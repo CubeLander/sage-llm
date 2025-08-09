@@ -30,7 +30,6 @@ from vllm.io.inputs.multimodal import MultiModalKwargs
 from vllm.io.inputs.multimodal import MultiModalPlaceholderDict
 from vllm.lora.request import LoRARequest
 from vllm.pooling_params import PoolingParams
-from vllm.sampling_params import RequestOutputKind
 from vllm.sampling_params import SamplingParams
 
 if TYPE_CHECKING:

@@ -56,7 +56,7 @@ from vllm.io.inputs.multimodal import MultiModalRegistry
 from vllm.io.inputs.multimodal.processing import EncDecMultiModalProcessor
 from vllm.io.inputs.parse import split_enc_dec_inputs
 from vllm.io.inputs.preprocess import InputPreprocessor
-from vllm.logits_process import get_bad_words_logits_processors
+from vllm.logits_process import NoBadWordsLogitsProcessor
 from vllm.lora.request import LoRARequest
 from vllm.model_executor.layers.sampler import SamplerOutput
 from vllm.outputs import PoolingRequestOutput
@@ -2050,7 +2050,7 @@ class LLMEngine:
 
         if len(sampling_params.bad_words) > 0:
             tokenizer = self.get_tokenizer(lora_request)
-            processors = get_bad_words_logits_processors(
+            processors = NoBadWordsLogitsProcessor(
                 bad_words=sampling_params.bad_words, tokenizer=tokenizer)
             logits_processors.extend(processors)
 
