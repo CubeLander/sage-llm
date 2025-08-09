@@ -18,7 +18,7 @@ import torch.nn as nn
 
 from vllm.config import VllmConfig
 from vllm.core.tensors.intermediate_tensors import IntermediateTensors
-from vllm.core.tensors.intermediate_tensors import SequenceGroupMetadata
+from vllm.sequence import SequenceGroupMetadata
 from vllm.model_executor.layers.sampler import SamplerOutput
 from vllm.model_executor.models.interfaces import supports_transcription
 from vllm.model_executor.models.interfaces_base import is_pooling_model

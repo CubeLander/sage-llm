@@ -36,7 +36,7 @@ from vllm.config import CompilationLevel
 from vllm.config import VllmConfig
 from vllm.core.scheduler import SchedulerOutputs
 from vllm.core.tensors.intermediate_tensors import IntermediateTensors
-from vllm.core.tensors.intermediate_tensors import SequenceGroupMetadata
+from vllm.sequence import SequenceGroupMetadata
 from vllm.distributed import broadcast_tensor_dict
 from vllm.distributed import get_pp_group
 from vllm.distributed.kv_transfer import get_kv_transfer_group

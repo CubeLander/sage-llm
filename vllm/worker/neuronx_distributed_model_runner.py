@@ -16,7 +16,7 @@ import torch
 
 from vllm.config import VllmConfig
 from vllm.core.tensors.intermediate_tensors import IntermediateTensors
-from vllm.core.tensors.intermediate_tensors import SequenceGroupMetadata
+from vllm.sequence import SequenceGroupMetadata
 from vllm.entrypoints.openai.serving_models import LoRAModulePath
 from vllm.io.inputs.multimodal import MultiModalKwargs
 from vllm.lora.layers import LoRAMapping
