@@ -1,20 +1,34 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import copy
 from collections import defaultdict
-from dataclasses import asdict, dataclass, field
-from typing import Any, Callable, Optional, TypeAlias, Union
+import copy
+from dataclasses import asdict
+from dataclasses import dataclass
+from dataclasses import field
+from typing import Any
+from typing import Callable
+from typing import Optional
+from typing import TypeAlias
+from typing import Union
 
 import pandas as pd
-from torch._C._autograd import DeviceType, _KinetoEvent, _ProfilerResult
-from torch._C._profiler import _EventType, _ExperimentalConfig, _ProfilerEvent
+from torch._C._autograd import DeviceType
+from torch._C._autograd import _KinetoEvent
+from torch._C._autograd import _ProfilerResult
+from torch._C._profiler import _EventType
+from torch._C._profiler import _ExperimentalConfig
+from torch._C._profiler import _ProfilerEvent
 from torch.autograd.profiler import FunctionEvent
-from torch.profiler import ProfilerActivity, profile
+from torch.profiler import ProfilerActivity
+from torch.profiler import profile
 
-from vllm.profiler.utils import (TablePrinter, event_has_module,
-                                 event_is_torch_op, event_module_repr,
-                                 event_torch_op_stack_trace, indent_string)
+from vllm.profiler.utils import TablePrinter
+from vllm.profiler.utils import event_has_module
+from vllm.profiler.utils import event_is_torch_op
+from vllm.profiler.utils import event_module_repr
+from vllm.profiler.utils import event_torch_op_stack_trace
+from vllm.profiler.utils import indent_string
 
 
 @dataclass

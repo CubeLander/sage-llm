@@ -1,39 +1,52 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
+from enum import Enum
 import json
 import os
 import tempfile
-from enum import Enum
-from typing import Any, Callable, Optional, TypedDict, TypeVar, Union
+from typing import Any
+from typing import Callable
+from typing import Optional
+from typing import TypeVar
+from typing import TypedDict
+from typing import Union
 
+from PIL import Image
+from huggingface_hub import snapshot_download
 import numpy as np
 import pytest
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from huggingface_hub import snapshot_download
-from PIL import Image
-from transformers import (AutoConfig, AutoModelForCausalLM, AutoTokenizer,
-                          BatchEncoding, BatchFeature)
+from transformers import AutoConfig
+from transformers import AutoModelForCausalLM
+from transformers import AutoTokenizer
+from transformers import BatchEncoding
+from transformers import BatchFeature
 from transformers.models.auto.auto_factory import _BaseAutoModelClass
 
-from tests.models.utils import (TokensTextLogprobs,
-                                TokensTextLogprobsPromptLogprobs)
-from vllm import LLM, SamplingParams
+from tests.models.utils import TokensTextLogprobs
+from tests.models.utils import TokensTextLogprobsPromptLogprobs
+from vllm import LLM
+from vllm import SamplingParams
 from vllm.assets.audio import AudioAsset
 from vllm.assets.image import ImageAsset
 from vllm.assets.video import VideoAsset
-from vllm.config import ConvertOption, RunnerOption, _get_and_verify_dtype
-from vllm.utils.network.httpconnection import global_http_connection
-from vllm.distributed import (cleanup_dist_env_and_memory,
-                              init_distributed_environment,
-                              initialize_model_parallel)
-from vllm.io.inputs import (ExplicitEncoderDecoderPrompt, TextPrompt,
-                         to_enc_dec_tuple_list, zip_enc_dec_prompts)
-from vllm.utils.logger import init_logger
+from vllm.config import ConvertOption
+from vllm.config import RunnerOption
+from vllm.config import _get_and_verify_dtype
+from vllm.distributed import cleanup_dist_env_and_memory
+from vllm.distributed import init_distributed_environment
+from vllm.distributed import initialize_model_parallel
+from vllm.io.inputs import ExplicitEncoderDecoderPrompt
+from vllm.io.inputs import TextPrompt
+from vllm.io.inputs import to_enc_dec_tuple_list
+from vllm.io.inputs import zip_enc_dec_prompts
 from vllm.outputs import RequestOutput
 from vllm.sampling_params import BeamSearchParams
 from vllm.transformers_utils.utils import maybe_model_redirect
+from vllm.utils.logger import init_logger
+from vllm.utils.network.httpconnection import global_http_connection
 
 logger = init_logger(__name__)
 

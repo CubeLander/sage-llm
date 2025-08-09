@@ -18,11 +18,13 @@ import pytest
 from vllm.platforms import current_platform
 from vllm.utils import STR_BACKEND_ENV_VAR
 
-from ..models.utils import check_logprobs_close, check_outputs_equal
+from ..models.utils import check_logprobs_close
+from ..models.utils import check_outputs_equal
 from ..utils import multi_gpu_test
 
 if TYPE_CHECKING:
-    from .conftest import HfRunner, VllmRunner
+    from .conftest import HfRunner
+    from .conftest import VllmRunner
 
 MODELS = [
     "facebook/opt-125m",

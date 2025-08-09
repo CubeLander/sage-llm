@@ -1,14 +1,17 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from PIL import Image
 import pytest
 import torch.nn.functional as F
-from PIL import Image
 
 from vllm.assets.base import get_vllm_public_assets
 from vllm.assets.image import VLM_IMAGES_DIR
 
-from ....conftest import IMAGE_ASSETS, HfRunner, PromptImageInput, VllmRunner
+from ....conftest import HfRunner
+from ....conftest import IMAGE_ASSETS
+from ....conftest import PromptImageInput
+from ....conftest import VllmRunner
 from ....utils import large_gpu_test
 from ...utils import check_embeddings_close
 

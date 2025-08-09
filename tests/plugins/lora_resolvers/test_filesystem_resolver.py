@@ -3,8 +3,8 @@
 import os
 import shutil
 
-import pytest
 from huggingface_hub import snapshot_download
+import pytest
 
 from vllm.plugins.lora_resolvers.filesystem_resolver import FilesystemResolver
 

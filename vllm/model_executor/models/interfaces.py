@@ -1,31 +1,41 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from collections.abc import Iterable, Mapping, MutableSequence
-from typing import (TYPE_CHECKING, ClassVar, Literal, Optional, Protocol,
-                    Union, overload, runtime_checkable)
+from collections.abc import Iterable
+from collections.abc import Mapping
+from collections.abc import MutableSequence
+from typing import ClassVar
+from typing import Literal
+from typing import Optional
+from typing import Protocol
+from typing import TYPE_CHECKING
+from typing import Union
+from typing import overload
+from typing import runtime_checkable
 
 import numpy as np
 import torch
 from torch import Tensor
 from transformers.models.whisper.tokenization_whisper import LANGUAGES
-from typing_extensions import Self, TypeIs
+from typing_extensions import Self
+from typing_extensions import TypeIs
 
-from vllm.config import ModelConfig, SpeechToTextConfig
+from vllm.config import ModelConfig
+from vllm.config import SpeechToTextConfig
 from vllm.io.inputs import TokensPrompt
 from vllm.io.inputs.data import PromptType
-from vllm.utils.logger import init_logger
 from vllm.model_executor.layers.quantization.base_config import (
     QuantizationConfig)
 from vllm.utils import supports_kw
+from vllm.utils.logger import init_logger
 
 from .interfaces_base import is_pooling_model
 
 if TYPE_CHECKING:
     from vllm.attention import AttentionMetadata
     from vllm.config import VllmConfig
+    from vllm.core.tensors.intermediate_tensors import IntermediateTensors
     from vllm.model_executor.models.utils import WeightsMapper
-    from vllm.sequence import IntermediateTensors
 
 logger = init_logger(__name__)
 

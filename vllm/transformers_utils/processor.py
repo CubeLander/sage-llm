@@ -2,10 +2,15 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from functools import lru_cache
-from typing import TYPE_CHECKING, Any, Optional, Union, cast
+from typing import Any
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Union
+from typing import cast
 
-from transformers import (AutoFeatureExtractor, AutoImageProcessor,
-                          AutoProcessor)
+from transformers import AutoFeatureExtractor
+from transformers import AutoImageProcessor
+from transformers import AutoProcessor
 from transformers.feature_extraction_utils import FeatureExtractionMixin
 from transformers.image_processing_utils import BaseImageProcessor
 from transformers.processing_utils import ProcessorMixin

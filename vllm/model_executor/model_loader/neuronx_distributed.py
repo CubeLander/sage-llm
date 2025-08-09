@@ -12,26 +12,32 @@ import os
 import shutil
 from typing import Optional
 
-import torch
-import torch.nn as nn
-from neuronx_distributed_inference.models.config import (
-    FusedSpecNeuronConfig, OnDeviceSamplingConfig)
+from neuronx_distributed_inference.models.config import FusedSpecNeuronConfig
+from neuronx_distributed_inference.models.config import OnDeviceSamplingConfig
 from neuronx_distributed_inference.models.mllama.utils import (
     create_vision_mask)
 from neuronx_distributed_inference.modules.lora_serving import (
     LoraServingConfig)
 from neuronx_distributed_inference.utils.hf_adapter import (
     load_pretrained_config)
-from transformers import AutoModelForCausalLM, AutoTokenizer, PretrainedConfig
+import torch
+import torch.nn as nn
+from transformers import AutoModelForCausalLM
+from transformers import AutoTokenizer
+from transformers import PretrainedConfig
 
-from vllm.config import (ModelConfig, ParallelConfig, SchedulerConfig,
-                         SpeculativeConfig)
-from vllm.utils.logger import init_logger
+from vllm.config import ModelConfig
+from vllm.config import ParallelConfig
+from vllm.config import SchedulerConfig
+from vllm.config import SpeculativeConfig
 from vllm.model_executor.layers.logits_processor import LogitsProcessor
-from vllm.model_executor.layers.sampler import Sampler, SamplerOutput
+from vllm.model_executor.layers.sampler import Sampler
+from vllm.model_executor.layers.sampler import SamplerOutput
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.sequence import (CompletionSequenceGroupOutput, Logprob,
-                           SequenceOutput)
+from vllm.sequence import CompletionSequenceGroupOutput
+from vllm.sequence import Logprob
+from vllm.sequence import SequenceOutput
+from vllm.utils.logger import init_logger
 
 # yapf: enable
 logger = init_logger(__name__)

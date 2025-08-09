@@ -2,15 +2,17 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 from collections import defaultdict
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Optional
+from typing import Optional
+from typing import TYPE_CHECKING
 
 import torch
 
 from vllm.attention.backends.abstract import AttentionBackend
-from vllm.config import ModelConfig, SchedulerConfig
+from vllm.config import ModelConfig
+from vllm.config import SchedulerConfig
+from vllm.io.inputs.multimodal.registry import MultiModalRegistry
 from vllm.model_executor.models.interfaces import MultiModalEmbeddings
 from vllm.model_executor.models.utils import extract_layer_index
-from vllm.io.inputs.multimodal.registry import MultiModalRegistry
 from vllm.v1.attention.backends.utils import AttentionMetadataBuilder
 from vllm.v1.core.encoder_cache_manager import compute_encoder_budget
 from vllm.v1.kv_cache_interface import KVCacheGroupSpec

@@ -6,14 +6,15 @@ import io
 import shutil
 from tempfile import TemporaryDirectory
 
+# downloading lora to test lora requests
+from huggingface_hub import snapshot_download
 import openai  # use the official client for correctness check
+from openai import BadRequestError
 import pytest
 import pytest_asyncio
 import torch
-# downloading lora to test lora requests
-from huggingface_hub import snapshot_download
-from openai import BadRequestError
-from transformers import AutoConfig, AutoTokenizer
+from transformers import AutoConfig
+from transformers import AutoTokenizer
 
 from ...utils import RemoteOpenAIServer
 

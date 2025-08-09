@@ -3,18 +3,22 @@
 import copy
 import multiprocessing
 import time
-import weakref
 from typing import Optional
+import weakref
 
 import msgspec.msgpack
 import zmq
 
 from vllm.config import ParallelConfig
+from vllm.utils import get_mp_context
+from vllm.utils import make_zmq_socket
+from vllm.utils import set_process_title
 from vllm.utils.logger import init_logger
-from vllm.utils import get_mp_context, make_zmq_socket, set_process_title
-from vllm.v1.engine import EngineCoreOutputs, EngineCoreRequestType
+from vllm.v1.engine import EngineCoreOutputs
+from vllm.v1.engine import EngineCoreRequestType
 from vllm.v1.serial_utils import MsgpackDecoder
-from vllm.v1.utils import get_engine_client_zmq_addr, shutdown
+from vllm.v1.utils import get_engine_client_zmq_addr
+from vllm.v1.utils import shutdown
 
 logger = init_logger(__name__)
 

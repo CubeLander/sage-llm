@@ -7,7 +7,8 @@ convenient for use when we just need to call a few functions.
 
 import ctypes
 from dataclasses import dataclass
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
 # this line makes it possible to directly load `libcudart.so` using `ctypes`
 import torch  # noqa

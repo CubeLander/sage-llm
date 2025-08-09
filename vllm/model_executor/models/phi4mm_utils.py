@@ -6,11 +6,13 @@
 # but implemented by the Phi-Speech team
 #!/usr/bin/env python3
 import math
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 import torch
+from torch import Tensor
+from torch import nn
 import torch.nn.functional as F
-from torch import Tensor, nn
 
 
 class BlockBase(nn.Module):

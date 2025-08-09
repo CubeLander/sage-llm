@@ -2,37 +2,59 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from copy import deepcopy
-from typing import Any, Callable, Optional, Union
+from typing import Any
+from typing import Callable
+from typing import Optional
+from typing import Union
 
 import torch
 
-import vllm.model_executor.layers.fused_moe  # noqa
 from vllm import _custom_ops as ops
-from vllm.utils.logger import init_logger
+import vllm.model_executor.layers.fused_moe  # noqa
 from vllm.model_executor.layers.fused_moe.layer import (
-    FusedMoE, FusedMoEMethodBase, FusedMoeWeightScaleSupported,
+    FusedMoeWeightScaleSupported)
+from vllm.model_executor.layers.fused_moe.layer import (
     UnquantizedFusedMoEMethod)
-from vllm.model_executor.layers.linear import (LinearMethodBase,
-                                               set_weight_attrs)
+from vllm.model_executor.layers.fused_moe.layer import FusedMoE
+from vllm.model_executor.layers.fused_moe.layer import FusedMoEMethodBase
+from vllm.model_executor.layers.linear import LinearMethodBase
+from vllm.model_executor.layers.linear import set_weight_attrs
 from vllm.model_executor.layers.quantization import QuantizationMethods
 from vllm.model_executor.layers.quantization.base_config import (
-    QuantizationConfig, QuantizeMethodBase)
+    QuantizationConfig)
+from vllm.model_executor.layers.quantization.base_config import (
+    QuantizeMethodBase)
 from vllm.model_executor.layers.quantization.kernels.mixed_precision import (
-    MPLinearLayerConfig, choose_mp_linear_kernel)
+    MPLinearLayerConfig)
+from vllm.model_executor.layers.quantization.kernels.mixed_precision import (
+    choose_mp_linear_kernel)
 from vllm.model_executor.layers.quantization.utils import replace_parameter
 from vllm.model_executor.layers.quantization.utils.gptq_utils import (
-    get_dynamic_override, get_linear_quant_method, override_config)
+    get_dynamic_override)
+from vllm.model_executor.layers.quantization.utils.gptq_utils import (
+    get_linear_quant_method)
+from vllm.model_executor.layers.quantization.utils.gptq_utils import (
+    override_config)
 from vllm.model_executor.layers.quantization.utils.marlin_utils import (
-    check_marlin_supported, check_moe_marlin_supports_layer,
-    marlin_make_workspace_new, marlin_moe_permute_scales,
-    marlin_repeat_scales_on_all_ranks, verify_marlin_supported)
-from vllm.model_executor.parameter import (ChannelQuantScaleParameter,
-                                           GroupQuantScaleParameter,
-                                           PackedColumnParameter,
-                                           PackedvLLMParameter,
-                                           RowvLLMParameter)
+    check_marlin_supported)
+from vllm.model_executor.layers.quantization.utils.marlin_utils import (
+    check_moe_marlin_supports_layer)
+from vllm.model_executor.layers.quantization.utils.marlin_utils import (
+    marlin_make_workspace_new)
+from vllm.model_executor.layers.quantization.utils.marlin_utils import (
+    marlin_moe_permute_scales)
+from vllm.model_executor.layers.quantization.utils.marlin_utils import (
+    marlin_repeat_scales_on_all_ranks)
+from vllm.model_executor.layers.quantization.utils.marlin_utils import (
+    verify_marlin_supported)
+from vllm.model_executor.parameter import ChannelQuantScaleParameter
+from vllm.model_executor.parameter import GroupQuantScaleParameter
+from vllm.model_executor.parameter import PackedColumnParameter
+from vllm.model_executor.parameter import PackedvLLMParameter
+from vllm.model_executor.parameter import RowvLLMParameter
 from vllm.platforms import current_platform
 from vllm.scalar_type import scalar_types
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

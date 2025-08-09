@@ -1,18 +1,25 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import dataclasses
 from collections import defaultdict
 from contextlib import contextmanager
+import dataclasses
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Any, Dict, List, Optional, Set, Tuple, Type
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import Set
+from typing import TYPE_CHECKING
+from typing import Tuple
+from typing import Type
 
 from vllm.io.inputs.multimodal import MultiModalPlaceholderMap
 
 try:
     from flashinfer import BatchDecodeWithPagedKVCacheWrapper
-    from flashinfer.decode import (CUDAGraphBatchDecodeWithPagedKVCacheWrapper,
-                                   trtllm_batch_decode_with_kv_cache)
+    from flashinfer.decode import CUDAGraphBatchDecodeWithPagedKVCacheWrapper
+    from flashinfer.decode import trtllm_batch_decode_with_kv_cache
     from flashinfer.prefill import BatchPrefillWithPagedKVCacheWrapper
 
     from vllm.vllm_flash_attn import flash_attn_varlen_func
@@ -30,29 +37,34 @@ except ImportError:
 
 import torch
 
-import vllm.envs as envs
 from vllm import _custom_ops as ops
-from vllm.attention.backends.abstract import (AttentionBackend, AttentionImpl,
-                                              AttentionLayer,
-                                              AttentionMetadata,
-                                              AttentionMetadataBuilder,
-                                              AttentionState, AttentionType)
-from vllm.attention.backends.utils import (PAD_SLOT_ID, compute_slot_mapping,
-                                           compute_slot_mapping_start_idx,
-                                           is_block_tables_empty)
+from vllm.attention.backends.abstract import AttentionBackend
+from vllm.attention.backends.abstract import AttentionImpl
+from vllm.attention.backends.abstract import AttentionLayer
+from vllm.attention.backends.abstract import AttentionMetadata
+from vllm.attention.backends.abstract import AttentionMetadataBuilder
+from vllm.attention.backends.abstract import AttentionState
+from vllm.attention.backends.abstract import AttentionType
+from vllm.attention.backends.utils import PAD_SLOT_ID
+from vllm.attention.backends.utils import compute_slot_mapping
+from vllm.attention.backends.utils import compute_slot_mapping_start_idx
+from vllm.attention.backends.utils import is_block_tables_empty
 from vllm.attention.layer import Attention
 from vllm.attention.ops.paged_attn import PagedAttention
-from vllm.config import VllmConfig, get_layers_from_vllm_config
-from vllm.utils.logger import init_logger
-from vllm.utils import (async_tensor_h2d, get_kv_cache_torch_dtype,
-                        make_tensor_with_pad)
+from vllm.config import VllmConfig
+from vllm.config import get_layers_from_vllm_config
+import vllm.envs as envs
+from vllm.utils import async_tensor_h2d
+from vllm.utils import get_kv_cache_torch_dtype
+from vllm.utils import make_tensor_with_pad
 from vllm.utils.flashinfer import use_trtllm_attention
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 
 if TYPE_CHECKING:
-    from vllm.worker.model_runner import (ModelInputForGPUBuilder,
-                                          ModelInputForGPUWithSamplingMetadata)
+    from vllm.worker.model_runner import ModelInputForGPUBuilder
+    from vllm.worker.model_runner import ModelInputForGPUWithSamplingMetadata
 
 
 class FlashInferBackend(AttentionBackend):

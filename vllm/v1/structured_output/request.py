@@ -2,17 +2,19 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 from __future__ import annotations
 
+from concurrent.futures import Future
+from concurrent.futures._base import TimeoutError
 import dataclasses
 import functools
 import json
-from concurrent.futures import Future
-from concurrent.futures._base import TimeoutError
-from typing import Optional, Union, cast
+from typing import Optional
+from typing import Union
+from typing import cast
 
 from vllm.sampling_params import SamplingParams
-from vllm.v1.structured_output.backend_types import (StructuredOutputGrammar,
-                                                     StructuredOutputKey,
-                                                     StructuredOutputOptions)
+from vllm.v1.structured_output.backend_types import StructuredOutputGrammar
+from vllm.v1.structured_output.backend_types import StructuredOutputKey
+from vllm.v1.structured_output.backend_types import StructuredOutputOptions
 
 
 @dataclasses.dataclass

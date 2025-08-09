@@ -8,7 +8,8 @@ import pytest
 import pytest_asyncio
 
 from vllm.assets.audio import AudioAsset
-from vllm.io.inputs.multimodal.utils import encode_audio_base64, fetch_audio
+from vllm.io.inputs.multimodal.utils import encode_audio_base64
+from vllm.io.inputs.multimodal.utils import fetch_audio
 
 from ...utils import RemoteOpenAIServer
 

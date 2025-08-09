@@ -3,7 +3,12 @@
 import bisect
 import gc
 import time
-from typing import TYPE_CHECKING, Any, Literal, Optional, Union, cast
+from typing import Any
+from typing import Literal
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Union
+from typing import cast
 from unittest.mock import patch
 
 import numpy as np
@@ -14,50 +19,64 @@ import torch_xla.core.xla_model as xm
 import torch_xla.distributed.spmd as xs
 import torch_xla.runtime as xr
 
-import vllm.envs as envs
 from vllm.attention import Attention
 from vllm.attention.backends.abstract import AttentionType
 from vllm.attention.layers.chunked_local_attention import ChunkedLocalAttention
 from vllm.compilation.wrapper import TorchCompileWrapperWithCustomDispatcher
-from vllm.config import (ParallelConfig, VllmConfig,
-                         get_layers_from_vllm_config, update_config)
-from vllm.distributed.kv_transfer import (get_kv_transfer_group,
-                                          has_kv_transfer_group)
+from vllm.config import ParallelConfig
+from vllm.config import VllmConfig
+from vllm.config import get_layers_from_vllm_config
+from vllm.config import update_config
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.distributed.kv_transfer import get_kv_transfer_group
+from vllm.distributed.kv_transfer import has_kv_transfer_group
+import vllm.envs as envs
 from vllm.forward_context import set_forward_context
-from vllm.utils.logger import init_logger
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import BatchedTensorInputs
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.inputs import PlaceholderRange
+from vllm.io.inputs.multimodal.utils import group_mm_inputs_by_modality
 from vllm.lora.layers import BaseLayerWithLoRA
 from vllm.model_executor.model_loader import get_model_loader
 from vllm.model_executor.model_loader.tpu import TPUModelLoader
 from vllm.model_executor.models.interfaces import supports_transcription
-from vllm.model_executor.models.interfaces_base import (
-    is_pooling_model, is_text_generation_model)
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.io.inputs.multimodal.inputs import (BatchedTensorInputs, MultiModalKwargs,
-                                    PlaceholderRange)
-from vllm.io.inputs.multimodal.utils import group_mm_inputs_by_modality
-from vllm.sequence import IntermediateTensors
-from vllm.tasks import GenerationTask, PoolingTask, SupportedTask
-from vllm.utils import (LayerBlockType, cdiv, is_pin_memory_available,
-                        prev_power_of_2)
-from vllm.v1.attention.backends.pallas import (TPU_STR_DTYPE_TO_TORCH_DTYPE,
-                                               PallasAttentionBackend,
-                                               PallasMetadata,
-                                               get_page_size_bytes)
-from vllm.v1.kv_cache_interface import (AttentionSpec, FullAttentionSpec,
-                                        KVCacheConfig, KVCacheSpec,
-                                        SlidingWindowSpec)
-from vllm.v1.outputs import (EMPTY_MODEL_RUNNER_OUTPUT, LogprobsLists,
-                             LogprobsTensors, ModelRunnerOutput)
+from vllm.model_executor.models.interfaces_base import is_pooling_model
+from vllm.model_executor.models.interfaces_base import is_text_generation_model
+from vllm.tasks import GenerationTask
+from vllm.tasks import PoolingTask
+from vllm.tasks import SupportedTask
+from vllm.utils import LayerBlockType
+from vllm.utils import cdiv
+from vllm.utils import is_pin_memory_available
+from vllm.utils import prev_power_of_2
+from vllm.utils.logger import init_logger
+from vllm.v1.attention.backends.pallas import PallasAttentionBackend
+from vllm.v1.attention.backends.pallas import PallasMetadata
+from vllm.v1.attention.backends.pallas import TPU_STR_DTYPE_TO_TORCH_DTYPE
+from vllm.v1.attention.backends.pallas import get_page_size_bytes
+from vllm.v1.kv_cache_interface import AttentionSpec
+from vllm.v1.kv_cache_interface import FullAttentionSpec
+from vllm.v1.kv_cache_interface import KVCacheConfig
+from vllm.v1.kv_cache_interface import KVCacheSpec
+from vllm.v1.kv_cache_interface import SlidingWindowSpec
+from vllm.v1.outputs import EMPTY_MODEL_RUNNER_OUTPUT
+from vllm.v1.outputs import LogprobsLists
+from vllm.v1.outputs import LogprobsTensors
+from vllm.v1.outputs import ModelRunnerOutput
 from vllm.v1.sample.tpu.metadata import TPUSupportedSamplingMetadata
 from vllm.v1.sample.tpu.sampler import Sampler as TPUSampler
 from vllm.v1.worker.kv_connector_model_runner_mixin import (
-    KVConnectorModelRunnerMixin, KVConnectorOutput)
+    KVConnectorModelRunnerMixin)
+from vllm.v1.worker.kv_connector_model_runner_mixin import KVConnectorOutput
 from vllm.v1.worker.lora_model_runner_mixin import LoRAModelRunnerMixin
-from vllm.v1.worker.tpu_input_batch import CachedRequestState, InputBatch
+from vllm.v1.worker.tpu_input_batch import CachedRequestState
+from vllm.v1.worker.tpu_input_batch import InputBatch
 
-from .utils import (MultiModalBudget, bind_kv_cache,
-                    initialize_kv_cache_for_kv_sharing,
-                    sanity_check_mm_encoder_outputs)
+from .utils import MultiModalBudget
+from .utils import bind_kv_cache
+from .utils import initialize_kv_cache_for_kv_sharing
+from .utils import sanity_check_mm_encoder_outputs
 
 if TYPE_CHECKING:
     from vllm.v1.core.sched.output import SchedulerOutput

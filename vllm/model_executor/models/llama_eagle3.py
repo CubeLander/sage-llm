@@ -10,20 +10,24 @@ from transformers import LlamaConfig
 
 from vllm.compilation.decorators import support_torch_compile
 from vllm.config import VllmConfig
-from vllm.utils.logger import init_logger
 from vllm.model_executor.layers.layernorm import RMSNorm
 from vllm.model_executor.layers.linear import QKVParallelLinear
 from vllm.model_executor.layers.logits_processor import LogitsProcessor
 from vllm.model_executor.layers.quantization.base_config import (
     QuantizationConfig)
 from vllm.model_executor.layers.vocab_parallel_embedding import (
-    DEFAULT_VOCAB_PADDING_SIZE, ParallelLMHead, VocabParallelEmbedding)
+    DEFAULT_VOCAB_PADDING_SIZE)
+from vllm.model_executor.layers.vocab_parallel_embedding import (
+    VocabParallelEmbedding)
+from vllm.model_executor.layers.vocab_parallel_embedding import ParallelLMHead
 from vllm.model_executor.model_loader.weight_utils import default_weight_loader
-from vllm.model_executor.models.llama import (LlamaDecoderLayer,
-                                              LlamaForCausalLM)
+from vllm.model_executor.models.llama import LlamaDecoderLayer
+from vllm.model_executor.models.llama import LlamaForCausalLM
+from vllm.utils.logger import init_logger
 from vllm.v1.sample.metadata import SamplingMetadata
 
-from .utils import AutoWeightsLoader, maybe_prefix
+from .utils import AutoWeightsLoader
+from .utils import maybe_prefix
 
 logger = init_logger(__name__)
 

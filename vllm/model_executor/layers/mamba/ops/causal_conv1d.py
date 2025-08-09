@@ -4,13 +4,15 @@
 # Copyright (c) 2024, Tri Dao.
 # Adapted from https://github.com/Dao-AILab/causal-conv1d/blob/main/causal_conv1d/causal_conv1d_interface.py
 
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 import numpy as np
 import torch
 
 from vllm.attention.backends.utils import PAD_SLOT_ID
-from vllm.platforms.triton_tuils import tl, triton
+from vllm.platforms.triton_tuils import tl
+from vllm.platforms.triton_tuils import triton
 
 
 @triton.jit()

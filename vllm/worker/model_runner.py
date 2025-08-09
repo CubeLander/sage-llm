@@ -1,16 +1,25 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from contextlib import contextmanager
 import dataclasses
+from dataclasses import dataclass
 import gc
 import inspect
 import itertools
 import time
+from typing import Any
+from typing import Callable
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import Set
+from typing import TYPE_CHECKING
+from typing import Tuple
+from typing import Type
+from typing import TypeVar
+from typing import Union
 import weakref
-from contextlib import contextmanager
-from dataclasses import dataclass
-from typing import (TYPE_CHECKING, Any, Callable, Dict, List, Optional, Set,
-                    Tuple, Type, TypeVar, Union)
 
 import numpy as np
 import torch
@@ -18,46 +27,65 @@ import torch.distributed
 import torch.nn as nn
 from tqdm.auto import tqdm
 
-import vllm.envs as envs
-from vllm.attention import AttentionMetadata, get_attn_backend
+from vllm.attention import AttentionMetadata
+from vllm.attention import get_attn_backend
 from vllm.attention.backends.abstract import AttentionState
 from vllm.attention.backends.utils import CommonAttentionState
 from vllm.compilation.counter import compilation_counter
-from vllm.config import CompilationLevel, VllmConfig
+from vllm.config import CompilationLevel
+from vllm.config import VllmConfig
 from vllm.core.scheduler import SchedulerOutputs
-from vllm.distributed import broadcast_tensor_dict, get_pp_group
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.tensors.intermediate_tensors import SequenceGroupMetadata
+from vllm.distributed import broadcast_tensor_dict
+from vllm.distributed import get_pp_group
 from vllm.distributed.kv_transfer import get_kv_transfer_group
-from vllm.distributed.parallel_state import (get_tensor_model_parallel_rank,
-                                             graph_capture)
-from vllm.forward_context import get_forward_context, set_forward_context
-from vllm.io.inputs import INPUT_REGISTRY, InputRegistry
-from vllm.utils.logger import init_logger
+from vllm.distributed.parallel_state import get_tensor_model_parallel_rank
+from vllm.distributed.parallel_state import graph_capture
+import vllm.envs as envs
+from vllm.forward_context import get_forward_context
+from vllm.forward_context import set_forward_context
+from vllm.io.inputs import INPUT_REGISTRY
+from vllm.io.inputs import InputRegistry
+from vllm.io.inputs.multimodal import BatchedTensorInputs
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal import MultiModalKwargs
+from vllm.io.inputs.multimodal import MultiModalPlaceholderMap
+from vllm.io.inputs.multimodal import MultiModalRegistry
 from vllm.lora.layers import LoRAMapping
 from vllm.lora.request import LoRARequest
 from vllm.lora.worker_manager import LRUCacheWorkerLoRAManager
-from vllm.model_executor import SamplingMetadata, SamplingMetadataCache
+from vllm.model_executor import SamplingMetadata
+from vllm.model_executor import SamplingMetadataCache
 from vllm.model_executor.layers.rotary_embedding import MRotaryEmbedding
-from vllm.model_executor.layers.sampler import (Sampler, SamplerOutput,
-                                                get_sampler)
+from vllm.model_executor.layers.sampler import Sampler
+from vllm.model_executor.layers.sampler import SamplerOutput
+from vllm.model_executor.layers.sampler import get_sampler
 from vllm.model_executor.model_loader import get_model
 from vllm.model_executor.model_loader.tensorizer import TensorizerConfig
-from vllm.model_executor.models import supports_lora, supports_multimodal
+from vllm.model_executor.models import supports_lora
+from vllm.model_executor.models import supports_multimodal
 from vllm.model_executor.models.utils import set_cpu_offload_max_bytes
-from vllm.io.inputs.multimodal import (MULTIMODAL_REGISTRY, BatchedTensorInputs,
-                             MultiModalKwargs, MultiModalPlaceholderMap,
-                             MultiModalRegistry)
 from vllm.sampling_params import SamplingParams
-from vllm.sequence import IntermediateTensors, SequenceGroupMetadata
-from vllm.utils import (DeviceMemoryProfiler, GiB_bytes, PyObjectCache,
-                        async_tensor_h2d, flatten_2d_lists,
-                        is_pin_memory_available, supports_dynamo,
-                        weak_ref_tensor)
+from vllm.utils import DeviceMemoryProfiler
+from vllm.utils import GiB_bytes
+from vllm.utils import PyObjectCache
+from vllm.utils import async_tensor_h2d
+from vllm.utils import flatten_2d_lists
+from vllm.utils import is_pin_memory_available
+from vllm.utils import supports_dynamo
+from vllm.utils import weak_ref_tensor
+from vllm.utils.logger import init_logger
 from vllm.worker.model_runner_base import (
-    InputProcessingError, ModelRunnerBase, ModelRunnerInputBase,
-    ModelRunnerInputBuilderBase, _add_attn_metadata_broadcastable_dict,
-    _add_sampling_metadata_broadcastable_dict,
-    _init_attn_metadata_from_tensor_dict,
+    _add_sampling_metadata_broadcastable_dict)
+from vllm.worker.model_runner_base import (
     _init_sampling_metadata_from_tensor_dict)
+from vllm.worker.model_runner_base import InputProcessingError
+from vllm.worker.model_runner_base import ModelRunnerBase
+from vllm.worker.model_runner_base import ModelRunnerInputBase
+from vllm.worker.model_runner_base import ModelRunnerInputBuilderBase
+from vllm.worker.model_runner_base import _add_attn_metadata_broadcastable_dict
+from vllm.worker.model_runner_base import _init_attn_metadata_from_tensor_dict
 
 if TYPE_CHECKING:
     from vllm.attention.backends.abstract import AttentionBackend

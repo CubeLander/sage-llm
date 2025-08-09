@@ -1,18 +1,20 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
 import torch
 
-import vllm.model_executor.layers.fused_moe.modular_kernel as mk
-from vllm.utils.logger import init_logger
 from vllm.model_executor.layers.fused_moe.config import FusedMoEQuantConfig
+import vllm.model_executor.layers.fused_moe.modular_kernel as mk
 from vllm.model_executor.layers.fused_moe.topk_weight_and_reduce import (
     TopKWeightAndReduceDelegate)
 from vllm.model_executor.layers.fused_moe.utils import _resize_cache
-from vllm.platforms.triton_tuils import tl, triton
-from vllm.utils.deep_gemm import (fp8_m_grouped_gemm_nt_masked,
-                                  is_blackwell_deep_gemm_used)
+from vllm.platforms.triton_tuils import tl
+from vllm.platforms.triton_tuils import triton
+from vllm.utils.deep_gemm import fp8_m_grouped_gemm_nt_masked
+from vllm.utils.deep_gemm import is_blackwell_deep_gemm_used
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

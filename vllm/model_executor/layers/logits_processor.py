@@ -1,16 +1,16 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 """A layer that compute logits from hidden_stats."""
-import inspect
 from concurrent.futures import ThreadPoolExecutor
+import inspect
 from typing import Optional
 
 import torch
 import torch.nn as nn
 
+from vllm.distributed import tensor_model_parallel_all_gather
+from vllm.distributed import tensor_model_parallel_gather
 import vllm.envs as envs
-from vllm.distributed import (tensor_model_parallel_all_gather,
-                              tensor_model_parallel_gather)
 from vllm.model_executor.layers.vocab_parallel_embedding import (
     VocabParallelEmbedding)
 from vllm.model_executor.sampling_metadata import SamplingMetadata

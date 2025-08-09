@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
 import numpy as np
 import pytest
@@ -8,8 +9,9 @@ import torch
 
 from tests.conftest import HfRunner
 
-from .mteb_utils import (RerankModelInfo, VllmMtebEncoder,
-                         mteb_test_rerank_models)
+from .mteb_utils import RerankModelInfo
+from .mteb_utils import VllmMtebEncoder
+from .mteb_utils import mteb_test_rerank_models
 
 RERANK_MODELS = [
     RerankModelInfo("BAAI/bge-reranker-v2-gemma",
@@ -26,7 +28,8 @@ class GemmaRerankerHfRunner(HfRunner):
                  dtype: str = "auto",
                  *args: Any,
                  **kwargs: Any) -> None:
-        from transformers import AutoModelForCausalLM, AutoTokenizer
+        from transformers import AutoModelForCausalLM
+        from transformers import AutoTokenizer
         super().__init__(model_name, dtype, auto_cls=AutoModelForCausalLM)
         self.tokenizer = AutoTokenizer.from_pretrained(model_name,
                                                        padding_side='left')

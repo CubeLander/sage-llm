@@ -1,44 +1,61 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from http import HTTPStatus
 # Adapted from
 # https://github.com/lm-sys/FastChat/blob/168ccc29d3f7edc50823016105c024fe2282732a/fastchat/protocol/openai_api_protocol.py
 import json
 import time
-from http import HTTPStatus
-from typing import Annotated, Any, ClassVar, Literal, Optional, Union
+from typing import Annotated
+from typing import Any
+from typing import ClassVar
+from typing import Literal
+from typing import Optional
+from typing import Union
 
-import regex as re
-import torch
-from fastapi import HTTPException, UploadFile
+from fastapi import HTTPException
+from fastapi import UploadFile
 # yapf: disable
 from openai.types.chat.chat_completion_audio import (
     ChatCompletionAudio as OpenAIChatCompletionAudio)
 from openai.types.chat.chat_completion_message import (
     Annotation as OpenAIAnnotation)
 # yapf: enable
-from openai.types.responses import (ResponseFunctionToolCall,
-                                    ResponseInputItemParam, ResponseOutputItem,
-                                    ResponsePrompt, ResponseStatus,
-                                    ResponseTextConfig)
+from openai.types.responses import ResponseFunctionToolCall
+from openai.types.responses import ResponseInputItemParam
+from openai.types.responses import ResponseOutputItem
+from openai.types.responses import ResponsePrompt
+from openai.types.responses import ResponseStatus
+from openai.types.responses import ResponseTextConfig
 from openai.types.responses.response import ToolChoice
 from openai.types.responses.tool import Tool
-from openai.types.shared import Metadata, Reasoning
-from pydantic import (BaseModel, ConfigDict, Field, TypeAdapter,
-                      ValidationInfo, field_validator, model_validator)
+from openai.types.shared import Metadata
+from openai.types.shared import Reasoning
+from pydantic import BaseModel
+from pydantic import ConfigDict
+from pydantic import Field
+from pydantic import TypeAdapter
+from pydantic import ValidationInfo
+from pydantic import field_validator
+from pydantic import model_validator
+import regex as re
+import torch
 from typing_extensions import TypeAlias
 
 from vllm import envs
-from vllm.entrypoints.chat_utils import (ChatCompletionMessageParam,
-                                         random_tool_call_id)
-from vllm.entrypoints.score_utils import (ScoreContentPartParam,
-                                          ScoreMultiModalParam)
-from vllm.utils.logger import init_logger
+from vllm.entrypoints.chat_utils import ChatCompletionMessageParam
+from vllm.entrypoints.chat_utils import random_tool_call_id
+from vllm.entrypoints.score_utils import ScoreContentPartParam
+from vllm.entrypoints.score_utils import ScoreMultiModalParam
 from vllm.pooling_params import PoolingParams
-from vllm.sampling_params import (BeamSearchParams, GuidedDecodingParams,
-                                  RequestOutputKind, SamplingParams)
+from vllm.sampling_params import BeamSearchParams
+from vllm.sampling_params import GuidedDecodingParams
+from vllm.sampling_params import RequestOutputKind
+from vllm.sampling_params import SamplingParams
 from vllm.sequence import Logprob
-from vllm.utils import random_uuid, resolve_obj_by_qualname
+from vllm.utils import random_uuid
+from vllm.utils import resolve_obj_by_qualname
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

@@ -2,19 +2,30 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 """KV-Cache Utilities."""
 
+from collections import defaultdict
+from collections import deque
+from collections.abc import Iterable
+from collections.abc import Sequence
+from dataclasses import astuple
+from dataclasses import dataclass
 import os
-from collections import defaultdict, deque
-from collections.abc import Iterable, Sequence
-from dataclasses import astuple, dataclass
-from typing import Any, Callable, NamedTuple, Optional
+from typing import Any
+from typing import Callable
+from typing import NamedTuple
+from typing import Optional
 
 from vllm.config import VllmConfig
+from vllm.utils import GiB_bytes
+from vllm.utils import cdiv
+from vllm.utils import sha256_cbor_64bit
 from vllm.utils.logger import init_logger
-from vllm.utils import GiB_bytes, cdiv, sha256_cbor_64bit
-from vllm.v1.kv_cache_interface import (ChunkedLocalAttentionSpec,
-                                        FullAttentionSpec, KVCacheConfig,
-                                        KVCacheGroupSpec, KVCacheSpec,
-                                        KVCacheTensor, SlidingWindowSpec)
+from vllm.v1.kv_cache_interface import ChunkedLocalAttentionSpec
+from vllm.v1.kv_cache_interface import FullAttentionSpec
+from vllm.v1.kv_cache_interface import KVCacheConfig
+from vllm.v1.kv_cache_interface import KVCacheGroupSpec
+from vllm.v1.kv_cache_interface import KVCacheSpec
+from vllm.v1.kv_cache_interface import KVCacheTensor
+from vllm.v1.kv_cache_interface import SlidingWindowSpec
 from vllm.v1.metrics.stats import PrefixCacheStats
 from vllm.v1.request import Request
 

@@ -2,25 +2,32 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from functools import partial
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
+from PIL import Image
+from mistral_common.protocol.instruct.messages import ImageChunk
+from mistral_common.protocol.instruct.messages import TextChunk
+from mistral_common.protocol.instruct.messages import UserMessage
+from mistral_common.protocol.instruct.request import ChatCompletionRequest
 import numpy as np
 import pytest
-from mistral_common.protocol.instruct.messages import (ImageChunk, TextChunk,
-                                                       UserMessage)
-from mistral_common.protocol.instruct.request import ChatCompletionRequest
-from PIL import Image
 
 from vllm.config import ModelConfig
 from vllm.io.inputs import InputProcessingContext
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY, MultiModalDataDict
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal import MultiModalDataDict
 from vllm.io.inputs.multimodal.inputs import MultiModalInputs
-from vllm.io.inputs.multimodal.processing import BaseMultiModalProcessor, ProcessingCache
-from vllm.transformers_utils.tokenizer import (AnyTokenizer, MistralTokenizer,
-                                               cached_tokenizer_from_config,
-                                               encode_tokens)
+from vllm.io.inputs.multimodal.processing import BaseMultiModalProcessor
+from vllm.io.inputs.multimodal.processing import ProcessingCache
+from vllm.transformers_utils.tokenizer import AnyTokenizer
+from vllm.transformers_utils.tokenizer import MistralTokenizer
+from vllm.transformers_utils.tokenizer import cached_tokenizer_from_config
+from vllm.transformers_utils.tokenizer import encode_tokens
 
-from ....multimodal.utils import random_audio, random_image, random_video
+from ....multimodal.utils import random_audio
+from ....multimodal.utils import random_image
+from ....multimodal.utils import random_video
 from ...registry import HF_EXAMPLE_MODELS
 
 

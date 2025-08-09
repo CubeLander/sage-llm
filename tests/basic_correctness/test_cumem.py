@@ -4,7 +4,8 @@
 import pytest
 import torch
 
-from vllm import LLM, SamplingParams
+from vllm import LLM
+from vllm import SamplingParams
 from vllm.platforms.device_allocator.cumem import CuMemAllocator
 from vllm.utils import GiB_bytes
 

@@ -1,26 +1,32 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from collections.abc import Sequence
 # Adapted from https://github.com/sgl-project/sglang/pull/2575
 import functools
 import json
 import os
-from collections.abc import Sequence
-from typing import Any, Callable, Optional, Union
+from typing import Any
+from typing import Callable
+from typing import Optional
+from typing import Union
 
 import torch
 
-import vllm.envs as envs
 from vllm import _custom_ops as ops
-from vllm.utils.logger import init_logger
+import vllm.envs as envs
 from vllm.model_executor.layers.quantization.utils.quant_utils import (
     group_broadcast)
 from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
     CUTLASS_BLOCK_FP8_SUPPORTED)
 from vllm.platforms import current_platform
-from vllm.platforms.triton_tuils import tl, triton
-from vllm.utils import cdiv, direct_register_custom_op, has_deep_gemm
+from vllm.platforms.triton_tuils import tl
+from vllm.platforms.triton_tuils import triton
+from vllm.utils import cdiv
+from vllm.utils import direct_register_custom_op
+from vllm.utils import has_deep_gemm
 from vllm.utils.deep_gemm import is_blackwell_deep_gemm_used
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

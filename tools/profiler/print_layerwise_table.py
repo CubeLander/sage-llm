@@ -4,8 +4,10 @@
 import argparse
 import json
 
-from vllm.profiler.layerwise_profile import ModelStatsEntry, SummaryStatsEntry
-from vllm.profiler.utils import TablePrinter, indent_string
+from vllm.profiler.layerwise_profile import ModelStatsEntry
+from vllm.profiler.layerwise_profile import SummaryStatsEntry
+from vllm.profiler.utils import TablePrinter
+from vllm.profiler.utils import indent_string
 
 
 def flatten_entries(entry_cls, profile_dict: dict):

@@ -3,10 +3,12 @@
 import pytest
 import torch
 
-from vllm.io.inputs.multimodal.cache import MultiModalCache, MultiModalCacheItemMetadata
-from vllm.io.inputs.multimodal.inputs import (MultiModalFieldElem, MultiModalKwargs,
-                                    MultiModalKwargsItem,
-                                    MultiModalSharedField)
+from vllm.io.inputs.multimodal.cache import MultiModalCache
+from vllm.io.inputs.multimodal.cache import MultiModalCacheItemMetadata
+from vllm.io.inputs.multimodal.inputs import MultiModalFieldElem
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargsItem
+from vllm.io.inputs.multimodal.inputs import MultiModalSharedField
 
 
 def _dummy_elem(modality: str, key: str, size: int):

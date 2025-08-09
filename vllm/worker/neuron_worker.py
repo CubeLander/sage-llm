@@ -2,22 +2,26 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 """A Neuron worker class."""
 import os
-from typing import List, Optional, Set, Tuple
+from typing import List
+from typing import Optional
+from typing import Set
+from typing import Tuple
 
 import torch.distributed
 
 from vllm.config import VllmConfig
-from vllm.distributed import (ensure_model_parallel_initialized,
-                              init_distributed_environment)
-from vllm.utils.logger import init_logger
+from vllm.distributed import ensure_model_parallel_initialized
+from vllm.distributed import init_distributed_environment
 from vllm.lora.request import LoRARequest
 from vllm.model_executor import set_random_seed
 from vllm.platforms import current_platform
 from vllm.platforms.neuron import NeuronFramework
 from vllm.sequence import ExecuteModelRequest
+from vllm.utils.logger import init_logger
 from vllm.worker.neuron_model_runner import NeuronModelRunner
-from vllm.worker.worker_base import (LocalOrDistributedWorkerBase, WorkerBase,
-                                     WorkerInput)
+from vllm.worker.worker_base import LocalOrDistributedWorkerBase
+from vllm.worker.worker_base import WorkerBase
+from vllm.worker.worker_base import WorkerInput
 
 logger = init_logger(__name__)
 

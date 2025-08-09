@@ -6,10 +6,15 @@ from typing import List
 import torch
 
 from vllm.attention import get_attn_backend
-from vllm.config import CacheConfig, DeviceConfig, ModelConfig, ParallelConfig
+from vllm.config import CacheConfig
+from vllm.config import DeviceConfig
+from vllm.config import ModelConfig
+from vllm.config import ParallelConfig
+from vllm.utils import LayerBlockType
+from vllm.utils import STR_DTYPE_TO_TORCH_DTYPE
+from vllm.utils import get_dtype_size
+from vllm.utils import is_pin_memory_available
 from vllm.utils.logger import init_logger
-from vllm.utils import (STR_DTYPE_TO_TORCH_DTYPE, LayerBlockType,
-                        get_dtype_size, is_pin_memory_available)
 
 logger = init_logger(__name__)
 

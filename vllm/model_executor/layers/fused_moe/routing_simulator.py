@@ -9,7 +9,8 @@ It supports routing logic customization and includes example implementations
 like uniform random routing.
 """
 
-from abc import ABC, abstractmethod
+from abc import ABC
+from abc import abstractmethod
 from typing import Optional
 
 import torch

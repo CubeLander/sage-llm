@@ -1,15 +1,16 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from prometheus_client import REGISTRY
 import pytest
 import ray
-from prometheus_client import REGISTRY
 
-import vllm.envs as envs
-from vllm import EngineArgs, LLMEngine
+from vllm import EngineArgs
+from vllm import LLMEngine
 from vllm.engine.arg_utils import AsyncEngineArgs
 from vllm.engine.async_llm_engine import AsyncLLMEngine
 from vllm.engine.metrics import RayPrometheusStatLogger
+import vllm.envs as envs
 from vllm.sampling_params import SamplingParams
 from vllm.test_utils import MODEL_WEIGHTS_S3_BUCKET
 

@@ -7,12 +7,16 @@ Punica: Multi-Tenant LoRA Serving.
 https://arxiv.org/abs/2310.18547
 """
 
-from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING, Optional, Union
+from abc import ABC
+from abc import abstractmethod
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Union
 
 import torch
 
-from .utils import compute_meta, convert_mapping
+from .utils import compute_meta
+from .utils import convert_mapping
 
 if TYPE_CHECKING:
     # avoid circuit import

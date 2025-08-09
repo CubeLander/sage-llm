@@ -1,27 +1,39 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
 import torch
 from torch.nn import Module
 from torch.nn.parameter import Parameter
 
-from vllm.utils.logger import init_logger
-from vllm.model_executor.layers.linear import (LinearBase, LinearMethodBase,
-                                               UnquantizedLinearMethod)
+from vllm.model_executor.layers.linear import LinearBase
+from vllm.model_executor.layers.linear import LinearMethodBase
+from vllm.model_executor.layers.linear import UnquantizedLinearMethod
 from vllm.model_executor.layers.quantization import QuantizationMethods
 from vllm.model_executor.layers.quantization.base_config import (
-    QuantizationConfig, QuantizeMethodBase)
+    QuantizationConfig)
+from vllm.model_executor.layers.quantization.base_config import (
+    QuantizeMethodBase)
 from vllm.model_executor.layers.quantization.utils.marlin_utils_fp8 import (
-    apply_fp8_marlin_linear, prepare_fp8_layer_for_marlin)
+    apply_fp8_marlin_linear)
+from vllm.model_executor.layers.quantization.utils.marlin_utils_fp8 import (
+    prepare_fp8_layer_for_marlin)
 from vllm.model_executor.layers.quantization.utils.quant_utils import (
-    GroupShape, is_layer_skipped)
+    GroupShape)
+from vllm.model_executor.layers.quantization.utils.quant_utils import (
+    is_layer_skipped)
 from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
-    Fp8LinearOp, maybe_create_device_identity, normalize_e4m3fn_to_e4m3fnuz)
-from vllm.model_executor.parameter import (ChannelQuantScaleParameter,
-                                           ModelWeightParameter)
+    Fp8LinearOp)
+from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
+    maybe_create_device_identity)
+from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
+    normalize_e4m3fn_to_e4m3fnuz)
+from vllm.model_executor.parameter import ChannelQuantScaleParameter
+from vllm.model_executor.parameter import ModelWeightParameter
 from vllm.platforms import current_platform
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

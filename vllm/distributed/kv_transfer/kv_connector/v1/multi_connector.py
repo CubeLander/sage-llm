@@ -2,15 +2,21 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 import copy
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Any, Optional
+from typing import Any
+from typing import Optional
+from typing import TYPE_CHECKING
 
 import torch
 
-from vllm.config import KVTransferConfig, VllmConfig
+from vllm.config import KVTransferConfig
+from vllm.config import VllmConfig
 from vllm.distributed.kv_transfer.kv_connector.factory import (
     KVConnectorFactory)
 from vllm.distributed.kv_transfer.kv_connector.v1.base import (
-    KVConnectorBase_V1, KVConnectorMetadata, KVConnectorRole)
+    KVConnectorBase_V1)
+from vllm.distributed.kv_transfer.kv_connector.v1.base import (
+    KVConnectorMetadata)
+from vllm.distributed.kv_transfer.kv_connector.v1.base import KVConnectorRole
 from vllm.utils.logger import init_logger
 from vllm.v1.core.kv_cache_manager import KVCacheBlocks
 from vllm.v1.core.sched.output import SchedulerOutput

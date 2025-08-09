@@ -9,11 +9,15 @@ import numpy as np
 import pytest
 import torch
 
-from vllm.io.inputs.multimodal.inputs import (MultiModalBatchedField,
-                                    MultiModalFieldElem, MultiModalFlatField,
-                                    MultiModalKwargs, MultiModalKwargsItem,
-                                    MultiModalSharedField, NestedTensors)
-from vllm.v1.serial_utils import MsgpackDecoder, MsgpackEncoder
+from vllm.io.inputs.multimodal.inputs import MultiModalBatchedField
+from vllm.io.inputs.multimodal.inputs import MultiModalFieldElem
+from vllm.io.inputs.multimodal.inputs import MultiModalFlatField
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargsItem
+from vllm.io.inputs.multimodal.inputs import MultiModalSharedField
+from vllm.io.inputs.multimodal.inputs import NestedTensors
+from vllm.v1.serial_utils import MsgpackDecoder
+from vllm.v1.serial_utils import MsgpackEncoder
 
 
 class UnrecognizedType(UserDict):

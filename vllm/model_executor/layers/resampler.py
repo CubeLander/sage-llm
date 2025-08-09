@@ -32,14 +32,16 @@ related helpers for sincos positional embeddings.
 
 Example models: Qwen (Qwen-VL), MiniCPM-V 2.0
 """
-import math
 from functools import partial
-from typing import Callable, Optional, Union
+import math
+from typing import Callable
+from typing import Optional
+from typing import Union
 
 import numpy as np
 import torch
-import torch.nn.functional as F
 from torch import nn
+import torch.nn.functional as F
 
 from vllm.model_executor.layers.linear import ReplicatedLinear
 from vllm.model_executor.layers.quantization import QuantizationConfig

@@ -1,9 +1,12 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from abc import ABC
+from abc import abstractmethod
 import inspect
-from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING, Any, Optional
+from typing import Any
+from typing import Optional
+from typing import TYPE_CHECKING
 
 import torch
 from torch import nn

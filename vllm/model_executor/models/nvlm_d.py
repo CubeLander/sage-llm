@@ -7,26 +7,31 @@
 # Copyright (c) 2024 NVIDIA
 # Licensed under Apache 2.0 License [see LICENSE for details]
 # --------------------------------------------------------
-from collections.abc import Mapping, Sequence
+from collections.abc import Mapping
+from collections.abc import Sequence
 from typing import Optional
 
 import torch
 import torch.nn as nn
 from transformers import PretrainedConfig
 
-from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.io.inputs.multimodal.inputs import MultiModalDataDict, MultiModalKwargs
-from vllm.io.inputs.multimodal.parse import (ImageEmbeddingItems, ImageProcessorItems,
-                                   MultiModalDataItems)
-from vllm.io.inputs.multimodal.processing import (PromptReplacement, PromptUpdate,
-                                        PromptUpdateDetails)
+from vllm.io.inputs.multimodal.inputs import MultiModalDataDict
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.parse import ImageEmbeddingItems
+from vllm.io.inputs.multimodal.parse import ImageProcessorItems
+from vllm.io.inputs.multimodal.parse import MultiModalDataItems
+from vllm.io.inputs.multimodal.processing import PromptReplacement
+from vllm.io.inputs.multimodal.processing import PromptUpdate
+from vllm.io.inputs.multimodal.processing import PromptUpdateDetails
+from vllm.model_executor.layers.quantization import QuantizationConfig
 
 from .intern_vit import InternVisionModel
-from .internvl import (BaseInternVLDummyInputsBuilder,
-                       BaseInternVLMultiModalProcessor,
-                       BaseInternVLProcessingInfo, BaseInternVLProcessor,
-                       InternVLChatModel)
+from .internvl import BaseInternVLDummyInputsBuilder
+from .internvl import BaseInternVLMultiModalProcessor
+from .internvl import BaseInternVLProcessingInfo
+from .internvl import BaseInternVLProcessor
+from .internvl import InternVLChatModel
 
 IMG_PAD = "<|vision_pad|>"
 

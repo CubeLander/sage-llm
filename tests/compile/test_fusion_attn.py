@@ -7,12 +7,18 @@ import torch._dynamo
 
 from tests.compile.backend import TestBackend
 from tests.models.utils import check_outputs_equal
-from vllm import LLM, SamplingParams
-from vllm.compilation.fusion import QUANT_OPS, QuantKey, kFp8StaticTensorSym
-from vllm.compilation.fusion_attn import ATTN_OP, AttnFusionPass
+from vllm import LLM
+from vllm import SamplingParams
+from vllm.compilation.fusion import QUANT_OPS
+from vllm.compilation.fusion import QuantKey
+from vllm.compilation.fusion import kFp8StaticTensorSym
+from vllm.compilation.fusion_attn import ATTN_OP
+from vllm.compilation.fusion_attn import AttnFusionPass
 from vllm.compilation.fx_utils import find_op_nodes
 from vllm.compilation.noop_elimination import NoOpEliminationPass
-from vllm.config import CompilationConfig, CompilationLevel, VllmConfig
+from vllm.config import CompilationConfig
+from vllm.config import CompilationLevel
+from vllm.config import VllmConfig
 from vllm.platforms import current_platform
 
 # globals needed for string-import custom Dynamo backend field

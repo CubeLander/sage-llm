@@ -11,9 +11,9 @@ import torch.distributed
 
 from vllm.distributed.eplb.rebalance_execute import (
     rearrange_expert_weights_inplace)
-from vllm.distributed.parallel_state import (ensure_model_parallel_initialized,
-                                             get_tp_group,
-                                             init_distributed_environment)
+from vllm.distributed.parallel_state import ensure_model_parallel_initialized
+from vllm.distributed.parallel_state import get_tp_group
+from vllm.distributed.parallel_state import init_distributed_environment
 from vllm.utils import update_environment_variables
 
 

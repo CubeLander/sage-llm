@@ -15,59 +15,81 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """PyTorch Mllama model."""
+from collections.abc import Iterable
+from collections.abc import Mapping
+from collections.abc import Sequence
 import math
-from collections.abc import Iterable, Mapping, Sequence
-from typing import Literal, Optional, TypedDict, Union
+from typing import Literal
+from typing import Optional
+from typing import TypedDict
+from typing import Union
 
+from PIL.Image import Image
 import numpy as np
 import torch
-import torch.nn.functional as F
-import transformers.models.mllama.configuration_mllama as config_mllama
-from PIL.Image import Image
 from torch import nn
-from transformers import BatchFeature, MllamaConfig
-from transformers.modeling_outputs import (BaseModelOutput,
-                                           CausalLMOutputWithPast)
+import torch.nn.functional as F
+from transformers import BatchFeature
+from transformers import MllamaConfig
+from transformers.modeling_outputs import BaseModelOutput
+from transformers.modeling_outputs import CausalLMOutputWithPast
+import transformers.models.mllama.configuration_mllama as config_mllama
 from transformers.models.mllama.image_processing_mllama import (
     get_optimal_tiled_canvas)
 from transformers.models.mllama.processing_mllama import (
-    MllamaProcessor, get_cross_attention_token_mask)
+    get_cross_attention_token_mask)
+from transformers.models.mllama.processing_mllama import MllamaProcessor
 
-import vllm.distributed.parallel_state as ps
-from vllm.attention import Attention, AttentionMetadata, AttentionType
+from vllm.attention import Attention
+from vllm.attention import AttentionMetadata
+from vllm.attention import AttentionType
 from vllm.attention.ops.paged_attn import PagedAttention
 from vllm.attention.selector import _Backend
 from vllm.config import VllmConfig
-from vllm.distributed import get_pp_group, get_tp_group
+from vllm.distributed import get_pp_group
+from vllm.distributed import get_tp_group
+import vllm.distributed.parallel_state as ps
 from vllm.forward_context import get_forward_context
-from vllm.utils.logger import init_logger
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import MultiModalDataDict
+from vllm.io.inputs.multimodal.inputs import MultiModalEncDecInputs
+from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.parse import ImageProcessorItems
+from vllm.io.inputs.multimodal.parse import ImageSize
+from vllm.io.inputs.multimodal.parse import MultiModalDataItems
+from vllm.io.inputs.multimodal.processing import BaseProcessingInfo
+from vllm.io.inputs.multimodal.processing import EncDecMultiModalProcessor
+from vllm.io.inputs.multimodal.processing import PromptReplacement
+from vllm.io.inputs.multimodal.processing import PromptUpdate
+from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
 from vllm.model_executor.layers.layernorm import RMSNorm
-from vllm.model_executor.layers.linear import (ColumnParallelLinear,
-                                               QKVCrossParallelLinear,
-                                               QKVParallelLinear,
-                                               RowParallelLinear)
+from vllm.model_executor.layers.linear import ColumnParallelLinear
+from vllm.model_executor.layers.linear import QKVCrossParallelLinear
+from vllm.model_executor.layers.linear import QKVParallelLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
 from vllm.model_executor.layers.logits_processor import LogitsProcessor
 from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.model_executor.layers.vocab_parallel_embedding import (
-    DEFAULT_VOCAB_PADDING_SIZE, ParallelLMHead, VocabParallelEmbedding)
+    DEFAULT_VOCAB_PADDING_SIZE)
+from vllm.model_executor.layers.vocab_parallel_embedding import (
+    VocabParallelEmbedding)
+from vllm.model_executor.layers.vocab_parallel_embedding import ParallelLMHead
 from vllm.model_executor.model_loader.weight_utils import (
-    default_weight_loader, maybe_remap_kv_scale_name)
+    maybe_remap_kv_scale_name)
+from vllm.model_executor.model_loader.weight_utils import default_weight_loader
 from vllm.model_executor.models.module_mapping import MultiModelKeys
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalEncDecInputs,
-                                    MultiModalFieldConfig, MultiModalKwargs)
-from vllm.io.inputs.multimodal.parse import (ImageProcessorItems, ImageSize,
-                                   MultiModalDataItems)
-from vllm.io.inputs.multimodal.processing import (BaseProcessingInfo,
-                                        EncDecMultiModalProcessor,
-                                        PromptReplacement, PromptUpdate)
-from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
+from vllm.utils.logger import init_logger
 
 from .clip import CLIPMLP
-from .interfaces import SupportsMultiModal, SupportsV0Only
-from .llama import LlamaDecoderLayer, LlamaMLP
-from .utils import AutoWeightsLoader, WeightsMapper, maybe_prefix
+from .interfaces import SupportsMultiModal
+from .interfaces import SupportsV0Only
+from .llama import LlamaDecoderLayer
+from .llama import LlamaMLP
+from .utils import AutoWeightsLoader
+from .utils import WeightsMapper
+from .utils import maybe_prefix
 
 logger = init_logger(__name__)
 

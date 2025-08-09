@@ -1,14 +1,16 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from huggingface_hub import snapshot_download
 import pytest
 import pytest_asyncio
-from huggingface_hub import snapshot_download
 
 from tests.utils import RemoteOpenAIServer
 from vllm.platforms import current_platform
 
-from .utils import ARGS, CONFIGS, ServerConfig
+from .utils import ARGS
+from .utils import CONFIGS
+from .utils import ServerConfig
 
 
 # for each server config, download the model and return the config

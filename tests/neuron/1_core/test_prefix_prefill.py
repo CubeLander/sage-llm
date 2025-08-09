@@ -14,7 +14,8 @@ class BlockDiagonalCausalFromBottomRightMask:
 
     @staticmethod
     def _from_seqlens(query_lens, seq_lens, block_size=None):
-        from torch import logical_and, logical_or
+        from torch import logical_and
+        from torch import logical_or
 
         contexted = block_size is None
         context_lens = torch.tensor(seq_lens) - torch.tensor(query_lens)
@@ -336,8 +337,8 @@ def test_contexted_kv_attention(
 
     import torch_xla.core.xla_model as xm
 
-    from vllm.attention.ops.nki_flash_attn import (flash_attn_varlen_nkifunc,
-                                                   reorder_context_mask)
+    from vllm.attention.ops.nki_flash_attn import flash_attn_varlen_nkifunc
+    from vllm.attention.ops.nki_flash_attn import reorder_context_mask
 
     assert large_tile_size % block_size == 0
 

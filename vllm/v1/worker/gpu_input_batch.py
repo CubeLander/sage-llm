@@ -3,21 +3,24 @@
 # Datastructures defining a GPU input batch
 
 from dataclasses import dataclass
-from typing import Optional, cast
+from typing import Optional
+from typing import cast
 
 import numpy as np
 import torch
 
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.inputs import PlaceholderRange
 from vllm.lora.request import LoRARequest
-from vllm.io.inputs.multimodal.inputs import MultiModalKwargs, PlaceholderRange
 from vllm.pooling_params import PoolingParams
-from vllm.sampling_params import SamplingParams, SamplingType
+from vllm.sampling_params import SamplingParams
+from vllm.sampling_params import SamplingType
 from vllm.utils import swap_dict_values
 from vllm.v1.outputs import LogprobsTensors
 from vllm.v1.pool.metadata import PoolingMetadata
-from vllm.v1.sample.logits_processor import (BatchUpdateBuilder,
-                                             MoveDirectionality,
-                                             init_builtin_logitsprocs)
+from vllm.v1.sample.logits_processor import BatchUpdateBuilder
+from vllm.v1.sample.logits_processor import MoveDirectionality
+from vllm.v1.sample.logits_processor import init_builtin_logitsprocs
 from vllm.v1.sample.metadata import SamplingMetadata
 from vllm.v1.spec_decode.utils import is_spec_decode_unsupported
 from vllm.v1.utils import copy_slice

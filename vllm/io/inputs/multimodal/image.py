@@ -5,9 +5,9 @@ from io import BytesIO
 from pathlib import Path
 from typing import Union
 
+from PIL import Image
 import pybase64
 import torch
-from PIL import Image
 
 from .base import MediaIO
 

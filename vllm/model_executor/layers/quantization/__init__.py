@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from typing import Literal, get_args
+from typing import Literal
+from typing import get_args
 
 from vllm.model_executor.layers.quantization.base_config import (
     QuantizationConfig)
@@ -109,7 +110,8 @@ def get_quantization_config(quantization: str) -> type[QuantizationConfig]:
     from .inc import INCConfig
     from .ipex_quant import IPEXConfig
     from .marlin import MarlinConfig
-    from .modelopt import ModelOptFp8Config, ModelOptNvFp4Config
+    from .modelopt import ModelOptFp8Config
+    from .modelopt import ModelOptNvFp4Config
     from .moe_wna16 import MoeWNA16Config
     from .mxfp4 import Mxfp4Config
     from .neuron_quant import NeuronQuantConfig

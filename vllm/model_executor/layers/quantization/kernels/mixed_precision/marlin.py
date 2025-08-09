@@ -7,15 +7,33 @@ import torch
 
 from vllm import _custom_ops as ops
 from vllm.model_executor.layers.quantization.utils.marlin_utils import (
-    MARLIN_SUPPORTED_GROUP_SIZES, apply_gptq_marlin_linear,
-    check_marlin_supports_shape, marlin_is_k_full, marlin_make_empty_g_idx,
-    marlin_make_workspace_new, marlin_permute_scales, marlin_sort_g_idx,
-    marlin_zero_points, query_marlin_supported_quant_types, unpack_cols)
-from vllm.model_executor.parameter import (BasevLLMParameter,
-                                           permute_param_layout_)
+    MARLIN_SUPPORTED_GROUP_SIZES)
+from vllm.model_executor.layers.quantization.utils.marlin_utils import (
+    apply_gptq_marlin_linear)
+from vllm.model_executor.layers.quantization.utils.marlin_utils import (
+    check_marlin_supports_shape)
+from vllm.model_executor.layers.quantization.utils.marlin_utils import (
+    marlin_is_k_full)
+from vllm.model_executor.layers.quantization.utils.marlin_utils import (
+    marlin_make_empty_g_idx)
+from vllm.model_executor.layers.quantization.utils.marlin_utils import (
+    marlin_make_workspace_new)
+from vllm.model_executor.layers.quantization.utils.marlin_utils import (
+    marlin_permute_scales)
+from vllm.model_executor.layers.quantization.utils.marlin_utils import (
+    marlin_sort_g_idx)
+from vllm.model_executor.layers.quantization.utils.marlin_utils import (
+    marlin_zero_points)
+from vllm.model_executor.layers.quantization.utils.marlin_utils import (
+    query_marlin_supported_quant_types)
+from vllm.model_executor.layers.quantization.utils.marlin_utils import (
+    unpack_cols)
+from vllm.model_executor.parameter import BasevLLMParameter
+from vllm.model_executor.parameter import permute_param_layout_
 from vllm.platforms import current_platform
 
-from .MPLinearKernel import MPLinearKernel, MPLinearLayerConfig
+from .MPLinearKernel import MPLinearKernel
+from .MPLinearKernel import MPLinearLayerConfig
 
 
 class MarlinLinearKernel(MPLinearKernel):

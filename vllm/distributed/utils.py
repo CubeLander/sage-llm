@@ -1,32 +1,36 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from collections import deque
+from collections.abc import Sequence
 # Copyright 2023 The vLLM team.
 # Adapted from
 # https://github.com/NVIDIA/Megatron-LM/blob/main/megatron/core/tensor_parallel/utils.py
 # Copyright (c) 2022, NVIDIA CORPORATION. All rights reserved.
 import dataclasses
+from datetime import timedelta
 import os
 import pickle
 import socket
 import sys
 import time
+from typing import Any
+from typing import Optional
 import uuid
-from collections import deque
-from collections.abc import Sequence
-from datetime import timedelta
-from typing import Any, Optional
 
 import torch
-from torch.distributed import ProcessGroup, TCPStore
-from torch.distributed.distributed_c10d import (Backend, PrefixStore,
-                                                _get_default_timeout,
-                                                _unregister_process_group)
+from torch.distributed import ProcessGroup
+from torch.distributed import TCPStore
+from torch.distributed.distributed_c10d import Backend
+from torch.distributed.distributed_c10d import PrefixStore
+from torch.distributed.distributed_c10d import _get_default_timeout
+from torch.distributed.distributed_c10d import _unregister_process_group
 from torch.distributed.rendezvous import rendezvous
 
 import vllm.envs as envs
+from vllm.utils import get_tcp_uri
+from vllm.utils import is_torch_equal_or_newer
 from vllm.utils.logger import init_logger
-from vllm.utils import get_tcp_uri, is_torch_equal_or_newer
 
 logger = init_logger(__name__)
 

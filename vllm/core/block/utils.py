@@ -2,8 +2,8 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 """Block manager utils."""
 from vllm.sequence import SequenceGroup
-from vllm.utils import (STR_NOT_IMPL_ENC_DEC_PREFIX_CACHE,
-                        STR_NOT_IMPL_ENC_DEC_SWA)
+from vllm.utils import STR_NOT_IMPL_ENC_DEC_PREFIX_CACHE
+from vllm.utils import STR_NOT_IMPL_ENC_DEC_SWA
 
 
 def check_no_caching_or_swa_for_blockmgr_encdec(

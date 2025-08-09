@@ -2,54 +2,79 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import asyncio
+from collections.abc import AsyncGenerator
+from collections.abc import AsyncIterator
+from collections.abc import Sequence as GenericSequence
 import json
 import time
-from collections.abc import AsyncGenerator, AsyncIterator
-from collections.abc import Sequence as GenericSequence
-from typing import Callable, Final, Optional, Union
+from typing import Callable
+from typing import Final
+from typing import Optional
+from typing import Union
 
-import jinja2
-import partial_json_parser
-import regex as re
 from fastapi import Request
+import jinja2
 from openai_harmony import Message as OpenAIMessage
+import partial_json_parser
 from pydantic import TypeAdapter
+import regex as re
 
 from vllm.config import ModelConfig
 from vllm.engine.protocol import EngineClient
-from vllm.entrypoints.chat_utils import (ChatTemplateContentFormatOption,
-                                         ConversationMessage,
-                                         random_tool_call_id)
+from vllm.entrypoints.chat_utils import ChatTemplateContentFormatOption
+from vllm.entrypoints.chat_utils import ConversationMessage
+from vllm.entrypoints.chat_utils import random_tool_call_id
 from vllm.entrypoints.harmony_utils import (
-    get_developer_message, get_stop_tokens_for_assistant_actions,
-    get_streamable_parser_for_assistant, get_system_message, parse_chat_input,
-    parse_chat_output, render_for_completion)
+    get_stop_tokens_for_assistant_actions)
+from vllm.entrypoints.harmony_utils import get_developer_message
+from vllm.entrypoints.harmony_utils import get_streamable_parser_for_assistant
+from vllm.entrypoints.harmony_utils import get_system_message
+from vllm.entrypoints.harmony_utils import parse_chat_input
+from vllm.entrypoints.harmony_utils import parse_chat_output
+from vllm.entrypoints.harmony_utils import render_for_completion
 from vllm.entrypoints.logger import RequestLogger
-from vllm.entrypoints.openai.protocol import (
-    ChatCompletionLogProb, ChatCompletionLogProbs,
-    ChatCompletionLogProbsContent, ChatCompletionNamedToolChoiceParam,
-    ChatCompletionRequest, ChatCompletionResponse,
-    ChatCompletionResponseChoice, ChatCompletionResponseStreamChoice,
-    ChatCompletionStreamResponse, ChatMessage, DeltaFunctionCall, DeltaMessage,
-    DeltaToolCall, ErrorResponse, FunctionCall, FunctionDefinition,
-    PromptTokenUsageInfo, RequestResponseMetadata, ToolCall, UsageInfo)
-from vllm.entrypoints.openai.serving_engine import (OpenAIServing,
-                                                    clamp_prompt_logprobs)
+from vllm.entrypoints.openai.protocol import ChatCompletionLogProb
+from vllm.entrypoints.openai.protocol import ChatCompletionLogProbs
+from vllm.entrypoints.openai.protocol import ChatCompletionLogProbsContent
+from vllm.entrypoints.openai.protocol import ChatCompletionNamedToolChoiceParam
+from vllm.entrypoints.openai.protocol import ChatCompletionRequest
+from vllm.entrypoints.openai.protocol import ChatCompletionResponse
+from vllm.entrypoints.openai.protocol import ChatCompletionResponseChoice
+from vllm.entrypoints.openai.protocol import ChatCompletionResponseStreamChoice
+from vllm.entrypoints.openai.protocol import ChatCompletionStreamResponse
+from vllm.entrypoints.openai.protocol import ChatMessage
+from vllm.entrypoints.openai.protocol import DeltaFunctionCall
+from vllm.entrypoints.openai.protocol import DeltaMessage
+from vllm.entrypoints.openai.protocol import DeltaToolCall
+from vllm.entrypoints.openai.protocol import ErrorResponse
+from vllm.entrypoints.openai.protocol import FunctionCall
+from vllm.entrypoints.openai.protocol import FunctionDefinition
+from vllm.entrypoints.openai.protocol import PromptTokenUsageInfo
+from vllm.entrypoints.openai.protocol import RequestResponseMetadata
+from vllm.entrypoints.openai.protocol import ToolCall
+from vllm.entrypoints.openai.protocol import UsageInfo
+from vllm.entrypoints.openai.serving_engine import OpenAIServing
+from vllm.entrypoints.openai.serving_engine import clamp_prompt_logprobs
 from vllm.entrypoints.openai.serving_models import OpenAIServingModels
-from vllm.entrypoints.openai.tool_parsers import ToolParser, ToolParserManager
+from vllm.entrypoints.openai.tool_parsers import ToolParser
+from vllm.entrypoints.openai.tool_parsers import ToolParserManager
 from vllm.entrypoints.openai.tool_parsers.mistral_tool_parser import (
     MistralToolCall)
 from vllm.entrypoints.utils import get_max_tokens
 from vllm.io.inputs.data import TokensPrompt as EngineTokensPrompt
-from vllm.utils.logger import init_logger
-from vllm.outputs import CompletionOutput, RequestOutput
-from vllm.io.reasoning import ReasoningParser, ReasoningParserManager
-from vllm.sampling_params import BeamSearchParams, SamplingParams
+from vllm.io.reasoning import ReasoningParser
+from vllm.io.reasoning import ReasoningParserManager
+from vllm.outputs import CompletionOutput
+from vllm.outputs import RequestOutput
+from vllm.sampling_params import BeamSearchParams
+from vllm.sampling_params import SamplingParams
 from vllm.sequence import Logprob
-from vllm.transformers_utils.tokenizer import AnyTokenizer, MistralTokenizer
-from vllm.transformers_utils.tokenizers import (maybe_serialize_tool_calls,
-                                                truncate_tool_call_ids,
-                                                validate_request_params)
+from vllm.transformers_utils.tokenizer import AnyTokenizer
+from vllm.transformers_utils.tokenizer import MistralTokenizer
+from vllm.transformers_utils.tokenizers import maybe_serialize_tool_calls
+from vllm.transformers_utils.tokenizers import truncate_tool_call_ids
+from vllm.transformers_utils.tokenizers import validate_request_params
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

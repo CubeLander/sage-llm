@@ -2,13 +2,17 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import math
-from typing import TYPE_CHECKING, Optional, Union
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Union
 
 import torch
 import torch.nn.functional as F
 import torch_xla.core.xla_model as xm
 
-from vllm.lora.ops.xla_ops import bgmv_expand, bgmv_expand_slice, bgmv_shrink
+from vllm.lora.ops.xla_ops import bgmv_expand
+from vllm.lora.ops.xla_ops import bgmv_expand_slice
+from vllm.lora.ops.xla_ops import bgmv_shrink
 from vllm.lora.punica_wrapper.utils import convert_mapping
 
 if TYPE_CHECKING:

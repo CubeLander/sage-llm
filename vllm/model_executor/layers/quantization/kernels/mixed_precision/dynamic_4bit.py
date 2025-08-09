@@ -6,10 +6,12 @@ from typing import Optional
 import torch
 
 from vllm.model_executor.layers.quantization.utils import replace_parameter
-from vllm.platforms import CpuArchEnum, current_platform
+from vllm.platforms import CpuArchEnum
+from vllm.platforms import current_platform
 from vllm.scalar_type import scalar_types
 
-from .MPLinearKernel import MPLinearKernel, MPLinearLayerConfig
+from .MPLinearKernel import MPLinearKernel
+from .MPLinearKernel import MPLinearLayerConfig
 
 
 class Dynamic4bitLinearKernel(MPLinearKernel):

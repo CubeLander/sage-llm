@@ -1,15 +1,20 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from abc import ABC, abstractmethod
+from abc import ABC
+from abc import abstractmethod
 from collections.abc import Sequence
 from pathlib import Path
-from typing import TYPE_CHECKING, Generic, NamedTuple, TypeVar
+from typing import Generic
+from typing import NamedTuple
+from typing import TYPE_CHECKING
+from typing import TypeVar
 
 if TYPE_CHECKING:
     from vllm.sequence import SequenceGroupMetadata
 
-from .inputs import MultiModalKwargs, PlaceholderRange
+from .inputs import MultiModalKwargs
+from .inputs import PlaceholderRange
 
 _T = TypeVar("_T")
 

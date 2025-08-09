@@ -1,29 +1,34 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from collections.abc import Sequence
 import dataclasses
 import importlib
-import pickle
-from collections.abc import Sequence
 from inspect import isclass
+import pickle
 from types import FunctionType
-from typing import Any, Optional, Union
+from typing import Any
+from typing import Optional
+from typing import Union
 
 import cloudpickle
 import msgspec
+from msgspec import msgpack
 import numpy as np
 import torch
 import zmq
-from msgspec import msgpack
 
 from vllm import envs
+from vllm.io.inputs.multimodal.inputs import BaseMultiModalField
+from vllm.io.inputs.multimodal.inputs import MultiModalBatchedField
+from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
+from vllm.io.inputs.multimodal.inputs import MultiModalFieldElem
+from vllm.io.inputs.multimodal.inputs import MultiModalFlatField
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargsItem
+from vllm.io.inputs.multimodal.inputs import MultiModalSharedField
+from vllm.io.inputs.multimodal.inputs import NestedTensors
 from vllm.utils.logger import init_logger
-from vllm.io.inputs.multimodal.inputs import (BaseMultiModalField,
-                                    MultiModalBatchedField,
-                                    MultiModalFieldConfig, MultiModalFieldElem,
-                                    MultiModalFlatField, MultiModalKwargs,
-                                    MultiModalKwargsItem,
-                                    MultiModalSharedField, NestedTensors)
 from vllm.v1.engine import UtilityResult
 
 logger = init_logger(__name__)

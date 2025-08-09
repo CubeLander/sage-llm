@@ -1,20 +1,23 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import itertools
 from collections.abc import Generator
+import itertools
 
 import pytest
 import torch
 
 from tests.v1.sample.utils import (
-    BatchLogprobsComposition, BatchLogprobsSpecType,
-    assert_incr_detok_str_matches_non_incr_detok_str,
-    compute_correct_cumulative_logprob, get_test_batch)
+    assert_incr_detok_str_matches_non_incr_detok_str)
+from tests.v1.sample.utils import BatchLogprobsComposition
+from tests.v1.sample.utils import BatchLogprobsSpecType
+from tests.v1.sample.utils import compute_correct_cumulative_logprob
+from tests.v1.sample.utils import get_test_batch
 from vllm import SamplingParams
 from vllm.config import LogprobsMode
 
-from ...conftest import HfRunner, VllmRunner
+from ...conftest import HfRunner
+from ...conftest import VllmRunner
 
 MODEL = "meta-llama/Llama-3.2-1B-Instruct"
 DTYPE = "half"

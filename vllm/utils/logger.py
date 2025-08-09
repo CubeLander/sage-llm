@@ -1,18 +1,21 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 """Logging configuration for vLLM."""
+from collections.abc import Hashable
 import datetime
+from functools import lru_cache
+from functools import partial
 import json
 import logging
-import os
-import sys
-from collections.abc import Hashable
-from functools import lru_cache, partial
 from logging import Logger
 from logging.config import dictConfig
+import os
 from os import path
+import sys
 from types import MethodType
-from typing import Any, Optional, cast
+from typing import Any
+from typing import Optional
+from typing import cast
 
 import vllm.envs as envs
 

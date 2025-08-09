@@ -13,23 +13,32 @@ from torch import nn
 from transformers.models.granitemoeshared import GraniteMoeSharedConfig
 
 from vllm.compilation.decorators import support_torch_compile
-from vllm.config import CacheConfig, VllmConfig
+from vllm.config import CacheConfig
+from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
 from vllm.distributed import get_pp_group
 from vllm.model_executor.layers.activation import SiluAndMul
 from vllm.model_executor.layers.layernorm import RMSNorm
-from vllm.model_executor.layers.linear import (MergedColumnParallelLinear,
-                                               RowParallelLinear)
+from vllm.model_executor.layers.linear import MergedColumnParallelLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
 from vllm.model_executor.layers.logits_processor import LogitsProcessor
 from vllm.model_executor.layers.quantization.base_config import (
     QuantizationConfig)
 from vllm.model_executor.layers.vocab_parallel_embedding import (
-    DEFAULT_VOCAB_PADDING_SIZE, ParallelLMHead, VocabParallelEmbedding)
+    DEFAULT_VOCAB_PADDING_SIZE)
+from vllm.model_executor.layers.vocab_parallel_embedding import (
+    VocabParallelEmbedding)
+from vllm.model_executor.layers.vocab_parallel_embedding import ParallelLMHead
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.sequence import IntermediateTensors
 
-from .granitemoe import GraniteMoeAttention, GraniteMoeModel, GraniteMoeMoE
-from .interfaces import SupportsLoRA, SupportsPP
-from .utils import AutoWeightsLoader, make_layers, maybe_prefix
+from .granitemoe import GraniteMoeAttention
+from .granitemoe import GraniteMoeMoE
+from .granitemoe import GraniteMoeModel
+from .interfaces import SupportsLoRA
+from .interfaces import SupportsPP
+from .utils import AutoWeightsLoader
+from .utils import make_layers
+from .utils import maybe_prefix
 
 
 class GraniteMoeSharedMLP(nn.Module):

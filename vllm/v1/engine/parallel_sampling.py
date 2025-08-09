@@ -5,7 +5,8 @@ from copy import copy
 from typing import Optional
 
 from vllm.outputs import CompletionOutput
-from vllm.sampling_params import RequestOutputKind, SamplingParams
+from vllm.sampling_params import RequestOutputKind
+from vllm.sampling_params import SamplingParams
 from vllm.v1.metrics.stats import IterationStats
 
 

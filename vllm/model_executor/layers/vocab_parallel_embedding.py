@@ -7,13 +7,19 @@ from typing import Optional
 
 import torch
 import torch.nn.functional as F
-from torch.nn.parameter import Parameter, UninitializedParameter
+from torch.nn.parameter import Parameter
+from torch.nn.parameter import UninitializedParameter
 
-from vllm.distributed import (divide, get_tensor_model_parallel_rank,
-                              get_tensor_model_parallel_world_size,
-                              tensor_model_parallel_all_reduce)
+from vllm.distributed import divide
+from vllm.distributed import get_tensor_model_parallel_rank
+from vllm.distributed import get_tensor_model_parallel_world_size
+from vllm.distributed import tensor_model_parallel_all_reduce
 from vllm.model_executor.layers.quantization.base_config import (
-    QuantizationConfig, QuantizeMethodBase, method_has_implemented_embedding)
+    QuantizationConfig)
+from vllm.model_executor.layers.quantization.base_config import (
+    QuantizeMethodBase)
+from vllm.model_executor.layers.quantization.base_config import (
+    method_has_implemented_embedding)
 from vllm.model_executor.layers.utils import dispatch_unquantized_gemm
 from vllm.model_executor.parameter import BasevLLMParameter
 from vllm.model_executor.utils import set_weight_attrs

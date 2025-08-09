@@ -3,10 +3,10 @@
 
 import os
 
+from huggingface_hub import snapshot_download
 import openai  # use the official client for correctness check
 import pytest
 import pytest_asyncio
-from huggingface_hub import snapshot_download
 
 from ...conftest import AudioTestAssets
 from ...utils import RemoteOpenAIServer

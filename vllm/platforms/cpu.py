@@ -1,21 +1,25 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from dataclasses import dataclass
+from importlib.util import find_spec
 import json
 import os
 import platform
 import subprocess
 import sys
-from dataclasses import dataclass
-from importlib.util import find_spec
-from typing import TYPE_CHECKING, Optional
+from typing import Optional
+from typing import TYPE_CHECKING
 
 import torch
 
-from vllm.utils.logger import init_logger
 from vllm.utils import DEFAULT_MAX_NUM_BATCHED_TOKENS
+from vllm.utils.logger import init_logger
 
-from .interface import CpuArchEnum, Platform, PlatformEnum, _Backend
+from .interface import CpuArchEnum
+from .interface import Platform
+from .interface import PlatformEnum
+from .interface import _Backend
 
 logger = init_logger(__name__)
 

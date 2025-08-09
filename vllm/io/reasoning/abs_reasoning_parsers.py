@@ -3,19 +3,24 @@
 
 from __future__ import annotations
 
-import os
 from abc import abstractmethod
 from collections.abc import Sequence
 from functools import cached_property
-from typing import TYPE_CHECKING, Any, Callable, Optional, Union
+import os
+from typing import Any
+from typing import Callable
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Union
 
+from vllm.utils import import_from_path
+from vllm.utils import is_list_of
 from vllm.utils.logger import init_logger
-from vllm.utils import import_from_path, is_list_of
 
 if TYPE_CHECKING:
-    from vllm.entrypoints.openai.protocol import (ChatCompletionRequest,
-                                                  DeltaMessage,
-                                                  ResponsesRequest)
+    from vllm.entrypoints.openai.protocol import ChatCompletionRequest
+    from vllm.entrypoints.openai.protocol import DeltaMessage
+    from vllm.entrypoints.openai.protocol import ResponsesRequest
     from vllm.transformers_utils.tokenizer import AnyTokenizer
 else:
     ChatCompletionRequest = Any

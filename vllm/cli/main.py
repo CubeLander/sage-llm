@@ -15,7 +15,8 @@ def main():
     import vllm.cli.openai
     import vllm.cli.run_batch
     import vllm.cli.serve
-    from vllm.entrypoints.utils import VLLM_SUBCMD_PARSER_EPILOG, cli_env_setup
+    from vllm.entrypoints.utils import VLLM_SUBCMD_PARSER_EPILOG
+    from vllm.entrypoints.utils import cli_env_setup
     from vllm.utils import FlexibleArgumentParser
 
     CMD_MODULES = [

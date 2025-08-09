@@ -7,8 +7,10 @@ from transformers import AutoModelForSeq2SeqLM
 
 from vllm.sequence import SampleLogprobs
 
-from ....conftest import (DecoderPromptType, ExplicitEncoderDecoderPrompt,
-                          HfRunner, VllmRunner)
+from ....conftest import DecoderPromptType
+from ....conftest import ExplicitEncoderDecoderPrompt
+from ....conftest import HfRunner
+from ....conftest import VllmRunner
 from ....utils import multi_gpu_test
 from ...utils import check_logprobs_close
 

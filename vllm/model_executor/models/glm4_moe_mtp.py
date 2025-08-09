@@ -30,18 +30,21 @@ import torch
 import torch.nn as nn
 from transformers import PretrainedConfig
 
-from vllm.config import CacheConfig, VllmConfig
+from vllm.config import CacheConfig
+from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
 from vllm.model_executor.layers.fused_moe import FusedMoE
 from vllm.model_executor.layers.layernorm import RMSNorm
 from vllm.model_executor.layers.logits_processor import LogitsProcessor
 from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.model_executor.layers.vocab_parallel_embedding import (
-    ParallelLMHead, VocabParallelEmbedding)
+    VocabParallelEmbedding)
+from vllm.model_executor.layers.vocab_parallel_embedding import ParallelLMHead
 from vllm.model_executor.model_loader.weight_utils import default_weight_loader
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.sequence import IntermediateTensors
 
-from .glm4_moe import Glm4MoeDecoderLayer, get_spec_layer_idx_from_weight_name
+from .glm4_moe import Glm4MoeDecoderLayer
+from .glm4_moe import get_spec_layer_idx_from_weight_name
 from .interfaces import SupportsPP
 from .utils import maybe_prefix
 

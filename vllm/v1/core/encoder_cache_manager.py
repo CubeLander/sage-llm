@@ -3,12 +3,13 @@
 
 from typing import TYPE_CHECKING
 
-from vllm.utils.logger import init_logger
 from vllm.io.inputs.multimodal import MultiModalRegistry
+from vllm.utils.logger import init_logger
 from vllm.v1.request import Request
 
 if TYPE_CHECKING:
-    from vllm.config import ModelConfig, SchedulerConfig
+    from vllm.config import ModelConfig
+    from vllm.config import SchedulerConfig
 
 logger = init_logger(__name__)
 

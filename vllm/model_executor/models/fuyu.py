@@ -17,34 +17,50 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """ PyTorch Fuyu model."""
+from collections.abc import Iterable
+from collections.abc import Mapping
+from collections.abc import Sequence
 import math
-from collections.abc import Iterable, Mapping, Sequence
-from typing import Annotated, Literal, Optional
+from typing import Annotated
+from typing import Literal
+from typing import Optional
 
 import torch
 import torch.nn as nn
-from transformers import (BatchFeature, FuyuConfig, FuyuImageProcessor,
-                          FuyuProcessor)
+from transformers import BatchFeature
+from transformers import FuyuConfig
+from transformers import FuyuImageProcessor
+from transformers import FuyuProcessor
 
 from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import MultiModalDataDict
+from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.parse import ImageProcessorItems
+from vllm.io.inputs.multimodal.parse import ImageSize
+from vllm.io.inputs.multimodal.parse import MultiModalDataItems
+from vllm.io.inputs.multimodal.processing import BaseMultiModalProcessor
+from vllm.io.inputs.multimodal.processing import BaseProcessingInfo
+from vllm.io.inputs.multimodal.processing import PromptReplacement
+from vllm.io.inputs.multimodal.processing import PromptUpdate
+from vllm.io.inputs.multimodal.processing import PromptUpdateDetails
+from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
 from vllm.model_executor.layers.linear import ColumnParallelLinear
 from vllm.model_executor.models.persimmon import PersimmonForCausalLM
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
-                                    MultiModalKwargs)
-from vllm.io.inputs.multimodal.parse import (ImageProcessorItems, ImageSize,
-                                   MultiModalDataItems)
-from vllm.io.inputs.multimodal.processing import (BaseMultiModalProcessor,
-                                        BaseProcessingInfo, PromptReplacement,
-                                        PromptUpdate, PromptUpdateDetails)
-from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
-from vllm.sequence import IntermediateTensors
-from vllm.utils.tensor_schema import TensorSchema, TensorShape
+from vllm.utils.tensor_schema import TensorSchema
+from vllm.utils.tensor_schema import TensorShape
 
-from .interfaces import MultiModalEmbeddings, SupportsMultiModal, SupportsPP
-from .utils import (AutoWeightsLoader, WeightsMapper, flatten_bn, maybe_prefix,
-                    merge_multimodal_embeddings)
+from .interfaces import MultiModalEmbeddings
+from .interfaces import SupportsMultiModal
+from .interfaces import SupportsPP
+from .utils import AutoWeightsLoader
+from .utils import WeightsMapper
+from .utils import flatten_bn
+from .utils import maybe_prefix
+from .utils import merge_multimodal_embeddings
 
 # Cannot find the following 2 numbers from hf config.
 _IMAGE_TOKEN_ID = 71011

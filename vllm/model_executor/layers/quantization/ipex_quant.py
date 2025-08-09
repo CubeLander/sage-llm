@@ -1,16 +1,18 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
-import torch
 from packaging import version
+import torch
 
-from vllm.model_executor.layers.linear import (LinearBase, LinearMethodBase,
-                                               UnquantizedLinearMethod)
+from vllm.model_executor.layers.linear import LinearBase
+from vllm.model_executor.layers.linear import LinearMethodBase
+from vllm.model_executor.layers.linear import UnquantizedLinearMethod
 from vllm.model_executor.layers.quantization import QuantizationMethods
-from vllm.model_executor.layers.quantization.awq import (AWQLinearMethod,
-                                                         is_layer_skipped_awq)
+from vllm.model_executor.layers.quantization.awq import AWQLinearMethod
+from vllm.model_executor.layers.quantization.awq import is_layer_skipped_awq
 from vllm.model_executor.layers.quantization.base_config import (
     QuantizationConfig)
 from vllm.model_executor.layers.quantization.gptq import GPTQLinearMethod

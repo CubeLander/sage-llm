@@ -1,17 +1,24 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 import torch
 
-from vllm.config import (CacheConfig, KVTransferConfig, ModelConfig,
-                         SchedulerConfig, SpeculativeConfig, VllmConfig)
-from vllm.io.inputs.multimodal.inputs import MultiModalKwargs, PlaceholderRange
+from vllm.config import CacheConfig
+from vllm.config import KVTransferConfig
+from vllm.config import ModelConfig
+from vllm.config import SchedulerConfig
+from vllm.config import SpeculativeConfig
+from vllm.config import VllmConfig
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.inputs import PlaceholderRange
 from vllm.sampling_params import SamplingParams
 from vllm.v1.core.sched.async_scheduler import AsyncScheduler
 from vllm.v1.core.sched.scheduler import Scheduler
-from vllm.v1.kv_cache_interface import (FullAttentionSpec, KVCacheConfig,
-                                        KVCacheGroupSpec)
+from vllm.v1.kv_cache_interface import FullAttentionSpec
+from vllm.v1.kv_cache_interface import KVCacheConfig
+from vllm.v1.kv_cache_interface import KVCacheGroupSpec
 from vllm.v1.request import Request
 from vllm.v1.structured_output import StructuredOutputManager
 

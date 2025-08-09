@@ -1,12 +1,19 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 # Adapted from https://github.com/huggingface/transformers/tree/main/src/transformers/models/aya_vision
-from collections.abc import Iterable, Mapping, Sequence
-from typing import Annotated, Literal, Optional, Union, cast
+from collections.abc import Iterable
+from collections.abc import Mapping
+from collections.abc import Sequence
+from typing import Annotated
+from typing import Literal
+from typing import Optional
+from typing import Union
+from typing import cast
 
 import torch
 from torch import nn
-from transformers import BatchFeature, GotOcr2ImageProcessor
+from transformers import BatchFeature
+from transformers import GotOcr2ImageProcessor
 from transformers.activations import ACT2FN
 from transformers.image_processing_utils import get_size_dict
 from transformers.models.aya_vision import AyaVisionConfig
@@ -16,26 +23,35 @@ from transformers.models.got_ocr2.image_processing_got_ocr2 import (
     get_optimal_tiled_canvas)
 
 from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import MultiModalDataDict
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.parse import ImageProcessorItems
+from vllm.io.inputs.multimodal.parse import ImageSize
+from vllm.io.inputs.multimodal.parse import MultiModalDataItems
+from vllm.io.inputs.multimodal.processing import BaseMultiModalProcessor
+from vllm.io.inputs.multimodal.processing import BaseProcessingInfo
+from vllm.io.inputs.multimodal.processing import MultiModalFieldConfig
+from vllm.io.inputs.multimodal.processing import PromptReplacement
+from vllm.io.inputs.multimodal.processing import PromptUpdate
+from vllm.io.inputs.multimodal.processing import PromptUpdateDetails
+from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
 from vllm.jsontree import json_map_leaves
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.io.inputs.multimodal.inputs import MultiModalDataDict, MultiModalKwargs
-from vllm.io.inputs.multimodal.parse import (ImageProcessorItems, ImageSize,
-                                   MultiModalDataItems)
-from vllm.io.inputs.multimodal.processing import (BaseMultiModalProcessor,
-                                        BaseProcessingInfo,
-                                        MultiModalFieldConfig,
-                                        PromptReplacement, PromptUpdate,
-                                        PromptUpdateDetails)
-from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
-from vllm.sequence import IntermediateTensors
-from vllm.utils.tensor_schema import TensorSchema, TensorShape
+from vllm.utils.tensor_schema import TensorSchema
+from vllm.utils.tensor_schema import TensorShape
 
-from .interfaces import MultiModalEmbeddings, SupportsMultiModal, SupportsPP
+from .interfaces import MultiModalEmbeddings
+from .interfaces import SupportsMultiModal
+from .interfaces import SupportsPP
 from .siglip import SiglipVisionModel
-from .utils import (AutoWeightsLoader, WeightsMapper, flatten_bn,
-                    init_vllm_registered_model, maybe_prefix,
-                    merge_multimodal_embeddings)
+from .utils import AutoWeightsLoader
+from .utils import WeightsMapper
+from .utils import flatten_bn
+from .utils import init_vllm_registered_model
+from .utils import maybe_prefix
+from .utils import merge_multimodal_embeddings
 
 
 class AyaVisionImagePixelInputs(TensorSchema):

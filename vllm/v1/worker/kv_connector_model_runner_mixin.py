@@ -3,19 +3,24 @@
 """
 Define KV connector functionality mixin for model runners.
 """
+from contextlib import AbstractContextManager
+from contextlib import contextmanager
+from contextlib import nullcontext
 import copy
-from contextlib import AbstractContextManager, contextmanager, nullcontext
 from typing import Generator  # noqa: UP035
-from typing import TYPE_CHECKING, Optional
+from typing import Optional
+from typing import TYPE_CHECKING
 
 from vllm.config import VllmConfig
-from vllm.distributed.kv_transfer import (get_kv_transfer_group,
-                                          has_kv_transfer_group)
+from vllm.distributed.kv_transfer import get_kv_transfer_group
+from vllm.distributed.kv_transfer import has_kv_transfer_group
 from vllm.distributed.kv_transfer.kv_connector.base import KVConnectorBase
-from vllm.forward_context import get_forward_context, set_forward_context
+from vllm.forward_context import get_forward_context
+from vllm.forward_context import set_forward_context
 from vllm.utils.logger import init_logger
-from vllm.v1.outputs import (EMPTY_MODEL_RUNNER_OUTPUT, KVConnectorOutput,
-                             ModelRunnerOutput)
+from vllm.v1.outputs import EMPTY_MODEL_RUNNER_OUTPUT
+from vllm.v1.outputs import KVConnectorOutput
+from vllm.v1.outputs import ModelRunnerOutput
 
 if TYPE_CHECKING:
     from vllm.v1.core.sched.output import SchedulerOutput

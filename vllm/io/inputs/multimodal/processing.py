@@ -1,32 +1,52 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-from abc import ABC, abstractmethod
+from abc import ABC
+from abc import abstractmethod
 from collections import defaultdict
-from collections.abc import (Callable, Generator, ItemsView, Iterable, Mapping,
-                             Sequence)
-from dataclasses import dataclass, field
+from collections.abc import Callable
+from collections.abc import Generator
+from collections.abc import ItemsView
+from collections.abc import Iterable
+from collections.abc import Mapping
+from collections.abc import Sequence
+from dataclasses import dataclass
+from dataclasses import field
 from enum import Enum
 from functools import lru_cache
-from typing import (TYPE_CHECKING, Generic, NamedTuple, Optional, Protocol,
-                    TypeVar, Union, cast)
+from typing import Generic
+from typing import NamedTuple
+from typing import Optional
+from typing import Protocol
+from typing import TYPE_CHECKING
+from typing import TypeVar
+from typing import Union
+from typing import cast
 
 import regex as re
 import torch
 from typing_extensions import assert_never
 
 from vllm.io.inputs import InputProcessingContext
+from vllm.transformers_utils.tokenizer import AnyTokenizer
+from vllm.transformers_utils.tokenizer import decode_tokens
+from vllm.transformers_utils.tokenizer import encode_tokens
+from vllm.utils import flatten_2d_lists
+from vllm.utils import full_groupby
 from vllm.utils.logger import init_logger
-from vllm.transformers_utils.tokenizer import (AnyTokenizer, decode_tokens,
-                                               encode_tokens)
-from vllm.utils import flatten_2d_lists, full_groupby
 
 from .cache import MultiModalCache
 from .hasher import MultiModalHasher
-from .inputs import (MultiModalDataDict, MultiModalEncDecInputs,
-                     MultiModalFieldConfig, MultiModalInputs, MultiModalKwargs,
-                     MultiModalKwargsItem, PlaceholderRange)
-from .parse import (DictEmbeddingItems, EmbeddingItems, MultiModalDataItems,
-                    MultiModalDataParser)
+from .inputs import MultiModalDataDict
+from .inputs import MultiModalEncDecInputs
+from .inputs import MultiModalFieldConfig
+from .inputs import MultiModalInputs
+from .inputs import MultiModalKwargs
+from .inputs import MultiModalKwargsItem
+from .inputs import PlaceholderRange
+from .parse import DictEmbeddingItems
+from .parse import EmbeddingItems
+from .parse import MultiModalDataItems
+from .parse import MultiModalDataParser
 
 if TYPE_CHECKING:
     from transformers.configuration_utils import PretrainedConfig

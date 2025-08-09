@@ -1,13 +1,15 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from abc import ABC, abstractmethod
+from abc import ABC
+from abc import abstractmethod
 from collections.abc import Set
-from dataclasses import dataclass, field
+from dataclasses import dataclass
+from dataclasses import field
 from typing import Optional
 
-from vllm.utils.logger import init_logger
 from vllm.lora.request import LoRARequest
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

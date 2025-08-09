@@ -3,7 +3,8 @@
 
 from huggingface_hub import snapshot_download
 
-from vllm import LLM, SamplingParams
+from vllm import LLM
+from vllm import SamplingParams
 from vllm.lora.request import LoRARequest
 
 

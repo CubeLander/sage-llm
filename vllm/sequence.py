@@ -1,25 +1,33 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 """Sequence and its related classes."""
-import copy
-import enum
-from abc import ABC, abstractmethod
+from abc import ABC
+from abc import abstractmethod
 from array import array
 from collections import defaultdict
 from collections.abc import Mapping
 from collections.abc import Sequence as GenericSequence
-from dataclasses import dataclass, field
+import copy
+from dataclasses import dataclass
+from dataclasses import field
+import enum
 from functools import reduce
-from typing import TYPE_CHECKING, Any, Callable, Optional, Union
+from typing import Any
+from typing import Callable
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Union
 
 import msgspec
 import torch
 
 from vllm.io.inputs import SingletonInputs
+from vllm.io.inputs.multimodal import MultiModalKwargs
+from vllm.io.inputs.multimodal import MultiModalPlaceholderDict
 from vllm.lora.request import LoRARequest
-from vllm.io.inputs.multimodal import MultiModalKwargs, MultiModalPlaceholderDict
 from vllm.pooling_params import PoolingParams
-from vllm.sampling_params import RequestOutputKind, SamplingParams
+from vllm.sampling_params import RequestOutputKind
+from vllm.sampling_params import SamplingParams
 
 if TYPE_CHECKING:
     from vllm.v1.worker.kv_connector_model_runner_mixin import (
@@ -1154,48 +1162,6 @@ class PoolingSequenceGroupOutput(
         if not isinstance(other, PoolingSequenceGroupOutput):
             raise NotImplementedError()
         return self.data == other.data
-
-
-# cannot use msgspec.Struct here because Dynamo does not support it
-@dataclass
-class IntermediateTensors:
-    """For all pipeline stages except the last, we need to return the hidden
-    states and residuals to be sent to the next stage. This data structure
-    contains the hidden states and residuals for a request.
-    
-    Each stage also needs to handle its own kv_connector_output.
-    """
-
-    tensors: dict[str, torch.Tensor]
-    kv_connector_output: Optional["KVConnectorOutput"]
-
-    def __init__(self, tensors):
-        # manually define this function, so that
-        # Dynamo knows `IntermediateTensors()` comes from this file.
-        # Otherwise, dataclass will generate this function by evaluating
-        # a string, and we will lose the information about the source file.
-        self.tensors = tensors
-
-    def __getitem__(self, key: Union[str, slice]):
-        if isinstance(key, str):
-            return self.tensors[key]
-        elif isinstance(key, slice):
-            return self.__class__({k: v[key] for k, v in self.tensors.items()})
-
-    def __setitem__(self, key: str, value: torch.Tensor):
-        self.tensors[key] = value
-
-    def items(self):
-        return self.tensors.items()
-
-    def __len__(self):
-        return len(self.tensors)
-
-    def __eq__(self, other: object):
-        return isinstance(other, self.__class__) and self
-
-    def __repr__(self) -> str:
-        return f"IntermediateTensors(tensors={self.tensors})"
 
 
 class PoolerOutput(

@@ -8,12 +8,16 @@ import torch.nn as nn
 import torch_xla.core.xla_model as xm
 import torch_xla.distributed.spmd as xs
 
-from vllm.config import ModelConfig, VllmConfig
-from vllm.distributed.tpu_distributed_utils import get_fqn, shard_model
-from vllm.utils.logger import init_logger
+from vllm.config import ModelConfig
+from vllm.config import VllmConfig
+from vllm.distributed.tpu_distributed_utils import get_fqn
+from vllm.distributed.tpu_distributed_utils import shard_model
 from vllm.model_executor.model_loader.default_loader import DefaultModelLoader
 from vllm.model_executor.model_loader.utils import (
-    initialize_model, process_weights_after_loading, set_default_torch_dtype)
+    process_weights_after_loading)
+from vllm.model_executor.model_loader.utils import initialize_model
+from vllm.model_executor.model_loader.utils import set_default_torch_dtype
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

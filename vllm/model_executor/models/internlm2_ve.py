@@ -1,20 +1,23 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 import torch
 from torch import nn
 from transformers import PretrainedConfig
 
-from vllm.config import CacheConfig, VllmConfig
+from vllm.config import CacheConfig
+from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
 from vllm.distributed import get_pp_group
 from vllm.model_executor.layers.layernorm import RMSNorm
 from vllm.model_executor.layers.quantization import QuantizationConfig
-from vllm.model_executor.models.internlm2 import (InternLM2Attention,
-                                                  InternLM2ForCausalLM,
-                                                  InternLM2MLP, InternLM2Model)
-from vllm.sequence import IntermediateTensors
+from vllm.model_executor.models.internlm2 import InternLM2Attention
+from vllm.model_executor.models.internlm2 import InternLM2ForCausalLM
+from vllm.model_executor.models.internlm2 import InternLM2MLP
+from vllm.model_executor.models.internlm2 import InternLM2Model
 
 
 class InternLM2VEDecoderLayer(nn.Module):

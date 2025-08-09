@@ -2,39 +2,48 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 """Inference-only Jurassic model."""
 from collections.abc import Iterable
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
 import torch
 from torch import nn
 
 from vllm.attention import Attention
 from vllm.compilation.decorators import support_torch_compile
-from vllm.config import CacheConfig, ModelConfig, VllmConfig
-from vllm.distributed import (get_pp_group,
-                              get_tensor_model_parallel_world_size,
-                              tensor_model_parallel_all_reduce)
-from vllm.utils.logger import init_logger
+from vllm.config import CacheConfig
+from vllm.config import ModelConfig
+from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.distributed import get_pp_group
+from vllm.distributed import get_tensor_model_parallel_world_size
+from vllm.distributed import tensor_model_parallel_all_reduce
 from vllm.model_executor.layers.activation import SiluAndMul
 from vllm.model_executor.layers.fused_moe import FusedMoE
 from vllm.model_executor.layers.layernorm import RMSNorm
-from vllm.model_executor.layers.linear import (ColumnParallelLinear,
-                                               MergedColumnParallelLinear,
-                                               ReplicatedLinear,
-                                               RowParallelLinear)
+from vllm.model_executor.layers.linear import ColumnParallelLinear
+from vllm.model_executor.layers.linear import MergedColumnParallelLinear
+from vllm.model_executor.layers.linear import ReplicatedLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
 from vllm.model_executor.layers.logits_processor import LogitsProcessor
 from vllm.model_executor.layers.quantization.base_config import (
     QuantizationConfig)
 from vllm.model_executor.layers.rotary_embedding import get_rope
-from vllm.model_executor.layers.sampler import SamplerOutput, get_sampler
+from vllm.model_executor.layers.sampler import SamplerOutput
+from vllm.model_executor.layers.sampler import get_sampler
 from vllm.model_executor.layers.vocab_parallel_embedding import (
-    DEFAULT_VOCAB_PADDING_SIZE, ParallelLMHead, VocabParallelEmbedding)
+    DEFAULT_VOCAB_PADDING_SIZE)
+from vllm.model_executor.layers.vocab_parallel_embedding import (
+    VocabParallelEmbedding)
+from vllm.model_executor.layers.vocab_parallel_embedding import ParallelLMHead
 from vllm.model_executor.model_loader.weight_utils import default_weight_loader
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.sequence import IntermediateTensors
+from vllm.utils.logger import init_logger
 
 from .interfaces import SupportsPP
-from .utils import (PPMissingLayer, is_pp_missing_parameter,
-                    make_empty_intermediate_tensors_factory, make_layers)
+from .utils import PPMissingLayer
+from .utils import is_pp_missing_parameter
+from .utils import make_empty_intermediate_tensors_factory
+from .utils import make_layers
 
 logger = init_logger(__name__)
 

@@ -7,7 +7,8 @@ import torch
 
 from vllm.model_executor.custom_op import CustomOp
 
-from .common import apply_rotary_emb_dispatch, apply_rotary_emb_torch
+from .common import apply_rotary_emb_dispatch
+from .common import apply_rotary_emb_torch
 
 
 @CustomOp.register("rotary_embedding")

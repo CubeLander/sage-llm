@@ -2,8 +2,8 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 import pytest
 import torch
-import torch.nn.functional as F
 from torch import Tensor
+import torch.nn.functional as F
 
 import vllm._custom_ops as ops
 from vllm.platforms import current_platform

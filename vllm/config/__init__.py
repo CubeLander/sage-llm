@@ -3,55 +3,91 @@
 
 # ruff: noqa: F401
 import ast
+from collections.abc import Mapping
+from contextlib import contextmanager
 import copy
+from dataclasses import Field
+from dataclasses import MISSING
+from dataclasses import field
+from dataclasses import fields
+from dataclasses import is_dataclass
+from dataclasses import replace
 import enum
+from functools import cached_property
+from functools import lru_cache
 import hashlib
+from importlib.util import find_spec
 import inspect
 import json
 import textwrap
+from typing import Any
+from typing import Callable
+from typing import ClassVar
+from typing import Literal
+from typing import Optional
+from typing import Protocol
+from typing import TYPE_CHECKING
+from typing import TypeVar
+from typing import Union
+from typing import cast
+from typing import get_args
 import uuid
 import warnings
-from collections.abc import Mapping
-from contextlib import contextmanager
-from dataclasses import MISSING, Field, field, fields, is_dataclass, replace
-from functools import cached_property, lru_cache
-from importlib.util import find_spec
-from typing import (TYPE_CHECKING, Any, Callable, ClassVar, Literal, Optional,
-                    Protocol, TypeVar, Union, cast, get_args)
 
-import regex as re
-import torch
-from pydantic import (ConfigDict, SkipValidation, field_validator,
-                      model_validator)
+from pydantic import ConfigDict
+from pydantic import SkipValidation
+from pydantic import field_validator
+from pydantic import model_validator
 from pydantic.dataclasses import dataclass
+import regex as re
 from safetensors.torch import _TYPES as _SAFETENSORS_TO_TORCH_DTYPE
-from torch.distributed import ProcessGroup, ReduceOp
-from typing_extensions import Self, assert_never, runtime_checkable
+import torch
+from torch.distributed import ProcessGroup
+from torch.distributed import ReduceOp
+from typing_extensions import Self
+from typing_extensions import assert_never
+from typing_extensions import runtime_checkable
 
-import vllm.envs as envs
 from vllm import version
-from vllm.config.compilation import (CompilationConfig, CompilationLevel,
-                                     PassConfig)
-from vllm.config.utils import ConfigType, config
-from vllm.utils.logger import init_logger
+from vllm.config.compilation import CompilationConfig
+from vllm.config.compilation import CompilationLevel
+from vllm.config.compilation import PassConfig
+from vllm.config.utils import ConfigType
+from vllm.config.utils import config
+import vllm.envs as envs
 from vllm.model_executor.layers.quantization import QuantizationMethods
 from vllm.platforms import current_platform
 from vllm.transformers_utils.config import (
-    ConfigFormat, get_config, get_hf_image_processor_config,
-    get_hf_text_config, get_pooling_config,
-    get_sentence_transformer_tokenizer_config, is_encoder_decoder,
-    maybe_override_with_speculators_target_model, try_get_generation_config,
-    try_get_safetensors_metadata, try_get_tokenizer_config, uses_mrope)
+    get_sentence_transformer_tokenizer_config)
+from vllm.transformers_utils.config import (
+    maybe_override_with_speculators_target_model)
+from vllm.transformers_utils.config import ConfigFormat
+from vllm.transformers_utils.config import get_config
+from vllm.transformers_utils.config import get_hf_image_processor_config
+from vllm.transformers_utils.config import get_hf_text_config
+from vllm.transformers_utils.config import get_pooling_config
+from vllm.transformers_utils.config import is_encoder_decoder
+from vllm.transformers_utils.config import try_get_generation_config
+from vllm.transformers_utils.config import try_get_safetensors_metadata
+from vllm.transformers_utils.config import try_get_tokenizer_config
+from vllm.transformers_utils.config import uses_mrope
 from vllm.transformers_utils.s3_utils import S3Model
-from vllm.transformers_utils.utils import is_s3, maybe_model_redirect
+from vllm.transformers_utils.utils import is_s3
+from vllm.transformers_utils.utils import maybe_model_redirect
 # yapf conflicts with isort for this block
 # yapf: disable
-from vllm.utils import (DEFAULT_MAX_NUM_BATCHED_TOKENS,
-                        MULTIMODAL_MODEL_MAX_NUM_BATCHED_TOKENS,
-                        POOLING_MODEL_MAX_NUM_BATCHED_TOKENS, GiB_bytes,
-                        LayerBlockType, LazyLoader, common_broadcastable_dtype,
-                        cuda_device_count_stateless, get_cpu_memory,
-                        get_open_port, random_uuid)
+from vllm.utils import DEFAULT_MAX_NUM_BATCHED_TOKENS
+from vllm.utils import GiB_bytes
+from vllm.utils import LayerBlockType
+from vllm.utils import LazyLoader
+from vllm.utils import MULTIMODAL_MODEL_MAX_NUM_BATCHED_TOKENS
+from vllm.utils import POOLING_MODEL_MAX_NUM_BATCHED_TOKENS
+from vllm.utils import common_broadcastable_dtype
+from vllm.utils import cuda_device_count_stateless
+from vllm.utils import get_cpu_memory
+from vllm.utils import get_open_port
+from vllm.utils import random_uuid
+from vllm.utils.logger import init_logger
 
 # yapf: enable
 
@@ -61,14 +97,14 @@ if TYPE_CHECKING:
     from ray.util.placement_group import PlacementGroup
     from transformers.configuration_utils import PretrainedConfig
 
-    import vllm.model_executor.layers.quantization as me_quant
-    import vllm.model_executor.models as me_models
     from vllm.executor.executor_base import ExecutorBase
+    import vllm.model_executor.layers.quantization as me_quant
     from vllm.model_executor.layers.quantization import QuantizationMethods
     from vllm.model_executor.layers.quantization.base_config import (
         QuantizationConfig)
     from vllm.model_executor.model_loader import LoadFormats
     from vllm.model_executor.model_loader.tensorizer import TensorizerConfig
+    import vllm.model_executor.models as me_models
 
     HfOverrides = Union[dict, Callable[[type], type]]
 else:
@@ -3977,7 +4013,8 @@ class ObservabilityConfig:
                 and "," in self.collect_detailed_traces[0]):
             self._parse_collect_detailed_traces()
 
-        from vllm.tracing import is_otel_available, otel_import_error_traceback
+        from vllm.tracing import is_otel_available
+        from vllm.tracing import otel_import_error_traceback
         if not is_otel_available() and self.otlp_traces_endpoint is not None:
             raise ValueError(
                 "OpenTelemetry is not available. Unable to configure "
@@ -4632,7 +4669,8 @@ class VllmConfig:
             return
 
         from vllm.model_executor.models.config import (
-            MODELS_CONFIG_MAP, HybridAttentionMambaModelConfig)
+            HybridAttentionMambaModelConfig)
+        from vllm.model_executor.models.config import MODELS_CONFIG_MAP
         cls = MODELS_CONFIG_MAP.get(architecture, None)
         if cls is not None:
             cls.verify_and_update_config(self)

@@ -8,7 +8,8 @@ from transformers import AutoModel
 from vllm.entrypoints.chat_utils import ChatCompletionContentPartImageParam
 from vllm.entrypoints.score_utils import ScoreMultiModalParam
 
-from ....conftest import HfRunner, VllmRunner
+from ....conftest import HfRunner
+from ....conftest import VllmRunner
 
 model_name = "jinaai/jina-reranker-m0"
 

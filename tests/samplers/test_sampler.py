@@ -1,22 +1,27 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from dataclasses import dataclass
 import itertools
 import random
-from dataclasses import dataclass
 from typing import Optional
-from unittest.mock import Mock, patch
+from unittest.mock import Mock
+from unittest.mock import patch
 
 import pytest
 import torch
-from transformers import GenerationConfig, GenerationMixin
+from transformers import GenerationConfig
+from transformers import GenerationMixin
 
 import vllm.envs as envs
 from vllm.model_executor.layers.sampler import Sampler
 from vllm.model_executor.sampling_metadata import SamplingMetadata
 from vllm.model_executor.utils import set_random_seed
-from vllm.sequence import SamplingParams, SequenceData, SequenceGroupMetadata
-from vllm.utils import Counter, is_pin_memory_available
+from vllm.sequence import SamplingParams
+from vllm.sequence import SequenceData
+from vllm.sequence import SequenceGroupMetadata
+from vllm.utils import Counter
+from vllm.utils import is_pin_memory_available
 
 
 @pytest.fixture(scope="function", autouse=True)

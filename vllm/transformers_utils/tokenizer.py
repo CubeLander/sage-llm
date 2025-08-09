@@ -3,24 +3,28 @@
 
 import contextlib
 import copy
-import os
-import warnings
 from functools import lru_cache
+import os
 from pathlib import Path
 from types import MethodType
-from typing import TYPE_CHECKING, Any, Optional, Union
+from typing import Any
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Union
+import warnings
 
 import huggingface_hub
-from transformers import (AutoTokenizer, PreTrainedTokenizer,
-                          PreTrainedTokenizerFast)
+from transformers import AutoTokenizer
+from transformers import PreTrainedTokenizer
+from transformers import PreTrainedTokenizerFast
 
 from vllm import envs
-from vllm.utils.logger import init_logger
 from vllm.transformers_utils.config import (
     get_sentence_transformer_tokenizer_config)
 from vllm.transformers_utils.tokenizers import MistralTokenizer
 from vllm.transformers_utils.utils import check_gguf_file
 from vllm.utils import make_async
+from vllm.utils.logger import init_logger
 
 if TYPE_CHECKING:
     from vllm.config import ModelConfig

@@ -8,7 +8,8 @@ import torch
 
 from tests.kernels.utils import torch_experts
 from vllm import _custom_ops as ops
-from vllm.config import VllmConfig, set_current_vllm_config
+from vllm.config import VllmConfig
+from vllm.config import set_current_vllm_config
 from vllm.model_executor.layers.fused_moe.cutlass_moe import CutlassExpertsFp8
 from vllm.model_executor.layers.fused_moe.fused_moe import fused_topk
 from vllm.model_executor.layers.fused_moe.modular_kernel import (
@@ -16,13 +17,15 @@ from vllm.model_executor.layers.fused_moe.modular_kernel import (
 from vllm.platforms import current_platform
 from vllm.utils import cdiv
 
-from .parallel_utils import ProcessGroupInfo, parallel_launch
+from .parallel_utils import ProcessGroupInfo
+from .parallel_utils import parallel_launch
 
 try:
     from pplx_kernels import AllToAll
-    from pplx_kernels.nvshmem import (nvshmem_alloc_empty_unique_id,
-                                      nvshmem_finalize, nvshmem_get_unique_id,
-                                      nvshmem_init)
+    from pplx_kernels.nvshmem import nvshmem_alloc_empty_unique_id
+    from pplx_kernels.nvshmem import nvshmem_finalize
+    from pplx_kernels.nvshmem import nvshmem_get_unique_id
+    from pplx_kernels.nvshmem import nvshmem_init
     has_pplx = True
 except ImportError:
     has_pplx = False

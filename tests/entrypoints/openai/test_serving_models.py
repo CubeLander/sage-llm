@@ -8,11 +8,11 @@ import pytest
 
 from vllm.config import ModelConfig
 from vllm.engine.protocol import EngineClient
-from vllm.entrypoints.openai.protocol import (ErrorResponse,
-                                              LoadLoRAAdapterRequest,
-                                              UnloadLoRAAdapterRequest)
-from vllm.entrypoints.openai.serving_models import (BaseModelPath,
-                                                    OpenAIServingModels)
+from vllm.entrypoints.openai.protocol import ErrorResponse
+from vllm.entrypoints.openai.protocol import LoadLoRAAdapterRequest
+from vllm.entrypoints.openai.protocol import UnloadLoRAAdapterRequest
+from vllm.entrypoints.openai.serving_models import BaseModelPath
+from vllm.entrypoints.openai.serving_models import OpenAIServingModels
 from vllm.lora.request import LoRARequest
 
 MODEL_NAME = "meta-llama/Llama-3.2-1B-Instruct"

@@ -1,17 +1,24 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 import abc
+from abc import abstractmethod
+from dataclasses import dataclass
+from dataclasses import make_dataclass
 import enum
 import functools
-from abc import abstractmethod
-from dataclasses import dataclass, make_dataclass
-from typing import (TYPE_CHECKING, Any, Callable, ClassVar, Generic, Optional,
-                    TypeVar)
+from typing import Any
+from typing import Callable
+from typing import ClassVar
+from typing import Generic
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import TypeVar
 
 import numpy as np
 import torch
 
-from vllm.config import VllmConfig, get_layers_from_vllm_config
+from vllm.config import VllmConfig
+from vllm.config import get_layers_from_vllm_config
 from vllm.utils import cdiv
 
 if TYPE_CHECKING:
@@ -19,11 +26,11 @@ if TYPE_CHECKING:
     from vllm.v1.core.sched.output import SchedulerOutput
     from vllm.v1.worker.gpu_input_batch import InputBatch
 
-import vllm.envs as envs
 from vllm.attention.backends.abstract import AttentionBackend
 from vllm.attention.layer import Attention
 from vllm.distributed.kv_transfer.kv_connector.utils import (
     get_kv_connector_cache_layout)
+import vllm.envs as envs
 from vllm.utils.logger import init_logger
 from vllm.v1.kv_cache_interface import AttentionSpec
 

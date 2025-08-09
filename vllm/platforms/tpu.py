@@ -1,20 +1,29 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from typing import TYPE_CHECKING, Optional, Union, cast
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Union
+from typing import cast
 
 import torch
 from tpu_info import device
 
-from vllm.io.inputs import ProcessorInputs, PromptType
-from vllm.utils.logger import init_logger
-from vllm.sampling_params import SamplingParams, SamplingType
+from vllm.io.inputs import ProcessorInputs
+from vllm.io.inputs import PromptType
+from vllm.sampling_params import SamplingParams
+from vllm.sampling_params import SamplingType
 from vllm.utils import DEFAULT_MAX_NUM_BATCHED_TOKENS
+from vllm.utils.logger import init_logger
 
-from .interface import Platform, PlatformEnum, _Backend
+from .interface import Platform
+from .interface import PlatformEnum
+from .interface import _Backend
 
 if TYPE_CHECKING:
-    from vllm.config import BlockSize, ModelConfig, VllmConfig
+    from vllm.config import BlockSize
+    from vllm.config import ModelConfig
+    from vllm.config import VllmConfig
     from vllm.pooling_params import PoolingParams
 else:
     BlockSize = None

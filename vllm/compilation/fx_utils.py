@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from collections.abc import Iterable
+from collections.abc import Iterator
 import operator
-from collections.abc import Iterable, Iterator
 from typing import Optional
 
 from torch import fx

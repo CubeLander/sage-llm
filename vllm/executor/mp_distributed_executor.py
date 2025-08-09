@@ -3,20 +3,31 @@
 
 import asyncio
 import os
-from typing import Any, Callable, List, Optional, Union
+from typing import Any
+from typing import Callable
+from typing import List
+from typing import Optional
+from typing import Union
 
 import cloudpickle
 
 from vllm.executor.executor_base import DistributedExecutorBase
 from vllm.executor.multiproc_worker_utils import (
-    ProcessWorkerWrapper, ResultHandler, WorkerMonitor,
     set_multiprocessing_worker_envs)
-from vllm.utils.logger import init_logger
+from vllm.executor.multiproc_worker_utils import ProcessWorkerWrapper
+from vllm.executor.multiproc_worker_utils import ResultHandler
+from vllm.executor.multiproc_worker_utils import WorkerMonitor
 from vllm.model_executor.layers.sampler import SamplerOutput
 from vllm.sequence import ExecuteModelRequest
-from vllm.utils import (_run_task_with_lock, cuda_device_count_stateless,
-                        get_distributed_init_method, get_ip, get_open_port,
-                        make_async, run_method, update_environment_variables)
+from vllm.utils import _run_task_with_lock
+from vllm.utils import cuda_device_count_stateless
+from vllm.utils import get_distributed_init_method
+from vllm.utils import get_ip
+from vllm.utils import get_open_port
+from vllm.utils import make_async
+from vllm.utils import run_method
+from vllm.utils import update_environment_variables
+from vllm.utils.logger import init_logger
 from vllm.worker.worker_base import WorkerWrapperBase
 
 logger = init_logger(__name__)

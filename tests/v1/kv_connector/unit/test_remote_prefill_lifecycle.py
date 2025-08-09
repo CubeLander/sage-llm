@@ -2,11 +2,16 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 import copy
 
-from vllm.v1.outputs import EMPTY_MODEL_RUNNER_OUTPUT, KVConnectorOutput
-from vllm.v1.request import FinishReason, RequestStatus
+from vllm.v1.outputs import EMPTY_MODEL_RUNNER_OUTPUT
+from vllm.v1.outputs import KVConnectorOutput
+from vllm.v1.request import FinishReason
+from vllm.v1.request import RequestStatus
 
-from .utils import (assert_scheduler_empty, create_model_runner_output,
-                    create_request, create_scheduler, create_vllm_config)
+from .utils import assert_scheduler_empty
+from .utils import create_model_runner_output
+from .utils import create_request
+from .utils import create_scheduler
+from .utils import create_vllm_config
 
 
 def test_basic_lifecycle():

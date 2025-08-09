@@ -4,8 +4,8 @@
 import numpy as np
 import torch
 
-from vllm.utils.logger import init_logger
 from vllm.utils import cdiv
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

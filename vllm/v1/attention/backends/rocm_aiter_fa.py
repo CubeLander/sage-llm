@@ -2,17 +2,20 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 """Attention layer with AiterFlashAttention."""
 from dataclasses import dataclass
-from typing import ClassVar, Optional
+from typing import ClassVar
+from typing import Optional
 
 import torch
 
-from vllm.attention.backends.abstract import (AttentionBackend, AttentionImpl,
-                                              AttentionMetadata, AttentionType)
+from vllm.attention.backends.abstract import AttentionBackend
+from vllm.attention.backends.abstract import AttentionImpl
+from vllm.attention.backends.abstract import AttentionMetadata
+from vllm.attention.backends.abstract import AttentionType
 from vllm.config import VllmConfig
-from vllm.utils.logger import init_logger
 from vllm.platforms import current_platform
-from vllm.v1.attention.backends.utils import (AttentionMetadataBuilder,
-                                              CommonAttentionMetadata)
+from vllm.utils.logger import init_logger
+from vllm.v1.attention.backends.utils import AttentionMetadataBuilder
+from vllm.v1.attention.backends.utils import CommonAttentionMetadata
 from vllm.v1.kv_cache_interface import AttentionSpec
 
 _PARTITION_SIZE_ROCM = 256
@@ -20,7 +23,8 @@ _PARTITION_SIZE_ROCM = 256
 if current_platform.is_rocm():
     import aiter
 
-    from vllm.platforms.triton_tuils import tl, triton
+    from vllm.platforms.triton_tuils import tl
+    from vllm.platforms.triton_tuils import triton
     from vllm.utils import direct_register_custom_op
 
     @triton.jit

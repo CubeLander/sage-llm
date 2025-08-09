@@ -13,7 +13,9 @@ import pytest
 import torch
 
 from vllm.model_executor.layers.fused_moe.routing_simulator import (
-    DistributionBasedRouting, RoutingSimulator)
+    DistributionBasedRouting)
+from vllm.model_executor.layers.fused_moe.routing_simulator import (
+    RoutingSimulator)
 
 
 @pytest.fixture

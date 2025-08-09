@@ -9,8 +9,9 @@
 
 import torch
 
+from vllm.platforms.triton_tuils import tl
+from vllm.platforms.triton_tuils import triton
 from vllm.utils.logger import init_logger
-from vllm.platforms.triton_tuils import tl, triton
 
 logger = init_logger(__name__)
 

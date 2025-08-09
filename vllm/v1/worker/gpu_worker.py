@@ -1,34 +1,43 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 """A GPU worker class."""
+from contextlib import AbstractContextManager
+from contextlib import nullcontext
 import copy
 import gc
 import os
-from contextlib import AbstractContextManager, nullcontext
-from typing import TYPE_CHECKING, Any, Optional
+from typing import Any
+from typing import Optional
+from typing import TYPE_CHECKING
 
 import torch
 import torch.distributed
 import torch.nn as nn
 
-import vllm.envs as envs
 from vllm.config import VllmConfig
-from vllm.distributed import (ensure_model_parallel_initialized,
-                              init_distributed_environment,
-                              set_custom_all_reduce)
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.distributed import ensure_model_parallel_initialized
+from vllm.distributed import init_distributed_environment
+from vllm.distributed import set_custom_all_reduce
 from vllm.distributed.kv_transfer import ensure_kv_transfer_initialized
-from vllm.distributed.parallel_state import get_pp_group, get_tp_group
-from vllm.utils.logger import init_logger
+from vllm.distributed.parallel_state import get_pp_group
+from vllm.distributed.parallel_state import get_tp_group
+import vllm.envs as envs
 from vllm.lora.request import LoRARequest
 from vllm.model_executor import set_random_seed
 from vllm.model_executor.warmup.kernel_warmup import kernel_warmup
 from vllm.platforms import current_platform
-from vllm.sequence import IntermediateTensors
 from vllm.tasks import SupportedTask
-from vllm.utils import GiB_bytes, MemorySnapshot, memory_profiling
-from vllm.v1.engine import ReconfigureDistributedRequest, ReconfigureRankType
-from vllm.v1.kv_cache_interface import KVCacheConfig, KVCacheSpec
-from vllm.v1.outputs import EMPTY_MODEL_RUNNER_OUTPUT, ModelRunnerOutput
+from vllm.utils import GiB_bytes
+from vllm.utils import MemorySnapshot
+from vllm.utils import memory_profiling
+from vllm.utils.logger import init_logger
+from vllm.v1.engine import ReconfigureDistributedRequest
+from vllm.v1.engine import ReconfigureRankType
+from vllm.v1.kv_cache_interface import KVCacheConfig
+from vllm.v1.kv_cache_interface import KVCacheSpec
+from vllm.v1.outputs import EMPTY_MODEL_RUNNER_OUTPUT
+from vllm.v1.outputs import ModelRunnerOutput
 from vllm.v1.utils import report_usage_stats
 from vllm.v1.worker.gpu_model_runner import GPUModelRunner
 from vllm.v1.worker.worker_base import WorkerBase
@@ -489,7 +498,9 @@ class Worker(WorkerBase):
         otherwise None
         """
         from vllm.distributed.parallel_state import (
-            get_dp_group, get_ep_group, prepare_communication_buffer_for_model)
+            prepare_communication_buffer_for_model)
+        from vllm.distributed.parallel_state import get_dp_group
+        from vllm.distributed.parallel_state import get_ep_group
         from vllm.model_executor.layers.fused_moe.layer import (
             FusedMoEParallelConfig)
 
@@ -543,8 +554,8 @@ class Worker(WorkerBase):
     def reinitialize_distributed(
             self, reconfig_request: ReconfigureDistributedRequest) -> None:
         from vllm.config import set_current_vllm_config
-        from vllm.distributed.parallel_state import (
-            cleanup_dist_env_and_memory, get_ep_group)
+        from vllm.distributed.parallel_state import cleanup_dist_env_and_memory
+        from vllm.distributed.parallel_state import get_ep_group
 
         old_ep_size = get_ep_group().world_size
         old_ep_rank = get_ep_group().rank

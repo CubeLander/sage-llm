@@ -1,20 +1,23 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from typing import Callable, Optional
+from typing import Callable
+from typing import Optional
 
-import torch
 from compressed_tensors.quantization import QuantizationStrategy
+import torch
 
 from vllm.model_executor.layers.quantization.compressed_tensors.schemes import (
     CompressedTensorsScheme)
 from vllm.model_executor.layers.quantization.utils.marlin_utils_fp8 import (
-    apply_fp8_marlin_linear, prepare_fp8_layer_for_marlin)
+    apply_fp8_marlin_linear)
+from vllm.model_executor.layers.quantization.utils.marlin_utils_fp8 import (
+    prepare_fp8_layer_for_marlin)
 from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
     convert_to_channelwise)
-from vllm.model_executor.parameter import (ChannelQuantScaleParameter,
-                                           ModelWeightParameter,
-                                           PerTensorScaleParameter)
+from vllm.model_executor.parameter import ChannelQuantScaleParameter
+from vllm.model_executor.parameter import ModelWeightParameter
+from vllm.model_executor.parameter import PerTensorScaleParameter
 
 __all__ = ["CompressedTensorsW8A16Fp8"]
 

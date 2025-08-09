@@ -6,8 +6,8 @@ from __future__ import annotations
 import argparse
 import typing
 
-from vllm.collect_env import main as collect_env_main
 from vllm.cli.types import CLISubcommand
+from vllm.collect_env import main as collect_env_main
 
 if typing.TYPE_CHECKING:
     from vllm.utils import FlexibleArgumentParser

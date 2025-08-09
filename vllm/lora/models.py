@@ -1,39 +1,53 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from collections.abc import Sequence
 import math
 import os
-from collections.abc import Sequence
-from typing import Any, Callable, Optional, Union
+from typing import Any
+from typing import Callable
+from typing import Optional
+from typing import Union
 
 import regex as re
 import safetensors.torch
 import torch
 from torch import nn
 
-from .adapter.models import (AdapterLRUCache, AdapterModel,
-                                         AdapterModelManager)
-from .adapter.utils import (add_adapter, deactivate_adapter,
-                                        get_adapter, list_adapters,
-                                        remove_adapter, set_adapter_mapping)
 from vllm.config import LoRAConfig
-from vllm.utils.logger import init_logger
-from vllm.lora.layers import BaseLayerWithLoRA, LoRAMapping
-from vllm.lora.lora import LoRALayerWeights, PackedLoRALayerWeights
+from vllm.lora.layers import BaseLayerWithLoRA
+from vllm.lora.layers import LoRAMapping
+from vllm.lora.lora import LoRALayerWeights
+from vllm.lora.lora import PackedLoRALayerWeights
 from vllm.lora.peft_helper import PEFTHelper
 from vllm.lora.punica_wrapper import get_punica_wrapper
-from vllm.lora.utils import (from_layer, from_layer_logits_processor,
-                             get_supported_lora_modules,
-                             is_regex_target_modules,
-                             parse_fine_tuned_lora_name, replace_submodule)
+from vllm.lora.utils import from_layer
+from vllm.lora.utils import from_layer_logits_processor
+from vllm.lora.utils import get_supported_lora_modules
+from vllm.lora.utils import is_regex_target_modules
+from vllm.lora.utils import parse_fine_tuned_lora_name
+from vllm.lora.utils import replace_submodule
 from vllm.model_executor.layers.fused_moe import FusedMoE
 from vllm.model_executor.model_loader.tensorizer import TensorizerConfig
-from vllm.model_executor.models import SupportsLoRA, supports_multimodal
+from vllm.model_executor.models import SupportsLoRA
+from vllm.model_executor.models import supports_multimodal
 from vllm.model_executor.models.interfaces import is_pooling_model
 from vllm.model_executor.models.module_mapping import MultiModelKeys
-from vllm.model_executor.models.utils import PPMissingLayer, WeightsMapper
+from vllm.model_executor.models.utils import PPMissingLayer
+from vllm.model_executor.models.utils import WeightsMapper
 from vllm.model_executor.utils import get_packed_modules_mapping
 from vllm.utils import is_pin_memory_available
+from vllm.utils.logger import init_logger
+
+from .adapter.models import AdapterLRUCache
+from .adapter.models import AdapterModel
+from .adapter.models import AdapterModelManager
+from .adapter.utils import add_adapter
+from .adapter.utils import deactivate_adapter
+from .adapter.utils import get_adapter
+from .adapter.utils import list_adapters
+from .adapter.utils import remove_adapter
+from .adapter.utils import set_adapter_mapping
 
 logger = init_logger(__name__)
 

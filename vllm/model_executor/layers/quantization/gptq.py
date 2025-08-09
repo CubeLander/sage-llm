@@ -4,7 +4,9 @@
 import enum
 from enum import Enum
 from fractions import Fraction
-from typing import Any, Optional, Union
+from typing import Any
+from typing import Optional
+from typing import Union
 
 import torch
 from torch.nn.parameter import Parameter
@@ -14,14 +16,16 @@ from vllm.model_executor.layers.fused_moe.layer import FusedMoE
 from vllm.model_executor.layers.linear import LinearMethodBase
 from vllm.model_executor.layers.quantization import QuantizationMethods
 from vllm.model_executor.layers.quantization.base_config import (
-    QuantizationConfig, QuantizeMethodBase)
+    QuantizationConfig)
+from vllm.model_executor.layers.quantization.base_config import (
+    QuantizeMethodBase)
 from vllm.model_executor.layers.quantization.utils.gptq_utils import (
     get_linear_quant_method)
-from vllm.model_executor.parameter import (ChannelQuantScaleParameter,
-                                           GroupQuantScaleParameter,
-                                           PackedColumnParameter,
-                                           PackedvLLMParameter,
-                                           RowvLLMParameter)
+from vllm.model_executor.parameter import ChannelQuantScaleParameter
+from vllm.model_executor.parameter import GroupQuantScaleParameter
+from vllm.model_executor.parameter import PackedColumnParameter
+from vllm.model_executor.parameter import PackedvLLMParameter
+from vllm.model_executor.parameter import RowvLLMParameter
 
 
 class GPTQConfig(QuantizationConfig):

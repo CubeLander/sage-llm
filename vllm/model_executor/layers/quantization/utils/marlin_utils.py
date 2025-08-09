@@ -6,14 +6,16 @@ from typing import Optional
 import numpy
 import torch
 
-import vllm.envs as envs
 from vllm import _custom_ops as ops
-from vllm.utils.logger import init_logger
+import vllm.envs as envs
 from vllm.model_executor.layers.linear import LinearBase
 from vllm.platforms import current_platform
-from vllm.scalar_type import ScalarType, scalar_types
+from vllm.scalar_type import ScalarType
+from vllm.scalar_type import scalar_types
+from vllm.utils.logger import init_logger
 
-from .quant_utils import pack_cols, unpack_cols
+from .quant_utils import pack_cols
+from .quant_utils import unpack_cols
 
 logger = init_logger(__name__)
 

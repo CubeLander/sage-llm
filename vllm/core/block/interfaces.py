@@ -1,8 +1,14 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from abc import ABC, abstractmethod
-from typing import Dict, FrozenSet, List, Optional, Protocol, Tuple
+from abc import ABC
+from abc import abstractmethod
+from typing import Dict
+from typing import FrozenSet
+from typing import List
+from typing import Optional
+from typing import Protocol
+from typing import Tuple
 
 from vllm.utils import Device
 

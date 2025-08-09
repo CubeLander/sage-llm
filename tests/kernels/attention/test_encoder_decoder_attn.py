@@ -9,17 +9,22 @@ Tests:
 
 """
 
-from typing import NamedTuple, Optional
+from typing import NamedTuple
+from typing import Optional
 
 import pytest
 import torch
 
 from tests.kernels.utils import *
-from vllm.attention import Attention, AttentionMetadata, AttentionType
+from vllm.attention import Attention
+from vllm.attention import AttentionMetadata
+from vllm.attention import AttentionType
 from vllm.attention.backends.utils import STR_NOT_IMPL_ENC_DEC_ROCM_HIP
-from vllm.attention.selector import (_Backend, _cached_get_attn_backend,
-                                     global_force_attn_backend_context_manager)
-from vllm.config import VllmConfig, set_current_vllm_config
+from vllm.attention.selector import _Backend
+from vllm.attention.selector import _cached_get_attn_backend
+from vllm.attention.selector import global_force_attn_backend_context_manager
+from vllm.config import VllmConfig
+from vllm.config import set_current_vllm_config
 from vllm.forward_context import set_forward_context
 from vllm.platforms import current_platform
 

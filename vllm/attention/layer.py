@@ -1,29 +1,34 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 """Attention layer."""
-from typing import List, Optional
+from typing import List
+from typing import Optional
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-import vllm.envs as envs
 from vllm.attention import AttentionType
 from vllm.attention.backends.abstract import AttentionBackend
-from vllm.attention.selector import backend_name_to_enum, get_attn_backend
+from vllm.attention.selector import backend_name_to_enum
+from vllm.attention.selector import get_attn_backend
 from vllm.attention.utils.kv_sharing_utils import validate_kv_sharing_target
-from vllm.config import CacheConfig, get_current_vllm_config
-from vllm.distributed.kv_transfer import (get_kv_transfer_group,
-                                          has_kv_transfer_group,
-                                          is_v1_kv_transfer_group)
-from vllm.forward_context import ForwardContext, get_forward_context
-from vllm.utils.logger import init_logger
+from vllm.config import CacheConfig
+from vllm.config import get_current_vllm_config
+from vllm.distributed.kv_transfer import get_kv_transfer_group
+from vllm.distributed.kv_transfer import has_kv_transfer_group
+from vllm.distributed.kv_transfer import is_v1_kv_transfer_group
+import vllm.envs as envs
+from vllm.forward_context import ForwardContext
+from vllm.forward_context import get_forward_context
 from vllm.model_executor.layers.linear import UnquantizedLinearMethod
 from vllm.model_executor.layers.quantization.base_config import (
     QuantizationConfig)
 from vllm.model_executor.layers.quantization.kv_cache import BaseKVCacheMethod
-from vllm.platforms import _Backend, current_platform
+from vllm.platforms import _Backend
+from vllm.platforms import current_platform
 from vllm.utils import direct_register_custom_op
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 USE_XFORMERS_OPS = None

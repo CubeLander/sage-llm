@@ -5,7 +5,8 @@ Script to test add_lora, remove_lora, pin_lora, list_loras functions.
 """
 import pytest
 
-from vllm.engine.arg_utils import AsyncEngineArgs, EngineArgs
+from vllm.engine.arg_utils import AsyncEngineArgs
+from vllm.engine.arg_utils import EngineArgs
 from vllm.engine.llm_engine import LLMEngine
 from vllm.entrypoints.openai.api_server import (
     build_async_engine_client_from_engine_args)

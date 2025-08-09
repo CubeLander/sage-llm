@@ -10,8 +10,9 @@ from typing import Any
 import pytest
 
 from vllm.config import VllmConfig
-from vllm.executor.multiproc_worker_utils import (ProcessWorkerWrapper,
-                                                  ResultHandler, WorkerMonitor)
+from vllm.executor.multiproc_worker_utils import ProcessWorkerWrapper
+from vllm.executor.multiproc_worker_utils import ResultHandler
+from vllm.executor.multiproc_worker_utils import WorkerMonitor
 from vllm.worker.worker_base import WorkerWrapperBase
 
 

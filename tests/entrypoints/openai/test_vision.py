@@ -3,14 +3,15 @@
 
 import json
 
+from PIL import Image
 import openai
 import pytest
 import pytest_asyncio
 import requests
-from PIL import Image
 from transformers import AutoProcessor
 
-from vllm.io.inputs.multimodal.utils import encode_image_base64, fetch_image
+from vllm.io.inputs.multimodal.utils import encode_image_base64
+from vllm.io.inputs.multimodal.utils import fetch_image
 
 from ...utils import RemoteOpenAIServer
 

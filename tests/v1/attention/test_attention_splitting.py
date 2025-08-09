@@ -6,10 +6,10 @@ import torch
 
 from tests.v1.attention.test_attention_backends import BATCH_SPECS
 from tests.v1.attention.utils import create_common_attn_metadata
-from vllm.v1.attention.backends.utils import (UbatchSlice,
-                                              _make_metadata_with_slice,
-                                              slice_query_start_locs,
-                                              split_attn_metadata)
+from vllm.v1.attention.backends.utils import UbatchSlice
+from vllm.v1.attention.backends.utils import _make_metadata_with_slice
+from vllm.v1.attention.backends.utils import slice_query_start_locs
+from vllm.v1.attention.backends.utils import split_attn_metadata
 
 
 @pytest.fixture

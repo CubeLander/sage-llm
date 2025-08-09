@@ -1,23 +1,30 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-import json
 from dataclasses import asdict
-from typing import TYPE_CHECKING, Any, Optional
+import json
+from typing import Any
+from typing import Optional
+from typing import TYPE_CHECKING
 
-import pytest
 from mistral_common.multimodal import download_image
 from mistral_common.protocol.instruct.messages import ImageURLChunk
 from mistral_common.protocol.instruct.request import ChatCompletionRequest
 from mistral_common.tokens.tokenizers.mistral import MistralTokenizer
 from mistral_common.tokens.tokenizers.multimodal import image_from_chunk
+import pytest
 from transformers import AutoProcessor
 
-from vllm import RequestOutput, SamplingParams, TextPrompt, TokensPrompt
+from vllm import RequestOutput
+from vllm import SamplingParams
+from vllm import TextPrompt
+from vllm import TokensPrompt
 from vllm.io.inputs.multimodal import MultiModalDataBuiltins
 from vllm.io.inputs.multimodal.inputs import PlaceholderRange
-from vllm.sequence import Logprob, SampleLogprobs
+from vllm.sequence import Logprob
+from vllm.sequence import SampleLogprobs
 
-from ....utils import VLLM_PATH, large_gpu_test
+from ....utils import VLLM_PATH
+from ....utils import large_gpu_test
 from ...utils import check_logprobs_close
 
 if TYPE_CHECKING:

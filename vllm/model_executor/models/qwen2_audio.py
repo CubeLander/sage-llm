@@ -22,33 +22,46 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Inference-only Qwen2-Audio model compatible with HuggingFace weights."""
-from collections.abc import Iterable, Mapping, Sequence
-from typing import Any, Optional, TypedDict, Union
+from collections.abc import Iterable
+from collections.abc import Mapping
+from collections.abc import Sequence
+from typing import Any
+from typing import Optional
+from typing import TypedDict
+from typing import Union
 
 import torch
 import torch.nn as nn
 from transformers import BatchFeature
-from transformers.models.qwen2_audio import (Qwen2AudioConfig,
-                                             Qwen2AudioEncoder,
-                                             Qwen2AudioProcessor)
+from transformers.models.qwen2_audio import Qwen2AudioConfig
+from transformers.models.qwen2_audio import Qwen2AudioEncoder
+from transformers.models.qwen2_audio import Qwen2AudioProcessor
 from transformers.models.whisper import WhisperFeatureExtractor
 
 from vllm.config import VllmConfig
-from vllm.model_executor.sampling_metadata import SamplingMetadata
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
 from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
-                                    MultiModalKwargs)
-from vllm.io.inputs.multimodal.parse import (AudioProcessorItems, MultiModalDataItems,
-                                   MultiModalDataParser)
-from vllm.io.inputs.multimodal.processing import (BaseMultiModalProcessor,
-                                        BaseProcessingInfo, PromptReplacement,
-                                        PromptUpdate, PromptUpdateDetails)
+from vllm.io.inputs.multimodal.inputs import MultiModalDataDict
+from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.parse import AudioProcessorItems
+from vllm.io.inputs.multimodal.parse import MultiModalDataItems
+from vllm.io.inputs.multimodal.parse import MultiModalDataParser
+from vllm.io.inputs.multimodal.processing import BaseMultiModalProcessor
+from vllm.io.inputs.multimodal.processing import BaseProcessingInfo
+from vllm.io.inputs.multimodal.processing import PromptReplacement
+from vllm.io.inputs.multimodal.processing import PromptUpdate
+from vllm.io.inputs.multimodal.processing import PromptUpdateDetails
 from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
-from vllm.sequence import IntermediateTensors
+from vllm.model_executor.sampling_metadata import SamplingMetadata
 
-from .interfaces import MultiModalEmbeddings, SupportsMultiModal, SupportsPP
-from .utils import (AutoWeightsLoader, init_vllm_registered_model,
-                    maybe_prefix, merge_multimodal_embeddings)
+from .interfaces import MultiModalEmbeddings
+from .interfaces import SupportsMultiModal
+from .interfaces import SupportsPP
+from .utils import AutoWeightsLoader
+from .utils import init_vllm_registered_model
+from .utils import maybe_prefix
+from .utils import merge_multimodal_embeddings
 
 
 # # === Audio Inputs === #

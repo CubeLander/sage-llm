@@ -1,22 +1,42 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from abc import ABC, abstractmethod
+from abc import ABC
+from abc import abstractmethod
 from collections import UserDict
-from collections.abc import Callable, Iterator, Mapping, Sequence
-from typing import (TYPE_CHECKING, Any, Generic, Literal, NamedTuple, Optional,
-                    TypeVar, Union)
+from collections.abc import Callable
+from collections.abc import Iterator
+from collections.abc import Mapping
+from collections.abc import Sequence
+from typing import Any
+from typing import Generic
+from typing import Literal
+from typing import NamedTuple
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import TypeVar
+from typing import Union
 
 import numpy as np
 import torch
-from typing_extensions import TypeAlias, TypeGuard, assert_never
+from typing_extensions import TypeAlias
+from typing_extensions import TypeGuard
+from typing_extensions import assert_never
 
-from vllm.utils import LazyLoader, is_list_of
+from vllm.utils import LazyLoader
+from vllm.utils import is_list_of
 
 from .audio import AudioResampler
-from .inputs import (AudioItem, HfAudioItem, HfImageItem, HfVideoItem,
-                     ImageItem, ModalityData, MultiModalDataDict,
-                     MultiModalFieldConfig, MultiModalKwargs, VideoItem)
+from .inputs import AudioItem
+from .inputs import HfAudioItem
+from .inputs import HfImageItem
+from .inputs import HfVideoItem
+from .inputs import ImageItem
+from .inputs import ModalityData
+from .inputs import MultiModalDataDict
+from .inputs import MultiModalFieldConfig
+from .inputs import MultiModalKwargs
+from .inputs import VideoItem
 
 _T = TypeVar("_T")
 _I = TypeVar("_I")

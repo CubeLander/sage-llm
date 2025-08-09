@@ -7,23 +7,26 @@ purposes.
 """
 
 import argparse
-import json
-import ssl
 from collections.abc import Sequence
 from dataclasses import field
-from typing import Literal, Optional, Union
+import json
+import ssl
+from typing import Literal
+from typing import Optional
+from typing import Union
 
 from pydantic.dataclasses import dataclass
 
-import vllm.envs as envs
 from vllm.config import config
-from vllm.engine.arg_utils import AsyncEngineArgs, optional_type
-from vllm.entrypoints.chat_utils import (ChatTemplateContentFormatOption,
-                                         validate_chat_template)
+from vllm.engine.arg_utils import AsyncEngineArgs
+from vllm.engine.arg_utils import optional_type
+from vllm.entrypoints.chat_utils import ChatTemplateContentFormatOption
+from vllm.entrypoints.chat_utils import validate_chat_template
 from vllm.entrypoints.openai.serving_models import LoRAModulePath
 from vllm.entrypoints.openai.tool_parsers import ToolParserManager
-from vllm.utils.logger import init_logger
+import vllm.envs as envs
 from vllm.utils import FlexibleArgumentParser
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

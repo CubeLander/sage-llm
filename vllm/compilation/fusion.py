@@ -1,19 +1,21 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-from typing import Callable, NamedTuple, Optional
+from typing import Callable
+from typing import NamedTuple
+from typing import Optional
 
 import torch
-import torch._inductor.pattern_matcher as pm
 from torch import fx
 from torch._higher_order_ops.auto_functionalize import auto_functionalized
+import torch._inductor.pattern_matcher as pm
 from torch._inductor.pattern_matcher import PatternMatcherPass
 from torch._ops import OpOverload
 
 from vllm.config import VllmConfig
-from vllm.utils.logger import init_logger
 from vllm.model_executor.layers.quantization.utils.quant_utils import (
     GroupShape)
 from vllm.platforms import current_platform
+from vllm.utils.logger import init_logger
 
 from .fx_utils import find_getitem_maybe
 from .multi_output_match import MultiOutputMatch

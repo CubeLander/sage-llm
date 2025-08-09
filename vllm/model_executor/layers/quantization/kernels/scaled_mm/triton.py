@@ -7,8 +7,8 @@ import torch
 
 from vllm.platforms import current_platform
 
-from .cutlass import CutlassScaledMMLinearKernel
 from .ScaledMMLinearKernel import ScaledMMLinearLayerConfig
+from .cutlass import CutlassScaledMMLinearKernel
 
 
 class TritonScaledMMLinearKernel(CutlassScaledMMLinearKernel):

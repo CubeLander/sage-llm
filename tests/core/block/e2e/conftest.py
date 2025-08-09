@@ -2,7 +2,8 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from collections.abc import Iterable
-from typing import Callable, Optional
+from typing import Callable
+from typing import Optional
 
 import pytest
 

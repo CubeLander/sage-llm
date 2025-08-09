@@ -1,10 +1,11 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from concurrent.futures import Future
+from concurrent.futures import ThreadPoolExecutor
 import copy
 import time
 import uuid
-from concurrent.futures import Future, ThreadPoolExecutor
 
 import pytest
 from transformers import AutoTokenizer
@@ -15,11 +16,13 @@ from vllm.platforms import current_platform
 from vllm.utils import set_default_torch_num_threads
 from vllm.v1.engine import EngineCoreRequest
 from vllm.v1.engine.core import EngineCore
-from vllm.v1.executor.abstract import Executor, UniProcExecutor
+from vllm.v1.executor.abstract import Executor
+from vllm.v1.executor.abstract import UniProcExecutor
 from vllm.v1.kv_cache_interface import KVCacheConfig
 from vllm.v1.outputs import ModelRunnerOutput
 
-from ...utils import create_new_process_for_each_test, multi_gpu_test
+from ...utils import create_new_process_for_each_test
+from ...utils import multi_gpu_test
 
 if not current_platform.is_cuda():
     pytest.skip(reason="V1 currently only supported on CUDA.",

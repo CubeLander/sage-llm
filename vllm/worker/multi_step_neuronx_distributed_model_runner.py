@@ -1,13 +1,14 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-from typing import List, Optional
+from typing import List
+from typing import Optional
 
 import torch
 
 from vllm.config import VllmConfig
-from vllm.model_executor.layers.sampler import SamplerOutput
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
 from vllm.io.inputs.multimodal import MultiModalKwargs
-from vllm.sequence import IntermediateTensors
+from vllm.model_executor.layers.sampler import SamplerOutput
 from vllm.worker.neuronx_distributed_model_runner import (
     NeuronxDistributedModelRunner)
 

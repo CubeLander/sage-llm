@@ -2,17 +2,26 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import os
-from typing import Any, Callable, Dict, List, Optional, Tuple, Union
+from typing import Any
+from typing import Callable
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import Tuple
+from typing import Union
 
 import torch
 import torch.distributed as dist
 
 import vllm.envs as envs
 from vllm.executor.executor_base import ExecutorBase
+from vllm.utils import get_distributed_init_method
+from vllm.utils import get_ip
+from vllm.utils import get_open_port
+from vllm.utils import run_method
 from vllm.utils.logger import init_logger
-from vllm.utils import (get_distributed_init_method, get_ip, get_open_port,
-                        run_method)
-from vllm.v1.engine import ReconfigureDistributedRequest, ReconfigureRankType
+from vllm.v1.engine import ReconfigureDistributedRequest
+from vllm.v1.engine import ReconfigureRankType
 from vllm.worker.worker_base import WorkerWrapperBase
 
 logger = init_logger(__name__)

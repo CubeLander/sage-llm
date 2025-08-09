@@ -8,7 +8,8 @@ from vllm.v1.core.sched.output import SchedulerOutput
 from vllm.v1.outputs import ModelRunnerOutput
 from vllm.v1.request import RequestStatus
 
-from .utils import create_requests, create_scheduler
+from .utils import create_requests
+from .utils import create_scheduler
 
 
 def _make_model_runner_output(

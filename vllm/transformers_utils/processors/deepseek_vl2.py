@@ -26,10 +26,13 @@
 
 import math
 
+from PIL import Image
+from PIL import ImageOps
 import torch
 import torchvision.transforms as T
-from PIL import Image, ImageOps
-from transformers import AutoProcessor, BatchFeature, LlamaTokenizerFast
+from transformers import AutoProcessor
+from transformers import BatchFeature
+from transformers import LlamaTokenizerFast
 from transformers.processing_utils import ProcessorMixin
 
 

@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from collections.abc import Mapping, MutableMapping
+from collections.abc import Mapping
+from collections.abc import MutableMapping
 from pathlib import Path
 from typing import Optional
 from urllib.parse import urlparse

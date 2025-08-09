@@ -5,9 +5,9 @@
 import random
 
 import numpy as np
+from packaging import version
 import pytest
 import torch
-from packaging import version
 
 from vllm import SamplingParams
 

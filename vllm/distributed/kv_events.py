@@ -1,15 +1,19 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import queue
-import threading
-import time
-from abc import ABC, abstractmethod
+from abc import ABC
+from abc import abstractmethod
 from collections import deque
 from dataclasses import asdict
 from itertools import count
+import queue
 from queue import Queue
-from typing import Any, Callable, Optional, Union
+import threading
+import time
+from typing import Any
+from typing import Callable
+from typing import Optional
+from typing import Union
 
 import msgspec
 import zmq

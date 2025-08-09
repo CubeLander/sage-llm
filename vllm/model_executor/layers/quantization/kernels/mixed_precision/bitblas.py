@@ -3,20 +3,34 @@
 
 from typing import Optional
 
-import torch
 from packaging import version
+import torch
 
-from vllm.utils.logger import init_logger
 from vllm.model_executor.layers.quantization.base_config import (
     QuantizationConfig)
 from vllm.model_executor.layers.quantization.utils import replace_parameter
 from vllm.model_executor.layers.quantization.utils.bitblas_utils import (
-    BITBLAS_OPTIMIZE_FEATURES, BITBLAS_SUPPORTED_GROUP_SIZES,
-    MINIMUM_BITBLAS_VERSION, bitblas_make_empty_g_idx, bitblas_sort_g_idx,
-    check_bitblas_supports_shape, query_bitblas_supported_quant_types,
-    unpack_gptq_qweight, unpack_gptq_qzeros)
+    BITBLAS_OPTIMIZE_FEATURES)
+from vllm.model_executor.layers.quantization.utils.bitblas_utils import (
+    BITBLAS_SUPPORTED_GROUP_SIZES)
+from vllm.model_executor.layers.quantization.utils.bitblas_utils import (
+    MINIMUM_BITBLAS_VERSION)
+from vllm.model_executor.layers.quantization.utils.bitblas_utils import (
+    bitblas_make_empty_g_idx)
+from vllm.model_executor.layers.quantization.utils.bitblas_utils import (
+    bitblas_sort_g_idx)
+from vllm.model_executor.layers.quantization.utils.bitblas_utils import (
+    check_bitblas_supports_shape)
+from vllm.model_executor.layers.quantization.utils.bitblas_utils import (
+    query_bitblas_supported_quant_types)
+from vllm.model_executor.layers.quantization.utils.bitblas_utils import (
+    unpack_gptq_qweight)
+from vllm.model_executor.layers.quantization.utils.bitblas_utils import (
+    unpack_gptq_qzeros)
+from vllm.utils.logger import init_logger
 
-from .MPLinearKernel import MPLinearKernel, MPLinearLayerConfig
+from .MPLinearKernel import MPLinearKernel
+from .MPLinearKernel import MPLinearLayerConfig
 
 logger = init_logger(__name__)
 
@@ -252,8 +266,10 @@ class BitBLASLinearKernel(MPLinearKernel):
             matmul_config, enable_tuning)
 
     def _get_or_create_bitblas_operator(self, config, enable_tuning):
-        from bitblas import Matmul, auto_detect_nvidia_target
-        from bitblas.cache import get_database_path, global_operator_cache
+        from bitblas import Matmul
+        from bitblas import auto_detect_nvidia_target
+        from bitblas.cache import get_database_path
+        from bitblas.cache import global_operator_cache
         BITBLAS_DATABASE_PATH = get_database_path()
         BITBLAS_TARGET = auto_detect_nvidia_target()
 

@@ -6,7 +6,8 @@ See https://github.com/vllm-project/vllm/issues/11926 for more details.
 
 Run `pytest tests/quantization/test_register_quantization_config.py`.
 """
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
 import pytest
 import torch
@@ -15,7 +16,9 @@ import torch.nn.functional as F
 from vllm.model_executor.layers.linear import LinearBase  # noqa: E501
 from vllm.model_executor.layers.linear import UnquantizedLinearMethod
 from vllm.model_executor.layers.quantization import (
-    QuantizationMethods, get_quantization_config, register_quantization_config)
+    register_quantization_config)
+from vllm.model_executor.layers.quantization import QuantizationMethods
+from vllm.model_executor.layers.quantization import get_quantization_config
 from vllm.model_executor.layers.quantization.base_config import (  # noqa: E501
     QuantizationConfig)
 

@@ -7,12 +7,12 @@ from typing import Optional
 import torch
 
 import vllm._custom_ops as ops
-from vllm.attention.backends.abstract import (AttentionType,
-                                              is_quantized_kv_cache)
+from vllm.attention.backends.abstract import AttentionType
+from vllm.attention.backends.abstract import is_quantized_kv_cache
 from vllm.utils.logger import init_logger
-from vllm.v1.attention.backends.mla.common import (MLACommonBackend,
-                                                   MLACommonImpl,
-                                                   MLACommonMetadata)
+from vllm.v1.attention.backends.mla.common import MLACommonBackend
+from vllm.v1.attention.backends.mla.common import MLACommonImpl
+from vllm.v1.attention.backends.mla.common import MLACommonMetadata
 
 logger = init_logger(__name__)
 

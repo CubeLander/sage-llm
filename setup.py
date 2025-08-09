@@ -6,18 +6,21 @@ import importlib.util
 import json
 import logging
 import os
+from pathlib import Path
 import re
+from shutil import which
 import subprocess
 import sys
-from pathlib import Path
-from shutil import which
 
-import torch
-from packaging.version import Version, parse
-from setuptools import Extension, setup
+from packaging.version import Version
+from packaging.version import parse
+from setuptools import Extension
+from setuptools import setup
 from setuptools.command.build_ext import build_ext
 from setuptools_scm import get_version
-from torch.utils.cpp_extension import CUDA_HOME, ROCM_HOME
+import torch
+from torch.utils.cpp_extension import CUDA_HOME
+from torch.utils.cpp_extension import ROCM_HOME
 
 
 def load_module_from_path(module_name, path):

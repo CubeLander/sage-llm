@@ -32,7 +32,8 @@ def swap_w13_to_w31(x: torch.Tensor) -> torch.Tensor:
 
 def rotate_flashinfer_fp8_moe_weights(gemm1_weights: torch.Tensor,
                                       gemm2_weights: torch.Tensor):
-    from flashinfer import reorder_rows_for_gated_act_gemm, shuffle_matrix_a
+    from flashinfer import reorder_rows_for_gated_act_gemm
+    from flashinfer import shuffle_matrix_a
     epilogue_tile_m = 128
     num_experts = gemm1_weights.shape[0]
     hidden_size = gemm1_weights.shape[-1]

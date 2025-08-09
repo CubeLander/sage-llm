@@ -7,7 +7,9 @@ Punica: Multi-Tenant LoRA Serving.
 https://arxiv.org/abs/2310.18547
 """
 
-from typing import Optional, Union, final
+from typing import Optional
+from typing import Union
+from typing import final
 
 import torch
 

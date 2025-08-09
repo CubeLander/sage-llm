@@ -6,8 +6,8 @@ Run `pytest tests/v1/tpu/test_perf.py`.
 """
 from __future__ import annotations
 
-import time
 from dataclasses import dataclass
+import time
 from typing import TYPE_CHECKING
 
 import numpy as np

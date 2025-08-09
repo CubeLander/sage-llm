@@ -7,7 +7,8 @@ import openai
 import pytest
 from scipy.spatial.distance import cosine
 
-from vllm import LLM, SamplingParams
+from vllm import LLM
+from vllm import SamplingParams
 from vllm.config import ModelConfig
 
 from ....utils import RemoteOpenAIServer

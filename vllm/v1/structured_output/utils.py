@@ -8,13 +8,13 @@ import importlib.metadata
 import os
 from typing import TYPE_CHECKING
 
-import regex as re
 from cachetools import LRUCache
 from diskcache import Cache
+import regex as re
 
 import vllm.envs as envs
-from vllm.utils.logger import init_logger
 from vllm.utils import LazyLoader
+from vllm.utils.logger import init_logger
 
 if TYPE_CHECKING:
     import outlines_core as oc

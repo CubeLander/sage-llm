@@ -26,24 +26,29 @@
 # limitations under the License.
 """Inference-only MiMo model compatible with HuggingFace weights."""
 from collections.abc import Iterable
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 import torch
 import torch.nn as nn
 
 from vllm.compilation.decorators import support_torch_compile
 from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
 from vllm.distributed import get_pp_group
-from vllm.utils.logger import init_logger
 from vllm.model_executor.layers.logits_processor import LogitsProcessor
 from vllm.model_executor.layers.vocab_parallel_embedding import ParallelLMHead
 from vllm.model_executor.model_loader.weight_utils import (
-    default_weight_loader, maybe_remap_kv_scale_name)
-from vllm.model_executor.models.qwen2 import Qwen2ForCausalLM, Qwen2Model
+    maybe_remap_kv_scale_name)
+from vllm.model_executor.model_loader.weight_utils import default_weight_loader
+from vllm.model_executor.models.qwen2 import Qwen2ForCausalLM
+from vllm.model_executor.models.qwen2 import Qwen2Model
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.sequence import IntermediateTensors
+from vllm.utils.logger import init_logger
 
-from .utils import PPMissingLayer, is_pp_missing_parameter, maybe_prefix
+from .utils import PPMissingLayer
+from .utils import is_pp_missing_parameter
+from .utils import maybe_prefix
 
 logger = init_logger(__name__)
 

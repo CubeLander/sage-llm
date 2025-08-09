@@ -3,24 +3,27 @@
 """Attention layer with PagedAttention and Triton prefix prefill."""
 from dataclasses import dataclass
 from functools import cache
-from typing import ClassVar, Optional
+from typing import ClassVar
+from typing import Optional
 
 import torch
 
 from vllm import _custom_ops as ops
 from vllm import envs
-from vllm.attention.backends.abstract import (AttentionBackend, AttentionImpl,
-                                              AttentionMetadata, AttentionType)
+from vllm.attention.backends.abstract import AttentionBackend
+from vllm.attention.backends.abstract import AttentionImpl
+from vllm.attention.backends.abstract import AttentionMetadata
+from vllm.attention.backends.abstract import AttentionType
 from vllm.attention.ops.chunked_prefill_paged_decode import (
     chunked_prefill_paged_decode)
 from vllm.attention.ops.paged_attn import PagedAttention
 from vllm.config import VllmConfig
-from vllm.utils.logger import init_logger
 from vllm.platforms import current_platform
+from vllm.utils.logger import init_logger
 from vllm.v1.attention.backends.flash_attn import FlashAttentionMetadata
-from vllm.v1.attention.backends.utils import (AttentionCGSupport,
-                                              AttentionMetadataBuilder,
-                                              CommonAttentionMetadata)
+from vllm.v1.attention.backends.utils import AttentionCGSupport
+from vllm.v1.attention.backends.utils import AttentionMetadataBuilder
+from vllm.v1.attention.backends.utils import CommonAttentionMetadata
 from vllm.v1.kv_cache_interface import AttentionSpec
 
 logger = init_logger(__name__)

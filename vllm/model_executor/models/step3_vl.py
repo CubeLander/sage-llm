@@ -1,46 +1,66 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-import math
-from collections.abc import Iterable, Mapping, Sequence
+from collections.abc import Iterable
+from collections.abc import Mapping
+from collections.abc import Sequence
 from functools import cached_property
 from itertools import product
-from math import ceil, sqrt
-from typing import Any, Literal, Optional, TypedDict, Union
+import math
+from math import ceil
+from math import sqrt
+from typing import Any
+from typing import Literal
+from typing import Optional
+from typing import TypedDict
+from typing import Union
 
+from PIL import Image
 import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from PIL import Image
 from torchvision import transforms
 from torchvision.transforms.functional import InterpolationMode
-from transformers import BatchFeature, PretrainedConfig, TensorType
+from transformers import BatchFeature
+from transformers import PretrainedConfig
+from transformers import TensorType
 
 from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
 from vllm.distributed import get_tensor_model_parallel_world_size
-from vllm.model_executor.layers.activation import get_act_fn
-from vllm.model_executor.layers.linear import (ColumnParallelLinear,
-                                               QKVParallelLinear,
-                                               RowParallelLinear)
-from vllm.model_executor.layers.quantization import QuantizationConfig
-from vllm.model_executor.layers.sampler import SamplerOutput, get_sampler
-from vllm.model_executor.sampling_metadata import SamplingMetadata
 from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
-                                    MultiModalKwargs, NestedTensors)
-from vllm.io.inputs.multimodal.parse import ImageSize, MultiModalDataItems
-from vllm.io.inputs.multimodal.processing import (BaseMultiModalProcessor,
-                                        BaseProcessingInfo, PromptReplacement,
-                                        PromptUpdate, PromptUpdateDetails)
+from vllm.io.inputs.multimodal.inputs import MultiModalDataDict
+from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.inputs import NestedTensors
+from vllm.io.inputs.multimodal.parse import ImageSize
+from vllm.io.inputs.multimodal.parse import MultiModalDataItems
+from vllm.io.inputs.multimodal.processing import BaseMultiModalProcessor
+from vllm.io.inputs.multimodal.processing import BaseProcessingInfo
+from vllm.io.inputs.multimodal.processing import PromptReplacement
+from vllm.io.inputs.multimodal.processing import PromptUpdate
+from vllm.io.inputs.multimodal.processing import PromptUpdateDetails
 from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
-from vllm.sequence import IntermediateTensors
+from vllm.model_executor.layers.activation import get_act_fn
+from vllm.model_executor.layers.linear import ColumnParallelLinear
+from vllm.model_executor.layers.linear import QKVParallelLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
+from vllm.model_executor.layers.quantization import QuantizationConfig
+from vllm.model_executor.layers.sampler import SamplerOutput
+from vllm.model_executor.layers.sampler import get_sampler
+from vllm.model_executor.sampling_metadata import SamplingMetadata
 from vllm.transformers_utils.configs import Step3VisionEncoderConfig
 from vllm.transformers_utils.tokenizer import AnyTokenizer
 
-from .interfaces import MultiModalEmbeddings, SupportsMultiModal, SupportsPP
-from .utils import (AutoWeightsLoader, WeightsMapper, flatten_bn,
-                    init_vllm_registered_model, maybe_prefix,
-                    merge_multimodal_embeddings)
+from .interfaces import MultiModalEmbeddings
+from .interfaces import SupportsMultiModal
+from .interfaces import SupportsPP
+from .utils import AutoWeightsLoader
+from .utils import WeightsMapper
+from .utils import flatten_bn
+from .utils import init_vllm_registered_model
+from .utils import maybe_prefix
+from .utils import merge_multimodal_embeddings
 
 
 class Step3VLImagePixelInputs(TypedDict):

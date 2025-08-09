@@ -2,14 +2,16 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from fractions import Fraction
-from typing import Callable, Optional, Union
+from typing import Callable
+from typing import Optional
+from typing import Union
 
 import torch
 from torch.nn import Parameter
 
 from vllm.distributed import get_tensor_model_parallel_rank
-from vllm.utils.logger import init_logger
 from vllm.model_executor.utils import _make_synced_weight_loader
+from vllm.utils.logger import init_logger
 
 __all__ = [
     "BasevLLMParameter", "PackedvLLMParameter", "PerTensorScaleParameter",

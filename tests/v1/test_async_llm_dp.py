@@ -2,9 +2,9 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import asyncio
-import os
 from contextlib import ExitStack
 from dataclasses import dataclass
+import os
 from typing import Optional
 
 import pytest
@@ -18,7 +18,8 @@ from vllm.sampling_params import RequestOutputKind
 from vllm.v1.engine.async_llm import AsyncLLM
 from vllm.v1.engine.core_client import DPAsyncMPClient
 from vllm.v1.metrics.loggers import StatLoggerBase
-from vllm.v1.metrics.stats import IterationStats, SchedulerStats
+from vllm.v1.metrics.stats import IterationStats
+from vllm.v1.metrics.stats import SchedulerStats
 
 DP_SIZE = int(os.getenv("DP_SIZE", 2))
 

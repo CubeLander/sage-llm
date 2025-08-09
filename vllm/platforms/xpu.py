@@ -2,18 +2,23 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import os
-from typing import TYPE_CHECKING, Optional
+from typing import Optional
+from typing import TYPE_CHECKING
 
 import torch
 
 import vllm.envs as envs
-from vllm.utils.logger import init_logger
 from vllm.utils import DEFAULT_MAX_NUM_BATCHED_TOKENS
+from vllm.utils.logger import init_logger
 
-from .interface import DeviceCapability, Platform, PlatformEnum, _Backend
+from .interface import DeviceCapability
+from .interface import Platform
+from .interface import PlatformEnum
+from .interface import _Backend
 
 if TYPE_CHECKING:
-    from vllm.config import ModelConfig, VllmConfig
+    from vllm.config import ModelConfig
+    from vllm.config import VllmConfig
 else:
     ModelConfig = None
     VllmConfig = None

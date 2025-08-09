@@ -1,63 +1,85 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import math
-from collections.abc import Iterable, Mapping, Sequence
+from collections.abc import Iterable
+from collections.abc import Mapping
+from collections.abc import Sequence
 from dataclasses import dataclass
-from functools import cached_property, partial
-from typing import Optional, TypedDict, Union
+from functools import cached_property
+from functools import partial
+import math
+from typing import Optional
+from typing import TypedDict
+from typing import Union
 
+from einops import rearrange
 import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from einops import rearrange
-from transformers import (BatchFeature, PretrainedConfig, ProcessorMixin,
-                          TensorType)
+from transformers import BatchFeature
+from transformers import PretrainedConfig
+from transformers import ProcessorMixin
+from transformers import TensorType
 from transformers.image_utils import ImageInput
 from transformers.tokenization_utils_base import TextInput
 
 from vllm.attention import Attention
 from vllm.attention.layer import MultiHeadAttention
 from vllm.compilation.decorators import support_torch_compile
-from vllm.config import CacheConfig, VllmConfig
-from vllm.distributed import (get_pp_group, get_tensor_model_parallel_rank,
-                              get_tensor_model_parallel_world_size,
-                              split_tensor_along_last_dim,
-                              tensor_model_parallel_all_gather)
+from vllm.config import CacheConfig
+from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.distributed import get_pp_group
+from vllm.distributed import get_tensor_model_parallel_rank
+from vllm.distributed import get_tensor_model_parallel_world_size
+from vllm.distributed import split_tensor_along_last_dim
+from vllm.distributed import tensor_model_parallel_all_gather
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import MultiModalDataDict
+from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.parse import ImageProcessorItems
+from vllm.io.inputs.multimodal.parse import ImageSize
+from vllm.io.inputs.multimodal.parse import MultiModalDataItems
+from vllm.io.inputs.multimodal.processing import BaseMultiModalProcessor
+from vllm.io.inputs.multimodal.processing import BaseProcessingInfo
+from vllm.io.inputs.multimodal.processing import PromptIndexTargets
+from vllm.io.inputs.multimodal.processing import PromptInsertion
+from vllm.io.inputs.multimodal.processing import PromptUpdate
+from vllm.io.inputs.multimodal.processing import PromptUpdateDetails
+from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
 from vllm.model_executor import SamplingMetadata
-from vllm.model_executor.layers.activation import (MulAndSilu, QuickGELU,
-                                                   SiluAndMul)
+from vllm.model_executor.layers.activation import MulAndSilu
+from vllm.model_executor.layers.activation import QuickGELU
+from vllm.model_executor.layers.activation import SiluAndMul
 from vllm.model_executor.layers.layernorm import RMSNorm
-from vllm.model_executor.layers.linear import (ColumnParallelLinear,
-                                               MergedColumnParallelLinear,
-                                               QKVParallelLinear,
-                                               RowParallelLinear)
+from vllm.model_executor.layers.linear import ColumnParallelLinear
+from vllm.model_executor.layers.linear import MergedColumnParallelLinear
+from vllm.model_executor.layers.linear import QKVParallelLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
 from vllm.model_executor.layers.logits_processor import LogitsProcessor
 from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.model_executor.layers.rotary_embedding import get_rope
 from vllm.model_executor.layers.vocab_parallel_embedding import (
-    ParallelLMHead, VocabParallelEmbedding)
+    VocabParallelEmbedding)
+from vllm.model_executor.layers.vocab_parallel_embedding import ParallelLMHead
 from vllm.model_executor.model_loader.weight_utils import default_weight_loader
 from vllm.model_executor.models.module_mapping import MultiModelKeys
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
-                                    MultiModalKwargs)
-from vllm.io.inputs.multimodal.parse import (ImageProcessorItems, ImageSize,
-                                   MultiModalDataItems)
-from vllm.io.inputs.multimodal.processing import (BaseMultiModalProcessor,
-                                        BaseProcessingInfo, PromptIndexTargets,
-                                        PromptInsertion, PromptUpdate,
-                                        PromptUpdateDetails)
-from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
-from vllm.sequence import IntermediateTensors
 
-from .interfaces import (MultiModalEmbeddings, SupportsLoRA,
-                         SupportsMultiModal, SupportsPP, SupportsQuant)
-from .utils import (AutoWeightsLoader, WeightsMapper, flatten_bn,
-                    is_pp_missing_parameter,
-                    make_empty_intermediate_tensors_factory, make_layers,
-                    maybe_prefix, merge_multimodal_embeddings)
+from .interfaces import MultiModalEmbeddings
+from .interfaces import SupportsLoRA
+from .interfaces import SupportsMultiModal
+from .interfaces import SupportsPP
+from .interfaces import SupportsQuant
+from .utils import AutoWeightsLoader
+from .utils import WeightsMapper
+from .utils import flatten_bn
+from .utils import is_pp_missing_parameter
+from .utils import make_empty_intermediate_tensors_factory
+from .utils import make_layers
+from .utils import maybe_prefix
+from .utils import merge_multimodal_embeddings
 
 # TODO: hard-coded for now. Consider making it configurable.
 VIT_LAYERS = [-2, -9]

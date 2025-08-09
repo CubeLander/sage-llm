@@ -9,8 +9,8 @@ import torch_xla.distributed.spmd as xs
 import torch_xla.runtime as xr
 
 from vllm.config import set_current_vllm_config
-from vllm.distributed.parallel_state import (ensure_model_parallel_initialized,
-                                             init_distributed_environment)
+from vllm.distributed.parallel_state import ensure_model_parallel_initialized
+from vllm.distributed.parallel_state import init_distributed_environment
 from vllm.distributed.tpu_distributed_utils import XlaQKVParallelLinear
 from vllm.engine.arg_utils import EngineArgs
 from vllm.model_executor.layers.linear import QKVParallelLinear

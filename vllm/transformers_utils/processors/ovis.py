@@ -28,11 +28,14 @@ from typing import Union
 
 import PIL
 import torch
-from transformers import AutoProcessor, BatchFeature
+from transformers import AutoProcessor
+from transformers import BatchFeature
 from transformers.image_utils import ImageInput
-from transformers.processing_utils import (ProcessingKwargs, ProcessorMixin,
-                                           Unpack)
-from transformers.tokenization_utils_base import PreTokenizedInput, TextInput
+from transformers.processing_utils import ProcessingKwargs
+from transformers.processing_utils import ProcessorMixin
+from transformers.processing_utils import Unpack
+from transformers.tokenization_utils_base import PreTokenizedInput
+from transformers.tokenization_utils_base import TextInput
 
 from vllm.io.inputs.multimodal.image import convert_image_mode
 

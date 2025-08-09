@@ -1,22 +1,24 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import dataclasses
 from contextlib import ExitStack
-from typing import Any, Callable, Optional
+import dataclasses
+from typing import Any
+from typing import Callable
+from typing import Optional
 from unittest.mock import patch
 
 import torch
 import torch.fx as fx
 
-import vllm.envs as envs
 from vllm.compilation.backends import VllmBackend
 from vllm.compilation.counter import compilation_counter
 from vllm.compilation.monitor import end_monitoring_torch_compile
 from vllm.config import VllmConfig
+import vllm.envs as envs
 from vllm.forward_context import get_forward_context
-from vllm.utils.logger import init_logger
 from vllm.utils import weak_ref_tensors
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

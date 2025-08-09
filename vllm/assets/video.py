@@ -3,13 +3,16 @@
 
 from dataclasses import dataclass
 from functools import lru_cache
-from typing import Any, ClassVar, Literal, Optional
+from typing import Any
+from typing import ClassVar
+from typing import Literal
+from typing import Optional
 
+from PIL import Image
 import cv2
+from huggingface_hub import hf_hub_download
 import numpy as np
 import numpy.typing as npt
-from huggingface_hub import hf_hub_download
-from PIL import Image
 
 from vllm.utils import PlaceholderModule
 

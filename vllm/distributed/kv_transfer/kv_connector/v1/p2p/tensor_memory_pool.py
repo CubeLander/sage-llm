@@ -3,8 +3,8 @@
 
 import atexit
 import ctypes
-import math
 from dataclasses import dataclass
+import math
 
 import torch
 

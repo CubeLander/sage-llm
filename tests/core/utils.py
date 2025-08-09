@@ -1,20 +1,28 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import time
 from collections import defaultdict
 from collections.abc import Sequence as GenericSequence
 from itertools import count
-from typing import Any, Optional, Union
+import time
+from typing import Any
+from typing import Optional
+from typing import Union
 
 import torch
 
-from vllm.core.scheduler import Scheduler, SchedulerOutputs
-from vllm.io.inputs import EncoderDecoderInputs, embeds_inputs, token_inputs
+from vllm.core.scheduler import Scheduler
+from vllm.core.scheduler import SchedulerOutputs
+from vllm.io.inputs import EncoderDecoderInputs
+from vllm.io.inputs import embeds_inputs
+from vllm.io.inputs import token_inputs
 from vllm.lora.request import LoRARequest
 from vllm.sampling_params import SamplingParams
-from vllm.sequence import (Logprob, Sequence, SequenceData, SequenceGroup,
-                           SequenceGroupMetadata)
+from vllm.sequence import Logprob
+from vllm.sequence import Sequence
+from vllm.sequence import SequenceData
+from vllm.sequence import SequenceGroup
+from vllm.sequence import SequenceGroupMetadata
 
 
 def create_dummy_prompt(

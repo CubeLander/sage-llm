@@ -7,25 +7,31 @@ For production use, we recommend using our OpenAI compatible server.
 We are also not going to accept PRs modifying this file, please
 change `vllm/entrypoints/openai/api_server.py` instead.
 """
+from argparse import Namespace
 import asyncio
+from collections.abc import AsyncGenerator
 import json
 import ssl
-from argparse import Namespace
-from collections.abc import AsyncGenerator
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
-from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse, Response, StreamingResponse
+from fastapi import FastAPI
+from fastapi import Request
+from fastapi.responses import JSONResponse
+from fastapi.responses import Response
+from fastapi.responses import StreamingResponse
 
-import vllm.envs as envs
 from vllm.engine.arg_utils import AsyncEngineArgs
 from vllm.engine.async_llm_engine import AsyncLLMEngine
 from vllm.entrypoints.launcher import serve_http
 from vllm.entrypoints.utils import with_cancellation
-from vllm.utils.logger import init_logger
+import vllm.envs as envs
 from vllm.sampling_params import SamplingParams
 from vllm.usage.usage_lib import UsageContext
-from vllm.utils import FlexibleArgumentParser, random_uuid, set_ulimit
+from vllm.utils import FlexibleArgumentParser
+from vllm.utils import random_uuid
+from vllm.utils import set_ulimit
+from vllm.utils.logger import init_logger
 from vllm.version import __version__ as VLLM_VERSION
 
 logger = init_logger("vllm.entrypoints.api_server")

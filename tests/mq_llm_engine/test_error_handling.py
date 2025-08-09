@@ -5,8 +5,8 @@
 import asyncio
 import tempfile
 import time
-import uuid
 from unittest.mock import Mock
+import uuid
 
 import pytest
 

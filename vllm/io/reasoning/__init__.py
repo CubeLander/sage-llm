@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from .abs_reasoning_parsers import ReasoningParser, ReasoningParserManager
+from .abs_reasoning_parsers import ReasoningParser
+from .abs_reasoning_parsers import ReasoningParserManager
 from .deepseek_r1_reasoning_parser import DeepSeekR1ReasoningParser
 from .glm4_moe_reasoning_parser import Glm4MoeModelReasoningParser
 from .gptoss_reasoning_parser import GptOssReasoningParser

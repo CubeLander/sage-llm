@@ -6,8 +6,8 @@ import pytest
 import torch
 
 from vllm.platforms import current_platform
-from vllm.v1.sample.ops.topk_topp_sampler import (apply_top_k_top_p,
-                                                  apply_top_k_top_p_tpu)
+from vllm.v1.sample.ops.topk_topp_sampler import apply_top_k_top_p
+from vllm.v1.sample.ops.topk_topp_sampler import apply_top_k_top_p_tpu
 
 if not current_platform.is_tpu():
     pytest.skip("This test needs a TPU.", allow_module_level=True)

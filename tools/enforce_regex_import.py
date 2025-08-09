@@ -2,8 +2,8 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 from __future__ import annotations
 
-import subprocess
 from pathlib import Path
+import subprocess
 
 import regex as re
 

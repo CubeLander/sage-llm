@@ -1,14 +1,15 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 import contextlib
+from contextlib import ExitStack
 import os
 import weakref
-from contextlib import ExitStack
 
 import pytest
 
 from tests.utils import wait_for_gpu_memory_to_clear
-from vllm import LLM, SamplingParams
+from vllm import LLM
+from vllm import SamplingParams
 from vllm.config import CompilationConfig
 from vllm.platforms import current_platform
 

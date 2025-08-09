@@ -6,7 +6,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from ..utils import compare_two_settings, create_new_process_for_each_test
+from ..utils import compare_two_settings
+from ..utils import create_new_process_for_each_test
 
 if TYPE_CHECKING:
     from typing_extensions import LiteralString

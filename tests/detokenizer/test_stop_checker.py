@@ -9,7 +9,9 @@ from transformers import PreTrainedTokenizer
 from vllm.engine.output_processor.stop_checker import StopChecker
 from vllm.io.inputs import token_inputs
 from vllm.sampling_params import SamplingParams
-from vllm.sequence import Logprob, Sequence, SequenceStatus
+from vllm.sequence import Logprob
+from vllm.sequence import Sequence
+from vllm.sequence import SequenceStatus
 
 
 def sequence_with_eos(text: str, eos_token: str,

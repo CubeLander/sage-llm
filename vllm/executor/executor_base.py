@@ -1,24 +1,33 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from abc import ABC
+from abc import abstractmethod
 import asyncio
-import time
-from abc import ABC, abstractmethod
 from functools import cached_property
-from typing import (Any, Awaitable, Callable, Dict, List, Optional, Set, Tuple,
-                    Union)
+import time
+from typing import Any
+from typing import Awaitable
+from typing import Callable
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import Set
+from typing import Tuple
+from typing import Union
 
 import torch.nn as nn
 from typing_extensions import TypeVar
 
-import vllm.platforms
 from vllm.config import VllmConfig
-from vllm.utils.logger import init_logger
 from vllm.lora.request import LoRARequest
 from vllm.model_executor.layers.sampler import SamplerOutput
-from vllm.sequence import ExecuteModelRequest, PoolerOutput
+import vllm.platforms
+from vllm.sequence import ExecuteModelRequest
+from vllm.sequence import PoolerOutput
 from vllm.tasks import SupportedTask
 from vllm.utils import make_async
+from vllm.utils.logger import init_logger
 from vllm.worker.worker_base import WorkerBase
 
 logger = init_logger(__name__)

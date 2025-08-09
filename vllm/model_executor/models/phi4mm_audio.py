@@ -7,22 +7,32 @@
 #!/usr/bin/env python3
 import abc
 import math
-from typing import Literal, Optional
+from typing import Literal
+from typing import Optional
 
 import numpy as np
 import torch
-import torch.nn.functional as F
-from torch import Tensor, nn
+from torch import Tensor
+from torch import nn
 from torch.distributed.algorithms._checkpoint.checkpoint_wrapper import (
     CheckpointWrapper)
 from torch.distributed.fsdp.fully_sharded_data_parallel import (
     FullyShardedDataParallel)
+import torch.nn.functional as F
 from transformers import PretrainedConfig
 
 from vllm.model_executor.models.phi4mm_utils import (
-    AbsolutePositionalEncoding, ConvModule, FeedForward, MeanVarianceNormLayer,
-    MultiHeadedAttention, MultiSequential, NemoConvSubsampling,
-    T5RelativeAttentionLogitBias, adaptive_enc_mask, get_offset, unfold_tensor)
+    T5RelativeAttentionLogitBias)
+from vllm.model_executor.models.phi4mm_utils import AbsolutePositionalEncoding
+from vllm.model_executor.models.phi4mm_utils import ConvModule
+from vllm.model_executor.models.phi4mm_utils import FeedForward
+from vllm.model_executor.models.phi4mm_utils import MeanVarianceNormLayer
+from vllm.model_executor.models.phi4mm_utils import MultiHeadedAttention
+from vllm.model_executor.models.phi4mm_utils import MultiSequential
+from vllm.model_executor.models.phi4mm_utils import NemoConvSubsampling
+from vllm.model_executor.models.phi4mm_utils import adaptive_enc_mask
+from vllm.model_executor.models.phi4mm_utils import get_offset
+from vllm.model_executor.models.phi4mm_utils import unfold_tensor
 
 _AUDIO_PLACEHOLDER_TOKEN_ID = 200011  # <|endoftext11|>
 

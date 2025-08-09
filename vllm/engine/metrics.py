@@ -3,13 +3,20 @@
 
 import time
 from typing import Counter as CollectionsCounter
-from typing import Dict, List, Optional, Type, Union, cast
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import Type
+from typing import Union
+from typing import cast
 
 import numpy as np
 import prometheus_client
 
-from vllm.config import SupportsMetricsInfo, VllmConfig
-from vllm.engine.metrics_types import StatLoggerBase, Stats
+from vllm.config import SupportsMetricsInfo
+from vllm.config import VllmConfig
+from vllm.engine.metrics_types import StatLoggerBase
+from vllm.engine.metrics_types import Stats
 from vllm.executor.ray_utils import ray
 from vllm.utils.logger import init_logger
 

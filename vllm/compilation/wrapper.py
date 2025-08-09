@@ -1,17 +1,19 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import os
-import sys
 from abc import abstractmethod
 from contextlib import contextmanager
+import os
+import sys
 from types import CodeType
-from typing import Callable, Optional
+from typing import Callable
+from typing import Optional
 
 import torch
 
+from vllm.config import CompilationLevel
+from vllm.config import get_current_vllm_config
 import vllm.envs as envs
-from vllm.config import CompilationLevel, get_current_vllm_config
 from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)

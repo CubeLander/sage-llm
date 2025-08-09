@@ -187,7 +187,8 @@ def rocm_aiter_fused_moe_impl(
     a1_scale: Optional[torch.Tensor] = None,
     a2_scale: Optional[torch.Tensor] = None,
 ) -> torch.Tensor:
-    from aiter import ActivationType, QuantType
+    from aiter import ActivationType
+    from aiter import QuantType
     from aiter.fused_moe import fused_moe
 
     activation = ActivationType(activation_method)

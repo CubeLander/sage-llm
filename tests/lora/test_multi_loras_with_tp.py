@@ -4,7 +4,8 @@
 Script to test multi loras service with tp >= 2
 """
 from tests.utils import multi_gpu_test
-from vllm import LLM, SamplingParams
+from vllm import LLM
+from vllm import SamplingParams
 from vllm.lora.request import LoRARequest
 
 MODEL_PATH = "Qwen/Qwen3-0.6B"

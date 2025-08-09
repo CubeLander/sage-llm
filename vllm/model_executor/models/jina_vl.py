@@ -1,27 +1,34 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-from collections.abc import Iterable, Mapping
+from collections.abc import Iterable
+from collections.abc import Mapping
 from typing import Optional
 
 import torch
 import torch.nn as nn
-from transformers import BatchFeature, PretrainedConfig
+from transformers import BatchFeature
+from transformers import PretrainedConfig
 
 from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
 from vllm.io.inputs import TokensPrompt
-from vllm.utils.logger import init_logger
-from vllm.model_executor.layers.linear import (ColumnParallelLinear,
-                                               RowParallelLinear)
-from vllm.model_executor.layers.pooler import DispatchPooler, Pooler
 from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.sequence import IntermediateTensors
+from vllm.model_executor.layers.linear import ColumnParallelLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
+from vllm.model_executor.layers.pooler import DispatchPooler
+from vllm.model_executor.layers.pooler import Pooler
+from vllm.utils.logger import init_logger
 
-from .interfaces import (SupportsCrossEncoding, SupportsMultiModal,
-                         SupportsScoreTemplate)
-from .qwen2_vl import (Qwen2VLDummyInputsBuilder,
-                       Qwen2VLForConditionalGeneration,
-                       Qwen2VLMultiModalProcessor, Qwen2VLProcessingInfo)
-from .utils import AutoWeightsLoader, WeightsMapper, maybe_prefix
+from .interfaces import SupportsCrossEncoding
+from .interfaces import SupportsMultiModal
+from .interfaces import SupportsScoreTemplate
+from .qwen2_vl import Qwen2VLDummyInputsBuilder
+from .qwen2_vl import Qwen2VLForConditionalGeneration
+from .qwen2_vl import Qwen2VLMultiModalProcessor
+from .qwen2_vl import Qwen2VLProcessingInfo
+from .utils import AutoWeightsLoader
+from .utils import WeightsMapper
+from .utils import maybe_prefix
 
 logger = init_logger(__name__)
 

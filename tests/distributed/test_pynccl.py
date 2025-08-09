@@ -13,9 +13,10 @@ from vllm.distributed.communication_op import (  # noqa
     tensor_model_parallel_all_reduce)
 from vllm.distributed.device_communicators.pynccl import PyNcclCommunicator
 from vllm.distributed.device_communicators.pynccl_wrapper import NCCLLibrary
-from vllm.distributed.parallel_state import (ensure_model_parallel_initialized,
-                                             get_world_group, graph_capture,
-                                             init_distributed_environment)
+from vllm.distributed.parallel_state import ensure_model_parallel_initialized
+from vllm.distributed.parallel_state import get_world_group
+from vllm.distributed.parallel_state import graph_capture
+from vllm.distributed.parallel_state import init_distributed_environment
 from vllm.utils import update_environment_variables
 
 

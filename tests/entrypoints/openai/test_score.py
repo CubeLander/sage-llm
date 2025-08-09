@@ -5,8 +5,8 @@ from typing import Any
 import pytest
 import requests
 import torch
-import torch.nn.functional as F
 from torch import tensor
+import torch.nn.functional as F
 
 from vllm.entrypoints.openai.protocol import ScoreResponse
 

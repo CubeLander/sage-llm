@@ -1,38 +1,48 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 from dataclasses import dataclass
-from typing import Any, Optional, Union
+from typing import Any
+from typing import Optional
+from typing import Union
 
 import torch
 
-import vllm._custom_ops as ops
-import vllm.model_executor.layers.fused_moe.modular_kernel as mk
 from tests.kernels.utils import torch_experts
+import vllm._custom_ops as ops
 from vllm.config import VllmConfig
-from vllm.distributed import get_dp_group, get_tensor_model_parallel_world_size
+from vllm.distributed import get_dp_group
+from vllm.distributed import get_tensor_model_parallel_world_size
 # Fused experts and PrepareFinalize imports
 from vllm.model_executor.layers.fused_moe.batched_deep_gemm_moe import (
     BatchedDeepGemmExperts)
 from vllm.model_executor.layers.fused_moe.batched_triton_or_deep_gemm_moe import (  # noqa: E501
     BatchedTritonOrDeepGemmExperts)
-from vllm.model_executor.layers.fused_moe.config import (
-    FusedMoEConfig, FusedMoEParallelConfig, FusedMoEQuantConfig)
+from vllm.model_executor.layers.fused_moe.config import FusedMoEConfig
+from vllm.model_executor.layers.fused_moe.config import FusedMoEParallelConfig
+from vllm.model_executor.layers.fused_moe.config import FusedMoEQuantConfig
 from vllm.model_executor.layers.fused_moe.cutlass_moe import CutlassExpertsFp8
 from vllm.model_executor.layers.fused_moe.deep_gemm_moe import DeepGemmExperts
 from vllm.model_executor.layers.fused_moe.fused_batched_moe import (
-    BatchedTritonExperts, NaiveBatchedExperts)
+    BatchedTritonExperts)
+from vllm.model_executor.layers.fused_moe.fused_batched_moe import (
+    NaiveBatchedExperts)
 from vllm.model_executor.layers.fused_moe.fused_moe import fused_topk
-from vllm.model_executor.layers.fused_moe.layer import (FusedMoEMethodBase,
-                                                        TritonExperts)
+from vllm.model_executor.layers.fused_moe.layer import FusedMoEMethodBase
+from vllm.model_executor.layers.fused_moe.layer import TritonExperts
+import vllm.model_executor.layers.fused_moe.modular_kernel as mk
 from vllm.model_executor.layers.fused_moe.prepare_finalize import (
     MoEPrepareAndFinalizeNoEP)
 from vllm.model_executor.layers.fused_moe.triton_deep_gemm_moe import (
     TritonOrDeepGemmExperts)
-from vllm.utils import has_deep_ep, has_deep_gemm, has_pplx
+from vllm.utils import has_deep_ep
+from vllm.utils import has_deep_gemm
+from vllm.utils import has_pplx
 
 from .parallel_utils import ProcessGroupInfo
-from .utils import (make_block_quant_fp8_weights, make_non_quant_weights,
-                    make_quant_fp8_weights, per_token_cast_to_fp8)
+from .utils import make_block_quant_fp8_weights
+from .utils import make_non_quant_weights
+from .utils import make_quant_fp8_weights
+from .utils import per_token_cast_to_fp8
 
 if has_pplx():
     from vllm.model_executor.layers.fused_moe.pplx_prepare_finalize import (

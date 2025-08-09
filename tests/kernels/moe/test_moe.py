@@ -5,7 +5,9 @@
 Run `pytest tests/kernels/test_moe.py`.
 """
 import functools
-from typing import Callable, Optional, Union
+from typing import Callable
+from typing import Optional
+from typing import Union
 
 import pytest
 import torch
@@ -14,14 +16,18 @@ from torch.nn import functional as F
 from transformers import MixtralConfig
 from transformers.models.mixtral.modeling_mixtral import MixtralSparseMoeBlock
 
-import vllm.model_executor.layers.fused_moe  # noqa
-from tests.kernels.utils import opcheck, stack_and_dev, torch_moe
-from vllm.config import VllmConfig, set_current_vllm_config
+from tests.kernels.utils import opcheck
+from tests.kernels.utils import stack_and_dev
+from tests.kernels.utils import torch_moe
+from vllm.config import VllmConfig
+from vllm.config import set_current_vllm_config
 from vllm.distributed.parallel_state import init_distributed_environment
 from vllm.forward_context import set_forward_context
+import vllm.model_executor.layers.fused_moe  # noqa
 from vllm.model_executor.layers.fused_moe import fused_moe
 from vllm.model_executor.layers.fused_moe.fused_moe import (
-    fused_topk, modular_triton_fused_moe)
+    modular_triton_fused_moe)
+from vllm.model_executor.layers.fused_moe.fused_moe import fused_topk
 from vllm.model_executor.layers.fused_moe.moe_torch_iterative import (
     fused_moe as iterative_moe)
 from vllm.model_executor.layers.quantization.utils.marlin_utils_fp4 import (
@@ -29,12 +35,15 @@ from vllm.model_executor.layers.quantization.utils.marlin_utils_fp4 import (
 from vllm.model_executor.layers.quantization.utils.marlin_utils_fp8 import (
     marlin_quant_fp8_torch)
 from vllm.model_executor.layers.quantization.utils.marlin_utils_test import (
-    awq_marlin_quantize, marlin_quantize)
+    awq_marlin_quantize)
+from vllm.model_executor.layers.quantization.utils.marlin_utils_test import (
+    marlin_quantize)
 from vllm.model_executor.layers.quantization.utils.quant_utils import (
     quantize_weights)
 from vllm.model_executor.models.mixtral import MixtralMoE
 from vllm.platforms import current_platform
-from vllm.scalar_type import ScalarType, scalar_types
+from vllm.scalar_type import ScalarType
+from vllm.scalar_type import scalar_types
 
 NUM_EXPERTS = [8, 64]
 EP_SIZE = [1, 4]

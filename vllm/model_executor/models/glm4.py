@@ -23,30 +23,37 @@
 # limitations under the License.
 """Inference-only GLM-4-0414 model compatible with HuggingFace weights."""
 from collections.abc import Iterable
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 import torch
 from torch import nn
 from transformers import Glm4Config
 
-from vllm.attention import Attention, AttentionType
+from vllm.attention import Attention
+from vllm.attention import AttentionType
 from vllm.compilation.decorators import support_torch_compile
-from vllm.config import CacheConfig, VllmConfig
-from vllm.distributed import get_pp_group, get_tensor_model_parallel_world_size
+from vllm.config import CacheConfig
+from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.distributed import get_pp_group
+from vllm.distributed import get_tensor_model_parallel_world_size
 from vllm.model_executor.layers.layernorm import RMSNorm
-from vllm.model_executor.layers.linear import (QKVParallelLinear,
-                                               RowParallelLinear)
+from vllm.model_executor.layers.linear import QKVParallelLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
 from vllm.model_executor.layers.logits_processor import LogitsProcessor
 from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.model_executor.layers.rotary_embedding import get_rope
 from vllm.model_executor.layers.vocab_parallel_embedding import ParallelLMHead
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.sequence import IntermediateTensors
 
-from .interfaces import SupportsLoRA, SupportsPP
+from .interfaces import SupportsLoRA
+from .interfaces import SupportsPP
 from .llama import LlamaMLP as Glm4MLP
 from .llama import LlamaModel
-from .utils import AutoWeightsLoader, PPMissingLayer, maybe_prefix
+from .utils import AutoWeightsLoader
+from .utils import PPMissingLayer
+from .utils import maybe_prefix
 
 
 class Glm4Attention(nn.Module):

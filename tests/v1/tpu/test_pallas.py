@@ -1,12 +1,13 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-from unittest.mock import ANY, patch
+from unittest.mock import ANY
+from unittest.mock import patch
 
 import torch
 
 from vllm.attention.backends.abstract import AttentionType
-from vllm.v1.attention.backends.pallas import (PallasAttentionBackendImpl,
-                                               PallasMetadata)
+from vllm.v1.attention.backends.pallas import PallasAttentionBackendImpl
+from vllm.v1.attention.backends.pallas import PallasMetadata
 
 
 def test_ragged_paged_attention():

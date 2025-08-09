@@ -2,43 +2,62 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from abc import abstractmethod
-from collections.abc import Iterable, Mapping, Sequence
-from typing import (Final, Literal, Optional, Protocol, TypedDict, TypeVar,
-                    Union)
+from collections.abc import Iterable
+from collections.abc import Mapping
+from collections.abc import Sequence
+from typing import Final
+from typing import Literal
+from typing import Optional
+from typing import Protocol
+from typing import TypeVar
+from typing import TypedDict
+from typing import Union
 
 import torch
 import torch.nn as nn
-from transformers import (BatchFeature, Mistral3Config, PixtralVisionConfig,
-                          PretrainedConfig)
+from transformers import BatchFeature
+from transformers import Mistral3Config
+from transformers import PixtralVisionConfig
+from transformers import PretrainedConfig
 from transformers.models.pixtral import PixtralProcessor
 
 from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
 from vllm.io.inputs import InputProcessingContext
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import MultiModalDataDict
+from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.parse import ImageProcessorItems
+from vllm.io.inputs.multimodal.parse import ImageSize
+from vllm.io.inputs.multimodal.parse import MultiModalDataItems
+from vllm.io.inputs.multimodal.processing import BaseMultiModalProcessor
+from vllm.io.inputs.multimodal.processing import BaseProcessingInfo
+from vllm.io.inputs.multimodal.processing import ProcessingCache
+from vllm.io.inputs.multimodal.processing import PromptReplacement
+from vllm.io.inputs.multimodal.processing import PromptUpdate
+from vllm.io.inputs.multimodal.processing import PromptUpdateDetails
+from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
 from vllm.model_executor.layers.activation import get_act_fn
 from vllm.model_executor.layers.layernorm import RMSNorm
-from vllm.model_executor.layers.linear import (ColumnParallelLinear,
-                                               RowParallelLinear)
+from vllm.model_executor.layers.linear import ColumnParallelLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
 from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.model_executor.models.module_mapping import MultiModelKeys
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
-                                    MultiModalKwargs)
-from vllm.io.inputs.multimodal.parse import (ImageProcessorItems, ImageSize,
-                                   MultiModalDataItems)
-from vllm.io.inputs.multimodal.processing import (BaseMultiModalProcessor,
-                                        BaseProcessingInfo, ProcessingCache,
-                                        PromptReplacement, PromptUpdate,
-                                        PromptUpdateDetails)
-from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
-from vllm.sequence import IntermediateTensors
 
-from .interfaces import (MultiModalEmbeddings, SupportsLoRA,
-                         SupportsMultiModal, SupportsPP)
-from .pixtral import PixtralHFEncoderInfo, PixtralHFVisionModel
-from .utils import (AutoWeightsLoader, WeightsMapper, flatten_bn,
-                    init_vllm_registered_model, maybe_prefix,
-                    merge_multimodal_embeddings)
+from .interfaces import MultiModalEmbeddings
+from .interfaces import SupportsLoRA
+from .interfaces import SupportsMultiModal
+from .interfaces import SupportsPP
+from .pixtral import PixtralHFEncoderInfo
+from .pixtral import PixtralHFVisionModel
+from .utils import AutoWeightsLoader
+from .utils import WeightsMapper
+from .utils import flatten_bn
+from .utils import init_vllm_registered_model
+from .utils import maybe_prefix
+from .utils import merge_multimodal_embeddings
 from .vision import get_vision_encoder_info
 
 

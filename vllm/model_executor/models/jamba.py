@@ -10,35 +10,46 @@ from transformers import JambaConfig
 
 from vllm import envs
 from vllm.attention.layer import Attention
-from vllm.config import CacheConfig, VllmConfig
+from vllm.config import CacheConfig
+from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
 from vllm.distributed import get_tensor_model_parallel_world_size
 from vllm.distributed.parallel_state import get_pp_group
 from vllm.model_executor.layers.fused_moe import FusedMoE
 from vllm.model_executor.layers.layernorm import RMSNorm
-from vllm.model_executor.layers.linear import (QKVParallelLinear,
-                                               ReplicatedLinear,
-                                               RowParallelLinear)
+from vllm.model_executor.layers.linear import QKVParallelLinear
+from vllm.model_executor.layers.linear import ReplicatedLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
 from vllm.model_executor.layers.logits_processor import LogitsProcessor
 from vllm.model_executor.layers.mamba.mamba_mixer import MambaMixer
 from vllm.model_executor.layers.mamba.mamba_utils import (
     MambaStateShapeCalculator)
-from vllm.model_executor.layers.pooler import (DispatchPooler, Pooler,
-                                               PoolingType)
+from vllm.model_executor.layers.pooler import DispatchPooler
+from vllm.model_executor.layers.pooler import Pooler
+from vllm.model_executor.layers.pooler import PoolingType
 from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.model_executor.layers.vocab_parallel_embedding import (
-    DEFAULT_VOCAB_PADDING_SIZE, ParallelLMHead, VocabParallelEmbedding)
+    DEFAULT_VOCAB_PADDING_SIZE)
+from vllm.model_executor.layers.vocab_parallel_embedding import (
+    VocabParallelEmbedding)
+from vllm.model_executor.layers.vocab_parallel_embedding import ParallelLMHead
 from vllm.model_executor.model_loader.weight_utils import default_weight_loader
 from vllm.model_executor.models.llama import LlamaMLP as JambaMLP
-from vllm.model_executor.models.mamba_cache import (MambaCacheManager,
-                                                    MambaCacheParams)
+from vllm.model_executor.models.mamba_cache import MambaCacheManager
+from vllm.model_executor.models.mamba_cache import MambaCacheParams
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.sequence import IntermediateTensors
 from vllm.utils import LayerBlockType
 
-from .interfaces import HasInnerState, IsHybrid, SupportsLoRA, SupportsPP
-from .utils import (AutoWeightsLoader, WeightsMapper, is_pp_missing_parameter,
-                    make_empty_intermediate_tensors_factory, make_layers,
-                    maybe_prefix)
+from .interfaces import HasInnerState
+from .interfaces import IsHybrid
+from .interfaces import SupportsLoRA
+from .interfaces import SupportsPP
+from .utils import AutoWeightsLoader
+from .utils import WeightsMapper
+from .utils import is_pp_missing_parameter
+from .utils import make_empty_intermediate_tensors_factory
+from .utils import make_layers
+from .utils import maybe_prefix
 
 
 class JambaMoE(nn.Module):

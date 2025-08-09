@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from contextlib import contextmanager
 # cumem-based pytorch pluggable allocator to implement sleep mode.
 # other approaches tried but failed:
 # - cuda-python package binding
@@ -11,8 +12,10 @@
 import dataclasses
 import gc
 import os
-from contextlib import contextmanager
-from typing import Any, Callable, Optional, Union
+from typing import Any
+from typing import Callable
+from typing import Optional
+from typing import Union
 
 import torch
 
@@ -47,8 +50,9 @@ def find_loaded_library(lib_name) -> Optional[str]:
 
 cumem_available = False
 try:
-    from vllm.cumem_allocator import (init_module, python_create_and_map,
-                                      python_unmap_and_release)
+    from vllm.cumem_allocator import init_module
+    from vllm.cumem_allocator import python_create_and_map
+    from vllm.cumem_allocator import python_unmap_and_release
     from vllm.distributed.device_communicators.cuda_wrapper import (
         CudaRTLibrary)
     lib_name = find_loaded_library("cumem_allocator")

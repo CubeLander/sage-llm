@@ -3,7 +3,8 @@
 
 import asyncio
 import multiprocessing
-from typing import Callable, Union
+from typing import Callable
+from typing import Union
 
 from vllm import SamplingParams
 from vllm.engine.arg_utils import AsyncEngineArgs

@@ -1,20 +1,26 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-import os
 from collections.abc import Generator
+import os
 
 import gguf
+from huggingface_hub import hf_hub_download
 import torch
 import torch.nn as nn
-from huggingface_hub import hf_hub_download
 from transformers import AutoModelForCausalLM
 
-from vllm.config import LoadConfig, ModelConfig, VllmConfig
+from vllm.config import LoadConfig
+from vllm.config import ModelConfig
+from vllm.config import VllmConfig
 from vllm.model_executor.model_loader.base_loader import BaseModelLoader
 from vllm.model_executor.model_loader.utils import (
-    initialize_model, process_weights_after_loading, set_default_torch_dtype)
+    process_weights_after_loading)
+from vllm.model_executor.model_loader.utils import initialize_model
+from vllm.model_executor.model_loader.utils import set_default_torch_dtype
 from vllm.model_executor.model_loader.weight_utils import (
-    get_gguf_extra_tensor_names, gguf_quant_weights_iterator)
+    get_gguf_extra_tensor_names)
+from vllm.model_executor.model_loader.weight_utils import (
+    gguf_quant_weights_iterator)
 
 
 class GGUFModelLoader(BaseModelLoader):

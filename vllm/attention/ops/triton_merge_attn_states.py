@@ -4,7 +4,8 @@ from typing import Optional
 
 import torch
 
-from vllm.platforms.triton_tuils import tl, triton
+from vllm.platforms.triton_tuils import tl
+from vllm.platforms.triton_tuils import triton
 
 
 # Implements section 2.2 of https://www.arxiv.org/pdf/2501.01005

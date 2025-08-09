@@ -8,7 +8,8 @@ import torch
 from tests.conftest import HfRunner
 from tests.utils import multi_gpu_test
 
-from .mteb_utils import RerankModelInfo, mteb_test_rerank_models
+from .mteb_utils import RerankModelInfo
+from .mteb_utils import mteb_test_rerank_models
 
 RERANK_MODELS = [
     RerankModelInfo("Qwen/Qwen3-Reranker-0.6B",
@@ -27,7 +28,8 @@ class Qwen3RerankerHfRunner(HfRunner):
                  dtype: str = "auto",
                  *args: Any,
                  **kwargs: Any) -> None:
-        from transformers import AutoModelForCausalLM, AutoTokenizer
+        from transformers import AutoModelForCausalLM
+        from transformers import AutoTokenizer
         super().__init__(model_name, dtype, auto_cls=AutoModelForCausalLM)
 
         self.tokenizer = AutoTokenizer.from_pretrained(model_name,

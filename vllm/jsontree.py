@@ -3,7 +3,10 @@
 """Helper functions to work with nested JSON structures."""
 from collections.abc import Iterable
 from functools import reduce
-from typing import Callable, TypeVar, Union, overload
+from typing import Callable
+from typing import TypeVar
+from typing import Union
+from typing import overload
 
 _T = TypeVar("_T")
 _U = TypeVar("_U")

@@ -1,25 +1,39 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from abc import ABC, abstractmethod
-from collections import UserDict, defaultdict
-from collections.abc import Mapping, Sequence
+from abc import ABC
+from abc import abstractmethod
+from collections import UserDict
+from collections import defaultdict
+from collections.abc import Mapping
+from collections.abc import Sequence
 from dataclasses import dataclass
 from functools import partial
 from itertools import accumulate
-from typing import (TYPE_CHECKING, Any, Literal, Optional, TypedDict, TypeVar,
-                    Union, cast, final)
+from typing import Any
+from typing import Literal
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import TypeVar
+from typing import TypedDict
+from typing import Union
+from typing import cast
+from typing import final
 
 import numpy as np
-from typing_extensions import NotRequired, TypeAlias
+from typing_extensions import NotRequired
+from typing_extensions import TypeAlias
 
-from vllm.jsontree import JSONTree, json_map_leaves
-from vllm.utils import LazyLoader, full_groupby, is_list_of
+from vllm.jsontree import JSONTree
+from vllm.jsontree import json_map_leaves
+from vllm.utils import LazyLoader
+from vllm.utils import full_groupby
+from vllm.utils import is_list_of
 
 if TYPE_CHECKING:
+    from PIL.Image import Image
     import torch
     import torch.types
-    from PIL.Image import Image
     from transformers.feature_extraction_utils import BatchFeature
 
     from .hasher import MultiModalHashDict

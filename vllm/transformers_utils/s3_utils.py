@@ -3,10 +3,10 @@
 
 import fnmatch
 import os
+from pathlib import Path
 import shutil
 import signal
 import tempfile
-from pathlib import Path
 from typing import Optional
 
 from vllm.utils import PlaceholderModule

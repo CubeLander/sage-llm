@@ -2,25 +2,32 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from collections.abc import Iterable
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 import torch
 from torch import nn
 from transformers import RobertaConfig
 
 from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
 from vllm.forward_context import get_forward_context
-from vllm.model_executor.layers.pooler import (ClassifierPooler, CLSPool,
-                                               DispatchPooler, Pooler)
+from vllm.model_executor.layers.pooler import CLSPool
+from vllm.model_executor.layers.pooler import ClassifierPooler
+from vllm.model_executor.layers.pooler import DispatchPooler
+from vllm.model_executor.layers.pooler import Pooler
 from vllm.model_executor.layers.vocab_parallel_embedding import (
     VocabParallelEmbedding)
-from vllm.model_executor.models.bert import BertEmbeddingModel, BertModel
-from vllm.model_executor.models.utils import (AutoWeightsLoader, WeightsMapper,
-                                              maybe_prefix)
-from vllm.sequence import IntermediateTensors
+from vllm.model_executor.models.bert import BertEmbeddingModel
+from vllm.model_executor.models.bert import BertModel
+from vllm.model_executor.models.utils import AutoWeightsLoader
+from vllm.model_executor.models.utils import WeightsMapper
+from vllm.model_executor.models.utils import maybe_prefix
 
-from .bert_with_rope import BertWithRope, JinaRobertaModel
-from .interfaces import SupportsCrossEncoding, SupportsV0Only
+from .bert_with_rope import BertWithRope
+from .bert_with_rope import JinaRobertaModel
+from .interfaces import SupportsCrossEncoding
+from .interfaces import SupportsV0Only
 
 
 class RobertaEmbedding(nn.Module):

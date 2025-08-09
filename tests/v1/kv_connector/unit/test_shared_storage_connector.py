@@ -5,7 +5,9 @@ from typing import NamedTuple
 
 from PIL import Image
 
-from vllm import LLM, EngineArgs, SamplingParams
+from vllm import EngineArgs
+from vllm import LLM
+from vllm import SamplingParams
 from vllm.assets.image import ImageAsset
 from vllm.config import KVTransferConfig
 from vllm.io.inputs.multimodal.utils import encode_image_base64

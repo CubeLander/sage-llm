@@ -1,11 +1,13 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
+from argparse import HelpFormatter
+from argparse import SUPPRESS
 import logging
-import sys
-from argparse import SUPPRESS, HelpFormatter
 from pathlib import Path
+import sys
 from typing import Literal
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
+from unittest.mock import patch
 
 ROOT_DIR = Path(__file__).parent.parent.parent.parent
 ARGPARSE_DOC_DIR = ROOT_DIR / "docs/argparse"
@@ -15,7 +17,8 @@ sys.modules["aiohttp"] = MagicMock()
 sys.modules["blake3"] = MagicMock()
 sys.modules["vllm._C"] = MagicMock()
 
-from vllm.engine.arg_utils import AsyncEngineArgs, EngineArgs  # noqa: E402
+from vllm.engine.arg_utils import AsyncEngineArgs  # noqa: E402
+from vllm.engine.arg_utils import EngineArgs
 from vllm.entrypoints.openai.cli_args import make_arg_parser  # noqa: E402
 from vllm.utils import FlexibleArgumentParser  # noqa: E402
 

@@ -6,16 +6,16 @@ from typing import Optional
 import torch
 
 from vllm import envs
-from vllm.attention.backends.abstract import (AttentionType,
-                                              is_quantized_kv_cache)
+from vllm.attention.backends.abstract import AttentionType
+from vllm.attention.backends.abstract import is_quantized_kv_cache
 from vllm.attention.ops.triton_decode_attention import decode_attention_fwd
 from vllm.attention.ops.triton_flash_attention import triton_attention
-from vllm.utils.logger import init_logger
 from vllm.platforms import current_platform
 from vllm.platforms.triton_tuils import HAS_TRITON
-from vllm.v1.attention.backends.mla.common import (MLACommonBackend,
-                                                   MLACommonImpl,
-                                                   MLACommonMetadata)
+from vllm.utils.logger import init_logger
+from vllm.v1.attention.backends.mla.common import MLACommonBackend
+from vllm.v1.attention.backends.mla.common import MLACommonImpl
+from vllm.v1.attention.backends.mla.common import MLACommonMetadata
 
 logger = init_logger(__name__)
 

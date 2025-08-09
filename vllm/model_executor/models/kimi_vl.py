@@ -42,11 +42,17 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+from collections.abc import Iterable
+from collections.abc import Mapping
+from collections.abc import Sequence
 import copy
-import math
-from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass
-from typing import Annotated, Any, Literal, Optional, Union
+import math
+from typing import Annotated
+from typing import Any
+from typing import Literal
+from typing import Optional
+from typing import Union
 
 import torch
 from torch import nn
@@ -54,34 +60,43 @@ from transformers import BatchFeature
 from transformers.activations import GELUActivation
 
 from vllm.config import VllmConfig
-from vllm.distributed import (get_tensor_model_parallel_rank,
-                              get_tensor_model_parallel_world_size)
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.distributed import get_tensor_model_parallel_rank
+from vllm.distributed import get_tensor_model_parallel_world_size
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import MultiModalDataDict
+from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.inputs import NestedTensors
+from vllm.io.inputs.multimodal.parse import ImageEmbeddingItems
+from vllm.io.inputs.multimodal.parse import ImageProcessorItems
+from vllm.io.inputs.multimodal.parse import MultiModalDataItems
+from vllm.io.inputs.multimodal.processing import BaseMultiModalProcessor
+from vllm.io.inputs.multimodal.processing import BaseProcessingInfo
+from vllm.io.inputs.multimodal.processing import PromptReplacement
+from vllm.io.inputs.multimodal.processing import PromptUpdate
+from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
 from vllm.model_executor.layers.fused_moe import FusedMoE
 from vllm.model_executor.layers.logits_processor import LogitsProcessor
 from vllm.model_executor.layers.vocab_parallel_embedding import (
-    DEFAULT_VOCAB_PADDING_SIZE, ParallelLMHead)
+    DEFAULT_VOCAB_PADDING_SIZE)
+from vllm.model_executor.layers.vocab_parallel_embedding import ParallelLMHead
 from vllm.model_executor.model_loader.weight_utils import (
-    default_weight_loader, maybe_remap_kv_scale_name)
+    maybe_remap_kv_scale_name)
+from vllm.model_executor.model_loader.weight_utils import default_weight_loader
 from vllm.model_executor.models.deepseek_v2 import DeepseekV2Model
 from vllm.model_executor.models.interfaces import SupportsMultiModal
 from vllm.model_executor.models.moonvit import MoonVitPretrainedModel
 from vllm.model_executor.models.utils import merge_multimodal_embeddings
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
-                                    MultiModalKwargs, NestedTensors)
-from vllm.io.inputs.multimodal.parse import (ImageEmbeddingItems, ImageProcessorItems,
-                                   MultiModalDataItems)
-from vllm.io.inputs.multimodal.processing import (BaseMultiModalProcessor,
-                                        BaseProcessingInfo, PromptReplacement,
-                                        PromptUpdate)
-from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
-from vllm.sequence import IntermediateTensors
-from vllm.transformers_utils.configs import KimiVLConfig, MoonViTConfig
+from vllm.transformers_utils.configs import KimiVLConfig
+from vllm.transformers_utils.configs import MoonViTConfig
 from vllm.transformers_utils.configs.deepseek_vl2 import DeepseekV2Config
-from vllm.utils.tensor_schema import TensorSchema, TensorShape
+from vllm.utils.tensor_schema import TensorSchema
+from vllm.utils.tensor_schema import TensorShape
 
-from .utils import is_pp_missing_parameter, maybe_prefix
+from .utils import is_pp_missing_parameter
+from .utils import maybe_prefix
 
 
 # For dummy input only

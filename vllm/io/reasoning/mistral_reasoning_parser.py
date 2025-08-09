@@ -1,11 +1,12 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from vllm.utils.logger import init_logger
-from vllm.io.reasoning import ReasoningParser, ReasoningParserManager
+from vllm.io.reasoning import ReasoningParser
+from vllm.io.reasoning import ReasoningParserManager
 from vllm.io.reasoning.deepseek_r1_reasoning_parser import (
     DeepSeekR1ReasoningParser)
 from vllm.transformers_utils.tokenizers.mistral import MistralTokenizer
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

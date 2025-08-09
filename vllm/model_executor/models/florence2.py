@@ -1,39 +1,53 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import math
 from collections import OrderedDict
-from collections.abc import Iterable, Mapping, Sequence
-from typing import Annotated, Literal, Optional, Union
+from collections.abc import Iterable
+from collections.abc import Mapping
+from collections.abc import Sequence
+import math
+from typing import Annotated
+from typing import Literal
+from typing import Optional
+from typing import Union
 
+from einops import rearrange
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from einops import rearrange
-from transformers import BartTokenizer, BatchFeature, PretrainedConfig
+from transformers import BartTokenizer
+from transformers import BatchFeature
+from transformers import PretrainedConfig
 
 from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import MultiModalDataDict
+from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.parse import MultiModalDataItems
+from vllm.io.inputs.multimodal.processing import BaseProcessingInfo
+from vllm.io.inputs.multimodal.processing import EncDecMultiModalProcessor
+from vllm.io.inputs.multimodal.processing import PromptIndexTargets
+from vllm.io.inputs.multimodal.processing import PromptInsertion
+from vllm.io.inputs.multimodal.processing import PromptUpdate
+from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
 from vllm.model_executor.layers.logits_processor import LogitsProcessor
 from vllm.model_executor.model_loader.weight_utils import default_weight_loader
-from vllm.model_executor.models.bart import (BartDecoder, BartEncoder,
-                                             BartParallelLMHead,
-                                             BartScaledWordEmbedding)
+from vllm.model_executor.models.bart import BartDecoder
+from vllm.model_executor.models.bart import BartEncoder
+from vllm.model_executor.models.bart import BartParallelLMHead
+from vllm.model_executor.models.bart import BartScaledWordEmbedding
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
-                                    MultiModalKwargs)
-from vllm.io.inputs.multimodal.parse import MultiModalDataItems
-from vllm.io.inputs.multimodal.processing import (BaseProcessingInfo,
-                                        EncDecMultiModalProcessor,
-                                        PromptIndexTargets, PromptInsertion,
-                                        PromptUpdate)
-from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
-from vllm.sequence import IntermediateTensors
-from vllm.utils.tensor_schema import TensorSchema, TensorShape
+from vllm.utils.tensor_schema import TensorSchema
+from vllm.utils.tensor_schema import TensorShape
 
-from .interfaces import (MultiModalEmbeddings, SupportsMultiModal,
-                         SupportsV0Only)
-from .utils import AutoWeightsLoader, flatten_bn, merge_multimodal_embeddings
+from .interfaces import MultiModalEmbeddings
+from .interfaces import SupportsMultiModal
+from .interfaces import SupportsV0Only
+from .utils import AutoWeightsLoader
+from .utils import flatten_bn
+from .utils import merge_multimodal_embeddings
 
 
 class Florence2ImagePixelInputs(TensorSchema):

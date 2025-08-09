@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from contextlib import contextmanager
 import copy
 import dataclasses
-from contextlib import contextmanager
 
 
 @dataclasses.dataclass

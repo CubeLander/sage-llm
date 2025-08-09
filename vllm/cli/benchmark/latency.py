@@ -2,8 +2,10 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 import argparse
 
-from .__impl.latency import add_cli_args, main
 from vllm.cli.benchmark.base import BenchmarkSubcommandBase
+
+from .__impl.latency import add_cli_args
+from .__impl.latency import main
 
 
 class BenchmarkLatencySubcommand(BenchmarkSubcommandBase):

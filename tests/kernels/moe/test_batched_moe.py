@@ -7,12 +7,14 @@ from typing import Optional
 import pytest
 import torch
 
-from tests.kernels.moe.utils import (batched_moe,
-                                     make_quantized_test_activations,
-                                     make_test_weights, naive_batched_moe)
+from tests.kernels.moe.utils import batched_moe
+from tests.kernels.moe.utils import make_quantized_test_activations
+from tests.kernels.moe.utils import make_test_weights
+from tests.kernels.moe.utils import naive_batched_moe
 from tests.kernels.quant_utils import native_batched_masked_quant_matmul
 from tests.kernels.utils import torch_experts
-from vllm.config import VllmConfig, set_current_vllm_config
+from vllm.config import VllmConfig
+from vllm.config import set_current_vllm_config
 from vllm.model_executor.layers.fused_moe.fused_batched_moe import (
     invoke_moe_batched_triton_kernel)
 from vllm.model_executor.layers.fused_moe.fused_moe import fused_topk

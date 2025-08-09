@@ -2,16 +2,19 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from collections.abc import Iterable
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 import torch
 import torch.nn as nn
 
 from vllm.config import VllmConfig
-from vllm.model_executor.layers.pooler import DispatchPooler, Pooler
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.model_executor.layers.pooler import DispatchPooler
+from vllm.model_executor.layers.pooler import Pooler
 from vllm.model_executor.models.gemma2 import Gemma2Model
-from vllm.model_executor.models.utils import WeightsMapper, maybe_prefix
-from vllm.sequence import IntermediateTensors
+from vllm.model_executor.models.utils import WeightsMapper
+from vllm.model_executor.models.utils import maybe_prefix
 
 
 class MyGemma2Embedding(nn.Module):

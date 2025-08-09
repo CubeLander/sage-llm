@@ -4,7 +4,8 @@ from typing import Optional
 
 import torch
 
-from vllm.v1.request import Request, RequestStatus
+from vllm.v1.request import Request
+from vllm.v1.request import RequestStatus
 
 
 def check_stop(request: Request,

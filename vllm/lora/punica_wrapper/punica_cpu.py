@@ -1,13 +1,18 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from typing import Callable, Optional, Union
+from typing import Callable
+from typing import Optional
+from typing import Union
 
 import torch
 
-from vllm.lora.ops.torch_ops import (bgmv_expand, bgmv_expand_slice,
-                                     bgmv_shrink, sgmv_expand,
-                                     sgmv_expand_slice, sgmv_shrink)
+from vllm.lora.ops.torch_ops import bgmv_expand
+from vllm.lora.ops.torch_ops import bgmv_expand_slice
+from vllm.lora.ops.torch_ops import bgmv_shrink
+from vllm.lora.ops.torch_ops import sgmv_expand
+from vllm.lora.ops.torch_ops import sgmv_expand_slice
+from vllm.lora.ops.torch_ops import sgmv_shrink
 
 from .punica_base import PunicaWrapperBase
 

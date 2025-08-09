@@ -3,13 +3,19 @@
 from __future__ import annotations
 
 import random
-from typing import TYPE_CHECKING, Optional
+from typing import Optional
+from typing import TYPE_CHECKING
 
 import pytest
 
 from vllm import LLM
-from vllm.sampling_params import GuidedDecodingParams, SamplingParams
-from vllm.v1.metrics.reader import Counter, Gauge, Histogram, Metric, Vector
+from vllm.sampling_params import GuidedDecodingParams
+from vllm.sampling_params import SamplingParams
+from vllm.v1.metrics.reader import Counter
+from vllm.v1.metrics.reader import Gauge
+from vllm.v1.metrics.reader import Histogram
+from vllm.v1.metrics.reader import Metric
+from vllm.v1.metrics.reader import Vector
 
 if TYPE_CHECKING:
     from tests.conftest import VllmRunner

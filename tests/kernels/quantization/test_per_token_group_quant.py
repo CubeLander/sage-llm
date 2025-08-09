@@ -5,7 +5,8 @@ from unittest.mock import patch
 import pytest
 import torch
 
-from vllm.model_executor.layers.quantization.utils import fp8_utils, int8_utils
+from vllm.model_executor.layers.quantization.utils import fp8_utils
+from vllm.model_executor.layers.quantization.utils import int8_utils
 
 
 @pytest.mark.parametrize("shape", [(32, 128), (64, 256), (16, 512)])

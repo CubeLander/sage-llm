@@ -1,23 +1,24 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import tempfile
 from collections import OrderedDict
-from unittest.mock import MagicMock, patch
+import tempfile
+from unittest.mock import MagicMock
+from unittest.mock import patch
 
+from huggingface_hub import snapshot_download
 import pytest
 import torch
 import torch.nn as nn
-from huggingface_hub import snapshot_download
 
 import vllm
 from vllm.config import LoRAConfig
-from vllm.distributed import (cleanup_dist_env_and_memory,
-                              init_distributed_environment,
-                              initialize_model_parallel)
-from vllm.model_executor.layers.linear import (ColumnParallelLinear,
-                                               MergedColumnParallelLinear,
-                                               RowParallelLinear)
+from vllm.distributed import cleanup_dist_env_and_memory
+from vllm.distributed import init_distributed_environment
+from vllm.distributed import initialize_model_parallel
+from vllm.model_executor.layers.linear import ColumnParallelLinear
+from vllm.model_executor.layers.linear import MergedColumnParallelLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
 from vllm.model_executor.layers.logits_processor import LogitsProcessor
 from vllm.model_executor.layers.sampler import Sampler
 from vllm.model_executor.layers.vocab_parallel_embedding import ParallelLMHead

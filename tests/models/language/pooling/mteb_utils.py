@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import tempfile
 from collections.abc import Sequence
+import tempfile
 from typing import Optional
 
 import mteb
@@ -10,7 +10,8 @@ import numpy as np
 import pytest
 import requests
 
-from tests.models.utils import EmbedModelInfo, RerankModelInfo
+from tests.models.utils import EmbedModelInfo
+from tests.models.utils import RerankModelInfo
 
 # Most embedding models on the STS12 task (See #17175):
 # - Model implementation and minor changes in tensor dtype

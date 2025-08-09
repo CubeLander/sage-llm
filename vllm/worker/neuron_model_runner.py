@@ -1,26 +1,38 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import os
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Any, Dict, List, Optional, Set, Tuple, Union
+import os
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import Set
+from typing import TYPE_CHECKING
+from typing import Tuple
+from typing import Union
 
 import torch
 from torch import nn
 
-from vllm.config import DeviceConfig, VllmConfig
-from vllm.utils.logger import init_logger
+from vllm.config import DeviceConfig
+from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.tensors.intermediate_tensors import SequenceGroupMetadata
+from vllm.io.inputs.multimodal import BatchedTensorInputs
+from vllm.io.inputs.multimodal import MultiModalKwargs
 from vllm.lora.layers import LoRAMapping
 from vllm.lora.request import LoRARequest
 from vllm.model_executor import SamplingMetadata
 from vllm.model_executor.layers.sampler import SamplerOutput
 from vllm.model_executor.model_loader.neuron import get_neuron_model
-from vllm.io.inputs.multimodal import BatchedTensorInputs, MultiModalKwargs
 from vllm.platforms import current_platform
 from vllm.sampling_params import SamplingParams
-from vllm.sequence import IntermediateTensors, SequenceGroupMetadata
-from vllm.utils import is_pin_memory_available, make_tensor_with_pad
-from vllm.worker.model_runner_base import ModelRunnerBase, ModelRunnerInputBase
+from vllm.utils import is_pin_memory_available
+from vllm.utils import make_tensor_with_pad
+from vllm.utils.logger import init_logger
+from vllm.worker.model_runner_base import ModelRunnerBase
+from vllm.worker.model_runner_base import ModelRunnerInputBase
 
 if TYPE_CHECKING:
     from vllm.attention.backends.abstract import AttentionBackend

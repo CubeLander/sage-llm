@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from multiprocessing import Pool
 import os
+from pathlib import Path
 import subprocess
 import sys
 import time
-from multiprocessing import Pool
-from pathlib import Path
 
 import pytest
 import requests

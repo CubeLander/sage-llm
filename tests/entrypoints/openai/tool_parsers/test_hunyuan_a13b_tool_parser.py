@@ -8,9 +8,12 @@ from unittest.mock import MagicMock
 import pytest
 
 from tests.entrypoints.openai.tool_parsers.utils import (
-    run_tool_extraction, run_tool_extraction_streaming)
-from vllm.entrypoints.openai.protocol import FunctionCall, ToolCall
-from vllm.entrypoints.openai.tool_parsers import ToolParser, ToolParserManager
+    run_tool_extraction_streaming)
+from tests.entrypoints.openai.tool_parsers.utils import run_tool_extraction
+from vllm.entrypoints.openai.protocol import FunctionCall
+from vllm.entrypoints.openai.protocol import ToolCall
+from vllm.entrypoints.openai.tool_parsers import ToolParser
+from vllm.entrypoints.openai.tool_parsers import ToolParserManager
 
 
 def make_tool_call(name, arguments):

@@ -6,16 +6,17 @@
 
 # ruff: noqa: E501
 
-import torch
 from einops import rearrange
 from packaging import version
+import torch
 
 from vllm.platforms.triton_tuils import triton
 
 from .ssd_bmm import _bmm_chunk_fwd
 from .ssd_chunk_scan import _chunk_scan_fwd
-from .ssd_chunk_state import (_chunk_cumsum_fwd, _chunk_state_fwd,
-                              chunk_state_varlen)
+from .ssd_chunk_state import _chunk_cumsum_fwd
+from .ssd_chunk_state import _chunk_state_fwd
+from .ssd_chunk_state import chunk_state_varlen
 from .ssd_state_passing import _state_passing_fwd
 
 TRITON_22 = version.parse(triton.__version__) >= version.parse('2.2.0')

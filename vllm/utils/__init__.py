@@ -3,11 +3,40 @@
 
 from __future__ import annotations
 
+from argparse import Action
+from argparse import ArgumentDefaultsHelpFormatter
+from argparse import ArgumentParser
+from argparse import ArgumentTypeError
+from argparse import RawDescriptionHelpFormatter
+from argparse import _ArgumentGroup
 import asyncio
+from asyncio import AbstractEventLoop
+from asyncio import FIRST_COMPLETED
+from asyncio import Task
+from collections import UserDict
+from collections import defaultdict
+from collections.abc import AsyncGenerator
+from collections.abc import Awaitable
+from collections.abc import Collection
+from collections.abc import Generator
+from collections.abc import Hashable
+from collections.abc import Iterable
+from collections.abc import Iterator
+from collections.abc import KeysView
+from collections.abc import Mapping
+from collections.abc import Sequence
 import concurrent
+from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures.process import ProcessPoolExecutor
 import contextlib
+from dataclasses import dataclass
+from dataclasses import field
 import datetime
 import enum
+from functools import cache
+from functools import lru_cache
+from functools import partial
+from functools import wraps
 import gc
 import getpass
 import hashlib
@@ -30,54 +59,57 @@ import threading
 import time
 import traceback
 import types
+from types import MappingProxyType
+from typing import Any
+from typing import Callable
+from typing import Generic
+from typing import Literal
+from typing import NamedTuple
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import TextIO
+from typing import TypeVar
+from typing import Union
+from typing import cast
+from typing import overload
+from urllib.parse import urlparse
 import uuid
+from uuid import uuid4
 import warnings
 import weakref
-from argparse import (Action, ArgumentDefaultsHelpFormatter, ArgumentParser,
-                      ArgumentTypeError, RawDescriptionHelpFormatter,
-                      _ArgumentGroup)
-from asyncio import FIRST_COMPLETED, AbstractEventLoop, Task
-from collections import UserDict, defaultdict
-from collections.abc import (AsyncGenerator, Awaitable, Collection, Generator,
-                             Hashable, Iterable, Iterator, KeysView, Mapping,
-                             Sequence)
-from concurrent.futures import ThreadPoolExecutor
-from concurrent.futures.process import ProcessPoolExecutor
-from dataclasses import dataclass, field
-from functools import cache, lru_cache, partial, wraps
-from types import MappingProxyType
-from typing import (TYPE_CHECKING, Any, Callable, Generic, Literal, NamedTuple,
-                    Optional, TextIO, TypeVar, Union, cast, overload)
-from urllib.parse import urlparse
-from uuid import uuid4
 
 import cachetools
 import cbor2
 import cloudpickle
 import numpy as np
 import numpy.typing as npt
+from packaging import version
+from packaging.version import Version
 import psutil
 import regex as re
 import setproctitle
 import torch
+from torch.library import Library
 import torch.types
+from transformers.tokenization_utils_base import BatchEncoding
+from typing_extensions import Never
+from typing_extensions import ParamSpec
+from typing_extensions import TypeIs
+from typing_extensions import assert_never
 import yaml
 import zmq
 import zmq.asyncio
-from packaging import version
-from packaging.version import Version
-from torch.library import Library
-from transformers.tokenization_utils_base import BatchEncoding
-from typing_extensions import Never, ParamSpec, TypeIs, assert_never
 
 import vllm.envs as envs
-from vllm.utils.logger import enable_trace_function_call, init_logger
+from vllm.utils.logger import enable_trace_function_call
+from vllm.utils.logger import init_logger
 from vllm.utils.ray.lazy_utils import is_in_ray_actor
 
 if TYPE_CHECKING:
     from argparse import Namespace
 
-    from vllm.config import ModelConfig, VllmConfig
+    from vllm.config import ModelConfig
+    from vllm.config import VllmConfig
 
 logger = init_logger(__name__)
 

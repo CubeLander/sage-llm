@@ -5,19 +5,28 @@ from collections import defaultdict
 from contextlib import contextmanager
 from dataclasses import dataclass
 from itertools import accumulate
-from typing import (TYPE_CHECKING, Any, Dict, List, Optional, Tuple, Type,
-                    TypeVar, Union)
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Tuple
+from typing import Type
+from typing import TypeVar
+from typing import Union
 
 import numpy as np
 import torch
 
-from vllm.attention import (AttentionMetadata, AttentionMetadataBuilder,
-                            AttentionState)
+from vllm.attention import AttentionMetadata
+from vllm.attention import AttentionMetadataBuilder
+from vllm.attention import AttentionState
 from vllm.attention.backends.abstract import AttentionType
 from vllm.config import ModelConfig
-from vllm.utils.logger import init_logger
 from vllm.io.inputs.multimodal import MultiModalPlaceholderMap
-from vllm.utils import async_tensor_h2d, make_tensor_with_pad
+from vllm.utils import async_tensor_h2d
+from vllm.utils import make_tensor_with_pad
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

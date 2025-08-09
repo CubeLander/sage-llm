@@ -1,17 +1,22 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 import functools
-from typing import List, Optional
+from typing import List
+from typing import Optional
 
 import torch
 
 from vllm import envs
 from vllm.attention.backends.abstract import AttentionBackend
 from vllm.attention.selector import get_attn_backend
-from vllm.config import CacheConfig, QuantizationConfig
+from vllm.config import CacheConfig
+from vllm.config import QuantizationConfig
 from vllm.v1.attention.backends.utils import (
-    CommonAttentionMetadata, make_local_attention_virtual_batches,
-    subclass_attention_backend, subclass_attention_metadata_builder)
+    make_local_attention_virtual_batches)
+from vllm.v1.attention.backends.utils import (
+    subclass_attention_metadata_builder)
+from vllm.v1.attention.backends.utils import CommonAttentionMetadata
+from vllm.v1.attention.backends.utils import subclass_attention_backend
 
 from ..layer import Attention
 

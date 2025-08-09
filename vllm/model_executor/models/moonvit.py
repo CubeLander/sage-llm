@@ -42,16 +42,18 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-import math
 from collections.abc import Sequence
 from copy import deepcopy
 from functools import cached_property
-from typing import Optional, Union
+import math
+from typing import Optional
+from typing import Union
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from transformers.activations import ACT2FN, PytorchGELUTanh
+from transformers.activations import ACT2FN
+from transformers.activations import PytorchGELUTanh
 from transformers.modeling_utils import PreTrainedModel
 from transformers.utils import is_flash_attn_2_available
 

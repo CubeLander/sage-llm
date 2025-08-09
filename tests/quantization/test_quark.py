@@ -7,22 +7,25 @@ Run `pytest tests/quantization/test_quark.py`.
 See also `tests/kernels/moe/test_mxfp4_moe.py`.
 """
 
+from dataclasses import dataclass
 import importlib
 import importlib.metadata
 import os
-from dataclasses import dataclass
 
 import huggingface_hub
 import lm_eval
+from packaging import version
 import pytest
 import torch
-from packaging import version
 
 from vllm.model_executor.layers.quantization.quark.quark import (  # noqa: E501
-    QuarkLinearMethod, QuarkW8A8Fp8, QuarkW8A8Int8)
+    QuarkLinearMethod)
+from vllm.model_executor.layers.quantization.quark.quark import QuarkW8A8Fp8
+from vllm.model_executor.layers.quantization.quark.quark import QuarkW8A8Int8
 from vllm.platforms import current_platform
 
-from .reference_mxfp4 import dq_mxfp4_torch, qdq_mxfp4_torch
+from .reference_mxfp4 import dq_mxfp4_torch
+from .reference_mxfp4 import qdq_mxfp4_torch
 
 QUARK_MXFP4_AVAILABLE = importlib.util.find_spec(
     "quark") is not None and version.parse(

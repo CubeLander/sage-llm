@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-import torch
 from einops import rearrange
+import torch
 
-from vllm.platforms.triton_tuils import tl, triton
+from vllm.platforms.triton_tuils import tl
+from vllm.platforms.triton_tuils import triton
 
 
 @triton.jit

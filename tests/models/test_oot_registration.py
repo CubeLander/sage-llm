@@ -3,7 +3,8 @@
 
 import pytest
 
-from vllm import LLM, SamplingParams
+from vllm import LLM
+from vllm import SamplingParams
 from vllm.assets.image import ImageAsset
 from vllm.io.inputs.multimodal.image import convert_image_mode
 

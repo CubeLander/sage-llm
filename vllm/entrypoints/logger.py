@@ -2,14 +2,16 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from collections.abc import Sequence
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 import torch
 
-from vllm.utils.logger import init_logger
 from vllm.lora.request import LoRARequest
 from vllm.pooling_params import PoolingParams
-from vllm.sampling_params import BeamSearchParams, SamplingParams
+from vllm.sampling_params import BeamSearchParams
+from vllm.sampling_params import SamplingParams
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

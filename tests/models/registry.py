@@ -1,12 +1,16 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from collections.abc import Mapping, Set
-from dataclasses import dataclass, field
-from typing import Any, Literal, Optional
+from collections.abc import Mapping
+from collections.abc import Set
+from dataclasses import dataclass
+from dataclasses import field
+from typing import Any
+from typing import Literal
+from typing import Optional
 
-import pytest
 from packaging.version import Version
+import pytest
 from transformers import __version__ as TRANSFORMERS_VERSION
 
 from vllm.config import TokenizerMode

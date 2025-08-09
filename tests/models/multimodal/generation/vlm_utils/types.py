@@ -4,10 +4,14 @@
 from collections.abc import Iterable
 from enum import Enum
 from pathlib import PosixPath
-from typing import Any, Callable, NamedTuple, Optional, Union
+from typing import Any
+from typing import Callable
+from typing import NamedTuple
+from typing import Optional
+from typing import Union
 
-import torch
 from pytest import MarkDecorator
+import torch
 from transformers import AutoModelForCausalLM
 from transformers.models.auto.auto_factory import _BaseAutoModelClass
 
@@ -15,9 +19,14 @@ from vllm.config import RunnerOption
 from vllm.sequence import SampleLogprobs
 from vllm.transformers_utils.tokenizer import AnyTokenizer
 
-from .....conftest import (AUDIO_ASSETS, IMAGE_ASSETS, HfRunner, ImageAsset,
-                           ImageTestAssets, PromptAudioInput, PromptImageInput,
-                           PromptVideoInput)
+from .....conftest import AUDIO_ASSETS
+from .....conftest import HfRunner
+from .....conftest import IMAGE_ASSETS
+from .....conftest import ImageAsset
+from .....conftest import ImageTestAssets
+from .....conftest import PromptAudioInput
+from .....conftest import PromptImageInput
+from .....conftest import PromptVideoInput
 from ....utils import check_logprobs_close
 
 # meta image tag; will be replaced by the appropriate tag for the model

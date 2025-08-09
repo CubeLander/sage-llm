@@ -1,56 +1,79 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import itertools
 from collections.abc import Sequence
 from contextlib import contextmanager
-from typing import (TYPE_CHECKING, Any, Callable, ClassVar, Optional, Union,
-                    cast, overload)
+import itertools
+from typing import Any
+from typing import Callable
+from typing import ClassVar
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Union
+from typing import cast
+from typing import overload
 
 import cloudpickle
-import torch.nn as nn
 from pydantic import ValidationError
+import torch.nn as nn
 from tqdm.auto import tqdm
-from typing_extensions import TypeVar, deprecated
+from typing_extensions import TypeVar
+from typing_extensions import deprecated
 
-import vllm.envs as envs
-from vllm.beam_search import (BeamSearchInstance, BeamSearchOutput,
-                              BeamSearchSequence,
-                              create_sort_beams_key_function)
-from vllm.config import (CompilationConfig, ModelDType, TokenizerMode,
-                         is_init_field)
-from vllm.engine.arg_utils import (ConvertOption, EngineArgs, HfOverrides,
-                                   PoolerConfig, RunnerOption)
+from vllm.beam_search import BeamSearchInstance
+from vllm.beam_search import BeamSearchOutput
+from vllm.beam_search import BeamSearchSequence
+from vllm.beam_search import create_sort_beams_key_function
+from vllm.config import CompilationConfig
+from vllm.config import ModelDType
+from vllm.config import TokenizerMode
+from vllm.config import is_init_field
+from vllm.engine.arg_utils import ConvertOption
+from vllm.engine.arg_utils import EngineArgs
+from vllm.engine.arg_utils import HfOverrides
+from vllm.engine.arg_utils import PoolerConfig
+from vllm.engine.arg_utils import RunnerOption
 from vllm.engine.llm_engine import LLMEngine
-from vllm.entrypoints.chat_utils import (ChatCompletionMessageParam,
-                                         ChatTemplateContentFormatOption,
-                                         apply_hf_chat_template,
-                                         apply_mistral_chat_template,
-                                         parse_chat_messages,
-                                         resolve_chat_template_content_format)
-from vllm.entrypoints.score_utils import (ScoreContentPartParam,
-                                          ScoreMultiModalParam,
-                                          _cosine_similarity,
-                                          _validate_score_input_lens,
-                                          get_score_prompt)
-from vllm.entrypoints.utils import (_validate_truncation_size,
-                                    log_non_default_args)
-from vllm.io.inputs import PromptType, SingletonPrompt, TextPrompt, TokensPrompt
+from vllm.entrypoints.chat_utils import ChatCompletionMessageParam
+from vllm.entrypoints.chat_utils import ChatTemplateContentFormatOption
+from vllm.entrypoints.chat_utils import apply_hf_chat_template
+from vllm.entrypoints.chat_utils import apply_mistral_chat_template
+from vllm.entrypoints.chat_utils import parse_chat_messages
+from vllm.entrypoints.chat_utils import resolve_chat_template_content_format
+from vllm.entrypoints.score_utils import ScoreContentPartParam
+from vllm.entrypoints.score_utils import ScoreMultiModalParam
+from vllm.entrypoints.score_utils import _cosine_similarity
+from vllm.entrypoints.score_utils import _validate_score_input_lens
+from vllm.entrypoints.score_utils import get_score_prompt
+from vllm.entrypoints.utils import _validate_truncation_size
+from vllm.entrypoints.utils import log_non_default_args
+import vllm.envs as envs
+from vllm.io.inputs import PromptType
+from vllm.io.inputs import SingletonPrompt
+from vllm.io.inputs import TextPrompt
+from vllm.io.inputs import TokensPrompt
 from vllm.io.inputs.parse import parse_and_batch_prompt
-from vllm.utils.logger import init_logger
 from vllm.lora.request import LoRARequest
 from vllm.model_executor.layers.quantization import QuantizationMethods
-from vllm.outputs import (ClassificationRequestOutput, EmbeddingRequestOutput,
-                          PoolingRequestOutput, RequestOutput,
-                          ScoringRequestOutput)
+from vllm.outputs import ClassificationRequestOutput
+from vllm.outputs import EmbeddingRequestOutput
+from vllm.outputs import PoolingRequestOutput
+from vllm.outputs import RequestOutput
+from vllm.outputs import ScoringRequestOutput
 from vllm.pooling_params import PoolingParams
-from vllm.sampling_params import (BeamSearchParams, RequestOutputKind,
-                                  SamplingParams)
+from vllm.sampling_params import BeamSearchParams
+from vllm.sampling_params import RequestOutputKind
+from vllm.sampling_params import SamplingParams
 from vllm.tasks import PoolingTask
-from vllm.transformers_utils.tokenizer import (AnyTokenizer, MistralTokenizer,
-                                               get_cached_tokenizer)
+from vllm.transformers_utils.tokenizer import AnyTokenizer
+from vllm.transformers_utils.tokenizer import MistralTokenizer
+from vllm.transformers_utils.tokenizer import get_cached_tokenizer
 from vllm.usage.usage_lib import UsageContext
-from vllm.utils import Counter, Device, deprecate_kwargs, is_list_of
+from vllm.utils import Counter
+from vllm.utils import Device
+from vllm.utils import deprecate_kwargs
+from vllm.utils import is_list_of
+from vllm.utils.logger import init_logger
 
 if TYPE_CHECKING:
     from vllm.v1.metrics.reader import Metric

@@ -9,7 +9,8 @@ model alternates between state space model layers and attention-based layers.
 """
 from collections.abc import Iterable
 from itertools import cycle
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 import torch
 from torch import nn
@@ -18,34 +19,42 @@ from transformers import Zamba2Config
 from vllm import envs
 from vllm.attention.layer import Attention
 from vllm.compilation.decorators import support_torch_compile
-from vllm.config import CacheConfig, VllmConfig
+from vllm.config import CacheConfig
+from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
 from vllm.distributed import get_tensor_model_parallel_world_size
 from vllm.forward_context import get_forward_context
 from vllm.model_executor.layers.activation import GeluAndMul
 from vllm.model_executor.layers.layernorm import RMSNorm
-from vllm.model_executor.layers.linear import (ColumnParallelLinear,
-                                               MergedColumnParallelLinear,
-                                               QKVParallelLinear,
-                                               ReplicatedLinear,
-                                               RowParallelLinear)
+from vllm.model_executor.layers.linear import ColumnParallelLinear
+from vllm.model_executor.layers.linear import MergedColumnParallelLinear
+from vllm.model_executor.layers.linear import QKVParallelLinear
+from vllm.model_executor.layers.linear import ReplicatedLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
 from vllm.model_executor.layers.logits_processor import LogitsProcessor
 from vllm.model_executor.layers.mamba.mamba2_metadata import (
-    Mamba2Metadata, prepare_mamba2_metadata)
+    prepare_mamba2_metadata)
+from vllm.model_executor.layers.mamba.mamba2_metadata import Mamba2Metadata
 from vllm.model_executor.layers.mamba.mamba_mixer2 import MambaMixer2
 from vllm.model_executor.layers.mamba.mamba_utils import (
     MambaStateShapeCalculator)
 from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.model_executor.layers.rotary_embedding import get_rope
 from vllm.model_executor.layers.vocab_parallel_embedding import (
-    DEFAULT_VOCAB_PADDING_SIZE, ParallelLMHead, VocabParallelEmbedding)
+    DEFAULT_VOCAB_PADDING_SIZE)
+from vllm.model_executor.layers.vocab_parallel_embedding import (
+    VocabParallelEmbedding)
+from vllm.model_executor.layers.vocab_parallel_embedding import ParallelLMHead
 from vllm.model_executor.model_loader.weight_utils import default_weight_loader
-from vllm.model_executor.models.mamba_cache import (MambaCacheManager,
-                                                    MambaCacheParams)
+from vllm.model_executor.models.mamba_cache import MambaCacheManager
+from vllm.model_executor.models.mamba_cache import MambaCacheParams
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.sequence import IntermediateTensors
 
-from .interfaces import HasInnerState, IsHybrid
-from .utils import AutoWeightsLoader, WeightsMapper, maybe_prefix
+from .interfaces import HasInnerState
+from .interfaces import IsHybrid
+from .utils import AutoWeightsLoader
+from .utils import WeightsMapper
+from .utils import maybe_prefix
 
 
 class Zamba2LoRA(nn.Module):

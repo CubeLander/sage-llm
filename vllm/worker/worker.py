@@ -3,35 +3,48 @@
 """A GPU worker class."""
 import gc
 import os
-from typing import Dict, List, Optional, Set, Tuple, Type, Union
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import Set
+from typing import Tuple
+from typing import Type
+from typing import Union
 
 import torch
 import torch.distributed
 
-import vllm.envs as envs
 from vllm.attention.layer import Attention
-from vllm.config import VllmConfig, get_layers_from_vllm_config
-from vllm.platforms.device_allocator.cumem import CuMemAllocator
-from vllm.distributed import (ensure_model_parallel_initialized,
-                              init_distributed_environment,
-                              set_custom_all_reduce)
+from vllm.config import VllmConfig
+from vllm.config import get_layers_from_vllm_config
+from vllm.distributed import ensure_model_parallel_initialized
+from vllm.distributed import init_distributed_environment
+from vllm.distributed import set_custom_all_reduce
 from vllm.distributed.kv_transfer import ensure_kv_transfer_initialized
-from vllm.utils.logger import init_logger
+import vllm.envs as envs
 from vllm.lora.request import LoRARequest
 from vllm.model_executor import set_random_seed
 from vllm.model_executor.layers.sampler import SamplerOutput
 from vllm.model_executor.model_loader.tensorizer import TensorizerConfig
 from vllm.platforms import current_platform
-from vllm.sequence import (ExecuteModelRequest, IntermediateTensors,
-                           SequenceGroupMetadata, SequenceGroupMetadataDelta)
-from vllm.utils import (GiB_bytes, MemorySnapshot, bind_kv_cache,
-                        memory_profiling)
+from vllm.platforms.device_allocator.cumem import CuMemAllocator
+from vllm.sequence import ExecuteModelRequest
+from vllm.sequence import IntermediateTensors
+from vllm.sequence import SequenceGroupMetadata
+from vllm.sequence import SequenceGroupMetadataDelta
+from vllm.utils import GiB_bytes
+from vllm.utils import MemorySnapshot
+from vllm.utils import bind_kv_cache
+from vllm.utils import memory_profiling
+from vllm.utils.logger import init_logger
 from vllm.worker.cache_engine import CacheEngine
 from vllm.worker.enc_dec_model_runner import EncoderDecoderModelRunner
-from vllm.worker.model_runner import GPUModelRunnerBase, ModelRunner
+from vllm.worker.model_runner import GPUModelRunnerBase
+from vllm.worker.model_runner import ModelRunner
 from vllm.worker.pooling_model_runner import PoolingModelRunner
-from vllm.worker.worker_base import (LocalOrDistributedWorkerBase, WorkerBase,
-                                     WorkerInput)
+from vllm.worker.worker_base import LocalOrDistributedWorkerBase
+from vllm.worker.worker_base import WorkerBase
+from vllm.worker.worker_base import WorkerInput
 
 logger = init_logger(__name__)
 

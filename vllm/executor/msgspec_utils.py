@@ -2,7 +2,8 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from array import array
-from typing import Any, Type
+from typing import Any
+from typing import Type
 
 from vllm.sequence import VLLM_TOKEN_ID_ARRAY_TYPE
 

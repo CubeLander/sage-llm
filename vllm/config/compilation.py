@@ -1,19 +1,26 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import hashlib
 from collections import Counter
-from dataclasses import asdict, field
-from typing import TYPE_CHECKING, Any, Callable, Optional, Union
+from dataclasses import asdict
+from dataclasses import field
+import hashlib
+from typing import Any
+from typing import Callable
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Union
 
 from pydantic import TypeAdapter
 from pydantic.dataclasses import dataclass
 
-import vllm.envs as envs
-from vllm.compilation.inductor_pass import CallableInductorPass, InductorPass
+from vllm.compilation.inductor_pass import CallableInductorPass
+from vllm.compilation.inductor_pass import InductorPass
 from vllm.config.utils import config
+import vllm.envs as envs
+from vllm.utils import is_torch_equal_or_newer
+from vllm.utils import resolve_obj_by_qualname
 from vllm.utils.logger import init_logger
-from vllm.utils import is_torch_equal_or_newer, resolve_obj_by_qualname
 
 if TYPE_CHECKING:
     from vllm.config.config import VllmConfig

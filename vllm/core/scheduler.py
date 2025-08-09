@@ -1,25 +1,41 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from collections import deque
+from dataclasses import dataclass
+from dataclasses import field
 import enum
 import os
 import random
 import time
-from collections import deque
-from dataclasses import dataclass, field
-from typing import Callable, Deque, Dict, Iterable, List, Optional
+from typing import Callable
+from typing import Deque
+from typing import Dict
+from typing import Iterable
+from typing import List
+from typing import Optional
 from typing import Sequence as GenericSequence
-from typing import Set, Tuple, Union
+from typing import Set
+from typing import Tuple
+from typing import Union
 
-from vllm.config import CacheConfig, LoRAConfig, SchedulerConfig
-from vllm.core.interfaces import AllocStatus, BlockSpaceManager
-from vllm.utils.logger import init_logger
+from vllm.config import CacheConfig
+from vllm.config import LoRAConfig
+from vllm.config import SchedulerConfig
+from vllm.core.interfaces import AllocStatus
+from vllm.core.interfaces import BlockSpaceManager
 from vllm.lora.request import LoRARequest
-from vllm.sequence import (Sequence, SequenceData, SequenceGroup,
-                           SequenceGroupBase, SequenceGroupMetadata,
-                           SequenceGroupMetadataDelta, SequenceStage,
-                           SequenceStatus)
-from vllm.utils import Device, PyObjectCache
+from vllm.sequence import Sequence
+from vllm.sequence import SequenceData
+from vllm.sequence import SequenceGroup
+from vllm.sequence import SequenceGroupBase
+from vllm.sequence import SequenceGroupMetadata
+from vllm.sequence import SequenceGroupMetadataDelta
+from vllm.sequence import SequenceStage
+from vllm.sequence import SequenceStatus
+from vllm.utils import Device
+from vllm.utils import PyObjectCache
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

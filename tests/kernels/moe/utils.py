@@ -4,11 +4,15 @@ from typing import Optional
 
 import torch
 
-import vllm._custom_ops as ops
 from tests.kernels.quant_utils import per_block_cast_to_int8
+import vllm._custom_ops as ops
 from vllm.model_executor.layers.fused_moe import fused_experts
 from vllm.model_executor.layers.fused_moe.fused_batched_moe import (
-    BatchedPrepareAndFinalize, BatchedTritonExperts, NaiveBatchedExperts)
+    BatchedPrepareAndFinalize)
+from vllm.model_executor.layers.fused_moe.fused_batched_moe import (
+    BatchedTritonExperts)
+from vllm.model_executor.layers.fused_moe.fused_batched_moe import (
+    NaiveBatchedExperts)
 from vllm.model_executor.layers.fused_moe.modular_kernel import (
     FusedMoEModularKernel)
 from vllm.model_executor.layers.fused_moe.utils import (

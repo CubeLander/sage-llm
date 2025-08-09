@@ -1,30 +1,41 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import os
 from datetime import timedelta
-from functools import cache, lru_cache, wraps
-from typing import TYPE_CHECKING, Optional
+from functools import cache
+from functools import lru_cache
+from functools import wraps
+import os
+from typing import Optional
+from typing import TYPE_CHECKING
 
 import torch
-from torch.distributed import PrefixStore, ProcessGroup
+from torch.distributed import PrefixStore
+from torch.distributed import ProcessGroup
 from torch.distributed.distributed_c10d import is_nccl_available
 
 import vllm.envs as envs
-from vllm.utils.logger import init_logger
 from vllm.utils import cuda_device_count_stateless
+from vllm.utils.logger import init_logger
 
-from .interface import DeviceCapability, Platform, PlatformEnum, _Backend
+from .interface import DeviceCapability
+from .interface import Platform
+from .interface import PlatformEnum
+from .interface import _Backend
 
 if TYPE_CHECKING:
-    from vllm.config import ModelConfig, VllmConfig
+    from vllm.config import ModelConfig
+    from vllm.config import VllmConfig
 
 logger = init_logger(__name__)
 
 try:
-    from amdsmi import (AmdSmiException, amdsmi_get_gpu_asic_info,
-                        amdsmi_get_processor_handles, amdsmi_init,
-                        amdsmi_shut_down, amdsmi_topo_get_link_type)
+    from amdsmi import AmdSmiException
+    from amdsmi import amdsmi_get_gpu_asic_info
+    from amdsmi import amdsmi_get_processor_handles
+    from amdsmi import amdsmi_init
+    from amdsmi import amdsmi_shut_down
+    from amdsmi import amdsmi_topo_get_link_type
 except ImportError as e:
     logger.warning("Failed to import from amdsmi with %r", e)
 

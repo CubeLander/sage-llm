@@ -1,21 +1,23 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 from dataclasses import dataclass
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
+from compressed_tensors.quantization import QuantizationArgs
+from compressed_tensors.quantization import QuantizationStrategy
+from compressed_tensors.quantization import QuantizationType
 import torch
-from compressed_tensors.quantization import (QuantizationArgs,
-                                             QuantizationStrategy,
-                                             QuantizationType)
 
-import vllm.envs as envs
 from vllm.config import ParallelConfig
-from vllm.distributed import get_dp_group, get_tensor_model_parallel_rank
-from vllm.utils.logger import init_logger
+from vllm.distributed import get_dp_group
+from vllm.distributed import get_tensor_model_parallel_rank
+import vllm.envs as envs
 from vllm.model_executor.layers.quantization.base_config import (
     QuantizationConfig)
 from vllm.utils import cdiv
 from vllm.utils.flashinfer import has_flashinfer_cutlass_fused_moe
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

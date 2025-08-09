@@ -1,15 +1,22 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from abc import ABC, abstractmethod
-from typing import Final, Generic, Optional, Protocol, TypeVar, Union
+from abc import ABC
+from abc import abstractmethod
+from typing import Final
+from typing import Generic
+from typing import Optional
+from typing import Protocol
+from typing import TypeVar
+from typing import Union
 
 import torch
 from transformers import PretrainedConfig
 
 from vllm.attention.selector import get_env_variable_attn_backend
+from vllm.platforms import _Backend
+from vllm.platforms import current_platform
 from vllm.utils.logger import init_logger
-from vllm.platforms import _Backend, current_platform
 
 logger = init_logger(__name__)
 
@@ -53,9 +60,12 @@ class VisionLanguageConfig(Protocol):
 def get_vision_encoder_info(
         hf_config: VisionLanguageConfig) -> VisionEncoderInfo:
     # Avoid circular imports
-    from .clip import CLIPEncoderInfo, CLIPVisionConfig
-    from .pixtral import PixtralHFEncoderInfo, PixtralVisionConfig
-    from .siglip import SiglipEncoderInfo, SiglipVisionConfig
+    from .clip import CLIPEncoderInfo
+    from .clip import CLIPVisionConfig
+    from .pixtral import PixtralHFEncoderInfo
+    from .pixtral import PixtralVisionConfig
+    from .siglip import SiglipEncoderInfo
+    from .siglip import SiglipVisionConfig
 
     if isinstance(hf_config.vision_config, CLIPVisionConfig):
         return CLIPEncoderInfo(hf_config)

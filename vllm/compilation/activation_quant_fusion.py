@@ -3,12 +3,13 @@
 
 import torch
 from torch._higher_order_ops.auto_functionalize import auto_functionalized
-from torch._inductor.pattern_matcher import (PatternMatcherPass, fwd_only,
-                                             register_replacement)
+from torch._inductor.pattern_matcher import PatternMatcherPass
+from torch._inductor.pattern_matcher import fwd_only
+from torch._inductor.pattern_matcher import register_replacement
 
 from vllm.config import VllmConfig
-from vllm.utils.logger import init_logger
 from vllm.platforms import current_platform
+from vllm.utils.logger import init_logger
 
 from .vllm_inductor_pass import VllmInductorPass
 

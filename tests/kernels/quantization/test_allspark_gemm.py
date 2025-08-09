@@ -3,10 +3,14 @@
 import pytest
 import torch
 
-from tests.kernels.utils import DEFAULT_OPCHECK_TEST_UTILS, opcheck
+from tests.kernels.utils import DEFAULT_OPCHECK_TEST_UTILS
+from tests.kernels.utils import opcheck
 from vllm import _custom_ops as ops
 from vllm.model_executor.layers.quantization.utils.allspark_utils import (
-    ALLSPARK_AMPERE_K_ALIGN, ALLSPARK_AMPERE_M_CUBLAS_THRESHOLD,
+    ALLSPARK_AMPERE_K_ALIGN)
+from vllm.model_executor.layers.quantization.utils.allspark_utils import (
+    ALLSPARK_AMPERE_M_CUBLAS_THRESHOLD)
+from vllm.model_executor.layers.quantization.utils.allspark_utils import (
     ALLSPARK_AMPERE_N_ALIGN)
 from vllm.model_executor.layers.quantization.utils.quant_utils import (
     quantize_weights)

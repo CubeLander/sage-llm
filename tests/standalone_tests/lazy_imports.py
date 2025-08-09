@@ -1,13 +1,14 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from contextlib import nullcontext
 # Description: Test the lazy import module
 # The utility function cannot be placed in `vllm.utils`
 # this needs to be a standalone script
 import sys
-from contextlib import nullcontext
 
-from vllm_test_utils import BlameResult, blame
+from vllm_test_utils import BlameResult
+from vllm_test_utils import blame
 
 # List of modules that should not be imported too early.
 # Lazy import `torch._inductor.async_compile` to avoid creating

@@ -1,22 +1,33 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from abc import ABC, abstractmethod
+from abc import ABC
+from abc import abstractmethod
 from contextlib import contextmanager
-from dataclasses import dataclass, fields
-from typing import (TYPE_CHECKING, Any, Dict, Generic, List, Optional,
-                    Protocol, Set, Tuple, Type, TypeVar)
+from dataclasses import dataclass
+from dataclasses import fields
+from typing import Any
+from typing import Dict
+from typing import Generic
+from typing import List
+from typing import Optional
+from typing import Protocol
+from typing import Set
+from typing import TYPE_CHECKING
+from typing import Tuple
+from typing import Type
+from typing import TypeVar
 
 import torch
 
+from vllm.io.inputs.multimodal import MultiModalPlaceholderMap
 from vllm.model_executor.layers.quantization.utils.quant_utils import (
     GroupShape)
-from vllm.io.inputs.multimodal import MultiModalPlaceholderMap
 
 if TYPE_CHECKING:
-    from vllm.worker.model_runner_base import (ModelRunnerBase,
-                                               ModelRunnerInputBase,
-                                               ModelRunnerInputBuilderBase)
+    from vllm.worker.model_runner_base import ModelRunnerBase
+    from vllm.worker.model_runner_base import ModelRunnerInputBase
+    from vllm.worker.model_runner_base import ModelRunnerInputBuilderBase
 
 
 class AttentionType:

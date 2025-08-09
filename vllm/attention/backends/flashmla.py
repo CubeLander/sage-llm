@@ -3,20 +3,24 @@
 
 from contextlib import contextmanager
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, List, Optional, Tuple, Type
+from typing import List
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Tuple
+from typing import Type
 
 import torch
 
-from vllm.attention.backends.abstract import (AttentionType,
-                                              is_quantized_kv_cache)
-from vllm.attention.backends.mla.common import (MLACommonBackend,
-                                                MLACommonImpl,
-                                                MLACommonMetadata,
-                                                MLACommonMetadataBuilder,
-                                                MLACommonState)
-from vllm.attention.ops.flashmla import (flash_mla_with_kvcache,
-                                         get_mla_metadata,
-                                         is_flashmla_supported)
+from vllm.attention.backends.abstract import AttentionType
+from vllm.attention.backends.abstract import is_quantized_kv_cache
+from vllm.attention.backends.mla.common import MLACommonBackend
+from vllm.attention.backends.mla.common import MLACommonImpl
+from vllm.attention.backends.mla.common import MLACommonMetadata
+from vllm.attention.backends.mla.common import MLACommonMetadataBuilder
+from vllm.attention.backends.mla.common import MLACommonState
+from vllm.attention.ops.flashmla import flash_mla_with_kvcache
+from vllm.attention.ops.flashmla import get_mla_metadata
+from vllm.attention.ops.flashmla import is_flashmla_supported
 
 if TYPE_CHECKING:
     from vllm.worker.model_runner import ModelInputForGPUWithSamplingMetadata

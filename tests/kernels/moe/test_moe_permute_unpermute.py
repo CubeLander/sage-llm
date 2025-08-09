@@ -14,7 +14,11 @@ import torch
 from vllm.model_executor.layers.fused_moe.fused_moe import fused_topk
 from vllm.model_executor.layers.fused_moe.layer import determine_expert_map
 from vllm.model_executor.layers.fused_moe.moe_permute_unpermute import (
-    moe_permute, moe_permute_unpermute_supported, moe_unpermute)
+    moe_permute)
+from vllm.model_executor.layers.fused_moe.moe_permute_unpermute import (
+    moe_permute_unpermute_supported)
+from vllm.model_executor.layers.fused_moe.moe_permute_unpermute import (
+    moe_unpermute)
 from vllm.platforms import current_platform
 
 NUM_EXPERTS = [16, 64, 256]

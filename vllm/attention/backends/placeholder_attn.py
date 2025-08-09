@@ -4,19 +4,26 @@
 from collections import defaultdict
 from dataclasses import dataclass
 from itertools import accumulate
-from typing import TYPE_CHECKING, Dict, List, Optional, Tuple, Type
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Tuple
+from typing import Type
 
 import torch
 
-from vllm.attention.backends.abstract import (AttentionBackend, AttentionImpl,
-                                              AttentionMetadata,
-                                              AttentionMetadataBuilder)
+from vllm.attention.backends.abstract import AttentionBackend
+from vllm.attention.backends.abstract import AttentionImpl
+from vllm.attention.backends.abstract import AttentionMetadata
+from vllm.attention.backends.abstract import AttentionMetadataBuilder
 from vllm.attention.backends.utils import CommonAttentionState
 from vllm.io.inputs.multimodal import MultiModalPlaceholderMap
 
 if TYPE_CHECKING:
     from vllm.worker.model_runner import (ModelInputForGPUBuilder,
                                           ModelInputForGPUWithSamplingMetadata)
+
 from vllm.utils import async_tensor_h2d
 
 # Placeholder attention backend for models like Mamba and pooling models that

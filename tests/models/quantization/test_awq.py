@@ -8,7 +8,9 @@ import torch
 
 from vllm.io.inputs.multimodal.image import rescale_image_size
 
-from ...conftest import IMAGE_ASSETS, ImageTestAssets, VllmRunner
+from ...conftest import IMAGE_ASSETS
+from ...conftest import ImageTestAssets
+from ...conftest import VllmRunner
 from ..utils import check_logprobs_close
 
 HF_IMAGE_PROMPTS = IMAGE_ASSETS.prompts({

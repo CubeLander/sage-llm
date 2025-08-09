@@ -2,27 +2,31 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from http import HTTPStatus
-from typing import Optional, Union, cast
+from typing import Optional
+from typing import Union
+from typing import cast
 
-import numpy as np
 from fastapi import Request
+import numpy as np
 from typing_extensions import override
 
 from vllm.config import ModelConfig
 from vllm.engine.protocol import EngineClient
 from vllm.entrypoints.logger import RequestLogger
-from vllm.entrypoints.openai.protocol import (ClassificationData,
-                                              ClassificationRequest,
-                                              ClassificationResponse,
-                                              ErrorResponse, UsageInfo)
+from vllm.entrypoints.openai.protocol import ClassificationData
+from vllm.entrypoints.openai.protocol import ClassificationRequest
+from vllm.entrypoints.openai.protocol import ClassificationResponse
+from vllm.entrypoints.openai.protocol import ErrorResponse
+from vllm.entrypoints.openai.protocol import UsageInfo
 # yapf: enable
-from vllm.entrypoints.openai.serving_engine import (ClassificationServeContext,
-                                                    OpenAIServing,
-                                                    ServeContext)
+from vllm.entrypoints.openai.serving_engine import ClassificationServeContext
+from vllm.entrypoints.openai.serving_engine import OpenAIServing
+from vllm.entrypoints.openai.serving_engine import ServeContext
 from vllm.entrypoints.openai.serving_models import OpenAIServingModels
-from vllm.utils.logger import init_logger
-from vllm.outputs import ClassificationOutput, PoolingRequestOutput
+from vllm.outputs import ClassificationOutput
+from vllm.outputs import PoolingRequestOutput
 from vllm.pooling_params import PoolingParams
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

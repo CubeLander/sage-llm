@@ -12,7 +12,8 @@ import torch
 from vllm.lora.ops.triton_ops.kernel_utils import do_expand_kernel
 from vllm.lora.ops.triton_ops.utils import _get_lora_b_ptr
 from vllm.platforms import current_platform
-from vllm.platforms.triton_tuils import tl, triton
+from vllm.platforms.triton_tuils import tl
+from vllm.platforms.triton_tuils import triton
 from vllm.utils import direct_register_custom_op
 
 

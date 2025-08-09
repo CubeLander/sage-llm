@@ -5,10 +5,10 @@ import time
 
 import pytest
 
-import vllm.envs as env
 from vllm.engine.arg_utils import AsyncEngineArgs
 from vllm.entrypoints.openai.api_server import (
     build_async_engine_client_from_engine_args)
+import vllm.envs as env
 from vllm.io.inputs import TextPrompt
 from vllm.lora.request import LoRARequest
 from vllm.sampling_params import SamplingParams

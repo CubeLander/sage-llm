@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 """Custom normalization layers."""
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 import torch
 import torch.nn as nn

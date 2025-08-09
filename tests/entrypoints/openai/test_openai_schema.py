@@ -3,9 +3,9 @@
 import json
 from typing import Final
 
+from hypothesis import settings
 import pytest
 import schemathesis
-from hypothesis import settings
 from schemathesis import GenerationConfig
 
 from ...utils import RemoteOpenAIServer

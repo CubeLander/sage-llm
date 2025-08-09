@@ -7,10 +7,12 @@ from typing import Optional
 import pytest
 import torch
 
-from tests.kernels.allclose_default import get_default_atol, get_default_rtol
+from tests.kernels.allclose_default import get_default_atol
+from tests.kernels.allclose_default import get_default_rtol
 from tests.kernels.utils import opcheck
 from vllm import _custom_ops as ops
-from vllm.attention.layer import Attention, MultiHeadAttention
+from vllm.attention.layer import Attention
+from vllm.attention.layer import MultiHeadAttention
 from vllm.platforms import current_platform
 from vllm.utils import get_max_shared_memory_bytes
 

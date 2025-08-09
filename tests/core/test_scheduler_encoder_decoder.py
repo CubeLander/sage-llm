@@ -3,12 +3,15 @@
 
 import pytest  # noqa
 
-from vllm.config import CacheConfig, SchedulerConfig
+from vllm.config import CacheConfig
+from vllm.config import SchedulerConfig
 from vllm.core.scheduler import Scheduler
 from vllm.sequence import SequenceGroup
 
-from .utils import (append_new_token, create_dummy_prompt_encoder_decoder,
-                    get_sequence_groups, schedule_and_update_computed_tokens)
+from .utils import append_new_token
+from .utils import create_dummy_prompt_encoder_decoder
+from .utils import get_sequence_groups
+from .utils import schedule_and_update_computed_tokens
 
 
 def test_scheduler_schedule_simple_encoder_decoder():

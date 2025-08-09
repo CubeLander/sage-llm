@@ -1,7 +1,9 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 """Core test implementation to be shared across modalities."""
-from typing import Any, Callable, Optional
+from typing import Any
+from typing import Callable
+from typing import Optional
 
 import torch
 from transformers.models.auto.auto_factory import _BaseAutoModelClass
@@ -9,9 +11,11 @@ from transformers.models.auto.auto_factory import _BaseAutoModelClass
 from vllm.config import RunnerOption
 from vllm.transformers_utils.tokenizer import AnyTokenizer
 
-from .....conftest import HfRunner, VllmRunner
+from .....conftest import HfRunner
+from .....conftest import VllmRunner
 from ....registry import HF_EXAMPLE_MODELS
-from .types import PromptWithMultiModalInput, RunnerOutput
+from .types import PromptWithMultiModalInput
+from .types import RunnerOutput
 
 
 def run_test(

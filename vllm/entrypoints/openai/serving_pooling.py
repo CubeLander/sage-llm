@@ -3,30 +3,37 @@
 
 import asyncio
 import base64
-import time
 from collections.abc import AsyncGenerator
-from typing import Final, Literal, Optional, Union, cast
+import time
+from typing import Final
+from typing import Literal
+from typing import Optional
+from typing import Union
+from typing import cast
 
+from fastapi import Request
 import jinja2
 import numpy as np
 import torch
-from fastapi import Request
 from typing_extensions import assert_never
 
 from vllm.config import ModelConfig
 from vllm.engine.protocol import EngineClient
 from vllm.entrypoints.chat_utils import ChatTemplateContentFormatOption
 from vllm.entrypoints.logger import RequestLogger
-from vllm.entrypoints.openai.protocol import (ErrorResponse,
-                                              PoolingChatRequest,
-                                              PoolingRequest, PoolingResponse,
-                                              PoolingResponseData, UsageInfo)
+from vllm.entrypoints.openai.protocol import ErrorResponse
+from vllm.entrypoints.openai.protocol import PoolingChatRequest
+from vllm.entrypoints.openai.protocol import PoolingRequest
+from vllm.entrypoints.openai.protocol import PoolingResponse
+from vllm.entrypoints.openai.protocol import PoolingResponseData
+from vllm.entrypoints.openai.protocol import UsageInfo
 from vllm.entrypoints.openai.serving_engine import OpenAIServing
 from vllm.entrypoints.openai.serving_models import OpenAIServingModels
 from vllm.entrypoints.utils import _validate_truncation_size
-from vllm.utils.logger import init_logger
-from vllm.outputs import PoolingOutput, PoolingRequestOutput
+from vllm.outputs import PoolingOutput
+from vllm.outputs import PoolingRequestOutput
 from vllm.utils import merge_async_iterators
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

@@ -10,8 +10,10 @@ from __future__ import annotations
 import pytest
 
 from tests.conftest import VllmRunner
-from tests.core.utils import SchedulerProxy, create_dummy_prompt
-from vllm import SamplingParams, TokensPrompt
+from tests.core.utils import SchedulerProxy
+from tests.core.utils import create_dummy_prompt
+from vllm import SamplingParams
+from vllm import TokensPrompt
 from vllm.core.scheduler import Scheduler
 from vllm.engine.llm_engine import LLMEngine
 from vllm.platforms import current_platform

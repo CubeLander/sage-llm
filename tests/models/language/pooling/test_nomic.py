@@ -3,7 +3,8 @@
 
 import pytest
 
-from .embed_utils import EmbedModelInfo, correctness_test_embed_models
+from .embed_utils import EmbedModelInfo
+from .embed_utils import correctness_test_embed_models
 from .mteb_utils import mteb_test_embed_models
 
 MODELS = [

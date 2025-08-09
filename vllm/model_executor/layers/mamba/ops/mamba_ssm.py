@@ -4,12 +4,14 @@
 # Copyright (c) 2024, Tri Dao, Albert Gu.
 # Adapted from https://github.com/state-spaces/mamba/blob/v2.2.4/mamba_ssm/ops/triton/selective_state_update.py
 
-import torch
 from packaging import version
+import torch
 
 from vllm import _custom_ops as ops
 from vllm.attention.backends.utils import PAD_SLOT_ID
-from vllm.platforms.triton_tuils import HAS_TRITON, tl, triton
+from vllm.platforms.triton_tuils import HAS_TRITON
+from vllm.platforms.triton_tuils import tl
+from vllm.platforms.triton_tuils import triton
 
 TRITON3 = HAS_TRITON and (version.parse(triton.__version__)
                           >= version.parse("3.0.0"))

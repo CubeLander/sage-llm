@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 import random
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 import msgspec
 import msgspec.msgpack

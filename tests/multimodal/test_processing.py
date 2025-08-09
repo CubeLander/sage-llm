@@ -2,7 +2,8 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from contextlib import nullcontext
-from typing import Optional, cast
+from typing import Optional
+from typing import cast
 
 import numpy as np
 import pytest
@@ -12,14 +13,17 @@ from vllm.io.inputs import InputProcessingContext
 from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
 # yapf conflicts with isort for this block
 # yapf: disable
-from vllm.io.inputs.multimodal.processing import (PlaceholderFeaturesInfo,
-                                        PromptIndexTargets, PromptInsertion,
-                                        PromptReplacement, apply_text_matches,
-                                        apply_token_matches,
-                                        find_mm_placeholders,
-                                        find_text_matches, find_token_matches,
-                                        iter_token_matches,
-                                        replace_token_matches)
+from vllm.io.inputs.multimodal.processing import PlaceholderFeaturesInfo
+from vllm.io.inputs.multimodal.processing import PromptIndexTargets
+from vllm.io.inputs.multimodal.processing import PromptInsertion
+from vllm.io.inputs.multimodal.processing import PromptReplacement
+from vllm.io.inputs.multimodal.processing import apply_text_matches
+from vllm.io.inputs.multimodal.processing import apply_token_matches
+from vllm.io.inputs.multimodal.processing import find_mm_placeholders
+from vllm.io.inputs.multimodal.processing import find_text_matches
+from vllm.io.inputs.multimodal.processing import find_token_matches
+from vllm.io.inputs.multimodal.processing import iter_token_matches
+from vllm.io.inputs.multimodal.processing import replace_token_matches
 # yapf: enable
 from vllm.io.inputs.multimodal.profiling import MultiModalProfiler
 from vllm.transformers_utils.tokenizer import AnyTokenizer

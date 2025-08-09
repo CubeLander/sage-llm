@@ -1,16 +1,16 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from collections import defaultdict
 import contextlib
 import inspect
 import os
 import tempfile
 import textwrap
 import time
-import uuid
-from collections import defaultdict
 from typing import Optional
 from unittest.mock import patch
+import uuid
 
 import pytest
 import ray
@@ -18,12 +18,21 @@ import ray
 from vllm import LLM
 from vllm.config import KVTransferConfig
 from vllm.distributed.kv_transfer.kv_connector.v1.nixl_connector import (
-    KVConnectorRole, NixlAgentMetadata, NixlConnector, NixlConnectorMetadata,
+    KVConnectorRole)
+from vllm.distributed.kv_transfer.kv_connector.v1.nixl_connector import (
+    NixlAgentMetadata)
+from vllm.distributed.kv_transfer.kv_connector.v1.nixl_connector import (
+    NixlConnector)
+from vllm.distributed.kv_transfer.kv_connector.v1.nixl_connector import (
+    NixlConnectorMetadata)
+from vllm.distributed.kv_transfer.kv_connector.v1.nixl_connector import (
     NixlConnectorWorker)
 from vllm.forward_context import ForwardContext
 from vllm.sampling_params import SamplingParams
 
-from .utils import create_request, create_scheduler, create_vllm_config
+from .utils import create_request
+from .utils import create_scheduler
+from .utils import create_vllm_config
 
 
 class FakeNixlWrapper:

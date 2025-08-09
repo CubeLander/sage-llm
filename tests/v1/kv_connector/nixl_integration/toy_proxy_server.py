@@ -2,15 +2,16 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import argparse
+from contextlib import asynccontextmanager
 import itertools
 import logging
 import os
 import uuid
-from contextlib import asynccontextmanager
 
-import httpx
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
+from fastapi import Request
 from fastapi.responses import StreamingResponse
+import httpx
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)

@@ -23,40 +23,58 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Inference-only MiniCPM-O model compatible with HuggingFace weights."""
-from collections.abc import Iterable, Mapping, Sequence
-from typing import Any, Callable, Literal, Optional, TypedDict, Union
+from collections.abc import Iterable
+from collections.abc import Mapping
+from collections.abc import Sequence
+from typing import Any
+from typing import Callable
+from typing import Literal
+from typing import Optional
+from typing import TypedDict
+from typing import Union
 
 import torch
 from torch import nn
-from transformers import BatchFeature, PretrainedConfig
+from transformers import BatchFeature
+from transformers import PretrainedConfig
 from transformers.modeling_outputs import BaseModelOutputWithPast
-from transformers.models.whisper.modeling_whisper import (ACT2FN,
-                                                          WhisperAttention,
-                                                          WhisperConfig,
-                                                          WhisperEncoder)
+from transformers.models.whisper.modeling_whisper import ACT2FN
+from transformers.models.whisper.modeling_whisper import WhisperAttention
+from transformers.models.whisper.modeling_whisper import WhisperConfig
+from transformers.models.whisper.modeling_whisper import WhisperEncoder
 
 from vllm.config import VllmConfig
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal import MultiModalKwargs
+from vllm.io.inputs.multimodal.inputs import MultiModalDataDict
+from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
+from vllm.io.inputs.multimodal.inputs import NestedTensors
+from vllm.io.inputs.multimodal.parse import AudioItem
+from vllm.io.inputs.multimodal.parse import AudioProcessorItems
+from vllm.io.inputs.multimodal.parse import DictEmbeddingItems
+from vllm.io.inputs.multimodal.parse import ModalityData
+from vllm.io.inputs.multimodal.parse import ModalityDataItems
+from vllm.io.inputs.multimodal.parse import MultiModalDataItems
+from vllm.io.inputs.multimodal.parse import MultiModalDataParser
+from vllm.io.inputs.multimodal.processing import PromptReplacement
+from vllm.io.inputs.multimodal.processing import PromptUpdate
+from vllm.io.inputs.multimodal.processing import PromptUpdateDetails
 from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.model_executor.layers.quantization.gptq import GPTQConfig
 from vllm.model_executor.layers.quantization.gptq_marlin import (
     GPTQMarlinConfig)
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY, MultiModalKwargs
-from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
-                                    NestedTensors)
-from vllm.io.inputs.multimodal.parse import (AudioItem, AudioProcessorItems,
-                                   DictEmbeddingItems, ModalityData,
-                                   ModalityDataItems, MultiModalDataItems,
-                                   MultiModalDataParser)
-from vllm.io.inputs.multimodal.processing import (PromptReplacement, PromptUpdate,
-                                        PromptUpdateDetails)
 
-from .minicpmv import (_MAX_FRAMES_PER_VIDEO, MiniCPMV2_6,
-                       MiniCPMVDummyInputsBuilder,
-                       MiniCPMVMultiModalDataParser,
-                       MiniCPMVMultiModalProcessor, MiniCPMVProcessingInfo,
-                       _minicpmv_field_config)
-from .utils import (AutoWeightsLoader, cast_overflow_tensors, flatten_bn,
-                    maybe_prefix)
+from .minicpmv import MiniCPMV2_6
+from .minicpmv import MiniCPMVDummyInputsBuilder
+from .minicpmv import MiniCPMVMultiModalDataParser
+from .minicpmv import MiniCPMVMultiModalProcessor
+from .minicpmv import MiniCPMVProcessingInfo
+from .minicpmv import _MAX_FRAMES_PER_VIDEO
+from .minicpmv import _minicpmv_field_config
+from .utils import AutoWeightsLoader
+from .utils import cast_overflow_tensors
+from .utils import flatten_bn
+from .utils import maybe_prefix
 
 CPU_DEVICE = torch.device("cpu")
 

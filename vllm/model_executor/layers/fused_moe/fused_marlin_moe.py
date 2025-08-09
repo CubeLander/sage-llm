@@ -8,10 +8,14 @@ import torch
 
 import vllm._custom_ops as ops
 from vllm.model_executor.layers.fused_moe.fused_moe import (
-    moe_align_block_size, try_get_optimal_moe_config)
+    try_get_optimal_moe_config)
+from vllm.model_executor.layers.fused_moe.fused_moe import moe_align_block_size
 from vllm.model_executor.layers.quantization.utils.marlin_utils import (
-    marlin_make_workspace_new, maybe_warn_marlin_atomic_add)
-from vllm.scalar_type import ScalarType, scalar_types
+    marlin_make_workspace_new)
+from vllm.model_executor.layers.quantization.utils.marlin_utils import (
+    maybe_warn_marlin_atomic_add)
+from vllm.scalar_type import ScalarType
+from vllm.scalar_type import scalar_types
 from vllm.utils import direct_register_custom_op
 
 

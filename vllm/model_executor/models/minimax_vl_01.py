@@ -1,32 +1,44 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-from collections.abc import Iterable, Mapping
-from typing import Literal, Optional, TypedDict, Union, cast
+from collections.abc import Iterable
+from collections.abc import Mapping
+from typing import Literal
+from typing import Optional
+from typing import TypedDict
+from typing import Union
+from typing import cast
 
 import torch
 import torch.nn as nn
-from transformers import BatchFeature, PretrainedConfig
+from transformers import BatchFeature
+from transformers import PretrainedConfig
 
 from vllm.config import VllmConfig
-from vllm.jsontree import json_map_leaves
-from vllm.model_executor.layers.activation import get_act_fn
-from vllm.model_executor.layers.linear import (ColumnParallelLinear,
-                                               RowParallelLinear)
-from vllm.model_executor.layers.quantization import QuantizationConfig
-from vllm.model_executor.sampling_metadata import SamplingMetadata
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
 from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
 from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
-from vllm.sequence import IntermediateTensors
+from vllm.jsontree import json_map_leaves
+from vllm.model_executor.layers.activation import get_act_fn
+from vllm.model_executor.layers.linear import ColumnParallelLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
+from vllm.model_executor.layers.quantization import QuantizationConfig
+from vllm.model_executor.sampling_metadata import SamplingMetadata
 
 from .clip import CLIPVisionModel
-from .interfaces import MultiModalEmbeddings, SupportsMultiModal, SupportsPP
-from .llava import (BaseLlavaMultiModalProcessor, LlavaDummyInputsBuilder,
-                    init_vision_tower_for_llava)
+from .interfaces import MultiModalEmbeddings
+from .interfaces import SupportsMultiModal
+from .interfaces import SupportsPP
+from .llava import BaseLlavaMultiModalProcessor
+from .llava import LlavaDummyInputsBuilder
+from .llava import init_vision_tower_for_llava
 from .llava_next import LlavaNextProcessingInfo
 from .pixtral import PixtralHFVisionModel
 from .siglip import SiglipVisionModel
-from .utils import (AutoWeightsLoader, flatten_bn, init_vllm_registered_model,
-                    maybe_prefix, merge_multimodal_embeddings)
+from .utils import AutoWeightsLoader
+from .utils import flatten_bn
+from .utils import init_vllm_registered_model
+from .utils import maybe_prefix
+from .utils import merge_multimodal_embeddings
 
 
 class MiniMaxVL01ImagePixelInputs(TypedDict):

@@ -1,20 +1,25 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from typing import Any, Optional, Union
+from typing import Any
+from typing import Optional
+from typing import Union
 
 import torch
 
 from vllm import _custom_ops as ops
-from vllm.utils.logger import init_logger
 from vllm.model_executor.layers.fused_moe.layer import FusedMoE
-from vllm.model_executor.layers.linear import (LinearBase, LinearMethodBase,
-                                               UnquantizedLinearMethod)
+from vllm.model_executor.layers.linear import LinearBase
+from vllm.model_executor.layers.linear import LinearMethodBase
+from vllm.model_executor.layers.linear import UnquantizedLinearMethod
 from vllm.model_executor.layers.quantization import QuantizationMethods
 from vllm.model_executor.layers.quantization.base_config import (
-    QuantizationConfig, QuantizeMethodBase)
-from vllm.model_executor.parameter import (GroupQuantScaleParameter,
-                                           PackedvLLMParameter)
+    QuantizationConfig)
+from vllm.model_executor.layers.quantization.base_config import (
+    QuantizeMethodBase)
+from vllm.model_executor.parameter import GroupQuantScaleParameter
+from vllm.model_executor.parameter import PackedvLLMParameter
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 
@@ -87,7 +92,8 @@ class AWQConfig(QuantizationConfig):
             return AWQLinearMethod(self)
         elif isinstance(layer, FusedMoE):
             # Lazy import to avoid circular import.
-            from .awq_marlin import AWQMarlinConfig, AWQMoEMethod
+            from .awq_marlin import AWQMarlinConfig
+            from .awq_marlin import AWQMoEMethod
             from .moe_wna16 import MoeWNA16Config
             from .utils.marlin_utils import check_moe_marlin_supports_layer
             if not check_moe_marlin_supports_layer(layer, self.group_size):

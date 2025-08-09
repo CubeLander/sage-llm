@@ -1,19 +1,27 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 # ===================== import region =====================
 import torch
 import torch.distributed as dist
-from torch.distributed import ProcessGroup, ReduceOp
+from torch.distributed import ProcessGroup
+from torch.distributed import ReduceOp
 
 from vllm.distributed.device_communicators.pynccl_wrapper import (
-    NCCLLibrary, buffer_type, cudaStream_t, ncclComm_t, ncclDataTypeEnum,
-    ncclRedOpTypeEnum, ncclUniqueId)
+    ncclDataTypeEnum)
+from vllm.distributed.device_communicators.pynccl_wrapper import (
+    ncclRedOpTypeEnum)
+from vllm.distributed.device_communicators.pynccl_wrapper import NCCLLibrary
+from vllm.distributed.device_communicators.pynccl_wrapper import buffer_type
+from vllm.distributed.device_communicators.pynccl_wrapper import cudaStream_t
+from vllm.distributed.device_communicators.pynccl_wrapper import ncclComm_t
+from vllm.distributed.device_communicators.pynccl_wrapper import ncclUniqueId
 from vllm.distributed.utils import StatelessProcessGroup
-from vllm.utils.logger import init_logger
 from vllm.utils import current_stream
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

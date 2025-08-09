@@ -1,12 +1,16 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
+from abc import ABC
+from abc import abstractmethod
 import logging
-from abc import ABC, abstractmethod
 
-from openai_harmony import Message, Role, StreamState
+from openai_harmony import Message
+from openai_harmony import Role
+from openai_harmony import StreamState
 
-from vllm.entrypoints.harmony_utils import (
-    get_encoding, get_streamable_parser_for_assistant, render_for_completion)
+from vllm.entrypoints.harmony_utils import get_encoding
+from vllm.entrypoints.harmony_utils import get_streamable_parser_for_assistant
+from vllm.entrypoints.harmony_utils import render_for_completion
 from vllm.entrypoints.tool import Tool
 from vllm.outputs import RequestOutput
 

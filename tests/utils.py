@@ -2,46 +2,54 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import asyncio
+from contextlib import contextmanager
+from contextlib import suppress
 import copy
 import functools
 import importlib
 import os
+from pathlib import Path
 import signal
 import subprocess
 import sys
 import tempfile
 import time
+from typing import Any
+from typing import Callable
+from typing import Literal
+from typing import Optional
+from typing import Union
 import warnings
-from contextlib import contextmanager, suppress
-from pathlib import Path
-from typing import Any, Callable, Literal, Optional, Union
 
 import cloudpickle
 import httpx
 import openai
+from openai.types.completion import Completion
 import pytest
 import requests
 import torch
 import torch.nn.functional as F
-from openai.types.completion import Completion
 from typing_extensions import ParamSpec
 
-import vllm.envs as envs
 from tests.models.utils import TextTextLogprobs
-from vllm.distributed import (ensure_model_parallel_initialized,
-                              init_distributed_environment)
-from vllm.engine.arg_utils import AsyncEngineArgs
 from vllm.cli.serve import ServeSubcommand
+from vllm.distributed import ensure_model_parallel_initialized
+from vllm.distributed import init_distributed_environment
+from vllm.engine.arg_utils import AsyncEngineArgs
+import vllm.envs as envs
 from vllm.model_executor.model_loader import get_model_loader
 from vllm.platforms import current_platform
 from vllm.transformers_utils.tokenizer import get_tokenizer
-from vllm.utils import (FlexibleArgumentParser, GB_bytes,
-                        cuda_device_count_stateless, get_open_port)
+from vllm.utils import FlexibleArgumentParser
+from vllm.utils import GB_bytes
+from vllm.utils import cuda_device_count_stateless
+from vllm.utils import get_open_port
 
 if current_platform.is_rocm():
-    from amdsmi import (amdsmi_get_gpu_vram_usage,
-                        amdsmi_get_processor_handles, amdsmi_init,
-                        amdsmi_shut_down)
+    from amdsmi import amdsmi_get_gpu_vram_usage
+    from amdsmi import amdsmi_get_processor_handles
+    from amdsmi import amdsmi_init
+    from amdsmi import amdsmi_shut_down
 
     @contextmanager
     def _nvml():
@@ -51,9 +59,10 @@ if current_platform.is_rocm():
         finally:
             amdsmi_shut_down()
 elif current_platform.is_cuda():
-    from vllm.third_party.pynvml import (nvmlDeviceGetHandleByIndex,
-                                         nvmlDeviceGetMemoryInfo, nvmlInit,
-                                         nvmlShutdown)
+    from vllm.third_party.pynvml import nvmlDeviceGetHandleByIndex
+    from vllm.third_party.pynvml import nvmlDeviceGetMemoryInfo
+    from vllm.third_party.pynvml import nvmlInit
+    from vllm.third_party.pynvml import nvmlShutdown
 
     @contextmanager
     def _nvml():

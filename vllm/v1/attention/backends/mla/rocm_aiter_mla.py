@@ -2,21 +2,22 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from dataclasses import dataclass
-from typing import ClassVar, Optional
+from typing import ClassVar
+from typing import Optional
 
 import torch
 
-import vllm.envs as envs
 from vllm.attention.ops.rocm_aiter_mla import aiter_mla_decode_fwd
 from vllm.config import VllmConfig
+import vllm.envs as envs
 from vllm.utils import cdiv
 # yapf conflicts with isort for this docstring
 # yapf: disable
-from vllm.v1.attention.backends.mla.common import (MLACommonBackend,
-                                                   MLACommonDecodeMetadata,
-                                                   MLACommonImpl,
-                                                   MLACommonMetadata,
-                                                   MLACommonMetadataBuilder)
+from vllm.v1.attention.backends.mla.common import MLACommonBackend
+from vllm.v1.attention.backends.mla.common import MLACommonDecodeMetadata
+from vllm.v1.attention.backends.mla.common import MLACommonImpl
+from vllm.v1.attention.backends.mla.common import MLACommonMetadata
+from vllm.v1.attention.backends.mla.common import MLACommonMetadataBuilder
 from vllm.v1.attention.backends.utils import AttentionCGSupport
 from vllm.v1.kv_cache_interface import AttentionSpec
 

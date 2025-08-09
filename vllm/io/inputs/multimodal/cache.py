@@ -1,17 +1,22 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-import sys
 from collections.abc import Mapping
 from dataclasses import dataclass
-from typing import TypeVar, Union
+import sys
+from typing import TypeVar
+from typing import Union
 
 import torch
 
-from vllm.jsontree import json_map_leaves, json_reduce_leaves
+from vllm.jsontree import json_map_leaves
+from vllm.jsontree import json_reduce_leaves
+from vllm.utils import GiB_bytes
+from vllm.utils import LRUCache
 from vllm.utils.logger import init_logger
-from vllm.utils import GiB_bytes, LRUCache
 
-from .inputs import MultiModalKwargs, MultiModalKwargsItem, NestedTensors
+from .inputs import MultiModalKwargs
+from .inputs import MultiModalKwargsItem
+from .inputs import NestedTensors
 
 logger = init_logger(__name__)
 

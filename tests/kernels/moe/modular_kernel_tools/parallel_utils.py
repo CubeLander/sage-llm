@@ -3,16 +3,20 @@
 import dataclasses
 import os
 import traceback
-from typing import Any, Callable, Optional
+from typing import Any
+from typing import Callable
+from typing import Optional
 
 import torch
 from torch.multiprocessing import (
     spawn)  # pyright: ignore[reportPrivateImportUsage]
-from typing_extensions import Concatenate, ParamSpec
+from typing_extensions import Concatenate
+from typing_extensions import ParamSpec
 
-from vllm.config import VllmConfig, set_current_vllm_config
-from vllm.distributed import (init_distributed_environment,
-                              initialize_model_parallel)
+from vllm.config import VllmConfig
+from vllm.config import set_current_vllm_config
+from vllm.distributed import init_distributed_environment
+from vllm.distributed import initialize_model_parallel
 from vllm.utils import get_open_port
 
 ## Parallel Processes Utils

@@ -2,43 +2,57 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import argparse
+from collections.abc import Generator
+from collections.abc import MutableMapping
 import contextlib
 import contextvars
 import dataclasses
+from dataclasses import asdict
+from dataclasses import dataclass
+from dataclasses import field
+from dataclasses import fields
 import json
 import os
 import tempfile
 import threading
 import time
-from collections.abc import Generator, MutableMapping
-from dataclasses import asdict, dataclass, field, fields
-from typing import TYPE_CHECKING, Any, ClassVar, Optional, Union
+from typing import Any
+from typing import ClassVar
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Union
 
+from huggingface_hub import snapshot_download
 import regex as re
 import torch
-from huggingface_hub import snapshot_download
 from torch import nn
 from torch.utils._python_dispatch import TorchDispatchMode
 from transformers import PretrainedConfig
 
+from vllm.config import ModelConfig
+from vllm.config import ParallelConfig
+from vllm.config import VllmConfig
+from vllm.config import set_current_vllm_config
 import vllm.envs as envs
-from vllm.config import (ModelConfig, ParallelConfig, VllmConfig,
-                         set_current_vllm_config)
-from vllm.utils.logger import init_logger
 from vllm.model_executor.layers.vocab_parallel_embedding import (
     VocabParallelEmbedding)
 from vllm.platforms import current_platform
-from vllm.utils import FlexibleArgumentParser, PlaceholderModule
+from vllm.utils import FlexibleArgumentParser
+from vllm.utils import PlaceholderModule
+from vllm.utils.logger import init_logger
 
 if TYPE_CHECKING:
     from vllm.engine.arg_utils import EngineArgs
 
 try:
-    from tensorizer import (DecryptionParams, EncryptionParams,
-                            TensorDeserializer, TensorSerializer)
+    from tensorizer import DecryptionParams
+    from tensorizer import EncryptionParams
+    from tensorizer import TensorDeserializer
+    from tensorizer import TensorSerializer
     from tensorizer.stream_io import open_stream
-    from tensorizer.utils import (convert_bytes, get_mem_usage,
-                                  no_init_or_tensor)
+    from tensorizer.utils import convert_bytes
+    from tensorizer.utils import get_mem_usage
+    from tensorizer.utils import no_init_or_tensor
 
 except ImportError:
     tensorizer = PlaceholderModule("tensorizer")

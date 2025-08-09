@@ -10,7 +10,8 @@ import numpy.typing as npt
 
 from vllm.utils import PlaceholderModule
 
-from .base import VLLM_S3_BUCKET_URL, get_vllm_public_assets
+from .base import VLLM_S3_BUCKET_URL
+from .base import get_vllm_public_assets
 
 try:
     import librosa

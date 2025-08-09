@@ -1,20 +1,27 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from collections import defaultdict
 import os
 import time
-from collections import defaultdict
-from typing import TYPE_CHECKING, Dict, List, Optional, Tuple, Union
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Tuple
+from typing import Union
 
 import msgspec
 
-import vllm.platforms
 from vllm.config import ParallelConfig
-from vllm.executor.msgspec_utils import decode_hook, encode_hook
-from vllm.utils.logger import init_logger
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.executor.msgspec_utils import decode_hook
+from vllm.executor.msgspec_utils import encode_hook
+import vllm.platforms
 from vllm.platforms import current_platform
-from vllm.sequence import ExecuteModelRequest, IntermediateTensors
+from vllm.sequence import ExecuteModelRequest
 from vllm.utils import get_ip
+from vllm.utils.logger import init_logger
 from vllm.worker.worker_base import WorkerWrapperBase
 
 if TYPE_CHECKING:

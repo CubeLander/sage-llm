@@ -3,36 +3,46 @@
 
 import dataclasses
 import itertools
-from typing import Any, Dict, List, Optional, Tuple, Type, cast
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import Tuple
+from typing import Type
+from typing import cast
 
 import torch
 import torch.distributed
 
-from vllm.attention.backends.abstract import (AttentionBackend,
-                                              AttentionMetadata)
+from vllm.attention.backends.abstract import AttentionBackend
+from vllm.attention.backends.abstract import AttentionMetadata
 from vllm.attention.backends.utils import PAD_SLOT_ID
-from vllm.attention.selector import (get_env_variable_attn_backend,
-                                     get_global_forced_attn_backend)
+from vllm.attention.selector import get_env_variable_attn_backend
+from vllm.attention.selector import get_global_forced_attn_backend
 from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
 from vllm.forward_context import set_forward_context
-from vllm.io.inputs import INPUT_REGISTRY, InputRegistry
-from vllm.utils.logger import init_logger
+from vllm.io.inputs import INPUT_REGISTRY
+from vllm.io.inputs import InputRegistry
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal import MultiModalKwargs
+from vllm.io.inputs.multimodal import MultiModalRegistry
 from vllm.lora.request import LoRARequest
 from vllm.model_executor import SamplingMetadata
 from vllm.model_executor.layers.sampler import SamplerOutput
-from vllm.io.inputs.multimodal import (MULTIMODAL_REGISTRY, MultiModalKwargs,
-                             MultiModalRegistry)
 from vllm.platforms import _Backend
 from vllm.sampling_params import SamplingParams
-from vllm.sequence import (IntermediateTensors, PoolerOutput,
-                           SequenceGroupMetadata)
-from vllm.utils import STR_NOT_IMPL_ENC_DEC_BACKEND, make_tensor_with_pad
-from vllm.worker.model_runner import (GPUModelRunnerBase,
-                                      ModelInputForGPUBuilder,
-                                      ModelInputForGPUWithSamplingMetadata)
+from vllm.sequence import PoolerOutput
+from vllm.sequence import SequenceGroupMetadata
+from vllm.utils import STR_NOT_IMPL_ENC_DEC_BACKEND
+from vllm.utils import make_tensor_with_pad
+from vllm.utils.logger import init_logger
+from vllm.worker.model_runner import GPUModelRunnerBase
+from vllm.worker.model_runner import ModelInputForGPUBuilder
+from vllm.worker.model_runner import ModelInputForGPUWithSamplingMetadata
 from vllm.worker.model_runner_base import (
-    _add_attn_metadata_broadcastable_dict,
     _add_sampling_metadata_broadcastable_dict)
+from vllm.worker.model_runner_base import _add_attn_metadata_broadcastable_dict
 from vllm.worker.utils import assert_enc_dec_mr_supported_scenario
 
 logger = init_logger(__name__)

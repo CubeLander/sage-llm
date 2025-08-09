@@ -26,20 +26,23 @@ MoE layer. If we have 32 EP ranks, then each GPU will hold 288 / 32 = 9 local
 physical experts.
 """
 
-import time
 from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Optional, Union
+import time
+from typing import Optional
+from typing import Union
 
 import torch
-from torch.distributed import ProcessGroup, all_reduce
+from torch.distributed import ProcessGroup
+from torch.distributed import all_reduce
 
 from vllm.config import ParallelConfig
-from vllm.distributed.parallel_state import (get_ep_group, get_node_count,
-                                             in_the_same_node_as)
+from vllm.distributed.parallel_state import get_ep_group
+from vllm.distributed.parallel_state import get_node_count
+from vllm.distributed.parallel_state import in_the_same_node_as
 from vllm.distributed.utils import StatelessProcessGroup
-from vllm.utils.logger import init_logger
 from vllm.model_executor.models.interfaces import MixtureOfExperts
+from vllm.utils.logger import init_logger
 
 from .rebalance_algo import rebalance_experts
 from .rebalance_execute import rearrange_expert_weights_inplace

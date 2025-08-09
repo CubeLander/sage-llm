@@ -1,55 +1,74 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from abc import ABC
+from abc import abstractmethod
 import asyncio
+from collections import Counter
+from collections import defaultdict
+from collections import deque
+from collections.abc import Awaitable
+from collections.abc import Iterable
+from functools import cached_property
+from functools import lru_cache
+from functools import partial
 import json
-from abc import ABC, abstractmethod
-from collections import Counter, defaultdict, deque
-from collections.abc import Awaitable, Iterable
-from functools import cached_property, lru_cache, partial
 from pathlib import Path
-from typing import (Any, Callable, Generic, Literal, Optional, TypeVar, Union,
-                    cast)
+from typing import Any
+from typing import Callable
+from typing import Generic
+from typing import Literal
+from typing import Optional
+from typing import TypeVar
+from typing import Union
+from typing import cast
 
+from PIL import Image
 import jinja2.nodes
-import transformers.utils.chat_template_utils as hf_chat_utils
-# yapf conflicts with isort for this block
-# yapf: disable
-from openai.types.chat import (ChatCompletionAssistantMessageParam,
-                               ChatCompletionContentPartImageParam,
-                               ChatCompletionContentPartInputAudioParam)
 from openai.types.chat import (
     ChatCompletionContentPartParam as OpenAIChatCompletionContentPartParam)
-from openai.types.chat import (ChatCompletionContentPartRefusalParam,
-                               ChatCompletionContentPartTextParam)
 from openai.types.chat import (
     ChatCompletionMessageParam as OpenAIChatCompletionMessageParam)
-from openai.types.chat import (ChatCompletionMessageToolCallParam,
-                               ChatCompletionToolMessageParam)
+# yapf conflicts with isort for this block
+# yapf: disable
+from openai.types.chat import ChatCompletionAssistantMessageParam
+from openai.types.chat import ChatCompletionContentPartImageParam
+from openai.types.chat import ChatCompletionContentPartInputAudioParam
+from openai.types.chat import ChatCompletionContentPartRefusalParam
+from openai.types.chat import ChatCompletionContentPartTextParam
+from openai.types.chat import ChatCompletionMessageToolCallParam
+from openai.types.chat import ChatCompletionToolMessageParam
 from openai.types.chat.chat_completion_content_part_input_audio_param import (
     InputAudio)
 from openai.types.responses import ResponseInputImageParam
 from openai_harmony import Message as OpenAIHarmonyMessage
-from PIL import Image
-from pydantic import BaseModel, ConfigDict, TypeAdapter
+from pydantic import BaseModel
+from pydantic import ConfigDict
+from pydantic import TypeAdapter
 # yapf: enable
-from transformers import (PreTrainedTokenizer, PreTrainedTokenizerFast,
-                          ProcessorMixin)
+from transformers import PreTrainedTokenizer
+from transformers import PreTrainedTokenizerFast
+from transformers import ProcessorMixin
+import transformers.utils.chat_template_utils as hf_chat_utils
 # pydantic needs the TypedDict from typing_extensions
-from typing_extensions import Required, TypeAlias, TypedDict
+from typing_extensions import Required
+from typing_extensions import TypeAlias
+from typing_extensions import TypedDict
 
 from vllm.config import ModelConfig
-from vllm.utils.logger import init_logger
-from vllm.model_executor.models import SupportsMultiModal
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY, MultiModalDataDict
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal import MultiModalDataDict
 from vllm.io.inputs.multimodal.utils import MediaConnector
+from vllm.model_executor.models import SupportsMultiModal
 # yapf: disable
 from vllm.transformers_utils.chat_templates import (
     get_chat_template_fallback_path)
 # yapf: enable
 from vllm.transformers_utils.processor import cached_get_processor
-from vllm.transformers_utils.tokenizer import AnyTokenizer, MistralTokenizer
+from vllm.transformers_utils.tokenizer import AnyTokenizer
+from vllm.transformers_utils.tokenizer import MistralTokenizer
 from vllm.utils import random_uuid
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

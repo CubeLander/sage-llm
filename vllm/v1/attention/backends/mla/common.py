@@ -187,34 +187,41 @@ for chunk_idx in range(cdiv(C, MCC)):
 return curr_o @ W_O
 """
 
-import functools
 from abc import abstractmethod
-from dataclasses import dataclass, field
-from typing import ClassVar, Generic, Optional, TypeVar, Union
+from dataclasses import dataclass
+from dataclasses import field
+import functools
+from typing import ClassVar
+from typing import Generic
+from typing import Optional
+from typing import TypeVar
+from typing import Union
 
 import torch
 
-import vllm.envs as envs
 from vllm import _custom_ops as ops
-from vllm.attention.backends.abstract import (AttentionBackend, AttentionLayer,
-                                              AttentionMetadata,
-                                              MLAAttentionImpl)
+from vllm.attention.backends.abstract import AttentionBackend
+from vllm.attention.backends.abstract import AttentionLayer
+from vllm.attention.backends.abstract import AttentionMetadata
+from vllm.attention.backends.abstract import MLAAttentionImpl
 from vllm.attention.backends.utils import get_mla_dims
 from vllm.attention.ops.merge_attn_states import merge_attn_states
 from vllm.attention.utils.fa_utils import get_flash_attn_version
 from vllm.config import VllmConfig
-from vllm.utils.logger import init_logger
-from vllm.model_executor.layers.linear import (ColumnParallelLinear,
-                                               LinearBase,
-                                               UnquantizedLinearMethod)
+import vllm.envs as envs
+from vllm.model_executor.layers.linear import ColumnParallelLinear
+from vllm.model_executor.layers.linear import LinearBase
+from vllm.model_executor.layers.linear import UnquantizedLinearMethod
 from vllm.platforms import current_platform
-from vllm.utils import cdiv, round_down
+from vllm.utils import cdiv
+from vllm.utils import round_down
 from vllm.utils.flashinfer import has_nvidia_artifactory
-from vllm.v1.attention.backends.utils import (AttentionMetadataBuilder,
-                                              CommonAttentionMetadata,
-                                              get_per_layer_parameters,
-                                              infer_global_hyperparameters,
-                                              split_decodes_and_prefills)
+from vllm.utils.logger import init_logger
+from vllm.v1.attention.backends.utils import AttentionMetadataBuilder
+from vllm.v1.attention.backends.utils import CommonAttentionMetadata
+from vllm.v1.attention.backends.utils import get_per_layer_parameters
+from vllm.v1.attention.backends.utils import infer_global_hyperparameters
+from vllm.v1.attention.backends.utils import split_decodes_and_prefills
 from vllm.v1.kv_cache_interface import AttentionSpec
 
 try:

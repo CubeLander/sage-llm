@@ -2,8 +2,10 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from collections.abc import Iterable
-from functools import lru_cache, partial
-from typing import Optional, Union
+from functools import lru_cache
+from functools import partial
+from typing import Optional
+from typing import Union
 
 import torch
 

@@ -6,14 +6,14 @@ think of KV cache transfer operations as putting new KV cache entries
 into a remote KVStore-based lookup buffer and getting existing KV caches
 from this remote lookup buffer.
 """
+from dataclasses import dataclass
 import json
 import os
-from dataclasses import dataclass
 from typing import Optional
 
-import torch
 from safetensors.torch import load as safetensors_load
 from safetensors.torch import save as safetensors_save
+import torch
 
 from vllm.config import VllmConfig
 from vllm.distributed.kv_transfer.kv_lookup_buffer.base import (

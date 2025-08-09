@@ -6,11 +6,12 @@ import os
 import shutil
 import tempfile
 
-import torch
 from huggingface_hub import snapshot_download
 from safetensors import safe_open
+import torch
 
-from vllm import LLM, SamplingParams
+from vllm import LLM
+from vllm import SamplingParams
 
 
 def patch_eagle_draft_with_lm_head(target_model_id: str,

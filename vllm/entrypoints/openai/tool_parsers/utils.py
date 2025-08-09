@@ -2,7 +2,8 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import json
-from json import JSONDecodeError, JSONDecoder
+from json import JSONDecodeError
+from json import JSONDecoder
 from typing import Any
 
 import partial_json_parser

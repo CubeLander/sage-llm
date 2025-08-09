@@ -4,25 +4,31 @@
 for manipulating the input / output of HF & vLLM test runners, which are
 typically specific to a small subset of models.
 """
-import types
 from pathlib import PosixPath
-from typing import Optional, Union
+import types
+from typing import Optional
+from typing import Union
 
+from PIL.Image import Image
 import numpy as np
 import numpy.typing as npt
 import pytest
 import regex as re
 import torch
-from PIL.Image import Image
-from transformers import (AutoConfig, AutoTokenizer, BatchFeature,
-                          GenerationConfig, GenerationMixin)
+from transformers import AutoConfig
+from transformers import AutoTokenizer
+from transformers import BatchFeature
+from transformers import GenerationConfig
+from transformers import GenerationMixin
 from transformers.video_utils import VideoMetadata
 
 from vllm.sequence import SampleLogprobs
 from vllm.transformers_utils.tokenizer import patch_padding_side
 from vllm.utils import is_list_of
 
-from .....conftest import HfRunner, ImageAsset, ImageTestAssets
+from .....conftest import HfRunner
+from .....conftest import ImageAsset
+from .....conftest import ImageTestAssets
 from .types import RunnerOutput
 
 
@@ -420,7 +426,10 @@ def h2ovl_patch_hf_runner(hf_model: HfRunner) -> HfRunner:
                      **kwargs):
             # yapf: disable
             from vllm.model_executor.models.h2ovl import (
-                IMG_CONTEXT, IMG_END, IMG_START, image_to_pixel_values_h2ovl)
+                image_to_pixel_values_h2ovl)
+            from vllm.model_executor.models.h2ovl import IMG_CONTEXT
+            from vllm.model_executor.models.h2ovl import IMG_END
+            from vllm.model_executor.models.h2ovl import IMG_START
 
             # yapf: enable
             images = [images] if isinstance(images, Image) else images
@@ -479,8 +488,10 @@ def skyworkr1v_patch_hf_runner(hf_model: HfRunner) -> HfRunner:
         def __call__(self, text: str, images: Union[Image, list[Image]],
                      **kwargs):
             from vllm.model_executor.models.skyworkr1v import (
-                IMG_CONTEXT, IMG_END, IMG_START,
                 image_to_pixel_values_skyworkr1v)
+            from vllm.model_executor.models.skyworkr1v import IMG_CONTEXT
+            from vllm.model_executor.models.skyworkr1v import IMG_END
+            from vllm.model_executor.models.skyworkr1v import IMG_START
             images = [images] if isinstance(images, Image) else images
             pixel_values = [
                 image_to_pixel_values_skyworkr1v(
@@ -541,8 +552,12 @@ def internvl_patch_hf_runner(hf_model: HfRunner) -> HfRunner:
             **kwargs,
         ):
             from vllm.model_executor.models.internvl import (
-                IMG_CONTEXT, IMG_END, IMG_START,
-                image_to_pixel_values_internvl, video_to_pixel_values_internvl)
+                image_to_pixel_values_internvl)
+            from vllm.model_executor.models.internvl import (
+                video_to_pixel_values_internvl)
+            from vllm.model_executor.models.internvl import IMG_CONTEXT
+            from vllm.model_executor.models.internvl import IMG_END
+            from vllm.model_executor.models.internvl import IMG_START
             images = [images] if isinstance(images, Image) else images
             videos = [videos] if isinstance(videos, np.ndarray) else videos
             if images is not None:

@@ -1,25 +1,34 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from typing import Optional, overload
+from typing import Optional
+from typing import overload
 
 import pytest
 import torch
-from transformers import AutoConfig, AutoModelForImageTextToText, AutoTokenizer
+from transformers import AutoConfig
+from transformers import AutoModelForImageTextToText
+from transformers import AutoTokenizer
 
-from vllm import LLM, SamplingParams
+from vllm import LLM
+from vllm import SamplingParams
 from vllm.attention.backends.flash_attn import FlashAttentionMetadata
-from vllm.attention.selector import (_Backend, _cached_get_attn_backend,
-                                     global_force_attn_backend_context_manager)
-from vllm.model_executor.models.mllama import MllamaForConditionalGeneration
+from vllm.attention.selector import _Backend
+from vllm.attention.selector import _cached_get_attn_backend
+from vllm.attention.selector import global_force_attn_backend_context_manager
 from vllm.io.inputs.multimodal.image import rescale_image_size
+from vllm.model_executor.models.mllama import MllamaForConditionalGeneration
 from vllm.sequence import SampleLogprobs
 
-from ....conftest import (IMAGE_ASSETS, HfRunner, ImageTestAssets,
-                          PromptImageInput, VllmRunner)
+from ....conftest import HfRunner
+from ....conftest import IMAGE_ASSETS
+from ....conftest import ImageTestAssets
+from ....conftest import PromptImageInput
+from ....conftest import VllmRunner
 from ....quantization.utils import is_quant_method_supported
-from ....utils import (create_new_process_for_each_test, large_gpu_test,
-                       multi_gpu_test)
+from ....utils import create_new_process_for_each_test
+from ....utils import large_gpu_test
+from ....utils import multi_gpu_test
 from ...utils import check_logprobs_close
 
 _LIMIT_IMAGE_PER_PROMPT = 3

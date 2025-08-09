@@ -1,12 +1,14 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import sys
 from contextlib import nullcontext
+import sys
 
-from vllm_test_utils import BlameResult, blame
+from vllm_test_utils import BlameResult
+from vllm_test_utils import blame
 
-from vllm import LLM, SamplingParams
+from vllm import LLM
+from vllm import SamplingParams
 from vllm.distributed import cleanup_dist_env_and_memory
 from vllm.sampling_params import GuidedDecodingParams
 

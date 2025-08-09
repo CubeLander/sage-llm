@@ -5,22 +5,35 @@ import importlib
 import pytest
 import torch
 
-from vllm.config import ModelConfig, SchedulerConfig, VllmConfig
-from vllm.io.inputs.multimodal.inputs import MultiModalKwargs, PlaceholderRange
+from vllm.config import ModelConfig
+from vllm.config import SchedulerConfig
+from vllm.config import VllmConfig
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.inputs import PlaceholderRange
 from vllm.sampling_params import SamplingParams
-from vllm.utils import GiB_bytes, sha256, sha256_cbor_64bit
+from vllm.utils import GiB_bytes
+from vllm.utils import sha256
+from vllm.utils import sha256_cbor_64bit
 from vllm.v1.core.kv_cache_manager import KVCacheManager
 # disable yapf here as it formats differently than isort such that both fail
 # yapf: disable
-from vllm.v1.core.kv_cache_utils import (
-    FreeKVCacheBlockQueue, KVCacheBlock, PrefixCachingMetrics,
-    estimate_max_model_len, generate_block_hash_extra_keys,
-    get_kv_cache_config, get_max_concurrency_for_kv_cache_config,
-    hash_block_tokens, hash_request_tokens, init_none_hash,
-    is_kv_cache_type_uniform, unify_kv_cache_configs)
-from vllm.v1.kv_cache_interface import (FullAttentionSpec, KVCacheConfig,
-                                        KVCacheGroupSpec, KVCacheTensor,
-                                        SlidingWindowSpec)
+from vllm.v1.core.kv_cache_utils import FreeKVCacheBlockQueue
+from vllm.v1.core.kv_cache_utils import KVCacheBlock
+from vllm.v1.core.kv_cache_utils import PrefixCachingMetrics
+from vllm.v1.core.kv_cache_utils import estimate_max_model_len
+from vllm.v1.core.kv_cache_utils import generate_block_hash_extra_keys
+from vllm.v1.core.kv_cache_utils import get_kv_cache_config
+from vllm.v1.core.kv_cache_utils import get_max_concurrency_for_kv_cache_config
+from vllm.v1.core.kv_cache_utils import hash_block_tokens
+from vllm.v1.core.kv_cache_utils import hash_request_tokens
+from vllm.v1.core.kv_cache_utils import init_none_hash
+from vllm.v1.core.kv_cache_utils import is_kv_cache_type_uniform
+from vllm.v1.core.kv_cache_utils import unify_kv_cache_configs
+from vllm.v1.kv_cache_interface import FullAttentionSpec
+from vllm.v1.kv_cache_interface import KVCacheConfig
+from vllm.v1.kv_cache_interface import KVCacheGroupSpec
+from vllm.v1.kv_cache_interface import KVCacheTensor
+from vllm.v1.kv_cache_interface import SlidingWindowSpec
 from vllm.v1.metrics.stats import PrefixCacheStats
 from vllm.v1.request import Request
 

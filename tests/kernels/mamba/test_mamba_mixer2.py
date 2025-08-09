@@ -7,8 +7,8 @@ import pytest
 import torch
 
 from tests.utils import multi_gpu_test
-from vllm.distributed.parallel_state import (init_distributed_environment,
-                                             initialize_model_parallel)
+from vllm.distributed.parallel_state import init_distributed_environment
+from vllm.distributed.parallel_state import initialize_model_parallel
 from vllm.model_executor.layers.mamba.mamba_mixer2 import Mixer2RMSNormGated
 from vllm.platforms import current_platform
 from vllm.utils import update_environment_variables

@@ -1,24 +1,28 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import os
 from collections.abc import Sequence
+import os
 from typing import Optional
 
+from huggingface_hub import snapshot_download
 import librosa
 import pytest
 import regex as re
-from huggingface_hub import snapshot_download
 from transformers import AutoTokenizer
 
 from vllm.assets.image import ImageAsset
+from vllm.io.inputs.multimodal.image import convert_image_mode
+from vllm.io.inputs.multimodal.image import rescale_image_size
 from vllm.lora.request import LoRARequest
-from vllm.io.inputs.multimodal.image import convert_image_mode, rescale_image_size
 from vllm.platforms import current_platform
 from vllm.sequence import SampleLogprobs
 
-from ....conftest import (IMAGE_ASSETS, HfRunner, PromptAudioInput,
-                          PromptImageInput, VllmRunner)
+from ....conftest import HfRunner
+from ....conftest import IMAGE_ASSETS
+from ....conftest import PromptAudioInput
+from ....conftest import PromptImageInput
+from ....conftest import VllmRunner
 from ....utils import large_gpu_test
 from ...utils import check_logprobs_close
 

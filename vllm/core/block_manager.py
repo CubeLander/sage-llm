@@ -1,18 +1,23 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 """A block manager that manages token blocks."""
-from typing import Dict, List, Optional
+from typing import Dict
+from typing import List
+from typing import Optional
 from typing import Sequence as GenericSequence
 from typing import Tuple
 
 from vllm.core.block.block_table import BlockTable
 from vllm.core.block.cpu_gpu_block_allocator import CpuGpuBlockAllocator
 from vllm.core.block.interfaces import Block
-from vllm.core.block.prefix_caching_block import (ComputedBlocksTracker,
-                                                  LastAccessBlocksTracker)
+from vllm.core.block.prefix_caching_block import ComputedBlocksTracker
+from vllm.core.block.prefix_caching_block import LastAccessBlocksTracker
 from vllm.core.block.utils import check_no_caching_or_swa_for_blockmgr_encdec
-from vllm.core.interfaces import AllocStatus, BlockSpaceManager
-from vllm.sequence import Sequence, SequenceGroup, SequenceStatus
+from vllm.core.interfaces import AllocStatus
+from vllm.core.interfaces import BlockSpaceManager
+from vllm.sequence import Sequence
+from vllm.sequence import SequenceGroup
+from vllm.sequence import SequenceStatus
 from vllm.utils import Device
 
 SeqId = int

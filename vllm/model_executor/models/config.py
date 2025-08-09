@@ -4,10 +4,12 @@ from copy import deepcopy
 from typing import TYPE_CHECKING
 
 import vllm.envs as envs
-from vllm.utils.logger import init_logger
 from vllm.model_executor.models import ModelRegistry
-from vllm.utils import STR_DTYPE_TO_TORCH_DTYPE, cdiv
-from vllm.v1.kv_cache_interface import FullAttentionSpec, MambaSpec
+from vllm.utils import STR_DTYPE_TO_TORCH_DTYPE
+from vllm.utils import cdiv
+from vllm.utils.logger import init_logger
+from vllm.v1.kv_cache_interface import FullAttentionSpec
+from vllm.v1.kv_cache_interface import MambaSpec
 
 if TYPE_CHECKING:
 

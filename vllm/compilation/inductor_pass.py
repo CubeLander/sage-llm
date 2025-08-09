@@ -1,12 +1,15 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from contextlib import contextmanager
 import hashlib
 import inspect
 import json
 import types
-from contextlib import contextmanager
-from typing import Any, Callable, Optional, Union
+from typing import Any
+from typing import Callable
+from typing import Optional
+from typing import Union
 
 import torch
 from torch import fx
@@ -17,8 +20,8 @@ if is_torch_equal_or_newer("2.6"):
     from torch._inductor.custom_graph_pass import CustomGraphPass
 else:
     # CustomGraphPass is not present in 2.5 or lower, import our version
-    from .torch25_custom_graph_pass import (  # noqa: E501
-        Torch25CustomGraphPass as CustomGraphPass)
+    from .torch25_custom_graph_pass import (
+        Torch25CustomGraphPass as CustomGraphPass)  # noqa: E501
 
 _pass_context = None
 

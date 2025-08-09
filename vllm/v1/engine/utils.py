@@ -1,28 +1,38 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import contextlib
-import os
-import weakref
 from collections.abc import Iterator
+import contextlib
 from dataclasses import dataclass
-from enum import Enum, auto
-from multiprocessing import Process, connection
+from enum import Enum
+from enum import auto
+from multiprocessing import Process
+from multiprocessing import connection
 from multiprocessing.process import BaseProcess
-from typing import TYPE_CHECKING, Callable, Optional, Union
+import os
+from typing import Callable
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Union
 from unittest.mock import patch
+import weakref
 
 import msgspec
 import zmq
 
-from vllm.config import CacheConfig, ParallelConfig, VllmConfig
-from vllm.utils.logger import init_logger
+from vllm.config import CacheConfig
+from vllm.config import ParallelConfig
+from vllm.config import VllmConfig
 from vllm.platforms import current_platform
+from vllm.utils import get_mp_context
+from vllm.utils import get_open_zmq_ipc_path
+from vllm.utils import zmq_socket_ctx
+from vllm.utils.logger import init_logger
 from vllm.utils.ray.ray_env import get_env_vars_to_copy
-from vllm.utils import get_mp_context, get_open_zmq_ipc_path, zmq_socket_ctx
 from vllm.v1.engine.coordinator import DPCoordinator
 from vllm.v1.executor.abstract import Executor
-from vllm.v1.utils import get_engine_client_zmq_addr, shutdown
+from vllm.v1.utils import get_engine_client_zmq_addr
+from vllm.v1.utils import shutdown
 
 if TYPE_CHECKING:
     from ray.util.placement_group import PlacementGroup
@@ -365,8 +375,8 @@ class CoreEngineActorManager:
         Add placement groups for new data parallel size.
         """
         import ray
-        from ray._private.state import (available_resources_per_node,
-                                        total_resources_per_node)
+        from ray._private.state import available_resources_per_node
+        from ray._private.state import total_resources_per_node
         from ray.util.state import list_nodes
 
         old_dp_size = old_vllm_config.parallel_config.data_parallel_size

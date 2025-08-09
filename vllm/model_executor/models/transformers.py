@@ -15,47 +15,67 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Wrapper around `transformers` models"""
-from collections.abc import Iterable, Mapping
-from contextlib import contextmanager, nullcontext
-from typing import Literal, Optional, Union
+from collections.abc import Iterable
+from collections.abc import Mapping
+from contextlib import contextmanager
+from contextlib import nullcontext
+from typing import Literal
+from typing import Optional
+from typing import Union
 
 import regex as re
 import torch
 from torch import nn
-from transformers import (AutoModel, BatchFeature, PretrainedConfig,
-                          PreTrainedModel)
+from transformers import AutoModel
+from transformers import BatchFeature
+from transformers import PreTrainedModel
+from transformers import PretrainedConfig
 from transformers.modeling_utils import ALL_ATTENTION_FUNCTIONS
 
 from vllm.attention import Attention
 from vllm.compilation.decorators import support_torch_compile
-from vllm.config import (CacheConfig, DeviceConfig, ModelConfig,
-                         ParallelConfig, VllmConfig)
-from vllm.distributed import get_pp_group, get_tensor_model_parallel_world_size
+from vllm.config import CacheConfig
+from vllm.config import DeviceConfig
+from vllm.config import ModelConfig
+from vllm.config import ParallelConfig
+from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.distributed import get_pp_group
+from vllm.distributed import get_tensor_model_parallel_world_size
 from vllm.distributed.utils import get_pp_indices
-from vllm.utils.logger import init_logger
-from vllm.model_executor.layers.linear import (ColumnParallelLinear,
-                                               ReplicatedLinear,
-                                               RowParallelLinear)
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal import MultiModalKwargs
+from vllm.io.inputs.multimodal.inputs import MultiModalDataDict
+from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
+from vllm.io.inputs.multimodal.inputs import MultiModalInputs
+from vllm.io.inputs.multimodal.inputs import PlaceholderRange
+from vllm.io.inputs.multimodal.parse import ImageProcessorItems
+from vllm.io.inputs.multimodal.parse import MultiModalDataItems
+from vllm.io.inputs.multimodal.processing import BaseMultiModalProcessor
+from vllm.io.inputs.multimodal.processing import BaseProcessingInfo
+from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
+from vllm.model_executor.layers.linear import ColumnParallelLinear
+from vllm.model_executor.layers.linear import ReplicatedLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
 from vllm.model_executor.layers.logits_processor import LogitsProcessor
 from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.model_executor.layers.vocab_parallel_embedding import (
-    ParallelLMHead, VocabParallelEmbedding)
+    VocabParallelEmbedding)
+from vllm.model_executor.layers.vocab_parallel_embedding import ParallelLMHead
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY, MultiModalKwargs
-from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
-                                    MultiModalInputs, PlaceholderRange)
-from vllm.io.inputs.multimodal.parse import ImageProcessorItems, MultiModalDataItems
-from vllm.io.inputs.multimodal.processing import (BaseMultiModalProcessor,
-                                        BaseProcessingInfo)
-from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
-from vllm.sequence import IntermediateTensors
 from vllm.utils import is_list_of
+from vllm.utils.logger import init_logger
 
-from .interfaces import (SupportsLoRA, SupportsMultiModal, SupportsPP,
-                         SupportsQuant)
-from .utils import (AutoWeightsLoader, PPMissingLayer, WeightsMapper,
-                    flatten_bn, make_empty_intermediate_tensors_factory,
-                    maybe_prefix)
+from .interfaces import SupportsLoRA
+from .interfaces import SupportsMultiModal
+from .interfaces import SupportsPP
+from .interfaces import SupportsQuant
+from .utils import AutoWeightsLoader
+from .utils import PPMissingLayer
+from .utils import WeightsMapper
+from .utils import flatten_bn
+from .utils import make_empty_intermediate_tensors_factory
+from .utils import maybe_prefix
 
 logger = init_logger(__name__)
 

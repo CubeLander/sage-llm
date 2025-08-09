@@ -3,13 +3,13 @@
 
 from typing import Optional
 
+from packaging import version
 import torch
 import torch.nn as nn
-from packaging import version
 
 from vllm import envs
-from vllm.utils.logger import init_logger
 from vllm.platforms import current_platform
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

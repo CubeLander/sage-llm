@@ -1,20 +1,27 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from collections.abc import Mapping
+from collections.abc import Sequence
 import time
-from collections.abc import Mapping, Sequence
-from typing import Any, Literal, Optional, Union
+from typing import Any
+from typing import Literal
+from typing import Optional
+from typing import Union
 
 from vllm.config import VllmConfig
-from vllm.io.inputs import ProcessorInputs, PromptType, SingletonInputs
-from vllm.io.inputs.parse import split_enc_dec_inputs
-from vllm.io.inputs.preprocess import InputPreprocessor
-from vllm.lora.request import LoRARequest
-from vllm.io.inputs.multimodal import (MULTIMODAL_REGISTRY, MultiModalKwargs,
-                             MultiModalRegistry)
+from vllm.io.inputs import ProcessorInputs
+from vllm.io.inputs import PromptType
+from vllm.io.inputs import SingletonInputs
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal import MultiModalKwargs
+from vllm.io.inputs.multimodal import MultiModalRegistry
 from vllm.io.inputs.multimodal.inputs import PlaceholderRange
 from vllm.io.inputs.multimodal.processing import EncDecMultiModalProcessor
 from vllm.io.inputs.multimodal.utils import merge_and_sort_multimodal_metadata
+from vllm.io.inputs.parse import split_enc_dec_inputs
+from vllm.io.inputs.preprocess import InputPreprocessor
+from vllm.lora.request import LoRARequest
 from vllm.pooling_params import PoolingParams
 from vllm.sampling_params import SamplingParams
 from vllm.transformers_utils.tokenizer_group import TokenizerGroup

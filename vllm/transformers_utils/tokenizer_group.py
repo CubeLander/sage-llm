@@ -5,12 +5,15 @@ from typing import Optional
 
 from typing_extensions import assert_never
 
-from vllm.config import LoRAConfig, ModelConfig, SchedulerConfig
+from vllm.config import LoRAConfig
+from vllm.config import ModelConfig
+from vllm.config import SchedulerConfig
 from vllm.lora.request import LoRARequest
-from vllm.transformers_utils.tokenizer import (AnyTokenizer, encode_tokens,
-                                               get_lora_tokenizer,
-                                               get_lora_tokenizer_async,
-                                               get_tokenizer)
+from vllm.transformers_utils.tokenizer import AnyTokenizer
+from vllm.transformers_utils.tokenizer import encode_tokens
+from vllm.transformers_utils.tokenizer import get_lora_tokenizer
+from vllm.transformers_utils.tokenizer import get_lora_tokenizer_async
+from vllm.transformers_utils.tokenizer import get_tokenizer
 from vllm.utils import LRUCache
 
 

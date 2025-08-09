@@ -1,20 +1,22 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import json
 from collections.abc import Generator
+import json
 from typing import Optional
 
 import pytest
 
-from vllm.entrypoints.openai.protocol import (ChatCompletionRequest,
-                                              ChatCompletionToolsParam,
-                                              DeltaMessage, FunctionCall,
-                                              ToolCall)
+from vllm.entrypoints.openai.protocol import ChatCompletionRequest
+from vllm.entrypoints.openai.protocol import ChatCompletionToolsParam
+from vllm.entrypoints.openai.protocol import DeltaMessage
+from vllm.entrypoints.openai.protocol import FunctionCall
+from vllm.entrypoints.openai.protocol import ToolCall
 from vllm.entrypoints.openai.tool_parsers.qwen3coder_tool_parser import (
     Qwen3CoderToolParser)
 from vllm.transformers_utils.detokenizer import detokenize_incrementally
-from vllm.transformers_utils.tokenizer import AnyTokenizer, get_tokenizer
+from vllm.transformers_utils.tokenizer import AnyTokenizer
+from vllm.transformers_utils.tokenizer import get_tokenizer
 
 MODEL = "Qwen/Qwen3-Coder-480B-A35B-Instruct-FP8"
 

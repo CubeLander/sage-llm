@@ -10,10 +10,10 @@ import pytest
 from vllm.transformers_utils.tokenizer import get_tokenizer
 
 from ...utils import RemoteOpenAIServer
+from .test_completion import MODEL_NAME
 from .test_completion import default_server_args  # noqa: F401
 from .test_completion import zephyr_lora_added_tokens_files  # noqa: F401
 from .test_completion import zephyr_lora_files  # noqa: F401
-from .test_completion import MODEL_NAME
 
 
 @pytest.fixture(scope="module")

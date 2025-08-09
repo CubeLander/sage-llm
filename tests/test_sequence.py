@@ -4,8 +4,9 @@
 import pytest
 
 from vllm.model_executor.layers.sampler import SamplerOutput
-from vllm.sequence import (CompletionSequenceGroupOutput, SequenceData,
-                           SequenceOutput)
+from vllm.sequence import CompletionSequenceGroupOutput
+from vllm.sequence import SequenceData
+from vllm.sequence import SequenceOutput
 
 from .core.utils import create_dummy_prompt
 

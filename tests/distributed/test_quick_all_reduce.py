@@ -10,11 +10,13 @@ import torch.distributed as dist
 
 from vllm.distributed.communication_op import (  # noqa
     tensor_model_parallel_all_reduce)
-from vllm.distributed.parallel_state import get_tp_group, graph_capture
+from vllm.distributed.parallel_state import get_tp_group
+from vllm.distributed.parallel_state import graph_capture
 from vllm.platforms import current_platform
 
-from ..utils import (ensure_model_parallel_initialized,
-                     init_test_distributed_environment, multi_process_parallel)
+from ..utils import ensure_model_parallel_initialized
+from ..utils import init_test_distributed_environment
+from ..utils import multi_process_parallel
 
 torch.manual_seed(42)
 random.seed(44)

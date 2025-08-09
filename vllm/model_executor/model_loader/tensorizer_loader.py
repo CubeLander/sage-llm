@@ -1,22 +1,30 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 # ruff: noqa: SIM117
-import copy
 from collections.abc import Generator
+import copy
 from typing import Union
 
 import torch
 from torch import nn
 
-from vllm.config import LoadConfig, ModelConfig, ParallelConfig, VllmConfig
-from vllm.utils.logger import init_logger
+from vllm.config import LoadConfig
+from vllm.config import ModelConfig
+from vllm.config import ParallelConfig
+from vllm.config import VllmConfig
 from vllm.model_executor.model_loader.base_loader import BaseModelLoader
 from vllm.model_executor.model_loader.tensorizer import (
-    TensorizerConfig, deserialize_tensorizer_model, init_tensorizer_model,
-    is_vllm_tensorized, serialize_vllm_model, tensorizer_weights_iterator)
-from vllm.model_executor.model_loader.utils import (get_model_architecture,
-                                                    initialize_model,
-                                                    set_default_torch_dtype)
+    deserialize_tensorizer_model)
+from vllm.model_executor.model_loader.tensorizer import (
+    tensorizer_weights_iterator)
+from vllm.model_executor.model_loader.tensorizer import TensorizerConfig
+from vllm.model_executor.model_loader.tensorizer import init_tensorizer_model
+from vllm.model_executor.model_loader.tensorizer import is_vllm_tensorized
+from vllm.model_executor.model_loader.tensorizer import serialize_vllm_model
+from vllm.model_executor.model_loader.utils import get_model_architecture
+from vllm.model_executor.model_loader.utils import initialize_model
+from vllm.model_executor.model_loader.utils import set_default_torch_dtype
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

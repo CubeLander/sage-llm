@@ -1,11 +1,14 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from typing import TYPE_CHECKING, Any, Optional, Union
+from typing import Any
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Union
 
 from vllm.transformers_utils.tokenizer import get_tokenizer
-from vllm.transformers_utils.tokenizer_base import (TokenizerBase,
-                                                    TokenizerRegistry)
+from vllm.transformers_utils.tokenizer_base import TokenizerBase
+from vllm.transformers_utils.tokenizer_base import TokenizerRegistry
 
 if TYPE_CHECKING:
     from vllm.entrypoints.chat_utils import ChatCompletionMessageParam

@@ -2,22 +2,23 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from dataclasses import dataclass
-from typing import ClassVar, Optional
+from typing import ClassVar
+from typing import Optional
 
 import torch
 
-from vllm.attention.backends.abstract import (AttentionType,
-                                              is_quantized_kv_cache)
-from vllm.attention.ops.flashmla import (flash_mla_with_kvcache,
-                                         get_mla_metadata,
-                                         is_flashmla_supported)
+from vllm.attention.backends.abstract import AttentionType
+from vllm.attention.backends.abstract import is_quantized_kv_cache
+from vllm.attention.ops.flashmla import flash_mla_with_kvcache
+from vllm.attention.ops.flashmla import get_mla_metadata
+from vllm.attention.ops.flashmla import is_flashmla_supported
 from vllm.config import VllmConfig
 from vllm.utils.logger import init_logger
-from vllm.v1.attention.backends.mla.common import (MLACommonBackend,
-                                                   MLACommonDecodeMetadata,
-                                                   MLACommonImpl,
-                                                   MLACommonMetadata,
-                                                   MLACommonMetadataBuilder)
+from vllm.v1.attention.backends.mla.common import MLACommonBackend
+from vllm.v1.attention.backends.mla.common import MLACommonDecodeMetadata
+from vllm.v1.attention.backends.mla.common import MLACommonImpl
+from vllm.v1.attention.backends.mla.common import MLACommonMetadata
+from vllm.v1.attention.backends.mla.common import MLACommonMetadataBuilder
 from vllm.v1.attention.backends.utils import AttentionCGSupport
 from vllm.v1.kv_cache_interface import AttentionSpec
 

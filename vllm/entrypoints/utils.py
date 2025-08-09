@@ -8,19 +8,23 @@ import functools
 import os
 import subprocess
 import sys
-from typing import Any, Optional, Union
+from typing import Any
+from typing import Optional
+from typing import Union
 
 from fastapi import Request
-from fastapi.responses import JSONResponse, StreamingResponse
-from starlette.background import BackgroundTask, BackgroundTasks
+from fastapi.responses import JSONResponse
+from fastapi.responses import StreamingResponse
+from starlette.background import BackgroundTask
+from starlette.background import BackgroundTasks
 
 from vllm.engine.arg_utils import EngineArgs
 from vllm.entrypoints.openai.cli_args import make_arg_parser
-from vllm.entrypoints.openai.protocol import (ChatCompletionRequest,
-                                              CompletionRequest)
-from vllm.utils.logger import init_logger
+from vllm.entrypoints.openai.protocol import ChatCompletionRequest
+from vllm.entrypoints.openai.protocol import CompletionRequest
 from vllm.platforms import current_platform
 from vllm.utils import FlexibleArgumentParser
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

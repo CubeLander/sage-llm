@@ -4,14 +4,19 @@
 from __future__ import annotations
 
 import tempfile
-from typing import Any, Optional, Union
+from typing import Any
+from typing import Optional
+from typing import Union
 
 import pytest
 import torch
 
 from tests.quantization.utils import is_quant_method_supported
-from vllm import LLM, SamplingParams
-from vllm.config import CompilationConfig, CompilationLevel, PassConfig
+from vllm import LLM
+from vllm import SamplingParams
+from vllm.config import CompilationConfig
+from vllm.config import CompilationLevel
+from vllm.config import PassConfig
 from vllm.platforms import current_platform
 
 from ..utils import create_new_process_for_each_test

@@ -11,27 +11,32 @@ generation. Supported dataset types include:
   - HuggingFace
   - VisionArena
 """
+from abc import ABC
+from abc import abstractmethod
 import base64
-import io
-import json
-import logging
-import random
-from abc import ABC, abstractmethod
 from collections.abc import Mapping
 from dataclasses import dataclass
 from functools import cache
+import io
 from io import BytesIO
-from typing import Any, Callable, Optional, Union
+import json
+import logging
+import random
+from typing import Any
+from typing import Callable
+from typing import Optional
+from typing import Union
 
-import numpy as np
 from PIL import Image
+import numpy as np
 from transformers import PreTrainedTokenizerBase
 
-from vllm.lora.request import LoRARequest
-from vllm.lora.utils import get_adapter_absolute_path
 from vllm.io.inputs.multimodal import MultiModalDataDict
 from vllm.io.inputs.multimodal.image import convert_image_mode
-from vllm.transformers_utils.tokenizer import AnyTokenizer, get_lora_tokenizer
+from vllm.lora.request import LoRARequest
+from vllm.lora.utils import get_adapter_absolute_path
+from vllm.transformers_utils.tokenizer import AnyTokenizer
+from vllm.transformers_utils.tokenizer import get_lora_tokenizer
 from vllm.utils import PlaceholderModule
 
 try:

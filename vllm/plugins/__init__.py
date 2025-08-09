@@ -2,7 +2,8 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import logging
-from typing import Any, Callable
+from typing import Any
+from typing import Callable
 
 import vllm.envs as envs
 

@@ -4,11 +4,14 @@ from typing import Callable
 
 import pytest
 
-from vllm import LLM, EngineArgs
+from vllm import EngineArgs
+from vllm import LLM
 from vllm.distributed import cleanup_dist_env_and_memory
 from vllm.model_executor.model_loader import tensorizer as tensorizer_mod
 from vllm.model_executor.model_loader.tensorizer import TensorizerConfig
-from vllm.utils import get_distributed_init_method, get_ip, get_open_port
+from vllm.utils import get_distributed_init_method
+from vllm.utils import get_ip
+from vllm.utils import get_open_port
 from vllm.v1.executor.abstract import UniProcExecutor
 from vllm.worker.worker_base import WorkerWrapperBase
 

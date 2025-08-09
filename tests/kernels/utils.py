@@ -2,25 +2,32 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 """Kernel test utils"""
 
-import itertools
-import random
-import unittest
 from collections.abc import Sequence
+import itertools
 from numbers import Number
-from typing import Any, NamedTuple, Optional, Union
+import random
+from typing import Any
+from typing import NamedTuple
+from typing import Optional
+from typing import Union
+import unittest
 
 import pytest
 import torch
 from torch._prims_common import TensorLikeType
 
 from tests.kernels.quant_utils import native_w8a8_block_matmul
-from vllm.attention import AttentionBackend, AttentionMetadata, AttentionType
+from vllm.attention import AttentionBackend
+from vllm.attention import AttentionMetadata
+from vllm.attention import AttentionType
 from vllm.model_executor.layers.activation import SiluAndMul
 from vllm.model_executor.layers.fused_moe.utils import (
     moe_kernel_quantize_input)
 from vllm.platforms.interface import _Backend
-from vllm.utils import (STR_BACKEND_ENV_VAR, STR_FLASH_ATTN_VAL,
-                        STR_XFORMERS_ATTN_VAL, make_tensor_with_pad)
+from vllm.utils import STR_BACKEND_ENV_VAR
+from vllm.utils import STR_FLASH_ATTN_VAL
+from vllm.utils import STR_XFORMERS_ATTN_VAL
+from vllm.utils import make_tensor_with_pad
 
 # For now, disable "test_aot_dispatch_dynamic" since there are some
 # bugs related to this test in PyTorch 2.4.

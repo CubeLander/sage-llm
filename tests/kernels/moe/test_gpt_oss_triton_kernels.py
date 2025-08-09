@@ -1,16 +1,20 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-from dataclasses import dataclass, fields
+from dataclasses import dataclass
+from dataclasses import fields
 
 import pytest
 import torch
 import torch.nn.functional as F
-import triton_kernels.swiglu
-from triton_kernels.matmul_ogs import FlexCtx, PrecisionConfig
+from triton_kernels.matmul_ogs import FlexCtx
+from triton_kernels.matmul_ogs import PrecisionConfig
 from triton_kernels.numerics import InFlexData
-from triton_kernels.numerics_details.mxfp import (downcast_to_mxfp,
-                                                  upcast_from_mxfp)
-from triton_kernels.tensor import FP4, convert_layout, wrap_torch_tensor
+from triton_kernels.numerics_details.mxfp import downcast_to_mxfp
+from triton_kernels.numerics_details.mxfp import upcast_from_mxfp
+import triton_kernels.swiglu
+from triton_kernels.tensor import FP4
+from triton_kernels.tensor import convert_layout
+from triton_kernels.tensor import wrap_torch_tensor
 from triton_kernels.tensor_details import layout
 from triton_kernels.testing import assert_close
 
@@ -18,7 +22,9 @@ from vllm.model_executor.layers.fused_moe.fused_batched_moe import (
     BatchedPrepareAndFinalize)
 from vllm.model_executor.layers.fused_moe.fused_moe import fused_topk
 from vllm.model_executor.layers.fused_moe.gpt_oss_triton_kernels_moe import (
-    BatchedOAITritonExperts, triton_kernel_moe_forward)
+    BatchedOAITritonExperts)
+from vllm.model_executor.layers.fused_moe.gpt_oss_triton_kernels_moe import (
+    triton_kernel_moe_forward)
 from vllm.model_executor.layers.fused_moe.modular_kernel import (
     FusedMoEModularKernel)
 from vllm.model_executor.layers.utils import shuffle_weight

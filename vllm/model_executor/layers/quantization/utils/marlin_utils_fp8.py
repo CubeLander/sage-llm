@@ -6,12 +6,17 @@ from typing import Optional
 import torch
 
 import vllm._custom_ops as ops
-from vllm.utils.logger import init_logger
 from vllm.model_executor.layers.quantization.utils.marlin_utils import (
-    USE_FP32_REDUCE_DEFAULT, marlin_make_workspace_new, marlin_permute_scales,
+    USE_FP32_REDUCE_DEFAULT)
+from vllm.model_executor.layers.quantization.utils.marlin_utils import (
+    marlin_make_workspace_new)
+from vllm.model_executor.layers.quantization.utils.marlin_utils import (
+    marlin_permute_scales)
+from vllm.model_executor.layers.quantization.utils.marlin_utils import (
     should_use_atomic_add_reduce)
 from vllm.platforms import current_platform
 from vllm.scalar_type import scalar_types
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

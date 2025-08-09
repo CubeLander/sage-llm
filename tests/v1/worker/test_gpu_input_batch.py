@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import inspect
 from collections.abc import Sequence
+import inspect
 from typing import Optional
 
 import numpy as np
@@ -11,12 +11,15 @@ import torch
 
 from vllm.platforms import current_platform
 from vllm.sampling_params import SamplingParams
-from vllm.utils import is_pin_memory_available, make_tensor_with_pad
+from vllm.utils import is_pin_memory_available
+from vllm.utils import make_tensor_with_pad
 from vllm.v1.pool.metadata import PoolingMetadata
 from vllm.v1.sample.logits_processor import LogitsProcessorManager
 from vllm.v1.sample.metadata import SamplingMetadata
-from vllm.v1.worker.block_table import BlockTable, MultiGroupBlockTable
-from vllm.v1.worker.gpu_input_batch import CachedRequestState, InputBatch
+from vllm.v1.worker.block_table import BlockTable
+from vllm.v1.worker.block_table import MultiGroupBlockTable
+from vllm.v1.worker.gpu_input_batch import CachedRequestState
+from vllm.v1.worker.gpu_input_batch import InputBatch
 
 VOCAB_SIZE = 1024
 NUM_OUTPUT_TOKENS = 20

@@ -1,17 +1,17 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from http import HTTPStatus
 import subprocess
 import sys
 import tempfile
 import time
-from http import HTTPStatus
 
 import openai
+from prometheus_client.parser import text_string_to_metric_families
 import pytest
 import pytest_asyncio
 import requests
-from prometheus_client.parser import text_string_to_metric_families
 from transformers import AutoTokenizer
 
 from vllm import version

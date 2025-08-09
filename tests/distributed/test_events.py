@@ -6,8 +6,9 @@ import time
 import msgspec
 import pytest
 
-from vllm.distributed.kv_events import (EventBatch, EventPublisherFactory,
-                                        NullEventPublisher)
+from vllm.distributed.kv_events import EventBatch
+from vllm.distributed.kv_events import EventPublisherFactory
+from vllm.distributed.kv_events import NullEventPublisher
 
 DP_RANK = 0
 

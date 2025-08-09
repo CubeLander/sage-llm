@@ -5,7 +5,9 @@ import weakref
 
 import pytest
 
-from vllm import LLM, PoolingParams, PoolingRequestOutput
+from vllm import LLM
+from vllm import PoolingParams
+from vllm import PoolingRequestOutput
 from vllm.distributed import cleanup_dist_env_and_memory
 
 from ...models.utils import check_embeddings_close

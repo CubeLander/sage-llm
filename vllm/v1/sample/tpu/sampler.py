@@ -5,7 +5,8 @@
 import torch
 import torch.nn as nn
 
-from vllm.v1.outputs import LogprobsTensors, SamplerOutput
+from vllm.v1.outputs import LogprobsTensors
+from vllm.v1.outputs import SamplerOutput
 from vllm.v1.sample.ops.topk_topp_sampler import TopKTopPSampler
 from vllm.v1.sample.tpu.metadata import TPUSupportedSamplingMetadata
 

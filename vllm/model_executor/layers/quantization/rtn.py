@@ -3,19 +3,25 @@
 # Copyright © 2025, Oracle and/or its affiliates.
 
 import os
-from typing import Any, Callable, Optional
+from typing import Any
+from typing import Callable
+from typing import Optional
 
 import torch
 import torch.nn.functional as F
 from torch.nn.parameter import Parameter
 
-from vllm.utils.logger import init_logger
-from vllm.model_executor.layers.fused_moe import FusedMoE, FusedMoEMethodBase
-from vllm.model_executor.layers.linear import (LinearBase, LinearMethodBase,
-                                               set_weight_attrs)
+from vllm.model_executor.layers.fused_moe import FusedMoE
+from vllm.model_executor.layers.fused_moe import FusedMoEMethodBase
+from vllm.model_executor.layers.linear import LinearBase
+from vllm.model_executor.layers.linear import LinearMethodBase
+from vllm.model_executor.layers.linear import set_weight_attrs
 from vllm.model_executor.layers.quantization import QuantizationMethods
 from vllm.model_executor.layers.quantization.base_config import (
-    QuantizationConfig, QuantizeMethodBase)
+    QuantizationConfig)
+from vllm.model_executor.layers.quantization.base_config import (
+    QuantizeMethodBase)
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 """By default, use 8 bit as target precision, but it can be 

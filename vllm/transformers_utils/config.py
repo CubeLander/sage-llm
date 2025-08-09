@@ -2,22 +2,31 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import enum
+from functools import cache
+from functools import partial
 import json
 import os
-import time
-from functools import cache, partial
 from pathlib import Path
-from typing import Any, Callable, Optional, TypeVar, Union
+import time
+from typing import Any
+from typing import Callable
+from typing import Optional
+from typing import TypeVar
+from typing import Union
 
 import huggingface_hub
-from huggingface_hub import get_safetensors_metadata, hf_hub_download
+from huggingface_hub import get_safetensors_metadata
+from huggingface_hub import hf_hub_download
 from huggingface_hub import list_repo_files as hf_list_repo_files
 from huggingface_hub import try_to_load_from_cache
-from huggingface_hub.utils import (EntryNotFoundError, HfHubHTTPError,
-                                   HFValidationError, LocalEntryNotFoundError,
-                                   RepositoryNotFoundError,
-                                   RevisionNotFoundError)
-from transformers import GenerationConfig, PretrainedConfig
+from huggingface_hub.utils import EntryNotFoundError
+from huggingface_hub.utils import HFValidationError
+from huggingface_hub.utils import HfHubHTTPError
+from huggingface_hub.utils import LocalEntryNotFoundError
+from huggingface_hub.utils import RepositoryNotFoundError
+from huggingface_hub.utils import RevisionNotFoundError
+from transformers import GenerationConfig
+from transformers import PretrainedConfig
 from transformers.models.auto.image_processing_auto import (
     get_image_processor_config)
 from transformers.models.auto.modeling_auto import (
@@ -26,22 +35,29 @@ from transformers.models.auto.tokenization_auto import get_tokenizer_config
 from transformers.utils import CONFIG_NAME as HF_CONFIG_NAME
 
 from vllm import envs
-from vllm.utils.logger import init_logger
 # yapf conflicts with isort for this block
 # yapf: disable
-from vllm.transformers_utils.configs import (ChatGLMConfig, DeepseekVLV2Config,
-                                             EAGLEConfig, JAISConfig,
-                                             KimiVLConfig, MedusaConfig,
-                                             MllamaConfig, MLPSpeculatorConfig,
-                                             Nemotron_Nano_VL_Config,
-                                             NemotronConfig, NVLM_D_Config,
-                                             OvisConfig, RWConfig,
-                                             SpeculatorsConfig,
-                                             Step3TextConfig, Step3VLConfig,
-                                             UltravoxConfig)
+from vllm.transformers_utils.configs import ChatGLMConfig
+from vllm.transformers_utils.configs import DeepseekVLV2Config
+from vllm.transformers_utils.configs import EAGLEConfig
+from vllm.transformers_utils.configs import JAISConfig
+from vllm.transformers_utils.configs import KimiVLConfig
+from vllm.transformers_utils.configs import MLPSpeculatorConfig
+from vllm.transformers_utils.configs import MedusaConfig
+from vllm.transformers_utils.configs import MllamaConfig
+from vllm.transformers_utils.configs import NVLM_D_Config
+from vllm.transformers_utils.configs import NemotronConfig
+from vllm.transformers_utils.configs import Nemotron_Nano_VL_Config
+from vllm.transformers_utils.configs import OvisConfig
+from vllm.transformers_utils.configs import RWConfig
+from vllm.transformers_utils.configs import SpeculatorsConfig
+from vllm.transformers_utils.configs import Step3TextConfig
+from vllm.transformers_utils.configs import Step3VLConfig
+from vllm.transformers_utils.configs import UltravoxConfig
 # yapf: enable
 from vllm.transformers_utils.configs.mistral import adapt_config_dict
 from vllm.transformers_utils.utils import check_gguf_file
+from vllm.utils.logger import init_logger
 
 if envs.VLLM_USE_MODELSCOPE:
     from modelscope import AutoConfig

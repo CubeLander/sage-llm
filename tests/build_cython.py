@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-import Cython.Compiler.Options
 from Cython.Build import cythonize
+import Cython.Compiler.Options
 from setuptools import setup
 
 Cython.Compiler.Options.annotate = True

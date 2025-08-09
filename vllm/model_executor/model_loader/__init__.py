@@ -1,12 +1,14 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from typing import Literal, Optional
+from typing import Literal
+from typing import Optional
 
 from torch import nn
 
-from vllm.config import LoadConfig, ModelConfig, VllmConfig
-from vllm.utils.logger import init_logger
+from vllm.config import LoadConfig
+from vllm.config import ModelConfig
+from vllm.config import VllmConfig
 from vllm.model_executor.model_loader.base_loader import BaseModelLoader
 from vllm.model_executor.model_loader.bitsandbytes_loader import (
     BitsAndBytesModelLoader)
@@ -18,8 +20,10 @@ from vllm.model_executor.model_loader.runai_streamer_loader import (
 from vllm.model_executor.model_loader.sharded_state_loader import (
     ShardedStateLoader)
 from vllm.model_executor.model_loader.tensorizer_loader import TensorizerLoader
-from vllm.model_executor.model_loader.utils import (
-    get_architecture_class_name, get_model_architecture, get_model_cls)
+from vllm.model_executor.model_loader.utils import get_architecture_class_name
+from vllm.model_executor.model_loader.utils import get_model_architecture
+from vllm.model_executor.model_loader.utils import get_model_cls
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

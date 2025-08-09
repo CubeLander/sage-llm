@@ -2,11 +2,12 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 from typing import Optional
 
-import torch
 from packaging import version
+import torch
 
 from vllm.platforms import current_platform
-from vllm.scalar_type import ScalarType, scalar_types
+from vllm.scalar_type import ScalarType
+from vllm.scalar_type import scalar_types
 
 MINIMUM_BITBLAS_VERSION = "0.1.0"
 

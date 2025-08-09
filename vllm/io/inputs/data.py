@@ -1,13 +1,23 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 from collections.abc import Iterable
-from typing import TYPE_CHECKING, Any, Generic, Literal, Optional, Union, cast
+from typing import Any
+from typing import Generic
+from typing import Literal
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Union
+from typing import cast
 
 import torch
-from typing_extensions import NotRequired, TypedDict, TypeIs, TypeVar
+from typing_extensions import NotRequired
+from typing_extensions import TypeIs
+from typing_extensions import TypeVar
+from typing_extensions import TypedDict
 
 if TYPE_CHECKING:
-    from vllm.io.inputs.multimodal.inputs import MultiModalDataDict, MultiModalInputs
+    from vllm.io.inputs.multimodal.inputs import MultiModalDataDict
+    from vllm.io.inputs.multimodal.inputs import MultiModalInputs
 
 
 class TextPrompt(TypedDict):

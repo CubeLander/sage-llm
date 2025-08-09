@@ -1,17 +1,19 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-import math
 from dataclasses import dataclass
-from typing import ClassVar, Optional
+import math
+from typing import ClassVar
+from typing import Optional
 
 import torch
 
 from vllm.attention.backends.abstract import AttentionBackend
 from vllm.config import VllmConfig
-from vllm.v1.attention.backends.utils import (AttentionMetadataBuilder,
-                                              CommonAttentionMetadata,
-                                              split_decodes_and_prefills)
-from vllm.v1.kv_cache_interface import AttentionSpec, MambaSpec
+from vllm.v1.attention.backends.utils import AttentionMetadataBuilder
+from vllm.v1.attention.backends.utils import CommonAttentionMetadata
+from vllm.v1.attention.backends.utils import split_decodes_and_prefills
+from vllm.v1.kv_cache_interface import AttentionSpec
+from vllm.v1.kv_cache_interface import MambaSpec
 
 
 def _query_start_loc_to_chunk_indices_offsets(query_start_loc: torch.Tensor,

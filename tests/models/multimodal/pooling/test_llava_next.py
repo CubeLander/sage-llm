@@ -7,7 +7,10 @@ from transformers import AutoModelForImageTextToText
 
 from vllm.platforms import current_platform
 
-from ....conftest import IMAGE_ASSETS, HfRunner, PromptImageInput, VllmRunner
+from ....conftest import HfRunner
+from ....conftest import IMAGE_ASSETS
+from ....conftest import PromptImageInput
+from ....conftest import VllmRunner
 from ....utils import large_gpu_test
 from ...utils import check_embeddings_close
 

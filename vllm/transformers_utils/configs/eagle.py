@@ -2,9 +2,11 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import os
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
-from transformers import AutoConfig, PretrainedConfig
+from transformers import AutoConfig
+from transformers import PretrainedConfig
 
 from vllm.transformers_utils.configs.deepseek_vl2 import DeepseekV2Config
 

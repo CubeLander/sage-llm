@@ -9,9 +9,9 @@ from unittest.mock import patch
 import librosa
 import numpy as np
 import openai
+from openai._base_client import AsyncAPIClient
 import pytest
 import soundfile as sf
-from openai._base_client import AsyncAPIClient
 
 from vllm.assets.audio import AudioAsset
 

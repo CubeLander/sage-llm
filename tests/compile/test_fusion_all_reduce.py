@@ -5,22 +5,27 @@ from importlib.util import find_spec
 import pytest
 import torch
 
-import vllm.envs as envs
 from vllm.compilation.collective_fusion import AllReduceFusionPass
 from vllm.compilation.fix_functionalization import FixFunctionalizationPass
 from vllm.compilation.noop_elimination import NoOpEliminationPass
-from vllm.config import (CompilationConfig, CompilationLevel, DeviceConfig,
-                         ModelConfig, PassConfig, VllmConfig)
+from vllm.config import CompilationConfig
+from vllm.config import CompilationLevel
+from vllm.config import DeviceConfig
+from vllm.config import ModelConfig
+from vllm.config import PassConfig
+from vllm.config import VllmConfig
 from vllm.distributed import tensor_model_parallel_all_reduce
-from vllm.distributed.parallel_state import (init_distributed_environment,
-                                             initialize_model_parallel)
+from vllm.distributed.parallel_state import init_distributed_environment
+from vllm.distributed.parallel_state import initialize_model_parallel
+import vllm.envs as envs
 from vllm.model_executor.layers.layernorm import RMSNorm
-from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
-    GroupShape, QuantFP8)
+from vllm.model_executor.layers.quantization.utils.w8a8_utils import GroupShape
+from vllm.model_executor.layers.quantization.utils.w8a8_utils import QuantFP8
 from vllm.platforms import current_platform
 from vllm.utils import update_environment_variables
 
-from ..utils import has_module_attribute, multi_gpu_test
+from ..utils import has_module_attribute
+from ..utils import multi_gpu_test
 from .backend import TestBackend
 
 

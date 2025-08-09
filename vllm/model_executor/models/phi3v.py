@@ -15,44 +15,63 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from collections.abc import Iterable, Mapping, Sequence
-from typing import Annotated, Any, Literal, Optional, Union
+from collections.abc import Iterable
+from collections.abc import Mapping
+from collections.abc import Sequence
+from typing import Annotated
+from typing import Any
+from typing import Literal
+from typing import Optional
+from typing import Union
 
 import regex as re
 import torch
 import torch.nn as nn
-from transformers import (BatchFeature, CLIPVisionConfig, PretrainedConfig,
-                          ProcessorMixin)
+from transformers import BatchFeature
+from transformers import CLIPVisionConfig
+from transformers import PretrainedConfig
+from transformers import ProcessorMixin
 
 from vllm.config import VllmConfig
-from vllm.utils.logger import init_logger
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import MultiModalDataDict
+from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.parse import ImageEmbeddingItems
+from vllm.io.inputs.multimodal.parse import ImageProcessorItems
+from vllm.io.inputs.multimodal.parse import ImageSize
+from vllm.io.inputs.multimodal.parse import MultiModalDataItems
+# yapf conflicts with isort for this block
+# yapf: disable
+from vllm.io.inputs.multimodal.processing import BaseMultiModalProcessor
+from vllm.io.inputs.multimodal.processing import BaseProcessingInfo
+from vllm.io.inputs.multimodal.processing import BoundPromptUpdate
+from vllm.io.inputs.multimodal.processing import PlaceholderFeaturesInfo
+from vllm.io.inputs.multimodal.processing import PromptReplacement
+from vllm.io.inputs.multimodal.processing import PromptUpdate
+# yapf: enable
+from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
 from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.model_executor.layers.vocab_parallel_embedding import (
     VocabParallelEmbedding)
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
-                                    MultiModalKwargs)
-from vllm.io.inputs.multimodal.parse import (ImageEmbeddingItems, ImageProcessorItems,
-                                   ImageSize, MultiModalDataItems)
-# yapf conflicts with isort for this block
-# yapf: disable
-from vllm.io.inputs.multimodal.processing import (BaseMultiModalProcessor,
-                                        BaseProcessingInfo, BoundPromptUpdate,
-                                        PlaceholderFeaturesInfo,
-                                        PromptReplacement, PromptUpdate)
-# yapf: enable
-from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
-from vllm.sequence import IntermediateTensors
 from vllm.utils import is_list_of
-from vllm.utils.tensor_schema import TensorSchema, TensorShape
+from vllm.utils.logger import init_logger
+from vllm.utils.tensor_schema import TensorSchema
+from vllm.utils.tensor_schema import TensorShape
 
 from .clip import CLIPVisionModel
-from .interfaces import (MultiModalEmbeddings, SupportsMultiModal, SupportsPP,
-                         SupportsQuant)
-from .utils import (AutoWeightsLoader, WeightsMapper, flatten_bn,
-                    init_vllm_registered_model, maybe_prefix,
-                    merge_multimodal_embeddings)
+from .interfaces import MultiModalEmbeddings
+from .interfaces import SupportsMultiModal
+from .interfaces import SupportsPP
+from .interfaces import SupportsQuant
+from .utils import AutoWeightsLoader
+from .utils import WeightsMapper
+from .utils import flatten_bn
+from .utils import init_vllm_registered_model
+from .utils import maybe_prefix
+from .utils import merge_multimodal_embeddings
 
 logger = init_logger(__name__)
 

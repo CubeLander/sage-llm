@@ -1,10 +1,12 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
+from huggingface_hub import snapshot_download
 import pytest
 import torch
 import torch.nn as nn
-from huggingface_hub import snapshot_download
-from transformers import AutoConfig, AutoModel, CLIPImageProcessor
+from transformers import AutoConfig
+from transformers import AutoModel
+from transformers import CLIPImageProcessor
 
 from vllm.distributed import cleanup_dist_env_and_memory
 from vllm.utils import STR_DTYPE_TO_TORCH_DTYPE

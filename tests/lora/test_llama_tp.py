@@ -9,7 +9,9 @@ from vllm import LLM
 from vllm.lora.request import LoRARequest
 from vllm.model_executor.model_loader.tensorizer import TensorizerConfig
 
-from ..utils import VLLM_PATH, create_new_process_for_each_test, multi_gpu_test
+from ..utils import VLLM_PATH
+from ..utils import create_new_process_for_each_test
+from ..utils import multi_gpu_test
 
 MODEL_PATH = "meta-llama/Llama-2-7b-hf"
 

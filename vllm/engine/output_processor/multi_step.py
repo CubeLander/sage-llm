@@ -2,7 +2,9 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import functools
-from typing import Callable, List, cast
+from typing import Callable
+from typing import List
+from typing import cast
 
 from vllm.core.scheduler import Scheduler
 from vllm.engine.output_processor.interfaces import (
@@ -10,15 +12,18 @@ from vllm.engine.output_processor.interfaces import (
 from vllm.engine.output_processor.single_step import (
     single_step_process_prompt_logprob)
 from vllm.engine.output_processor.stop_checker import StopChecker
-from vllm.utils.logger import init_logger
 from vllm.sampling_params import SamplingParams
-from vllm.sequence import (VLLM_INVALID_TOKEN_ID,
-                           CompletionSequenceGroupOutput, Sequence,
-                           SequenceGroup, SequenceGroupOutput, SequenceOutput,
-                           SequenceStatus)
+from vllm.sequence import CompletionSequenceGroupOutput
+from vllm.sequence import Sequence
+from vllm.sequence import SequenceGroup
+from vllm.sequence import SequenceGroupOutput
+from vllm.sequence import SequenceOutput
+from vllm.sequence import SequenceStatus
+from vllm.sequence import VLLM_INVALID_TOKEN_ID
 from vllm.transformers_utils.detokenizer import Detokenizer
 from vllm.transformers_utils.tokenizer import AnyTokenizer
 from vllm.utils import Counter
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

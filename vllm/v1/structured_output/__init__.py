@@ -2,18 +2,20 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 from __future__ import annotations
 
+from concurrent.futures import Future
+from concurrent.futures import ThreadPoolExecutor
 import multiprocessing
-from concurrent.futures import Future, ThreadPoolExecutor
-from typing import TYPE_CHECKING, Optional
+from typing import Optional
+from typing import TYPE_CHECKING
 
 from vllm.config import VllmConfig
-from vllm.utils.logger import init_logger
 from vllm.io.reasoning import ReasoningParserManager
 from vllm.transformers_utils.tokenizer_group import init_tokenizer_from_configs
 from vllm.utils import LazyLoader
+from vllm.utils.logger import init_logger
 from vllm.v1.structured_output.backend_guidance import GuidanceBackend
-from vllm.v1.structured_output.backend_types import (StructuredOutputBackend,
-                                                     StructuredOutputGrammar)
+from vllm.v1.structured_output.backend_types import StructuredOutputBackend
+from vllm.v1.structured_output.backend_types import StructuredOutputGrammar
 from vllm.v1.structured_output.backend_xgrammar import XgrammarBackend
 
 if TYPE_CHECKING:

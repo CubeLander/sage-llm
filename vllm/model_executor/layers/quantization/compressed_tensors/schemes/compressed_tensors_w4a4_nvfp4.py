@@ -1,20 +1,22 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-from typing import Callable, Optional
+from typing import Callable
+from typing import Optional
 
 import torch
 from torch.nn.parameter import Parameter
 
+from vllm._custom_ops import cutlass_scaled_fp4_mm
+from vllm._custom_ops import scaled_fp4_quant
 import vllm.envs as envs
-from vllm._custom_ops import cutlass_scaled_fp4_mm, scaled_fp4_quant
-from vllm.utils.logger import init_logger
 from vllm.model_executor.layers.quantization.compressed_tensors.schemes import (
     CompressedTensorsScheme)
 from vllm.model_executor.layers.quantization.utils.nvfp4_emulation_utils import (  # noqa: E501
     run_nvfp4_emulations)
-from vllm.model_executor.parameter import (GroupQuantScaleParameter,
-                                           ModelWeightParameter,
-                                           PerTensorScaleParameter)
+from vllm.model_executor.parameter import GroupQuantScaleParameter
+from vllm.model_executor.parameter import ModelWeightParameter
+from vllm.model_executor.parameter import PerTensorScaleParameter
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

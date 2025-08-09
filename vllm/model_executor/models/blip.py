@@ -3,18 +3,21 @@
 """Minimal implementation of BlipVisionModel intended to be only used 
 within a vision language model."""
 from collections.abc import Iterable
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 import torch
 import torch.nn as nn
-from transformers import Blip2VisionConfig, BlipVisionConfig
+from transformers import Blip2VisionConfig
+from transformers import BlipVisionConfig
 
 from vllm.attention.layer import MultiHeadAttention
-from vllm.distributed import divide, get_tensor_model_parallel_world_size
+from vllm.distributed import divide
+from vllm.distributed import get_tensor_model_parallel_world_size
 from vllm.model_executor.layers.activation import get_act_fn
-from vllm.model_executor.layers.linear import (ColumnParallelLinear,
-                                               QKVParallelLinear,
-                                               RowParallelLinear)
+from vllm.model_executor.layers.linear import ColumnParallelLinear
+from vllm.model_executor.layers.linear import QKVParallelLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
 from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.model_executor.model_loader.weight_utils import default_weight_loader
 

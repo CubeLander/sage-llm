@@ -1,21 +1,25 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import tempfile
 from pathlib import Path
+import tempfile
 
+from PIL import Image
 import numpy as np
 import numpy.typing as npt
 import pytest
-from PIL import Image
 
 from vllm.assets.base import get_vllm_public_assets
-from vllm.assets.video import video_to_ndarrays, video_to_pil_images_list
+from vllm.assets.video import video_to_ndarrays
+from vllm.assets.video import video_to_pil_images_list
 from vllm.io.inputs.multimodal.image import ImageMediaIO
-from vllm.io.inputs.multimodal.video import (VIDEO_LOADER_REGISTRY, VideoLoader,
-                                   VideoMediaIO)
+from vllm.io.inputs.multimodal.video import VIDEO_LOADER_REGISTRY
+from vllm.io.inputs.multimodal.video import VideoLoader
+from vllm.io.inputs.multimodal.video import VideoMediaIO
 
-from .utils import cosine_similarity, create_video_from_image, normalize_image
+from .utils import cosine_similarity
+from .utils import create_video_from_image
+from .utils import normalize_image
 
 NUM_FRAMES = 10
 FAKE_OUTPUT_1 = np.random.rand(NUM_FRAMES, 1280, 720, 3)

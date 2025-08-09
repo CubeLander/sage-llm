@@ -8,7 +8,8 @@ from vllm import SamplingParams
 from vllm.assets.audio import AudioAsset
 
 from ....conftest import VllmRunner
-from ....utils import create_new_process_for_each_test, multi_gpu_test
+from ....utils import create_new_process_for_each_test
+from ....utils import multi_gpu_test
 
 PROMPTS = [
     {

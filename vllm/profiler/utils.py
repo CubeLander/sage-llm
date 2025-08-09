@@ -2,9 +2,12 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import dataclasses
-from typing import Callable, Union
+from typing import Callable
+from typing import Union
 
-from torch._C._profiler import _EventType, _ProfilerEvent, _TensorMetadata
+from torch._C._profiler import _EventType
+from torch._C._profiler import _ProfilerEvent
+from torch._C._profiler import _TensorMetadata
 
 #
 # String / Print Manipulation

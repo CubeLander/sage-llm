@@ -25,50 +25,65 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Inference-only Qwen2.5-VL model compatible with HuggingFace weights."""
-from collections.abc import Iterable, Mapping
-from functools import lru_cache, partial
-from typing import Callable, Literal, Optional, TypedDict, Union
+from collections.abc import Iterable
+from collections.abc import Mapping
+from functools import lru_cache
+from functools import partial
+from typing import Callable
+from typing import Literal
+from typing import Optional
+from typing import TypedDict
+from typing import Union
 
+from einops import rearrange
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from einops import rearrange
 from transformers import BatchFeature
 from transformers.models.qwen2_5_vl import Qwen2_5_VLProcessor
 from transformers.models.qwen2_5_vl.configuration_qwen2_5_vl import (
-    Qwen2_5_VLConfig, Qwen2_5_VLVisionConfig)
+    Qwen2_5_VLConfig)
+from transformers.models.qwen2_5_vl.configuration_qwen2_5_vl import (
+    Qwen2_5_VLVisionConfig)
 
 from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
 from vllm.distributed import parallel_state
 from vllm.distributed import utils as dist_utils
-from vllm.utils.logger import init_logger
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
 from vllm.model_executor import SamplingMetadata
 from vllm.model_executor.layers.activation import get_act_and_mul_fn
 from vllm.model_executor.layers.layernorm import RMSNorm
-from vllm.model_executor.layers.linear import (ColumnParallelLinear,
-                                               MergedColumnParallelLinear,
-                                               QKVParallelLinear,
-                                               RowParallelLinear)
+from vllm.model_executor.layers.linear import ColumnParallelLinear
+from vllm.model_executor.layers.linear import MergedColumnParallelLinear
+from vllm.model_executor.layers.linear import QKVParallelLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
 from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.model_executor.layers.quantization.gptq import GPTQConfig
 from vllm.model_executor.layers.quantization.gptq_marlin import (
     GPTQMarlinConfig)
 from vllm.model_executor.model_loader.weight_utils import default_weight_loader
 from vllm.model_executor.models.module_mapping import MultiModelKeys
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
 from vllm.platforms import _Backend
-from vllm.sequence import IntermediateTensors
 from vllm.transformers_utils.config import uses_mrope
+from vllm.utils.logger import init_logger
 
-from .interfaces import (MultiModalEmbeddings, SupportsLoRA,
-                         SupportsMultiModal, SupportsPP, SupportsQuant)
+from .interfaces import MultiModalEmbeddings
+from .interfaces import SupportsLoRA
+from .interfaces import SupportsMultiModal
+from .interfaces import SupportsPP
+from .interfaces import SupportsQuant
 from .qwen2_vl import Qwen2VLDummyInputsBuilder as Qwen2_5_VLDummyInputsBuilder
-from .qwen2_vl import (Qwen2VLMultiModalProcessor, Qwen2VLProcessingInfo,
-                       apply_rotary_pos_emb_vision)
-from .utils import (AutoWeightsLoader, WeightsMapper, cast_overflow_tensors,
-                    init_vllm_registered_model, maybe_prefix,
-                    merge_multimodal_embeddings)
+from .qwen2_vl import Qwen2VLMultiModalProcessor
+from .qwen2_vl import Qwen2VLProcessingInfo
+from .qwen2_vl import apply_rotary_pos_emb_vision
+from .utils import AutoWeightsLoader
+from .utils import WeightsMapper
+from .utils import cast_overflow_tensors
+from .utils import init_vllm_registered_model
+from .utils import maybe_prefix
+from .utils import merge_multimodal_embeddings
 from .vision import get_vit_attn_backend
 
 logger = init_logger(__name__)

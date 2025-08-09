@@ -4,7 +4,8 @@
 import torch
 
 from vllm.platforms import current_platform
-from vllm.scalar_type import ScalarType, scalar_types
+from vllm.scalar_type import ScalarType
+from vllm.scalar_type import scalar_types
 
 ALLSPARK_AMPERE_M_CUBLAS_THRESHOLD = 1024
 ALLSPARK_SUPPORTED_QUANT_TYPES = [scalar_types.uint8b128]

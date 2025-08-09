@@ -1,22 +1,25 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from typing import Optional
 # pylint: disable=unused-argument
-from typing import TYPE_CHECKING, Optional, Union, cast
+from typing import TYPE_CHECKING
+from typing import Union
+from typing import cast
 
 import torch
 import torch.nn as nn
 from transformers import PretrainedConfig
 
 from vllm.config import LoRAConfig
-from vllm.distributed.communication_op import (
-    tensor_model_parallel_all_gather, tensor_model_parallel_all_reduce)
+from vllm.distributed.communication_op import tensor_model_parallel_all_gather
+from vllm.distributed.communication_op import tensor_model_parallel_all_reduce
 from vllm.distributed.parallel_state import get_tensor_model_parallel_rank
-from vllm.lora.layers import (ColumnParallelLinearWithLoRA,
-                              MergedColumnParallelLinearWithLoRA,
-                              MergedQKVParallelLinearWithLoRA,
-                              QKVParallelLinearWithLoRA,
-                              RowParallelLinearWithLoRA)
+from vllm.lora.layers import ColumnParallelLinearWithLoRA
+from vllm.lora.layers import MergedColumnParallelLinearWithLoRA
+from vllm.lora.layers import MergedQKVParallelLinearWithLoRA
+from vllm.lora.layers import QKVParallelLinearWithLoRA
+from vllm.lora.layers import RowParallelLinearWithLoRA
 from vllm.platforms import current_platform
 
 if TYPE_CHECKING:

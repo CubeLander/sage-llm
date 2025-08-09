@@ -1,35 +1,47 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
+from collections import defaultdict
+from collections.abc import Iterator
+from concurrent.futures import Future
+from concurrent.futures import ThreadPoolExecutor
 import contextlib
+from dataclasses import dataclass
 import logging
 import math
 import queue
 import threading
 import time
+from typing import Any
+from typing import Optional
+from typing import TYPE_CHECKING
 import uuid
-from collections import defaultdict
-from collections.abc import Iterator
-from concurrent.futures import Future, ThreadPoolExecutor
-from dataclasses import dataclass
-from typing import TYPE_CHECKING, Any, Optional
 
 import msgspec
 import torch
 import zmq
 
 from vllm import envs
-from vllm.attention.selector import backend_name_to_enum, get_attn_backend
+from vllm.attention.selector import backend_name_to_enum
+from vllm.attention.selector import get_attn_backend
 from vllm.config import VllmConfig
 from vllm.distributed.kv_transfer.kv_connector.v1.base import (
-    CopyBlocksOp, KVConnectorBase_V1, KVConnectorMetadata, KVConnectorRole)
+    KVConnectorBase_V1)
+from vllm.distributed.kv_transfer.kv_connector.v1.base import (
+    KVConnectorMetadata)
+from vllm.distributed.kv_transfer.kv_connector.v1.base import CopyBlocksOp
+from vllm.distributed.kv_transfer.kv_connector.v1.base import KVConnectorRole
 from vllm.distributed.parallel_state import (
-    get_tensor_model_parallel_rank, get_tensor_model_parallel_world_size,
-    get_tp_group)
+    get_tensor_model_parallel_world_size)
+from vllm.distributed.parallel_state import get_tensor_model_parallel_rank
+from vllm.distributed.parallel_state import get_tp_group
 from vllm.distributed.utils import divide
 from vllm.forward_context import ForwardContext
+from vllm.platforms import _Backend
+from vllm.platforms import current_platform
+from vllm.utils import make_zmq_path
+from vllm.utils import make_zmq_socket
+from vllm.utils import round_down
 from vllm.utils.logger import init_logger
-from vllm.platforms import _Backend, current_platform
-from vllm.utils import make_zmq_path, make_zmq_socket, round_down
 from vllm.v1.core.sched.output import SchedulerOutput
 from vllm.v1.request import RequestStatus
 

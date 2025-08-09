@@ -1,17 +1,21 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import random
 from dataclasses import dataclass
-from typing import Optional, Union
+import random
+from typing import Optional
+from typing import Union
 
 import torch
-from transformers import PreTrainedTokenizer, PreTrainedTokenizerFast
+from transformers import PreTrainedTokenizer
+from transformers import PreTrainedTokenizerFast
 
 from vllm.engine.arg_utils import EngineArgs
 from vllm.transformers_utils.tokenizer_group import TokenizerGroup
-from vllm.v1.engine import EngineCoreOutput, FinishReason
-from vllm.v1.outputs import LogprobsLists, LogprobsTensors
+from vllm.v1.engine import EngineCoreOutput
+from vllm.v1.engine import FinishReason
+from vllm.v1.outputs import LogprobsLists
+from vllm.v1.outputs import LogprobsTensors
 
 GeneralTokenizerType = Union[PreTrainedTokenizer, PreTrainedTokenizerFast]
 

@@ -7,17 +7,19 @@ import dataclasses
 import json
 import os
 import time
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
 import numpy as np
 from tqdm import tqdm
 
-import vllm.envs as envs
-from .lib.utils import (convert_to_pytorch_benchmark_format,
-                                       write_to_json)
 from vllm.engine.arg_utils import EngineArgs
+import vllm.envs as envs
 from vllm.io.inputs import PromptType
 from vllm.sampling_params import BeamSearchParams
+
+from .lib.utils import convert_to_pytorch_benchmark_format
+from .lib.utils import write_to_json
 
 
 def save_to_pytorch_benchmark_format(args: argparse.Namespace,
@@ -85,7 +87,8 @@ def main(args: argparse.Namespace):
     engine_args = EngineArgs.from_cli_args(args)
 
     # Lazy import to avoid importing LLM when the bench command is not selected.
-    from vllm import LLM, SamplingParams
+    from vllm import LLM
+    from vllm import SamplingParams
 
     # NOTE(woosuk): If the request cannot be processed in a single batch,
     # the engine will automatically process the request in multiple batches.

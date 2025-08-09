@@ -1,16 +1,20 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
+from itertools import chain
 import logging
 import traceback
-from itertools import chain
-from typing import TYPE_CHECKING, Optional
+from typing import Optional
+from typing import TYPE_CHECKING
 
 from vllm import envs
 from vllm.plugins import load_plugins_by_group
-from vllm.utils import resolve_obj_by_qualname, supports_xccl
+from vllm.utils import resolve_obj_by_qualname
+from vllm.utils import supports_xccl
 
+from .interface import CpuArchEnum
+from .interface import Platform
+from .interface import PlatformEnum
 from .interface import _Backend  # noqa: F401
-from .interface import CpuArchEnum, Platform, PlatformEnum
 
 logger = logging.getLogger(__name__)
 
@@ -19,7 +23,8 @@ def vllm_version_matches_substr(substr: str) -> bool:
     """
     Check to see if the vLLM version matches a substring.
     """
-    from importlib.metadata import PackageNotFoundError, version
+    from importlib.metadata import PackageNotFoundError
+    from importlib.metadata import version
     try:
         vllm_version = version("vllm")
     except PackageNotFoundError as e:

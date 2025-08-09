@@ -1,19 +1,19 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import warnings
 from typing import Optional
+import warnings
 
-import torch
 from functorch.experimental.control_flow import cond  # noqa: F401
+import torch
 
 from vllm.model_executor.layers.quantization.utils import replace_parameter
 from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
     convert_to_channelwise)
 from vllm.platforms import current_platform
 
-from .ScaledMMLinearKernel import (ScaledMMLinearKernel,
-                                   ScaledMMLinearLayerConfig)
+from .ScaledMMLinearKernel import ScaledMMLinearKernel
+from .ScaledMMLinearKernel import ScaledMMLinearLayerConfig
 
 
 class XLAScaledMMLinearKernel(ScaledMMLinearKernel):

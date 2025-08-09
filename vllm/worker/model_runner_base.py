@@ -1,22 +1,32 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from abc import ABC
+from abc import abstractmethod
 import dataclasses
-from abc import ABC, abstractmethod
-from typing import (TYPE_CHECKING, Any, Dict, Generic, List, Optional, Type,
-                    TypeVar)
+from typing import Any
+from typing import Dict
+from typing import Generic
+from typing import List
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Type
+from typing import TypeVar
 
 import torch
 import torch.nn as nn
 
 from vllm.config import VllmConfig
-from vllm.utils.logger import init_logger
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.tensors.intermediate_tensors import SequenceGroupMetadata
 from vllm.model_executor.layers.sampler import SamplerOutput
 from vllm.model_executor.models.interfaces import supports_transcription
-from vllm.model_executor.models.interfaces_base import (
-    is_pooling_model, is_text_generation_model)
-from vllm.sequence import IntermediateTensors, SequenceGroupMetadata
-from vllm.tasks import GenerationTask, PoolingTask, SupportedTask
+from vllm.model_executor.models.interfaces_base import is_pooling_model
+from vllm.model_executor.models.interfaces_base import is_text_generation_model
+from vllm.tasks import GenerationTask
+from vllm.tasks import PoolingTask
+from vllm.tasks import SupportedTask
+from vllm.utils.logger import init_logger
 
 if TYPE_CHECKING:
     from vllm.attention import AttentionMetadata

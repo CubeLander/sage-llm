@@ -2,15 +2,17 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from importlib.util import find_spec
-from typing import Final, Optional
+from typing import Final
+from typing import Optional
 
 import torch
 
-from vllm.model_executor.parameter import (BasevLLMParameter,
-                                           permute_param_layout_)
+from vllm.model_executor.parameter import BasevLLMParameter
+from vllm.model_executor.parameter import permute_param_layout_
 from vllm.scalar_type import scalar_types
 
-from .MPLinearKernel import MPLinearKernel, MPLinearLayerConfig
+from .MPLinearKernel import MPLinearKernel
+from .MPLinearKernel import MPLinearLayerConfig
 
 _CONCH_SUPPORTED_WEIGHT_TYPES: Final = [
     scalar_types.uint4, scalar_types.uint8, scalar_types.uint4b8,

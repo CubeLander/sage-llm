@@ -39,19 +39,26 @@ MODULE_ATTRS = {
 }
 
 if typing.TYPE_CHECKING:
-    from vllm.engine.arg_utils import AsyncEngineArgs, EngineArgs
+    from vllm.engine.arg_utils import AsyncEngineArgs
+    from vllm.engine.arg_utils import EngineArgs
     from vllm.engine.async_llm_engine import AsyncLLMEngine
     from vllm.engine.llm_engine import LLMEngine
     from vllm.entrypoints.llm import LLM
     from vllm.executor.ray_utils import initialize_ray_cluster
-    from vllm.io.inputs import PromptType, TextPrompt, TokensPrompt
+    from vllm.io.inputs import PromptType
+    from vllm.io.inputs import TextPrompt
+    from vllm.io.inputs import TokensPrompt
     from vllm.model_executor.models import ModelRegistry
-    from vllm.outputs import (ClassificationOutput,
-                              ClassificationRequestOutput, CompletionOutput,
-                              EmbeddingOutput, EmbeddingRequestOutput,
-                              PoolingOutput, PoolingRequestOutput,
-                              RequestOutput, ScoringOutput,
-                              ScoringRequestOutput)
+    from vllm.outputs import ClassificationOutput
+    from vllm.outputs import ClassificationRequestOutput
+    from vllm.outputs import CompletionOutput
+    from vllm.outputs import EmbeddingOutput
+    from vllm.outputs import EmbeddingRequestOutput
+    from vllm.outputs import PoolingOutput
+    from vllm.outputs import PoolingRequestOutput
+    from vllm.outputs import RequestOutput
+    from vllm.outputs import ScoringOutput
+    from vllm.outputs import ScoringRequestOutput
     from vllm.pooling_params import PoolingParams
     from vllm.sampling_params import SamplingParams
 else:

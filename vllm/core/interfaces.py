@@ -1,13 +1,16 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from abc import ABC
+from abc import abstractmethod
 import enum
-from abc import ABC, abstractmethod
-from typing import List, Optional
+from typing import List
+from typing import Optional
 from typing import Sequence as GenericSequence
 from typing import Tuple
 
-from vllm.sequence import Sequence, SequenceGroup
+from vllm.sequence import Sequence
+from vllm.sequence import SequenceGroup
 from vllm.utils import Device
 
 

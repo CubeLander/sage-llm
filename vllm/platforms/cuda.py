@@ -4,26 +4,37 @@
 pynvml. However, it should not initialize cuda context.
 """
 
-import os
 from datetime import timedelta
-from functools import cache, wraps
-from typing import TYPE_CHECKING, Callable, Optional, TypeVar, Union
+from functools import cache
+from functools import wraps
+import os
+from typing import Callable
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import TypeVar
+from typing import Union
 
 import torch
-from torch.distributed import PrefixStore, ProcessGroup
+from torch.distributed import PrefixStore
+from torch.distributed import ProcessGroup
 from torch.distributed.distributed_c10d import is_nccl_available
 from typing_extensions import ParamSpec
 
 # import custom ops, trigger op registration
 import vllm._C  # noqa
 import vllm.envs as envs
+from vllm.utils import cuda_device_count_stateless
+from vllm.utils import import_pynvml
 from vllm.utils.logger import init_logger
-from vllm.utils import cuda_device_count_stateless, import_pynvml
 
-from .interface import DeviceCapability, Platform, PlatformEnum, _Backend
+from .interface import DeviceCapability
+from .interface import Platform
+from .interface import PlatformEnum
+from .interface import _Backend
 
 if TYPE_CHECKING:
-    from vllm.config import ModelConfig, VllmConfig
+    from vllm.config import ModelConfig
+    from vllm.config import VllmConfig
 
 logger = init_logger(__name__)
 
@@ -399,9 +410,11 @@ class CudaPlatformBase(Platform):
         # installed.
         if target_backend == _Backend.FLASH_ATTN:
             try:
-                import vllm.vllm_flash_attn  # noqa: F401
+                from vllm.attention.backends.flash_attn import (
+                    flash_attn_supports_fp8)
                 from vllm.attention.backends.flash_attn import (  # noqa: F401
-                    FlashAttentionBackend, flash_attn_supports_fp8)
+                    FlashAttentionBackend)
+                import vllm.vllm_flash_attn  # noqa: F401
 
                 supported_sizes = \
                     FlashAttentionBackend.get_supported_head_sizes()

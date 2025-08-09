@@ -2,7 +2,8 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import os
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 from transformers import PretrainedConfig
 

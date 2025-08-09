@@ -39,11 +39,11 @@ Typical output looks like this:
 """
 
 import argparse
+from collections import defaultdict
 import errno
 import fnmatch
 import os
 import sys
-from collections import defaultdict
 
 # The number of long build times to report:
 long_count = 10

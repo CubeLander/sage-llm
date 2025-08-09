@@ -2,17 +2,23 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 # copied from : https://github.com/huggingface/transformers
 import ast
-import sys
 from collections import defaultdict
-from collections.abc import Iterable, Mapping, Sequence
+from collections.abc import Iterable
+from collections.abc import Mapping
+from collections.abc import Sequence
 from functools import partial
 from itertools import chain
-from typing import Any, Literal, Optional, TypedDict, Union
+import sys
+from typing import Any
+from typing import Literal
+from typing import Optional
+from typing import TypedDict
+from typing import Union
 
-import numpy as np
 import PIL
-from einops import rearrange
 from PIL import Image
+from einops import rearrange
+import numpy as np
 
 if sys.version_info >= (3, 11):
     import typing
@@ -21,31 +27,42 @@ else:
     import typing_extensions
     Unpack = typing_extensions.Unpack
 
+from timm.layers import LayerNorm
+from timm.layers import LayerNorm2d
+from timm.models.regnet import RegStage
 import torch
 import torch.nn as nn
-from timm.layers import LayerNorm, LayerNorm2d
-from timm.models.regnet import RegStage
-from transformers import BatchFeature, CLIPVisionConfig, SiglipVisionConfig
+from transformers import BatchFeature
+from transformers import CLIPVisionConfig
+from transformers import SiglipVisionConfig
 from transformers.modeling_utils import no_init_weights
 
 from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
 from vllm.io.inputs import InputProcessingContext
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import MultiModalDataDict
+from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.parse import ImageSize
+from vllm.io.inputs.multimodal.parse import MultiModalDataItems
+from vllm.io.inputs.multimodal.processing import BaseMultiModalProcessor
+from vllm.io.inputs.multimodal.processing import BaseProcessingInfo
+from vllm.io.inputs.multimodal.processing import ProcessingCache
+from vllm.io.inputs.multimodal.processing import PromptReplacement
+from vllm.io.inputs.multimodal.processing import PromptUpdate
+from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
 from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
-                                    MultiModalKwargs)
-from vllm.io.inputs.multimodal.parse import ImageSize, MultiModalDataItems
-from vllm.io.inputs.multimodal.processing import (BaseMultiModalProcessor,
-                                        BaseProcessingInfo, ProcessingCache,
-                                        PromptReplacement, PromptUpdate)
-from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
-from vllm.sequence import IntermediateTensors
 
 from .clip import CLIPVisionModel
-from .interfaces import MultiModalEmbeddings, SupportsMultiModal, SupportsPP
+from .interfaces import MultiModalEmbeddings
+from .interfaces import SupportsMultiModal
+from .interfaces import SupportsPP
 from .siglip import SiglipVisionModel
-from .utils import AutoWeightsLoader, init_vllm_registered_model, maybe_prefix
+from .utils import AutoWeightsLoader
+from .utils import init_vllm_registered_model
+from .utils import maybe_prefix
 from .vision import get_vision_encoder_info
 
 EOT = "<|endofturn|>"

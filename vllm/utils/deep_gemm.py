@@ -9,13 +9,16 @@ from __future__ import annotations
 import functools
 import importlib
 import os
-from typing import Any, Callable, NoReturn
+from typing import Any
+from typing import Callable
+from typing import NoReturn
 
 import torch
 
 import vllm.envs as envs
 from vllm.platforms import current_platform
-from vllm.utils import cdiv, has_deep_gemm
+from vllm.utils import cdiv
+from vllm.utils import has_deep_gemm
 
 
 @functools.cache

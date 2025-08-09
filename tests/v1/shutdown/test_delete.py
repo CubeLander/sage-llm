@@ -5,9 +5,10 @@
 import pytest
 
 from tests.utils import wait_for_gpu_memory_to_clear
-from tests.v1.shutdown.utils import (SHUTDOWN_TEST_THRESHOLD_BYTES,
-                                     SHUTDOWN_TEST_TIMEOUT_SEC)
-from vllm import LLM, SamplingParams
+from tests.v1.shutdown.utils import SHUTDOWN_TEST_THRESHOLD_BYTES
+from tests.v1.shutdown.utils import SHUTDOWN_TEST_TIMEOUT_SEC
+from vllm import LLM
+from vllm import SamplingParams
 from vllm.engine.arg_utils import AsyncEngineArgs
 from vllm.sampling_params import RequestOutputKind
 from vllm.utils import cuda_device_count_stateless

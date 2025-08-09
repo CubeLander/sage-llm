@@ -5,14 +5,16 @@ from collections.abc import Iterable
 import pytest
 import torch
 import transformers
-from transformers import AutoConfig, PreTrainedModel
+from transformers import AutoConfig
+from transformers import PreTrainedModel
 
 from vllm.config import ModelConfig
-from vllm.model_executor.models.utils import WeightsMapper
 from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.model_executor.models.utils import WeightsMapper
 from vllm.transformers_utils.config import try_get_safetensors_metadata
 
-from ..registry import _MULTIMODAL_EXAMPLE_MODELS, HF_EXAMPLE_MODELS
+from ..registry import HF_EXAMPLE_MODELS
+from ..registry import _MULTIMODAL_EXAMPLE_MODELS
 
 
 def create_repo_dummy_weights(repo: str) -> Iterable[tuple[str, torch.Tensor]]:

@@ -6,12 +6,14 @@ import random
 import torch
 
 from vllm.v1.core.block_pool import BlockPool
-from vllm.v1.core.kv_cache_utils import (BlockHash, BlockHashWithGroupId,
-                                         KVCacheBlock)
+from vllm.v1.core.kv_cache_utils import BlockHash
+from vllm.v1.core.kv_cache_utils import BlockHashWithGroupId
+from vllm.v1.core.kv_cache_utils import KVCacheBlock
 from vllm.v1.core.single_type_kv_cache_manager import (
-    ChunkedLocalAttentionManager, SlidingWindowManager)
-from vllm.v1.kv_cache_interface import (ChunkedLocalAttentionSpec,
-                                        SlidingWindowSpec)
+    ChunkedLocalAttentionManager)
+from vllm.v1.core.single_type_kv_cache_manager import SlidingWindowManager
+from vllm.v1.kv_cache_interface import ChunkedLocalAttentionSpec
+from vllm.v1.kv_cache_interface import SlidingWindowSpec
 
 
 def get_sliding_window_manager(sliding_window_spec, block_pool):

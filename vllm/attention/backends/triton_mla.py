@@ -1,15 +1,17 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from typing import List, Optional, Type
+from typing import List
+from typing import Optional
+from typing import Type
 
 import torch
 
-from vllm.attention.backends.abstract import (AttentionType,
-                                              is_quantized_kv_cache)
-from vllm.attention.backends.mla.common import (MLACommonBackend,
-                                                MLACommonImpl,
-                                                MLACommonMetadata)
+from vllm.attention.backends.abstract import AttentionType
+from vllm.attention.backends.abstract import is_quantized_kv_cache
+from vllm.attention.backends.mla.common import MLACommonBackend
+from vllm.attention.backends.mla.common import MLACommonImpl
+from vllm.attention.backends.mla.common import MLACommonMetadata
 from vllm.attention.ops.triton_decode_attention import decode_attention_fwd
 
 

@@ -2,7 +2,8 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from contextlib import suppress
-from dataclasses import dataclass, field
+from dataclasses import dataclass
+from dataclasses import field
 from http import HTTPStatus
 from typing import Optional
 from unittest.mock import MagicMock
@@ -11,12 +12,14 @@ import pytest
 
 from vllm.config import MultiModalConfig
 from vllm.engine.multiprocessing.client import MQLLMEngineClient
-from vllm.entrypoints.openai.protocol import CompletionRequest, ErrorResponse
+from vllm.entrypoints.openai.protocol import CompletionRequest
+from vllm.entrypoints.openai.protocol import ErrorResponse
 from vllm.entrypoints.openai.serving_completion import OpenAIServingCompletion
-from vllm.entrypoints.openai.serving_models import (BaseModelPath,
-                                                    OpenAIServingModels)
+from vllm.entrypoints.openai.serving_models import BaseModelPath
+from vllm.entrypoints.openai.serving_models import OpenAIServingModels
 from vllm.lora.request import LoRARequest
-from vllm.lora.resolver import LoRAResolver, LoRAResolverRegistry
+from vllm.lora.resolver import LoRAResolver
+from vllm.lora.resolver import LoRAResolverRegistry
 from vllm.transformers_utils.tokenizer import get_tokenizer
 
 MODEL_NAME = "openai-community/gpt2"

@@ -3,35 +3,43 @@
 
 from __future__ import annotations
 
-import itertools
-import time
 from collections import defaultdict
 from collections.abc import Iterable
-from typing import Any, Optional, Union
+import itertools
+import time
+from typing import Any
+from typing import Optional
+from typing import Union
 
 from vllm.config import VllmConfig
-from vllm.distributed.kv_events import EventPublisherFactory, KVEventBatch
+from vllm.distributed.kv_events import EventPublisherFactory
+from vllm.distributed.kv_events import KVEventBatch
 from vllm.distributed.kv_transfer.kv_connector.factory import (
     KVConnectorFactory)
-from vllm.distributed.kv_transfer.kv_connector.v1 import (KVConnectorBase_V1,
-                                                          KVConnectorRole)
+from vllm.distributed.kv_transfer.kv_connector.v1 import KVConnectorBase_V1
+from vllm.distributed.kv_transfer.kv_connector.v1 import KVConnectorRole
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal import MultiModalRegistry
 from vllm.utils.logger import init_logger
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY, MultiModalRegistry
-from vllm.v1.core.encoder_cache_manager import (EncoderCacheManager,
-                                                compute_encoder_budget)
+from vllm.v1.core.encoder_cache_manager import EncoderCacheManager
+from vllm.v1.core.encoder_cache_manager import compute_encoder_budget
 from vllm.v1.core.kv_cache_manager import KVCacheManager
 from vllm.v1.core.sched.interface import SchedulerInterface
-from vllm.v1.core.sched.output import (CachedRequestData, NewRequestData,
-                                       SchedulerOutput)
-from vllm.v1.core.sched.request_queue import (SchedulingPolicy,
-                                              create_request_queue)
+from vllm.v1.core.sched.output import CachedRequestData
+from vllm.v1.core.sched.output import NewRequestData
+from vllm.v1.core.sched.output import SchedulerOutput
+from vllm.v1.core.sched.request_queue import SchedulingPolicy
+from vllm.v1.core.sched.request_queue import create_request_queue
 from vllm.v1.core.sched.utils import check_stop
-from vllm.v1.engine import (EngineCoreEventType, EngineCoreOutput,
-                            EngineCoreOutputs)
+from vllm.v1.engine import EngineCoreEventType
+from vllm.v1.engine import EngineCoreOutput
+from vllm.v1.engine import EngineCoreOutputs
 from vllm.v1.kv_cache_interface import KVCacheConfig
 from vllm.v1.metrics.stats import SchedulerStats
-from vllm.v1.outputs import KVConnectorOutput, ModelRunnerOutput
-from vllm.v1.request import Request, RequestStatus
+from vllm.v1.outputs import KVConnectorOutput
+from vllm.v1.outputs import ModelRunnerOutput
+from vllm.v1.request import Request
+from vllm.v1.request import RequestStatus
 from vllm.v1.spec_decode.metrics import SpecDecodingStats
 from vllm.v1.structured_output import StructuredOutputManager
 

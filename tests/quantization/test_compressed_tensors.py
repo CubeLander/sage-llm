@@ -7,17 +7,29 @@ Run `pytest tests/quantization/test_compressed_tensors.py`.
 
 from typing import Optional
 
+from compressed_tensors.quantization import QuantizationType
 import pytest
 import torch
-from compressed_tensors.quantization import QuantizationType
 
 from tests.models.utils import check_logprobs_close
-from vllm.model_executor.layers.quantization.compressed_tensors.compressed_tensors import (  # noqa: E501
-    CompressedTensors24, CompressedTensorsLinearMethod,
-    CompressedTensorsW4A4Fp4, CompressedTensorsW4A16Fp4,
-    CompressedTensorsW4A16Sparse24, CompressedTensorsW8A8Fp8,
-    CompressedTensorsW8A8Int8, CompressedTensorsW8A16Fp8,
+from vllm.model_executor.layers.quantization.compressed_tensors.compressed_tensors import (
+    CompressedTensorsLinearMethod)
+from vllm.model_executor.layers.quantization.compressed_tensors.compressed_tensors import (
+    CompressedTensorsW4A4Fp4)
+from vllm.model_executor.layers.quantization.compressed_tensors.compressed_tensors import (
+    CompressedTensorsW4A16Fp4)
+from vllm.model_executor.layers.quantization.compressed_tensors.compressed_tensors import (
+    CompressedTensorsW4A16Sparse24)
+from vllm.model_executor.layers.quantization.compressed_tensors.compressed_tensors import (
+    CompressedTensorsW8A8Fp8)
+from vllm.model_executor.layers.quantization.compressed_tensors.compressed_tensors import (
+    CompressedTensorsW8A8Int8)
+from vllm.model_executor.layers.quantization.compressed_tensors.compressed_tensors import (
+    CompressedTensorsW8A16Fp8)
+from vllm.model_executor.layers.quantization.compressed_tensors.compressed_tensors import (
     CompressedTensorsWNA16)
+from vllm.model_executor.layers.quantization.compressed_tensors.compressed_tensors import (  # noqa: E501
+    CompressedTensors24)
 from vllm.model_executor.layers.quantization.utils.quant_utils import (
     cutlass_fp4_supported)
 from vllm.model_executor.layers.quantization.utils.w8a8_utils import (

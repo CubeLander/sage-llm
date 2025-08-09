@@ -1,14 +1,17 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from typing import Callable, Optional, Union
+from typing import Callable
+from typing import Optional
+from typing import Union
 
-import torch
 from packaging import version
+import torch
 
 from vllm import _custom_ops as ops
 from vllm import envs
-from vllm.config import CompilationLevel, get_current_vllm_config
+from vllm.config import CompilationLevel
+from vllm.config import get_current_vllm_config
 from vllm.model_executor.layers.quantization.input_quant_fp8 import QuantFP8
 from vllm.model_executor.layers.quantization.utils.quant_utils import (
     GroupShape)

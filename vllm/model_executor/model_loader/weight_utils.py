@@ -1,33 +1,41 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 """Utilities for downloading and initializing model weights."""
+from collections import defaultdict
+from collections.abc import Generator
 import fnmatch
 import glob
 import hashlib
 import json
 import os
+from pathlib import Path
 import tempfile
 import time
-from collections import defaultdict
-from collections.abc import Generator
-from pathlib import Path
-from typing import Any, Callable, Optional, Union
+from typing import Any
+from typing import Callable
+from typing import Optional
+from typing import Union
 
 import filelock
+from huggingface_hub import HfFileSystem
+from huggingface_hub import hf_hub_download
+from huggingface_hub import snapshot_download
 import huggingface_hub.constants
 import numpy as np
+from safetensors.torch import load_file
+from safetensors.torch import safe_open
+from safetensors.torch import save_file
 import torch
-from huggingface_hub import HfFileSystem, hf_hub_download, snapshot_download
-from safetensors.torch import load_file, safe_open, save_file
 from tqdm.auto import tqdm
 
-from vllm.config import LoadConfig, ModelConfig
+from vllm.config import LoadConfig
+from vllm.config import ModelConfig
 from vllm.distributed import get_tensor_model_parallel_rank
-from vllm.utils.logger import init_logger
-from vllm.model_executor.layers.quantization import (QuantizationConfig,
-                                                     get_quantization_config)
+from vllm.model_executor.layers.quantization import QuantizationConfig
+from vllm.model_executor.layers.quantization import get_quantization_config
 from vllm.platforms import current_platform
 from vllm.utils import PlaceholderModule
+from vllm.utils.logger import init_logger
 
 try:
     from runai_model_streamer import SafetensorsStreamer
@@ -45,7 +53,8 @@ except ImportError:
     gguf = PlaceholderModule("gguf")
 
 try:
-    from fastsafetensors import SafeTensorsFileLoader, SingleGroup
+    from fastsafetensors import SafeTensorsFileLoader
+    from fastsafetensors import SingleGroup
 except ImportError:
     fastsafetensors = PlaceholderModule("fastsafetensors")
     SafeTensorsFileLoader = fastsafetensors.placeholder_attr(

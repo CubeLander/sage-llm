@@ -4,21 +4,31 @@
 """
 from collections.abc import Iterable
 from pathlib import PosixPath
-from typing import Callable, Optional, Union
+from typing import Callable
+from typing import Optional
+from typing import Union
 
 import torch
 
 from vllm.io.inputs.multimodal.audio import AudioResampler
 from vllm.io.inputs.multimodal.image import rescale_image_size
-from vllm.io.inputs.multimodal.video import (rescale_video_size, resize_video,
-                                   sample_frames_from_video)
+from vllm.io.inputs.multimodal.video import rescale_video_size
+from vllm.io.inputs.multimodal.video import resize_video
+from vllm.io.inputs.multimodal.video import sample_frames_from_video
 
-from .....conftest import AudioTestAssets, ImageTestAssets, VideoTestAssets
-from .types import (SINGLE_AUDIO_BASE_PROMPT, SINGLE_IMAGE_BASE_PROMPTS,
-                    TEST_AUDIO_PLACEHOLDER, TEST_IMG_PLACEHOLDER,
-                    TEST_VIDEO_PLACEHOLDER, VIDEO_BASE_PROMPT,
-                    ImageSizeWrapper, PromptWithMultiModalInput, SizeType,
-                    VLMTestInfo)
+from .....conftest import AudioTestAssets
+from .....conftest import ImageTestAssets
+from .....conftest import VideoTestAssets
+from .types import ImageSizeWrapper
+from .types import PromptWithMultiModalInput
+from .types import SINGLE_AUDIO_BASE_PROMPT
+from .types import SINGLE_IMAGE_BASE_PROMPTS
+from .types import SizeType
+from .types import TEST_AUDIO_PLACEHOLDER
+from .types import TEST_IMG_PLACEHOLDER
+from .types import TEST_VIDEO_PLACEHOLDER
+from .types import VIDEO_BASE_PROMPT
+from .types import VLMTestInfo
 
 
 def replace_test_placeholder(prompt: str, mm_idx_to_prompt: Callable[[int],

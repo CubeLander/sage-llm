@@ -22,29 +22,36 @@ If you only need to use the distributed environment without model/pipeline
  parallelism, you can skip the model parallel initialization and destruction
  steps.
 """
-import contextlib
-import gc
-import pickle
-import weakref
 from collections import namedtuple
-from contextlib import contextmanager, nullcontext
+import contextlib
+from contextlib import contextmanager
+from contextlib import nullcontext
 from dataclasses import dataclass
+import gc
 from multiprocessing import shared_memory
-from typing import Any, Callable, Optional, Union
+import pickle
+from typing import Any
+from typing import Callable
+from typing import Optional
+from typing import Union
 from unittest.mock import patch
+import weakref
 
 import torch
 import torch.distributed
-from torch.distributed import Backend, ProcessGroup
+from torch.distributed import Backend
+from torch.distributed import ProcessGroup
 from typing_extensions import deprecated
 
-import vllm.envs as envs
 from vllm.distributed.device_communicators.base_device_communicator import (
     DeviceCommunicatorBase)
 from vllm.distributed.utils import StatelessProcessGroup
+import vllm.envs as envs
+from vllm.utils import direct_register_custom_op
+from vllm.utils import get_distributed_init_method
+from vllm.utils import resolve_obj_by_qualname
+from vllm.utils import supports_custom_op
 from vllm.utils.logger import init_logger
-from vllm.utils import (direct_register_custom_op, get_distributed_init_method,
-                        resolve_obj_by_qualname, supports_custom_op)
 
 
 @dataclass

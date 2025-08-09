@@ -3,7 +3,8 @@
 import base64
 from io import BytesIO
 from pathlib import Path
-from typing import Literal, Optional
+from typing import Literal
+from typing import Optional
 
 import numpy as np
 import numpy.typing as npt

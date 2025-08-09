@@ -1,60 +1,95 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import time
 from collections import Counter as collectionsCounter
 from collections import deque
 from contextlib import contextmanager
 from dataclasses import dataclass
 from functools import partial
-from typing import (TYPE_CHECKING, Any, Callable, ClassVar, Deque, Dict,
-                    Iterable, List, Literal, Mapping, NamedTuple, Optional)
+import time
+from typing import Any
+from typing import Callable
+from typing import ClassVar
+from typing import Deque
+from typing import Dict
+from typing import Iterable
+from typing import List
+from typing import Literal
+from typing import Mapping
+from typing import NamedTuple
+from typing import Optional
 from typing import Sequence as GenericSequence
-from typing import Set, Type, Union, cast
+from typing import Set
+from typing import TYPE_CHECKING
+from typing import Type
+from typing import Union
+from typing import cast
 
 import torch
 from typing_extensions import TypeVar
 
-import vllm.envs as envs
-from vllm.config import (DecodingConfig, LoRAConfig, ModelConfig,
-                         ObservabilityConfig, ParallelConfig, SchedulerConfig,
-                         VllmConfig)
-from vllm.core.scheduler import ScheduledSequenceGroup, SchedulerOutputs
+from vllm.config import DecodingConfig
+from vllm.config import LoRAConfig
+from vllm.config import ModelConfig
+from vllm.config import ObservabilityConfig
+from vllm.config import ParallelConfig
+from vllm.config import SchedulerConfig
+from vllm.config import VllmConfig
+from vllm.core.scheduler import ScheduledSequenceGroup
+from vllm.core.scheduler import SchedulerOutputs
 from vllm.engine.arg_utils import EngineArgs
-from vllm.engine.metrics_types import StatLoggerBase, Stats
+from vllm.engine.metrics_types import StatLoggerBase
+from vllm.engine.metrics_types import Stats
 from vllm.engine.output_processor.interfaces import (
     SequenceGroupOutputProcessor)
 from vllm.engine.output_processor.stop_checker import StopChecker
 from vllm.engine.output_processor.util import create_output_by_sequence_group
 from vllm.entrypoints.openai.logits_processors import (
     get_logits_processors as get_openai_logits_processors)
+import vllm.envs as envs
 from vllm.executor.executor_base import ExecutorBase
-from vllm.io.inputs import ProcessorInputs, PromptType, SingletonInputs
+from vllm.io.inputs import ProcessorInputs
+from vllm.io.inputs import PromptType
+from vllm.io.inputs import SingletonInputs
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal import MultiModalRegistry
+from vllm.io.inputs.multimodal.processing import EncDecMultiModalProcessor
 from vllm.io.inputs.parse import split_enc_dec_inputs
 from vllm.io.inputs.preprocess import InputPreprocessor
-from vllm.utils.logger import init_logger
 from vllm.logits_process import get_bad_words_logits_processors
 from vllm.lora.request import LoRARequest
 from vllm.model_executor.layers.sampler import SamplerOutput
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY, MultiModalRegistry
-from vllm.io.inputs.multimodal.processing import EncDecMultiModalProcessor
-from vllm.outputs import (PoolingRequestOutput, RequestOutput,
-                          RequestOutputFactory)
+from vllm.outputs import PoolingRequestOutput
+from vllm.outputs import RequestOutput
+from vllm.outputs import RequestOutputFactory
 from vllm.pooling_params import PoolingParams
-from vllm.sampling_params import RequestOutputKind, SamplingParams
-from vllm.sequence import (ExecuteModelRequest, ParallelSampleSequenceGroup,
-                           PoolingSequenceGroupOutput, Sequence, SequenceGroup,
-                           SequenceGroupBase, SequenceGroupMetadata,
-                           SequenceGroupOutput, SequenceStatus)
-from vllm.tracing import (SpanAttributes, SpanKind, extract_trace_context,
-                          init_tracer)
+from vllm.sampling_params import RequestOutputKind
+from vllm.sampling_params import SamplingParams
+from vllm.sequence import ExecuteModelRequest
+from vllm.sequence import ParallelSampleSequenceGroup
+from vllm.sequence import PoolingSequenceGroupOutput
+from vllm.sequence import Sequence
+from vllm.sequence import SequenceGroup
+from vllm.sequence import SequenceGroupBase
+from vllm.sequence import SequenceGroupMetadata
+from vllm.sequence import SequenceGroupOutput
+from vllm.sequence import SequenceStatus
+from vllm.tracing import SpanAttributes
+from vllm.tracing import SpanKind
+from vllm.tracing import extract_trace_context
+from vllm.tracing import init_tracer
 from vllm.transformers_utils.detokenizer import Detokenizer
 from vllm.transformers_utils.tokenizer import AnyTokenizer
-from vllm.transformers_utils.tokenizer_group import (
-    TokenizerGroup, init_tokenizer_from_configs)
-from vllm.usage.usage_lib import (UsageContext, is_usage_stats_enabled,
-                                  usage_message)
-from vllm.utils import Counter, Device, resolve_obj_by_qualname, weak_bind
+from vllm.transformers_utils.tokenizer_group import TokenizerGroup
+from vllm.transformers_utils.tokenizer_group import init_tokenizer_from_configs
+from vllm.usage.usage_lib import UsageContext
+from vllm.usage.usage_lib import is_usage_stats_enabled
+from vllm.usage.usage_lib import usage_message
+from vllm.utils import Counter
+from vllm.utils import Device
+from vllm.utils import resolve_obj_by_qualname
+from vllm.utils import weak_bind
+from vllm.utils.logger import init_logger
 from vllm.version import __version__ as VLLM_VERSION
 from vllm.worker.model_runner_base import InputProcessingError
 
@@ -349,8 +384,8 @@ class LLMEngine:
                 # We need to set PROMETHEUS_MULTIPROC_DIR environment variable
                 # before prometheus_client is imported.
                 # See https://prometheus.github.io/client_python/multiprocess/
-                from vllm.engine.metrics import (LoggingStatLogger,
-                                                 PrometheusStatLogger)
+                from vllm.engine.metrics import LoggingStatLogger
+                from vllm.engine.metrics import PrometheusStatLogger
 
                 self.stat_loggers = {
                     "logging":

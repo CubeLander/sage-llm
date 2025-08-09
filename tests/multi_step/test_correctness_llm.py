@@ -11,7 +11,8 @@ import pytest
 from vllm.platforms import current_platform
 from vllm.utils import STR_BACKEND_ENV_VAR
 
-from ..models.utils import check_logprobs_close, check_outputs_equal
+from ..models.utils import check_logprobs_close
+from ..models.utils import check_outputs_equal
 
 MODELS = [
     "JackFram/llama-160m",

@@ -1,17 +1,21 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import time
 from collections import defaultdict
 from contextlib import contextmanager
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Any, Optional, Union
+import time
+from typing import Any
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Union
 
 import torch
 import torch.distributed as dist
 
+from vllm.config import ParallelConfig
+from vllm.config import VllmConfig
 import vllm.envs as envs
-from vllm.config import ParallelConfig, VllmConfig
 from vllm.utils.logger import init_logger
 
 if TYPE_CHECKING:

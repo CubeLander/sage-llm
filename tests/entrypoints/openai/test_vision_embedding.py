@@ -3,15 +3,17 @@
 
 import json
 
+from PIL import Image
 import pytest
 import requests
-from PIL import Image
 from transformers import AutoProcessor
 
 from vllm.entrypoints.openai.protocol import EmbeddingResponse
-from vllm.io.inputs.multimodal.utils import encode_image_base64, fetch_image
+from vllm.io.inputs.multimodal.utils import encode_image_base64
+from vllm.io.inputs.multimodal.utils import fetch_image
 
-from ...utils import VLLM_PATH, RemoteOpenAIServer
+from ...utils import RemoteOpenAIServer
+from ...utils import VLLM_PATH
 
 MODEL_NAME = "TIGER-Lab/VLM2Vec-Full"
 MAXIMUM_IMAGES = 2

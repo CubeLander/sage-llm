@@ -3,16 +3,20 @@
 """Sampling parameters for text generation."""
 import copy
 from dataclasses import dataclass
-from enum import Enum, IntEnum
+from enum import Enum
+from enum import IntEnum
 from functools import cached_property
-from typing import Annotated, Any, Optional, Union
+from typing import Annotated
+from typing import Any
+from typing import Optional
+from typing import Union
 
 import msgspec
 from pydantic import BaseModel
 
-from vllm.utils.logger import init_logger
 from vllm.logits_process import LogitsProcessor
 from vllm.transformers_utils.tokenizer import AnyTokenizer
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

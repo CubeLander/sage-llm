@@ -3,17 +3,20 @@
 
 import json
 
+from mistral_common.audio import Audio
+from mistral_common.protocol.instruct.messages import AudioChunk
+from mistral_common.protocol.instruct.messages import RawAudio
+from mistral_common.protocol.instruct.messages import TextChunk
+from mistral_common.protocol.instruct.messages import UserMessage
 import pytest
 import pytest_asyncio
-from mistral_common.audio import Audio
-from mistral_common.protocol.instruct.messages import (AudioChunk, RawAudio,
-                                                       TextChunk, UserMessage)
 
 from vllm.transformers_utils.tokenizer import MistralTokenizer
 
 from ....conftest import AudioTestAssets
 from ....utils import RemoteOpenAIServer
-from .test_ultravox import MULTI_AUDIO_PROMPT, run_multi_audio_test
+from .test_ultravox import MULTI_AUDIO_PROMPT
+from .test_ultravox import run_multi_audio_test
 
 MODEL_NAME = "mistralai/Voxtral-Mini-3B-2507"
 MISTRAL_FORMAT_ARGS = [

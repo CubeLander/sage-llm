@@ -1,22 +1,30 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 """Fused batched MoE kernel."""
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
 import torch
 
-import vllm.model_executor.layers.fused_moe.modular_kernel as mk
 from vllm.model_executor.layers.fused_moe.config import FusedMoEQuantConfig
 from vllm.model_executor.layers.fused_moe.fused_moe import (
-    get_config_dtype_str, try_get_optimal_moe_config)
+    try_get_optimal_moe_config)
+from vllm.model_executor.layers.fused_moe.fused_moe import get_config_dtype_str
+import vllm.model_executor.layers.fused_moe.modular_kernel as mk
 from vllm.model_executor.layers.fused_moe.topk_weight_and_reduce import (
-    TopKWeightAndReduceDelegate, TopKWeightAndReduceNaiveBatched)
+    TopKWeightAndReduceDelegate)
+from vllm.model_executor.layers.fused_moe.topk_weight_and_reduce import (
+    TopKWeightAndReduceNaiveBatched)
 from vllm.model_executor.layers.fused_moe.utils import (
-    _resize_cache, moe_kernel_quantize_input, normalize_batched_scales_shape,
-    normalize_scales_shape)
+    moe_kernel_quantize_input)
+from vllm.model_executor.layers.fused_moe.utils import (
+    normalize_batched_scales_shape)
+from vllm.model_executor.layers.fused_moe.utils import _resize_cache
+from vllm.model_executor.layers.fused_moe.utils import normalize_scales_shape
 from vllm.model_executor.layers.quantization.utils.quant_utils import (
     group_broadcast)
-from vllm.platforms.triton_tuils import tl, triton
+from vllm.platforms.triton_tuils import tl
+from vllm.platforms.triton_tuils import triton
 
 
 @triton.jit

@@ -6,13 +6,18 @@ The actual execution of the rearrangement.
 This involves the exchange of expert weights between GPUs.
 """
 
-from collections.abc import Iterable, MutableSequence, Sequence
+from collections.abc import Iterable
+from collections.abc import MutableSequence
+from collections.abc import Sequence
 from functools import partial
 from typing import Optional
 
 import torch
-from torch.distributed import (P2POp, ProcessGroup, all_gather,
-                               batch_isend_irecv, get_global_rank)
+from torch.distributed import P2POp
+from torch.distributed import ProcessGroup
+from torch.distributed import all_gather
+from torch.distributed import batch_isend_irecv
+from torch.distributed import get_global_rank
 
 
 def idx_local_to_global(

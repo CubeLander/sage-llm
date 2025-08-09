@@ -2,8 +2,10 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 import argparse
 
-from .__impl.serve import add_cli_args, main
 from vllm.cli.benchmark.base import BenchmarkSubcommandBase
+
+from .__impl.serve import add_cli_args
+from .__impl.serve import main
 
 
 class BenchmarkServingSubcommand(BenchmarkSubcommandBase):

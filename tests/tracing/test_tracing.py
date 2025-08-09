@@ -4,22 +4,28 @@
 # type: ignore
 from __future__ import annotations
 
-import threading
 from collections.abc import Iterable
 from concurrent import futures
-from typing import Callable, Generator, Literal
+import threading
+from typing import Callable
+from typing import Generator
+from typing import Literal
 
 import grpc
-import pytest
 from opentelemetry.proto.collector.trace.v1.trace_service_pb2 import (
     ExportTraceServiceResponse)
 from opentelemetry.proto.collector.trace.v1.trace_service_pb2_grpc import (
-    TraceServiceServicer, add_TraceServiceServicer_to_server)
-from opentelemetry.proto.common.v1.common_pb2 import AnyValue, KeyValue
+    TraceServiceServicer)
+from opentelemetry.proto.collector.trace.v1.trace_service_pb2_grpc import (
+    add_TraceServiceServicer_to_server)
+from opentelemetry.proto.common.v1.common_pb2 import AnyValue
+from opentelemetry.proto.common.v1.common_pb2 import KeyValue
 from opentelemetry.sdk.environment_variables import (
     OTEL_EXPORTER_OTLP_TRACES_INSECURE)
+import pytest
 
-from vllm import LLM, SamplingParams
+from vllm import LLM
+from vllm import SamplingParams
 from vllm.tracing import SpanAttributes
 
 

@@ -1,22 +1,28 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 from collections.abc import AsyncGenerator
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 from fastapi import Request
 
 from vllm.config import ModelConfig
 from vllm.engine.protocol import EngineClient
 from vllm.entrypoints.logger import RequestLogger
-from vllm.entrypoints.openai.protocol import (
-    ErrorResponse, RequestResponseMetadata, TranscriptionRequest,
-    TranscriptionResponse, TranscriptionResponseStreamChoice,
-    TranscriptionStreamResponse, TranslationRequest, TranslationResponse,
-    TranslationResponseStreamChoice, TranslationStreamResponse)
+from vllm.entrypoints.openai.protocol import ErrorResponse
+from vllm.entrypoints.openai.protocol import RequestResponseMetadata
+from vllm.entrypoints.openai.protocol import TranscriptionRequest
+from vllm.entrypoints.openai.protocol import TranscriptionResponse
+from vllm.entrypoints.openai.protocol import TranscriptionResponseStreamChoice
+from vllm.entrypoints.openai.protocol import TranscriptionStreamResponse
+from vllm.entrypoints.openai.protocol import TranslationRequest
+from vllm.entrypoints.openai.protocol import TranslationResponse
+from vllm.entrypoints.openai.protocol import TranslationResponseStreamChoice
+from vllm.entrypoints.openai.protocol import TranslationStreamResponse
 from vllm.entrypoints.openai.serving_models import OpenAIServingModels
 from vllm.entrypoints.openai.speech_to_text import OpenAISpeechToText
-from vllm.utils.logger import init_logger
 from vllm.outputs import RequestOutput
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

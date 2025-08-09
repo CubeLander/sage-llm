@@ -6,12 +6,16 @@ import random
 import pytest
 import torch
 
-from tests.kernels.allclose_default import get_default_atol, get_default_rtol
+from tests.kernels.allclose_default import get_default_atol
+from tests.kernels.allclose_default import get_default_rtol
 from tests.kernels.utils import opcheck
-from vllm.model_executor.layers.activation import (FastGELU, FatreluAndMul,
-                                                   GeluAndMul, MulAndSilu,
-                                                   NewGELU, QuickGELU,
-                                                   SiluAndMul)
+from vllm.model_executor.layers.activation import FastGELU
+from vllm.model_executor.layers.activation import FatreluAndMul
+from vllm.model_executor.layers.activation import GeluAndMul
+from vllm.model_executor.layers.activation import MulAndSilu
+from vllm.model_executor.layers.activation import NewGELU
+from vllm.model_executor.layers.activation import QuickGELU
+from vllm.model_executor.layers.activation import SiluAndMul
 from vllm.platforms import current_platform
 
 DTYPES = [torch.half, torch.bfloat16, torch.float]

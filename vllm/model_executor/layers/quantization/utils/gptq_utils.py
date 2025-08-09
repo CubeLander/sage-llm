@@ -1,16 +1,18 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 from copy import deepcopy
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 import regex as re
 import torch
 
 from vllm.config import QuantizationConfig
-from vllm.model_executor.layers.linear import (LinearBase,
-                                               UnquantizedLinearMethod)
+from vllm.model_executor.layers.linear import LinearBase
+from vllm.model_executor.layers.linear import UnquantizedLinearMethod
 from vllm.model_executor.layers.vocab_parallel_embedding import (
-    ParallelLMHead, UnquantizedEmbeddingMethod)
+    UnquantizedEmbeddingMethod)
+from vllm.model_executor.layers.vocab_parallel_embedding import ParallelLMHead
 
 
 # Match dynamic rules with module name (prefix) and override quantize

@@ -10,12 +10,15 @@ from typing import Union
 import numpy as np
 import torch.nn as nn
 
-from vllm.config import LoRAConfig, ModelConfig, SchedulerConfig
-from vllm.utils.logger import init_logger
+from vllm.config import LoRAConfig
+from vllm.config import ModelConfig
+from vllm.config import SchedulerConfig
 from vllm.lora.layers import LoRAMapping
 from vllm.lora.request import LoRARequest
 from vllm.lora.worker_manager import LRUCacheWorkerLoRAManager
-from vllm.model_executor.models import supports_lora, supports_multimodal
+from vllm.model_executor.models import supports_lora
+from vllm.model_executor.models import supports_multimodal
+from vllm.utils.logger import init_logger
 from vllm.v1.worker.gpu_input_batch import InputBatch as GPUInputBatch
 from vllm.v1.worker.tpu_input_batch import InputBatch as TPUInputBatch
 

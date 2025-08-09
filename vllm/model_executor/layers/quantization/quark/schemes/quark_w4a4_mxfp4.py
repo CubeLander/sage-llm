@@ -1,18 +1,24 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from typing import Any, Callable, Optional
+from typing import Any
+from typing import Callable
+from typing import Optional
 
 import torch
 import torch.nn.functional as F
 
-from vllm.utils.logger import init_logger
 from vllm.model_executor.layers.quantization.quark.schemes import QuarkScheme
 from vllm.model_executor.layers.quantization.utils.mxfp4_utils import (
-    OCP_MX_BLOCK_SIZE, dequant_mxfp4, quant_dequant_mxfp4)
-from vllm.model_executor.parameter import (GroupQuantScaleParameter,
-                                           PackedvLLMParameter)
+    OCP_MX_BLOCK_SIZE)
+from vllm.model_executor.layers.quantization.utils.mxfp4_utils import (
+    dequant_mxfp4)
+from vllm.model_executor.layers.quantization.utils.mxfp4_utils import (
+    quant_dequant_mxfp4)
+from vllm.model_executor.parameter import GroupQuantScaleParameter
+from vllm.model_executor.parameter import PackedvLLMParameter
 from vllm.platforms import current_platform
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

@@ -1,33 +1,43 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 import asyncio
+from collections.abc import AsyncGenerator
+from functools import cached_property
 import io
 import math
 import time
-from collections.abc import AsyncGenerator
-from functools import cached_property
-from typing import Callable, Literal, Optional, TypeVar, Union, cast
+from typing import Callable
+from typing import Literal
+from typing import Optional
+from typing import TypeVar
+from typing import Union
+from typing import cast
 
-import numpy as np
 from fastapi import Request
+import numpy as np
 
-import vllm.envs as envs
 from vllm.config import ModelConfig
 from vllm.engine.protocol import EngineClient
 from vllm.entrypoints.logger import RequestLogger
-from vllm.entrypoints.openai.protocol import (
-    DeltaMessage, ErrorResponse, RequestResponseMetadata,
-    TranscriptionResponse, TranscriptionResponseStreamChoice,
-    TranscriptionStreamResponse, TranslationResponse,
-    TranslationResponseStreamChoice, TranslationStreamResponse, UsageInfo)
-from vllm.entrypoints.openai.serving_engine import (OpenAIServing,
-                                                    SpeechToTextRequest)
+from vllm.entrypoints.openai.protocol import DeltaMessage
+from vllm.entrypoints.openai.protocol import ErrorResponse
+from vllm.entrypoints.openai.protocol import RequestResponseMetadata
+from vllm.entrypoints.openai.protocol import TranscriptionResponse
+from vllm.entrypoints.openai.protocol import TranscriptionResponseStreamChoice
+from vllm.entrypoints.openai.protocol import TranscriptionStreamResponse
+from vllm.entrypoints.openai.protocol import TranslationResponse
+from vllm.entrypoints.openai.protocol import TranslationResponseStreamChoice
+from vllm.entrypoints.openai.protocol import TranslationStreamResponse
+from vllm.entrypoints.openai.protocol import UsageInfo
+from vllm.entrypoints.openai.serving_engine import OpenAIServing
+from vllm.entrypoints.openai.serving_engine import SpeechToTextRequest
 from vllm.entrypoints.openai.serving_models import OpenAIServingModels
+import vllm.envs as envs
 from vllm.io.inputs.data import PromptType
-from vllm.utils.logger import init_logger
 from vllm.model_executor.models import SupportsTranscription
 from vllm.outputs import RequestOutput
 from vllm.utils import PlaceholderModule
+from vllm.utils.logger import init_logger
 
 try:
     import librosa

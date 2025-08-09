@@ -1,10 +1,13 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 from dataclasses import dataclass
-from typing import Any, Final, Optional, Union
+from typing import Any
+from typing import Final
+from typing import Optional
+from typing import Union
 
-import jinja2
 from fastapi import Request
+import jinja2
 
 from vllm.config import ModelConfig
 from vllm.engine.protocol import EngineClient
@@ -12,18 +15,18 @@ from vllm.entrypoints.chat_utils import ChatTemplateContentFormatOption
 from vllm.entrypoints.logger import RequestLogger
 # yapf conflicts with isort for this block
 # yapf: disable
-from vllm.entrypoints.openai.protocol import (DetokenizeRequest,
-                                              DetokenizeResponse,
-                                              ErrorResponse,
-                                              TokenizeChatRequest,
-                                              TokenizeRequest,
-                                              TokenizeResponse,
-                                              TokenizerInfoResponse)
+from vllm.entrypoints.openai.protocol import DetokenizeRequest
+from vllm.entrypoints.openai.protocol import DetokenizeResponse
+from vllm.entrypoints.openai.protocol import ErrorResponse
+from vllm.entrypoints.openai.protocol import TokenizeChatRequest
+from vllm.entrypoints.openai.protocol import TokenizeRequest
+from vllm.entrypoints.openai.protocol import TokenizeResponse
+from vllm.entrypoints.openai.protocol import TokenizerInfoResponse
 # yapf: enable
 from vllm.entrypoints.openai.serving_engine import OpenAIServing
 from vllm.entrypoints.openai.serving_models import OpenAIServingModels
-from vllm.utils.logger import init_logger
 from vllm.transformers_utils.tokenizer import AnyTokenizer
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

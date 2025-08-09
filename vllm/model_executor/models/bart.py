@@ -19,8 +19,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """PyTorch BART model."""
-import math
 from collections.abc import Iterable
+import math
 from typing import Optional
 
 import torch
@@ -28,25 +28,32 @@ from torch import nn
 from transformers import BartConfig
 from transformers.utils import logging
 
-from vllm.attention import Attention, AttentionType
-from vllm.config import CacheConfig, LoRAConfig, VllmConfig
+from vllm.attention import Attention
+from vllm.attention import AttentionType
+from vllm.config import CacheConfig
+from vllm.config import LoRAConfig
+from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
 from vllm.distributed import get_tensor_model_parallel_world_size
 from vllm.model_executor.layers.activation import get_act_fn
-from vllm.model_executor.layers.linear import (ColumnParallelLinear,
-                                               QKVCrossParallelLinear,
-                                               QKVParallelLinear,
-                                               RowParallelLinear)
+from vllm.model_executor.layers.linear import ColumnParallelLinear
+from vllm.model_executor.layers.linear import QKVCrossParallelLinear
+from vllm.model_executor.layers.linear import QKVParallelLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
 from vllm.model_executor.layers.logits_processor import LogitsProcessor
 from vllm.model_executor.layers.quantization.base_config import (
     QuantizationConfig)
 from vllm.model_executor.layers.vocab_parallel_embedding import (
-    ParallelLMHead, VocabParallelEmbedding)
+    VocabParallelEmbedding)
+from vllm.model_executor.layers.vocab_parallel_embedding import ParallelLMHead
 from vllm.model_executor.model_loader.weight_utils import default_weight_loader
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.sequence import IntermediateTensors
 
-from .interfaces import SupportsQuant, SupportsV0Only
-from .utils import AutoWeightsLoader, WeightsMapper, maybe_prefix
+from .interfaces import SupportsQuant
+from .interfaces import SupportsV0Only
+from .utils import AutoWeightsLoader
+from .utils import WeightsMapper
+from .utils import maybe_prefix
 
 logger = logging.get_logger(__name__)
 

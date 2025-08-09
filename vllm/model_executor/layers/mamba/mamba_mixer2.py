@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 import torch
 from torch import nn
@@ -9,21 +10,24 @@ from torch import nn
 from vllm import envs
 from vllm.attention.backends.abstract import AttentionMetadata
 from vllm.config import get_current_vllm_config
-from vllm.distributed import (divide, get_tensor_model_parallel_rank,
-                              get_tensor_model_parallel_world_size,
-                              tensor_model_parallel_all_gather,
-                              tensor_model_parallel_all_reduce)
-from vllm.forward_context import ForwardContext, get_forward_context
+from vllm.distributed import divide
+from vllm.distributed import get_tensor_model_parallel_rank
+from vllm.distributed import get_tensor_model_parallel_world_size
+from vllm.distributed import tensor_model_parallel_all_gather
+from vllm.distributed import tensor_model_parallel_all_reduce
+from vllm.forward_context import ForwardContext
+from vllm.forward_context import get_forward_context
 from vllm.model_executor.custom_op import CustomOp
-from vllm.model_executor.layers.linear import (ColumnParallelLinear,
-                                               RowParallelLinear)
+from vllm.model_executor.layers.linear import ColumnParallelLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
 from vllm.model_executor.layers.mamba.abstract import MambaBase
-from vllm.model_executor.layers.mamba.mamba2_metadata import (Mamba2Metadata,
-                                                              update_metadata)
+from vllm.model_executor.layers.mamba.mamba2_metadata import Mamba2Metadata
+from vllm.model_executor.layers.mamba.mamba2_metadata import update_metadata
 from vllm.model_executor.layers.mamba.mamba_utils import (
     MambaStateShapeCalculator)
 from vllm.model_executor.layers.mamba.ops.causal_conv1d import (
-    causal_conv1d_fn, causal_conv1d_update)
+    causal_conv1d_update)
+from vllm.model_executor.layers.mamba.ops.causal_conv1d import causal_conv1d_fn
 from vllm.model_executor.layers.mamba.ops.layernorm_gated import rms_norm_gated
 from vllm.model_executor.layers.mamba.ops.mamba_ssm import (
     selective_state_update)
@@ -31,7 +35,9 @@ from vllm.model_executor.layers.mamba.ops.ssd_combined import (
     mamba_chunk_scan_combined)
 from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.model_executor.model_loader.weight_utils import (
-    LoaderFunction, composed_weight_loader, sharded_weight_loader)
+    composed_weight_loader)
+from vllm.model_executor.model_loader.weight_utils import LoaderFunction
+from vllm.model_executor.model_loader.weight_utils import sharded_weight_loader
 from vllm.model_executor.models.mamba_cache import MambaCacheParams
 from vllm.model_executor.utils import set_weight_attrs
 from vllm.platforms import current_platform

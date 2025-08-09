@@ -2,29 +2,36 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import base64
-from typing import Final, Literal, Optional, Union, cast
+from typing import Final
+from typing import Literal
+from typing import Optional
+from typing import Union
+from typing import cast
 
-import numpy as np
 from fastapi import Request
-from typing_extensions import assert_never, override
+import numpy as np
+from typing_extensions import assert_never
+from typing_extensions import override
 
 from vllm.config import ModelConfig
 from vllm.engine.protocol import EngineClient
 from vllm.entrypoints.chat_utils import ChatTemplateContentFormatOption
 from vllm.entrypoints.logger import RequestLogger
-from vllm.entrypoints.openai.protocol import (EmbeddingChatRequest,
-                                              EmbeddingRequest,
-                                              EmbeddingResponse,
-                                              EmbeddingResponseData,
-                                              ErrorResponse, UsageInfo)
-from vllm.entrypoints.openai.serving_engine import (EmbeddingServeContext,
-                                                    OpenAIServing,
-                                                    ServeContext)
+from vllm.entrypoints.openai.protocol import EmbeddingChatRequest
+from vllm.entrypoints.openai.protocol import EmbeddingRequest
+from vllm.entrypoints.openai.protocol import EmbeddingResponse
+from vllm.entrypoints.openai.protocol import EmbeddingResponseData
+from vllm.entrypoints.openai.protocol import ErrorResponse
+from vllm.entrypoints.openai.protocol import UsageInfo
+from vllm.entrypoints.openai.serving_engine import EmbeddingServeContext
+from vllm.entrypoints.openai.serving_engine import OpenAIServing
+from vllm.entrypoints.openai.serving_engine import ServeContext
 from vllm.entrypoints.openai.serving_models import OpenAIServingModels
-from vllm.utils.logger import init_logger
-from vllm.outputs import (EmbeddingOutput, EmbeddingRequestOutput,
-                          PoolingRequestOutput)
+from vllm.outputs import EmbeddingOutput
+from vllm.outputs import EmbeddingRequestOutput
+from vllm.outputs import PoolingRequestOutput
 from vllm.pooling_params import PoolingParams
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

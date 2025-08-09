@@ -1,11 +1,12 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 import filecmp
+from pathlib import Path
 import shutil
 import tempfile
-from pathlib import Path
 
-from vllm import LLM, SamplingParams
+from vllm import LLM
+from vllm import SamplingParams
 from vllm.config import KVTransferConfig
 
 MODEL_NAME = "meta-llama/Llama-3.2-1B-Instruct"

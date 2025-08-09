@@ -2,35 +2,53 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import asyncio
-import time
-import weakref
 from functools import partial
-from typing import (Any, AsyncGenerator, Callable, Dict, Iterable, List,
-                    Mapping, Optional, Set, Tuple, Type, Union)
+import time
+from typing import Any
+from typing import AsyncGenerator
+from typing import Callable
+from typing import Dict
+from typing import Iterable
+from typing import List
+from typing import Mapping
+from typing import Optional
+from typing import Set
+from typing import Tuple
+from typing import Type
+from typing import Union
+import weakref
 from weakref import ReferenceType
 
-import vllm.envs as envs
-from vllm.config import (DecodingConfig, LoRAConfig, ModelConfig,
-                         ParallelConfig, SchedulerConfig, VllmConfig)
+from vllm.config import DecodingConfig
+from vllm.config import LoRAConfig
+from vllm.config import ModelConfig
+from vllm.config import ParallelConfig
+from vllm.config import SchedulerConfig
+from vllm.config import VllmConfig
 from vllm.core.scheduler import SchedulerOutputs
 from vllm.engine.arg_utils import AsyncEngineArgs
 from vllm.engine.async_timeout import asyncio_timeout
-from vllm.engine.llm_engine import LLMEngine, SchedulerOutputState
+from vllm.engine.llm_engine import LLMEngine
+from vllm.engine.llm_engine import SchedulerOutputState
 from vllm.engine.metrics_types import StatLoggerBase
 from vllm.engine.protocol import EngineClient
+import vllm.envs as envs
 from vllm.executor.executor_base import ExecutorBase
 from vllm.io.inputs import PromptType
 from vllm.io.inputs.preprocess import InputPreprocessor
-from vllm.utils.logger import init_logger
 from vllm.lora.request import LoRARequest
 from vllm.model_executor.layers.sampler import SamplerOutput
-from vllm.outputs import PoolingRequestOutput, RequestOutput
+from vllm.outputs import PoolingRequestOutput
+from vllm.outputs import RequestOutput
 from vllm.pooling_params import PoolingParams
 from vllm.sampling_params import SamplingParams
 from vllm.sequence import ExecuteModelRequest
 from vllm.transformers_utils.tokenizer import AnyTokenizer
 from vllm.usage.usage_lib import UsageContext
-from vllm.utils import Device, deprecate_kwargs, weak_bind
+from vllm.utils import Device
+from vllm.utils import deprecate_kwargs
+from vllm.utils import weak_bind
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 ENGINE_ITERATION_TIMEOUT_S = envs.VLLM_ENGINE_ITERATION_TIMEOUT_S

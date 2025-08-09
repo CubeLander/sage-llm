@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import time
 from collections import deque
+import time
 from typing import Optional
 from unittest.mock import MagicMock
 
@@ -10,15 +10,22 @@ import pytest  # noqa
 import torch
 from torch import Use  # noqa
 
-from vllm.config import CacheConfig, LoRAConfig, SchedulerConfig
+from vllm.config import CacheConfig
+from vllm.config import LoRAConfig
+from vllm.config import SchedulerConfig
 from vllm.core.interfaces import AllocStatus
-from vllm.core.scheduler import Scheduler, SchedulingBudget
+from vllm.core.scheduler import Scheduler
+from vllm.core.scheduler import SchedulingBudget
 from vllm.lora.request import LoRARequest
-from vllm.sequence import SequenceGroup, SequenceStatus
+from vllm.sequence import SequenceGroup
+from vllm.sequence import SequenceStatus
 
-from .utils import (append_new_token, append_new_token_seq,
-                    append_new_token_seq_group, create_dummy_prompt,
-                    get_sequence_groups, schedule_and_update_computed_tokens)
+from .utils import append_new_token
+from .utils import append_new_token_seq
+from .utils import append_new_token_seq_group
+from .utils import create_dummy_prompt
+from .utils import get_sequence_groups
+from .utils import schedule_and_update_computed_tokens
 
 
 def test_scheduler_add_seq_group():

@@ -1,12 +1,14 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-from typing import Callable, Optional
+from typing import Callable
+from typing import Optional
 
 import torch
 
-from vllm.utils.logger import init_logger
 from vllm.platforms import current_platform
-from vllm.utils import direct_register_custom_op, is_torch_equal_or_newer
+from vllm.utils import direct_register_custom_op
+from vllm.utils import is_torch_equal_or_newer
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 
@@ -18,7 +20,9 @@ def _swizzle_mxfp4(quant_tensor, scale, num_warps):
     """
     import triton_kernels.matmul_ogs_details.opt_flags as opt_flags
     from triton_kernels.numerics import InFlexData
-    from triton_kernels.tensor import FP4, convert_layout, wrap_torch_tensor
+    from triton_kernels.tensor import FP4
+    from triton_kernels.tensor import convert_layout
+    from triton_kernels.tensor import wrap_torch_tensor
     from triton_kernels.tensor_details import layout
     from triton_kernels.tensor_details.layout import StridedLayout
     if (current_platform.is_cuda()

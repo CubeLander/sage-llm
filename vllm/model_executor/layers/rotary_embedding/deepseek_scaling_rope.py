@@ -9,8 +9,10 @@ import torch
 from vllm.platforms import current_platform
 
 from .base import RotaryEmbedding
-from .common import (rotate_gptj, rotate_neox, yarn_find_correction_range,
-                     yarn_linear_ramp_mask)
+from .common import rotate_gptj
+from .common import rotate_neox
+from .common import yarn_find_correction_range
+from .common import yarn_linear_ramp_mask
 
 
 def yarn_get_mscale(scale: float = 1, mscale: float = 1) -> float:

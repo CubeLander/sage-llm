@@ -1,10 +1,11 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from einops import rearrange
+from einops import repeat
 import pytest
 import torch
 import torch.nn.functional as F
-from einops import rearrange, repeat
 
 from vllm.model_executor.layers.mamba.ops.ssd_combined import (
     mamba_chunk_scan_combined)

@@ -5,8 +5,10 @@ from typing import Optional
 
 import pytest
 
-from vllm.core.block.interfaces import Block, BlockAllocator
-from vllm.core.block.naive_block import NaiveBlock, NaiveBlockAllocator
+from vllm.core.block.interfaces import Block
+from vllm.core.block.interfaces import BlockAllocator
+from vllm.core.block.naive_block import NaiveBlock
+from vllm.core.block.naive_block import NaiveBlockAllocator
 
 
 class TestNaiveBlockAllocator:

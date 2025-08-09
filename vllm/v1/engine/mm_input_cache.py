@@ -1,10 +1,12 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 from collections.abc import Sequence
-from typing import TYPE_CHECKING, Optional
+from typing import Optional
+from typing import TYPE_CHECKING
 
 from vllm.io.inputs.multimodal import MultiModalKwargs
-from vllm.io.inputs.multimodal.cache import MultiModalCache, MultiModalCacheItemMetadata
+from vllm.io.inputs.multimodal.cache import MultiModalCache
+from vllm.io.inputs.multimodal.cache import MultiModalCacheItemMetadata
 from vllm.utils import is_list_of
 
 if TYPE_CHECKING:

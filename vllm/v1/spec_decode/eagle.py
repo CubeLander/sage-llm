@@ -9,21 +9,22 @@ import torch
 import torch.nn as nn
 
 from vllm.attention.layer import Attention
-from vllm.config import (CompilationLevel, VllmConfig,
-                         get_layers_from_vllm_config)
+from vllm.config import CompilationLevel
+from vllm.config import VllmConfig
+from vllm.config import get_layers_from_vllm_config
 from vllm.distributed.parallel_state import get_pp_group
 from vllm.forward_context import set_forward_context
-from vllm.utils.logger import init_logger
 from vllm.model_executor.model_loader import get_model
 from vllm.model_executor.models import supports_multimodal
 from vllm.model_executor.models.llama_eagle3 import Eagle3LlamaForCausalLM
 from vllm.platforms import current_platform
 from vllm.utils import is_pin_memory_available
+from vllm.utils.logger import init_logger
 from vllm.v1.attention.backends.flash_attn import FlashAttentionMetadata
 from vllm.v1.attention.backends.rocm_aiter_fa import (
     AiterFlashAttentionMetadata)
-from vllm.v1.attention.backends.tree_attn import (TreeAttentionMetadata,
-                                                  TreeAttentionMetadataBuilder)
+from vllm.v1.attention.backends.tree_attn import TreeAttentionMetadata
+from vllm.v1.attention.backends.tree_attn import TreeAttentionMetadataBuilder
 from vllm.v1.attention.backends.triton_attn import TritonAttentionMetadata
 from vllm.v1.attention.backends.utils import CommonAttentionMetadata
 from vllm.v1.kv_cache_interface import KVCacheConfig

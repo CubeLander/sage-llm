@@ -1,11 +1,18 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from typing import Dict, FrozenSet, List, Optional, Tuple
+from typing import Dict
+from typing import FrozenSet
+from typing import List
+from typing import Optional
+from typing import Tuple
 
-from vllm.core.block.interfaces import (Block, BlockAllocator, BlockId,
-                                        DeviceAwareBlockAllocator)
-from vllm.core.block.naive_block import NaiveBlock, NaiveBlockAllocator
+from vllm.core.block.interfaces import Block
+from vllm.core.block.interfaces import BlockAllocator
+from vllm.core.block.interfaces import BlockId
+from vllm.core.block.interfaces import DeviceAwareBlockAllocator
+from vllm.core.block.naive_block import NaiveBlock
+from vllm.core.block.naive_block import NaiveBlockAllocator
 from vllm.core.block.prefix_caching_block import PrefixCachingBlockAllocator
 from vllm.utils import Device
 

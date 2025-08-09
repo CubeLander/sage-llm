@@ -7,11 +7,15 @@ from typing import Optional
 
 import torch
 
-from vllm.sampling_params import SamplingParams, SamplingType
-from vllm.sequence import (VLLM_TOKEN_ID_ARRAY_TYPE, SequenceData,
-                           SequenceGroupMetadata)
-from vllm.utils import (PyObjectCache, async_tensor_h2d,
-                        is_pin_memory_available, make_tensor_with_pad)
+from vllm.sampling_params import SamplingParams
+from vllm.sampling_params import SamplingType
+from vllm.sequence import SequenceData
+from vllm.sequence import SequenceGroupMetadata
+from vllm.sequence import VLLM_TOKEN_ID_ARRAY_TYPE
+from vllm.utils import PyObjectCache
+from vllm.utils import async_tensor_h2d
+from vllm.utils import is_pin_memory_available
+from vllm.utils import make_tensor_with_pad
 
 _SAMPLING_EPS = 1e-5
 

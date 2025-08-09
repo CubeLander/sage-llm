@@ -1,24 +1,29 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 from collections.abc import Set
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 import numpy as np
 import torch
 import torch.nn as nn
 
-from vllm.config import ModelConfig, VllmConfig
-from vllm.utils.logger import init_logger
-from vllm.model_executor.layers.pooler import (DispatchPooler, Pooler,
-                                               PoolerHead, PoolerNormalize,
-                                               PoolingParamsUpdate,
-                                               build_output, get_prompt_lens,
-                                               get_prompt_token_ids)
+from vllm.config import ModelConfig
+from vllm.config import VllmConfig
+from vllm.model_executor.layers.pooler import DispatchPooler
+from vllm.model_executor.layers.pooler import Pooler
+from vllm.model_executor.layers.pooler import PoolerHead
+from vllm.model_executor.layers.pooler import PoolerNormalize
+from vllm.model_executor.layers.pooler import PoolingParamsUpdate
+from vllm.model_executor.layers.pooler import build_output
+from vllm.model_executor.layers.pooler import get_prompt_lens
+from vllm.model_executor.layers.pooler import get_prompt_token_ids
 from vllm.model_executor.models.llama import LlamaForCausalLM
 from vllm.model_executor.pooling_metadata import PoolingMetadata
 from vllm.sequence import PoolerOutput
 from vllm.tasks import PoolingTask
 from vllm.transformers_utils.tokenizer import cached_tokenizer_from_config
+from vllm.utils.logger import init_logger
 
 from .interfaces import SupportsV0Only
 

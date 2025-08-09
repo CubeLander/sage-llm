@@ -2,7 +2,8 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import pytest
-from transformers import AutoTokenizer, PreTrainedTokenizerBase
+from transformers import AutoTokenizer
+from transformers import PreTrainedTokenizerBase
 
 from vllm.lora.request import LoRARequest
 from vllm.transformers_utils.tokenizer import get_lora_tokenizer

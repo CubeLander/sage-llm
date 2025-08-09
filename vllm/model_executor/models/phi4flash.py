@@ -1,38 +1,51 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-import math
 from collections.abc import Iterable
-from typing import Optional, Union
+import math
+from typing import Optional
+from typing import Union
 
 import torch
 import torch.nn as nn
 from transformers.activations import ACT2FN
 
-import vllm.envs as envs
-from vllm.attention import Attention, AttentionMetadata, AttentionType
+from vllm.attention import Attention
+from vllm.attention import AttentionMetadata
+from vllm.attention import AttentionType
 from vllm.attention.selector import _Backend
-from vllm.config import CacheConfig, VllmConfig
-from vllm.distributed import get_pp_group, get_tensor_model_parallel_world_size
-from vllm.forward_context import ForwardContext, get_forward_context
-from vllm.utils.logger import init_logger
-from vllm.model_executor.layers.linear import (ColumnParallelLinear,
-                                               MergedColumnParallelLinear,
-                                               RowParallelLinear)
+from vllm.config import CacheConfig
+from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.distributed import get_pp_group
+from vllm.distributed import get_tensor_model_parallel_world_size
+import vllm.envs as envs
+from vllm.forward_context import ForwardContext
+from vllm.forward_context import get_forward_context
+from vllm.model_executor.layers.linear import ColumnParallelLinear
+from vllm.model_executor.layers.linear import MergedColumnParallelLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
 from vllm.model_executor.layers.logits_processor import LogitsProcessor
 from vllm.model_executor.layers.mamba.ops.causal_conv1d import (
-    causal_conv1d_fn, causal_conv1d_update)
+    causal_conv1d_update)
+from vllm.model_executor.layers.mamba.ops.causal_conv1d import causal_conv1d_fn
 from vllm.model_executor.layers.mamba.ops.mamba_ssm import (
-    selective_scan_fn, selective_state_update)
+    selective_state_update)
+from vllm.model_executor.layers.mamba.ops.mamba_ssm import selective_scan_fn
 from vllm.model_executor.layers.vocab_parallel_embedding import (
-    DEFAULT_VOCAB_PADDING_SIZE, ParallelLMHead, VocabParallelEmbedding)
-from vllm.model_executor.models.interfaces import (HasInnerState, IsHybrid,
-                                                   SupportsV0Only)
-from vllm.model_executor.models.mamba_cache import (MambaCacheManager,
-                                                    MambaCacheParams)
+    DEFAULT_VOCAB_PADDING_SIZE)
+from vllm.model_executor.layers.vocab_parallel_embedding import (
+    VocabParallelEmbedding)
+from vllm.model_executor.layers.vocab_parallel_embedding import ParallelLMHead
+from vllm.model_executor.models.interfaces import HasInnerState
+from vllm.model_executor.models.interfaces import IsHybrid
+from vllm.model_executor.models.interfaces import SupportsV0Only
+from vllm.model_executor.models.mamba_cache import MambaCacheManager
+from vllm.model_executor.models.mamba_cache import MambaCacheParams
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.sequence import IntermediateTensors
+from vllm.utils.logger import init_logger
 
-from .utils import make_layers, maybe_prefix
+from .utils import make_layers
+from .utils import maybe_prefix
 
 logger = init_logger(__name__)
 

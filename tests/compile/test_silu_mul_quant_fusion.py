@@ -3,16 +3,21 @@
 import pytest
 import torch
 
-import vllm.envs as envs
 from vllm.compilation.activation_quant_fusion import ActivationQuantFusionPass
-from vllm.compilation.fx_utils import find_auto_fn, find_auto_fn_maybe
+from vllm.compilation.fx_utils import find_auto_fn
+from vllm.compilation.fx_utils import find_auto_fn_maybe
 from vllm.compilation.noop_elimination import NoOpEliminationPass
-from vllm.config import CompilationConfig, PassConfig, VllmConfig
+from vllm.config import CompilationConfig
+from vllm.config import PassConfig
+from vllm.config import VllmConfig
+import vllm.envs as envs
 from vllm.model_executor.layers.activation import SiluAndMul
 from vllm.model_executor.layers.quantization.utils.quant_utils import (
     GroupShape)
 from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
-    CUTLASS_FP8_SUPPORTED, Fp8LinearOp)
+    CUTLASS_FP8_SUPPORTED)
+from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
+    Fp8LinearOp)
 from vllm.platforms import current_platform
 
 from .backend import TestBackend

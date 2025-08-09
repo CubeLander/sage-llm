@@ -3,23 +3,31 @@
 
 from itertools import groupby
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Optional, TypeVar, Union
-from urllib.parse import ParseResult, urlparse
+from typing import Any
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import TypeVar
+from typing import Union
+from urllib.parse import ParseResult
+from urllib.parse import urlparse
 
+from PIL import Image
+from PIL import UnidentifiedImageError
 import numpy as np
 import numpy.typing as npt
 import torch
-from PIL import Image, UnidentifiedImageError
 
+from vllm.distributed import get_tensor_model_parallel_rank
+from vllm.distributed import get_tensor_model_parallel_world_size
+from vllm.distributed import tensor_model_parallel_all_gather
 import vllm.envs as envs
-from vllm.utils.network.httpconnection import HTTPConnection, global_http_connection
-from vllm.distributed import (get_tensor_model_parallel_rank,
-                              get_tensor_model_parallel_world_size,
-                              tensor_model_parallel_all_gather)
+from vllm.utils.network.httpconnection import HTTPConnection
+from vllm.utils.network.httpconnection import global_http_connection
 
 from .audio import AudioMediaIO
 from .base import MediaIO
-from .image import ImageEmbeddingMediaIO, ImageMediaIO
+from .image import ImageEmbeddingMediaIO
+from .image import ImageMediaIO
 from .inputs import PlaceholderRange
 from .video import VideoMediaIO
 
@@ -27,7 +35,8 @@ _M = TypeVar("_M")
 
 if TYPE_CHECKING:
     from .hasher import MultiModalHashDict
-    from .inputs import MultiModalKwargs, MultiModalPlaceholderDict
+    from .inputs import MultiModalKwargs
+    from .inputs import MultiModalPlaceholderDict
 else:
     MultiModalHashDict = Any
     MultiModalKwargs = Any

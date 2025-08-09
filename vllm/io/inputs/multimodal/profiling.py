@@ -1,22 +1,32 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-from abc import ABC, abstractmethod
+from abc import ABC
+from abc import abstractmethod
 from collections.abc import Mapping
-from dataclasses import dataclass, field
-from typing import Generic, NamedTuple, Optional, TypeVar, Union, cast
+from dataclasses import dataclass
+from dataclasses import field
+from typing import Generic
+from typing import NamedTuple
+from typing import Optional
+from typing import TypeVar
+from typing import Union
+from typing import cast
 
+from PIL import Image
 import numpy as np
 import numpy.typing as npt
-from PIL import Image
 
 import vllm.envs as envs
 from vllm.utils.logger import init_logger
 
-from .inputs import (MultiModalDataDict, MultiModalEncDecInputs,
-                     MultiModalInputs, MultiModalKwargs,
-                     MultiModalPlaceholderDict)
-from .processing import (BaseMultiModalProcessor, BaseProcessingInfo,
-                         EncDecMultiModalProcessor)
+from .inputs import MultiModalDataDict
+from .inputs import MultiModalEncDecInputs
+from .inputs import MultiModalInputs
+from .inputs import MultiModalKwargs
+from .inputs import MultiModalPlaceholderDict
+from .processing import BaseMultiModalProcessor
+from .processing import BaseProcessingInfo
+from .processing import EncDecMultiModalProcessor
 
 logger = init_logger(__name__)
 

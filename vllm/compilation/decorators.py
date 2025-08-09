@@ -2,19 +2,24 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import inspect
-from typing import Callable, Optional, TypeVar, Union, overload
+from typing import Callable
+from typing import Optional
+from typing import TypeVar
+from typing import Union
+from typing import overload
 from unittest.mock import patch
 
 import torch
-import torch.nn as nn
 from torch._dynamo.symbolic_convert import InliningInstructionTranslator
+import torch.nn as nn
 
 from vllm.compilation.counter import compilation_counter
 from vllm.compilation.wrapper import TorchCompileWrapperWithCustomDispatcher
-from vllm.config import CompilationLevel, VllmConfig
-from vllm.utils.logger import init_logger
-from vllm.sequence import IntermediateTensors
+from vllm.config import CompilationLevel
+from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
 from vllm.utils import supports_dynamo
+from vllm.utils.logger import init_logger
 
 from .monitor import start_monitoring_torch_compile
 

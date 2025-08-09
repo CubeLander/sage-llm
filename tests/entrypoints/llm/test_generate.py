@@ -5,7 +5,9 @@ import weakref
 
 import pytest
 
-from vllm import LLM, RequestOutput, SamplingParams
+from vllm import LLM
+from vllm import RequestOutput
+from vllm import SamplingParams
 from vllm.distributed import cleanup_dist_env_and_memory
 
 MODEL_NAME = "distilbert/distilgpt2"

@@ -9,7 +9,9 @@ import pytest
 import pytest_asyncio
 from transformers import AutoTokenizer
 
-from ....conftest import AUDIO_ASSETS, AudioTestAssets, VllmRunner
+from ....conftest import AUDIO_ASSETS
+from ....conftest import AudioTestAssets
+from ....conftest import VllmRunner
 from ....utils import RemoteOpenAIServer
 from ...registry import HF_EXAMPLE_MODELS
 

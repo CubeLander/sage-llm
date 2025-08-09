@@ -1,25 +1,31 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from typing import Any, Callable, Optional
+from typing import Any
+from typing import Callable
+from typing import Optional
 
 import gguf
-import torch
 from gguf import GGMLQuantizationType as WeightType
-from torch.nn.parameter import Parameter, UninitializedParameter
+import torch
+from torch.nn.parameter import Parameter
+from torch.nn.parameter import UninitializedParameter
 
 from vllm import _custom_ops as ops
-from vllm.utils.logger import init_logger
-from vllm.model_executor.layers.fused_moe.layer import (FusedMoE,
-                                                        FusedMoEMethodBase)
-from vllm.model_executor.layers.linear import LinearBase, LinearMethodBase
+from vllm.model_executor.layers.fused_moe.layer import FusedMoE
+from vllm.model_executor.layers.fused_moe.layer import FusedMoEMethodBase
+from vllm.model_executor.layers.linear import LinearBase
+from vllm.model_executor.layers.linear import LinearMethodBase
 from vllm.model_executor.layers.quantization import QuantizationMethods
 from vllm.model_executor.layers.quantization.base_config import (
-    QuantizationConfig, QuantizeMethodBase)
+    QuantizationConfig)
+from vllm.model_executor.layers.quantization.base_config import (
+    QuantizeMethodBase)
 from vllm.model_executor.layers.vocab_parallel_embedding import (
     VocabParallelEmbedding)
 from vllm.model_executor.utils import set_weight_attrs
 from vllm.utils import direct_register_custom_op
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

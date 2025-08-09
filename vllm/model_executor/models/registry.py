@@ -4,32 +4,46 @@
 Whenever you add an architecture to this page, please also update
 `tests/models/registry.py` with example HuggingFace models for it.
 """
+from abc import ABC
+from abc import abstractmethod
+from collections.abc import Set
+from dataclasses import dataclass
+from dataclasses import field
+from functools import lru_cache
 import importlib
 import os
 import pickle
 import subprocess
 import sys
 import tempfile
-from abc import ABC, abstractmethod
-from collections.abc import Set
-from dataclasses import dataclass, field
-from functools import lru_cache
-from typing import Callable, Optional, TypeVar, Union
+from typing import Callable
+from typing import Optional
+from typing import TypeVar
+from typing import Union
 
 import torch.nn as nn
 import transformers
 
-from vllm.config import (ModelConfig, ModelImpl, iter_architecture_defaults,
-                         try_match_architecture_defaults)
-from vllm.utils.logger import init_logger
+from vllm.config import ModelConfig
+from vllm.config import ModelImpl
+from vllm.config import iter_architecture_defaults
+from vllm.config import try_match_architecture_defaults
 from vllm.transformers_utils.dynamic_module import (
     try_get_class_from_dynamic_module)
+from vllm.utils.logger import init_logger
 
-from .interfaces import (has_inner_state, has_noops, is_attention_free,
-                         is_hybrid, supports_cross_encoding,
-                         supports_multimodal, supports_multimodal_raw_input,
-                         supports_pp, supports_transcription, supports_v0_only)
-from .interfaces_base import is_pooling_model, is_text_generation_model
+from .interfaces import has_inner_state
+from .interfaces import has_noops
+from .interfaces import is_attention_free
+from .interfaces import is_hybrid
+from .interfaces import supports_cross_encoding
+from .interfaces import supports_multimodal
+from .interfaces import supports_multimodal_raw_input
+from .interfaces import supports_pp
+from .interfaces import supports_transcription
+from .interfaces import supports_v0_only
+from .interfaces_base import is_pooling_model
+from .interfaces_base import is_text_generation_model
 
 logger = init_logger(__name__)
 

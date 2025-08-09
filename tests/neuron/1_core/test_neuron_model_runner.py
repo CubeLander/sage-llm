@@ -8,7 +8,8 @@ from vllm.engine.arg_utils import EngineArgs
 from vllm.platforms import current_platform
 from vllm.platforms.neuron import NeuronFramework
 from vllm.sampling_params import SamplingParams
-from vllm.sequence import SequenceData, SequenceGroupMetadata
+from vllm.sequence import SequenceData
+from vllm.sequence import SequenceGroupMetadata
 from vllm.worker.neuron_model_runner import NeuronModelRunner
 
 os.environ[

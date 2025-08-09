@@ -6,25 +6,28 @@ import json
 import os
 # torch.compile needs typing.List. It will fail torch.library.infer_schema
 # otherwise
+from typing import Any
+from typing import Callable
 from typing import List  # noqa: UP035
-from typing import Any, Callable, Optional
+from typing import Optional
 
 import torch
 import torch.nn.functional as F
 
-import vllm.envs as envs
-import vllm.model_executor.layers.fused_moe.modular_kernel as mk
 from vllm import _custom_ops as ops
-from vllm.utils.logger import init_logger
+import vllm.envs as envs
 # yapf: disable
-from vllm.model_executor.layers.fused_moe.config import (
-    FusedMoEQuantConfig, get_config_quant_dtype)
+from vllm.model_executor.layers.fused_moe.config import FusedMoEQuantConfig
+from vllm.model_executor.layers.fused_moe.config import get_config_quant_dtype
 from vllm.model_executor.layers.fused_moe.cutlass_moe import (
-    _valid_cutlass_block_scaled_grouped_gemm,
+    _valid_cutlass_block_scaled_grouped_gemm)
+from vllm.model_executor.layers.fused_moe.cutlass_moe import (
     run_cutlass_block_scaled_fused_experts)
-# yapf: enable
 from vllm.model_executor.layers.fused_moe.deep_gemm_moe import (
-    _valid_deep_gemm, deep_gemm_moe_fp8)
+    deep_gemm_moe_fp8)
+# yapf: enable
+from vllm.model_executor.layers.fused_moe.deep_gemm_moe import _valid_deep_gemm
+import vllm.model_executor.layers.fused_moe.modular_kernel as mk
 from vllm.model_executor.layers.fused_moe.moe_align_block_size import (
     moe_align_block_size)
 from vllm.model_executor.layers.fused_moe.prepare_finalize import (
@@ -32,15 +35,21 @@ from vllm.model_executor.layers.fused_moe.prepare_finalize import (
 from vllm.model_executor.layers.fused_moe.topk_weight_and_reduce import (
     TopKWeightAndReduceNoOP)
 from vllm.model_executor.layers.fused_moe.utils import (
-    _resize_cache, moe_kernel_quantize_input, per_token_group_quant_fp8)
+    moe_kernel_quantize_input)
+from vllm.model_executor.layers.fused_moe.utils import (
+    per_token_group_quant_fp8)
+from vllm.model_executor.layers.fused_moe.utils import _resize_cache
 from vllm.model_executor.layers.quantization.utils.flashinfer_utils import (
     calculate_tile_tokens_dim)
 from vllm.model_executor.layers.quantization.utils.mxfp4_utils import (
     dequant_mxfp4)
 from vllm.platforms import current_platform
-from vllm.platforms.triton_tuils import tl, triton
-from vllm.utils import direct_register_custom_op, is_torch_equal_or_newer
+from vllm.platforms.triton_tuils import tl
+from vllm.platforms.triton_tuils import triton
+from vllm.utils import direct_register_custom_op
+from vllm.utils import is_torch_equal_or_newer
 from vllm.utils.deep_gemm import is_blackwell_deep_gemm_used
+from vllm.utils.logger import init_logger
 
 from .rocm_aiter_fused_moe import is_rocm_aiter_moe_enabled
 

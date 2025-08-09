@@ -8,12 +8,14 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from tests.core.utils import create_dummy_lora_sequence, create_dummy_sequence
+from tests.core.utils import create_dummy_lora_sequence
+from tests.core.utils import create_dummy_sequence
 from vllm.core.block.cpu_gpu_block_allocator import CpuGpuBlockAllocator
-from vllm.core.block.interfaces import Block, BlockAllocator
-from vllm.core.block.prefix_caching_block import (ComputedBlocksTracker,
-                                                  PrefixCachingBlock,
-                                                  PrefixCachingBlockAllocator)
+from vllm.core.block.interfaces import Block
+from vllm.core.block.interfaces import BlockAllocator
+from vllm.core.block.prefix_caching_block import ComputedBlocksTracker
+from vllm.core.block.prefix_caching_block import PrefixCachingBlock
+from vllm.core.block.prefix_caching_block import PrefixCachingBlockAllocator
 from vllm.sequence import Logprob
 from vllm.utils import Device
 

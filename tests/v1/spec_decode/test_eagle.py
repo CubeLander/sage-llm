@@ -7,13 +7,19 @@ import pytest
 import torch
 
 from tests.utils import get_attn_backend_list_based_on_platform
-from tests.v1.attention.utils import (BatchSpec, _Backend,
-                                      create_common_attn_metadata,
-                                      create_standard_kv_cache_spec,
-                                      get_attention_backend)
-from vllm.config import (CacheConfig, DeviceConfig, LoadConfig, ModelConfig,
-                         ParallelConfig, SchedulerConfig, SpeculativeConfig,
-                         VllmConfig)
+from tests.v1.attention.utils import BatchSpec
+from tests.v1.attention.utils import _Backend
+from tests.v1.attention.utils import create_common_attn_metadata
+from tests.v1.attention.utils import create_standard_kv_cache_spec
+from tests.v1.attention.utils import get_attention_backend
+from vllm.config import CacheConfig
+from vllm.config import DeviceConfig
+from vllm.config import LoadConfig
+from vllm.config import ModelConfig
+from vllm.config import ParallelConfig
+from vllm.config import SchedulerConfig
+from vllm.config import SpeculativeConfig
+from vllm.config import VllmConfig
 from vllm.model_executor.models.llama import LlamaForCausalLM
 from vllm.platforms import current_platform
 from vllm.v1.spec_decode.eagle import EagleProposer

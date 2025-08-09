@@ -168,7 +168,8 @@ def test_static_scaled_int8_azp_quant(num_tokens: int, hidden_size: int,
 def test_static_scaled_int8_azp_quant_saturating_cast(is_max: bool) -> None:
     # Test that the saturating cast works correctly for values near i32 max/min
 
-    from numpy import inf, nextafter
+    from numpy import inf
+    from numpy import nextafter
 
     int32_traits = torch.iinfo(torch.int32)
     val = float(int32_traits.max if is_max else int32_traits.min)

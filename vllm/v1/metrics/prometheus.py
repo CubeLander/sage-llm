@@ -5,7 +5,9 @@ import os
 import tempfile
 from typing import Optional
 
-from prometheus_client import REGISTRY, CollectorRegistry, multiprocess
+from prometheus_client import CollectorRegistry
+from prometheus_client import REGISTRY
+from prometheus_client import multiprocess
 
 from vllm.utils.logger import init_logger
 

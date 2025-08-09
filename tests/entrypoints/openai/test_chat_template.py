@@ -4,8 +4,8 @@
 import pytest
 
 from vllm.config import ModelConfig
-from vllm.entrypoints.chat_utils import (apply_hf_chat_template,
-                                         load_chat_template)
+from vllm.entrypoints.chat_utils import apply_hf_chat_template
+from vllm.entrypoints.chat_utils import load_chat_template
 from vllm.entrypoints.openai.protocol import ChatCompletionRequest
 from vllm.transformers_utils.tokenizer import get_tokenizer
 

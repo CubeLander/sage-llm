@@ -8,8 +8,8 @@ Note: To pass the test, quantization higher than Q4 should be used
 import os
 from typing import NamedTuple
 
-import pytest
 from huggingface_hub import hf_hub_download
+import pytest
 from pytest import MarkDecorator
 from transformers import AutoTokenizer
 

@@ -1,10 +1,11 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from typing import Callable, Optional
+from typing import Callable
+from typing import Optional
 
-import torch
 from compressed_tensors.quantization import QuantizationStrategy
+import torch
 from torch.nn import Parameter
 
 from vllm.model_executor.layers.quantization.compressed_tensors.schemes import (
@@ -12,11 +13,16 @@ from vllm.model_executor.layers.quantization.compressed_tensors.schemes import (
 from vllm.model_executor.layers.quantization.utils.quant_utils import (
     GroupShape)
 from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
-    Fp8LinearOp, maybe_create_device_identity, normalize_e4m3fn_to_e4m3fnuz,
+    Fp8LinearOp)
+from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
+    maybe_create_device_identity)
+from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
+    normalize_e4m3fn_to_e4m3fnuz)
+from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
     requantize_with_max_scale)
-from vllm.model_executor.parameter import (ChannelQuantScaleParameter,
-                                           ModelWeightParameter,
-                                           PerTensorScaleParameter)
+from vllm.model_executor.parameter import ChannelQuantScaleParameter
+from vllm.model_executor.parameter import ModelWeightParameter
+from vllm.model_executor.parameter import PerTensorScaleParameter
 from vllm.platforms import current_platform
 
 __all__ = ["CompressedTensorsW8A8Fp8"]

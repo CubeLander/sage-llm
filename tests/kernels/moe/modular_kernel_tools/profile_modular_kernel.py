@@ -3,15 +3,20 @@
 
 import copy
 from itertools import product
-from typing import Any, Callable
+from typing import Any
+from typing import Callable
 
 import torch
 
 from vllm.config import VllmConfig
 from vllm.platforms import current_platform
 
-from .common import Config, RankTensors, WeightTensors, make_modular_kernel
-from .parallel_utils import ProcessGroupInfo, parallel_launch_with_config
+from .common import Config
+from .common import RankTensors
+from .common import WeightTensors
+from .common import make_modular_kernel
+from .parallel_utils import ProcessGroupInfo
+from .parallel_utils import parallel_launch_with_config
 
 
 def do_profile(fn: Callable,
@@ -113,7 +118,8 @@ def run(config: Config):
 
 
 if __name__ == '__main__':
-    from .cli_args import make_config, make_config_arg_parser
+    from .cli_args import make_config
+    from .cli_args import make_config_arg_parser
     parser = make_config_arg_parser(description=(
         "Run single prepare-finalize & fused-experts combination test"
         "Example : python3 -m tests.kernels.moe.modular_kernel_tools.profile_modular_kernel "  #noqa: E501

@@ -1,57 +1,76 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-import math
-from collections.abc import Iterable, Mapping, Sequence
+from collections.abc import Iterable
+from collections.abc import Mapping
+from collections.abc import Sequence
 from functools import partial
-from typing import Annotated, Any, Literal, Optional, Union
+import math
+from typing import Annotated
+from typing import Any
+from typing import Literal
+from typing import Optional
+from typing import Union
 
+from einops import rearrange
 import numpy as np
 import torch
 import torch.nn as nn
-from einops import rearrange
 from transformers import PretrainedConfig
 from transformers.activations import GELUActivation
 from transformers.feature_extraction_utils import BatchFeature
-from transformers.modeling_outputs import (BaseModelOutput,
-                                           BaseModelOutputWithPooling)
+from transformers.modeling_outputs import BaseModelOutput
+from transformers.modeling_outputs import BaseModelOutputWithPooling
 from transformers.utils import torch_int
 
 from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
 from vllm.distributed import get_tensor_model_parallel_world_size
-from vllm.utils.logger import init_logger
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import ImageItem
+from vllm.io.inputs.multimodal.inputs import ModalityData
+from vllm.io.inputs.multimodal.inputs import MultiModalDataDict
+from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.inputs import VideoItem
+from vllm.io.inputs.multimodal.parse import DictEmbeddingItems
+from vllm.io.inputs.multimodal.parse import ImageSize
+from vllm.io.inputs.multimodal.parse import ModalityDataItems
+from vllm.io.inputs.multimodal.parse import MultiModalDataItems
+from vllm.io.inputs.multimodal.parse import MultiModalDataParser
+from vllm.io.inputs.multimodal.processing import BaseMultiModalProcessor
+from vllm.io.inputs.multimodal.processing import BaseProcessingInfo
+from vllm.io.inputs.multimodal.processing import PromptReplacement
+from vllm.io.inputs.multimodal.processing import PromptUpdate
+from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
 from vllm.model_executor import SamplingMetadata
-from vllm.model_executor.layers.linear import (ColumnParallelLinear,
-                                               QKVParallelLinear,
-                                               RowParallelLinear)
+from vllm.model_executor.layers.linear import ColumnParallelLinear
+from vllm.model_executor.layers.linear import QKVParallelLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
 from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.model_executor.layers.quantization.gptq import GPTQConfig
 from vllm.model_executor.layers.quantization.gptq_marlin import (
     GPTQMarlinConfig)
 from vllm.model_executor.model_loader.weight_utils import (
-    default_weight_loader, maybe_remap_kv_scale_name)
+    maybe_remap_kv_scale_name)
+from vllm.model_executor.model_loader.weight_utils import default_weight_loader
 from vllm.model_executor.models.module_mapping import MultiModelKeys
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.io.inputs.multimodal.inputs import (ImageItem, ModalityData,
-                                    MultiModalDataDict, MultiModalFieldConfig,
-                                    MultiModalKwargs, VideoItem)
-from vllm.io.inputs.multimodal.parse import (DictEmbeddingItems, ImageSize,
-                                   ModalityDataItems, MultiModalDataItems,
-                                   MultiModalDataParser)
-from vllm.io.inputs.multimodal.processing import (BaseMultiModalProcessor,
-                                        BaseProcessingInfo, PromptReplacement,
-                                        PromptUpdate)
-from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
 from vllm.platforms import _Backend
-from vllm.sequence import IntermediateTensors
 from vllm.transformers_utils.config import uses_mrope
-from vllm.utils.tensor_schema import TensorSchema, TensorShape
+from vllm.utils.logger import init_logger
+from vllm.utils.tensor_schema import TensorSchema
+from vllm.utils.tensor_schema import TensorShape
 
-from .interfaces import (MultiModalEmbeddings, SupportsLoRA,
-                         SupportsMultiModal, SupportsPP)
+from .interfaces import MultiModalEmbeddings
+from .interfaces import SupportsLoRA
+from .interfaces import SupportsMultiModal
+from .interfaces import SupportsPP
 from .siglip import SiglipMLP
-from .utils import (AutoWeightsLoader, WeightsMapper,
-                    init_vllm_registered_model, is_pp_missing_parameter,
-                    maybe_prefix, merge_multimodal_embeddings)
+from .utils import AutoWeightsLoader
+from .utils import WeightsMapper
+from .utils import init_vllm_registered_model
+from .utils import is_pp_missing_parameter
+from .utils import maybe_prefix
+from .utils import merge_multimodal_embeddings
 from .vision import get_vit_attn_backend
 
 logger = init_logger(__name__)

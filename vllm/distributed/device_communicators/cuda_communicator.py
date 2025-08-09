@@ -1,14 +1,15 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 import torch
 from torch.distributed import ProcessGroup
 
 import vllm.envs as envs
-from vllm.utils.logger import init_logger
 from vllm.platforms import current_platform
+from vllm.utils.logger import init_logger
 
 from .base_device_communicator import DeviceCommunicatorBase
 

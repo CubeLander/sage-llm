@@ -2,22 +2,32 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import dataclasses
-from typing import Any, Dict, List, Optional, Tuple, Type, Union, cast
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import Tuple
+from typing import Type
+from typing import Union
+from typing import cast
 
 import torch
 
 from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
 from vllm.distributed import get_pp_group
 from vllm.forward_context import set_forward_context
-from vllm.utils.logger import init_logger
+from vllm.io.inputs.multimodal import MultiModalKwargs
 from vllm.model_executor.models.interfaces_base import VllmModelForPooling
 from vllm.model_executor.pooling_metadata import PoolingMetadata
-from vllm.io.inputs.multimodal import MultiModalKwargs
 from vllm.pooling_params import PoolingParams
-from vllm.sequence import (IntermediateTensors, PoolerOutput, SequenceData,
-                           SequenceGroupMetadata)
-from vllm.worker.model_runner import (GPUModelRunnerBase, ModelInputForGPU,
-                                      ModelInputForGPUBuilder)
+from vllm.sequence import PoolerOutput
+from vllm.sequence import SequenceData
+from vllm.sequence import SequenceGroupMetadata
+from vllm.utils.logger import init_logger
+from vllm.worker.model_runner import GPUModelRunnerBase
+from vllm.worker.model_runner import ModelInputForGPU
+from vllm.worker.model_runner import ModelInputForGPUBuilder
 
 logger = init_logger(__name__)
 

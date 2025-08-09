@@ -3,8 +3,8 @@
 import json
 
 import openai
-import pytest
 from pydantic import BaseModel
+import pytest
 
 
 @pytest.mark.asyncio

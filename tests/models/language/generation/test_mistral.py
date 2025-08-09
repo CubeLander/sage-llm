@@ -6,7 +6,9 @@ import json
 import pytest
 
 from vllm.entrypoints.openai.tool_parsers.mistral_tool_parser import (
-    MistralToolCall, MistralToolParser)
+    MistralToolCall)
+from vllm.entrypoints.openai.tool_parsers.mistral_tool_parser import (
+    MistralToolParser)
 from vllm.sampling_params import SamplingParams
 from vllm.transformers_utils.tokenizer import MistralTokenizer
 

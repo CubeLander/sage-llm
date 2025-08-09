@@ -1,19 +1,23 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import os
 from contextlib import contextmanager
 from dataclasses import dataclass
 from functools import cache
-from typing import Generator, Optional, Union
+import os
+from typing import Generator
+from typing import Optional
+from typing import Union
 
 import torch
 
-import vllm.envs as envs
 from vllm.attention.backends.abstract import AttentionBackend
+import vllm.envs as envs
+from vllm.platforms import _Backend
+from vllm.platforms import current_platform
+from vllm.utils import STR_BACKEND_ENV_VAR
+from vllm.utils import resolve_obj_by_qualname
 from vllm.utils.logger import init_logger
-from vllm.platforms import _Backend, current_platform
-from vllm.utils import STR_BACKEND_ENV_VAR, resolve_obj_by_qualname
 
 logger = init_logger(__name__)
 

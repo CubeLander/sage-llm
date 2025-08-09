@@ -1,17 +1,18 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from collections.abc import Iterable
+from collections.abc import Mapping
 import pickle
-from collections.abc import Iterable, Mapping
 from typing import Union
 
+from PIL import Image
+from blake3 import blake3
 import numpy as np
 import torch
-from blake3 import blake3
-from PIL import Image
 
-from vllm.utils.logger import init_logger
 from vllm.io.inputs.multimodal.image import convert_image_mode
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

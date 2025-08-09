@@ -7,10 +7,15 @@ import tempfile
 from typing import Union
 from unittest.mock import patch
 
+from vllm.config import CacheConfig
+from vllm.config import DeviceConfig
+from vllm.config import LoRAConfig
+from vllm.config import LoadConfig
+from vllm.config import ModelConfig
+from vllm.config import ParallelConfig
+from vllm.config import SchedulerConfig
+from vllm.config import VllmConfig
 import vllm.envs as envs
-from vllm.config import (CacheConfig, DeviceConfig, LoadConfig, LoRAConfig,
-                         ModelConfig, ParallelConfig, SchedulerConfig,
-                         VllmConfig)
 from vllm.lora.models import LoRAMapping
 from vllm.lora.request import LoRARequest
 from vllm.v1.worker.gpu_worker import Worker as V1Worker

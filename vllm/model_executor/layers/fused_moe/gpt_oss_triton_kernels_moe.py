@@ -1,6 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-from typing import TYPE_CHECKING, Any, Optional
+from typing import Any
+from typing import Optional
+from typing import TYPE_CHECKING
 
 import torch
 
@@ -11,9 +13,11 @@ from vllm.model_executor.layers.fused_moe.utils import extract_required_args
 from vllm.utils import has_triton_kernels
 
 if has_triton_kernels():
-    import triton_kernels.swiglu
-    from triton_kernels.matmul_ogs import FnSpecs, FusedActivation, matmul_ogs
+    from triton_kernels.matmul_ogs import FnSpecs
+    from triton_kernels.matmul_ogs import FusedActivation
+    from triton_kernels.matmul_ogs import matmul_ogs
     from triton_kernels.routing import routing
+    import triton_kernels.swiglu
 
 if TYPE_CHECKING:
     from triton_kernels.matmul_ogs import PrecisionConfig

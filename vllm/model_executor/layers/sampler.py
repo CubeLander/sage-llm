@@ -1,12 +1,13 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 """A layer that samples the next tokens from the model's outputs."""
-import itertools
 from collections.abc import Iterator
 from dataclasses import dataclass
 from importlib.util import find_spec
+import itertools
 from math import inf
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 import msgspec
 import torch
@@ -14,13 +15,16 @@ import torch.nn as nn
 
 import vllm.envs as envs
 from vllm.model_executor.layers.utils import apply_penalties
-from vllm.model_executor.sampling_metadata import (SamplingMetadata,
-                                                   SamplingTensors,
-                                                   SequenceGroupToSample)
+from vllm.model_executor.sampling_metadata import SamplingMetadata
+from vllm.model_executor.sampling_metadata import SamplingTensors
+from vllm.model_executor.sampling_metadata import SequenceGroupToSample
 from vllm.sampling_params import SamplingType
-from vllm.sequence import (VLLM_INVALID_TOKEN_ID,
-                           CompletionSequenceGroupOutput, Logprob,
-                           PromptLogprobs, SampleLogprobs, SequenceOutput)
+from vllm.sequence import CompletionSequenceGroupOutput
+from vllm.sequence import Logprob
+from vllm.sequence import PromptLogprobs
+from vllm.sequence import SampleLogprobs
+from vllm.sequence import SequenceOutput
+from vllm.sequence import VLLM_INVALID_TOKEN_ID
 
 if envs.VLLM_USE_FLASHINFER_SAMPLER and find_spec("flashinfer"):
     # yapf: disable

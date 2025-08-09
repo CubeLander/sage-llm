@@ -3,8 +3,11 @@
 
 import pytest
 
-from vllm.config import (CacheConfig, DeviceConfig, LoRAConfig, ModelConfig,
-                         VllmConfig)
+from vllm.config import CacheConfig
+from vllm.config import DeviceConfig
+from vllm.config import LoRAConfig
+from vllm.config import ModelConfig
+from vllm.config import VllmConfig
 from vllm.lora.request import LoRARequest
 from vllm.sampling_params import SamplingParams
 from vllm.transformers_utils.tokenizer_group import init_tokenizer_from_configs

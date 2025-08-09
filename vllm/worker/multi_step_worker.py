@@ -3,17 +3,22 @@
 
 import dataclasses
 from dataclasses import dataclass
-from typing import Dict, List, Optional, Tuple
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import Tuple
 
 import torch
 
-from vllm.distributed import broadcast_tensor_dict, get_pp_group
+from vllm.distributed import broadcast_tensor_dict
+from vllm.distributed import get_pp_group
 from vllm.model_executor.layers.sampler import SamplerOutput
 from vllm.sequence import ExecuteModelRequest
 from vllm.worker.model_runner_base import BroadcastableModelInput
-from vllm.worker.multi_step_model_runner import (MultiStepModelRunner,
-                                                 StatefulModelInput)
-from vllm.worker.worker import Worker, WorkerInput
+from vllm.worker.multi_step_model_runner import MultiStepModelRunner
+from vllm.worker.multi_step_model_runner import StatefulModelInput
+from vllm.worker.worker import Worker
+from vllm.worker.worker import WorkerInput
 
 
 @dataclass

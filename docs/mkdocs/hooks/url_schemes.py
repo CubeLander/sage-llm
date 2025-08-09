@@ -19,10 +19,10 @@ The goal is to simplify cross-referencing common GitHub resources
 in project docs.
 """
 
-import regex as re
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.structure.files import Files
 from mkdocs.structure.pages import Page
+import regex as re
 
 
 def on_page_markdown(markdown: str, *, page: Page, config: MkDocsConfig,

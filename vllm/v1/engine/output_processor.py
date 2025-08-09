@@ -4,21 +4,29 @@
 import asyncio
 from collections.abc import Iterable
 from dataclasses import dataclass
-from typing import Any, Optional, Union, cast
+from typing import Any
+from typing import Optional
+from typing import Union
+from typing import cast
 
 import torch
 
-from vllm.outputs import (CompletionOutput, PoolingOutput,
-                          PoolingRequestOutput, RequestOutput)
+from vllm.outputs import CompletionOutput
+from vllm.outputs import PoolingOutput
+from vllm.outputs import PoolingRequestOutput
+from vllm.outputs import RequestOutput
 from vllm.sampling_params import RequestOutputKind
 from vllm.transformers_utils.tokenizer import AnyTokenizer
 from vllm.transformers_utils.tokenizer_group import TokenizerGroup
-from vllm.v1.engine import EngineCoreOutput, EngineCoreRequest, FinishReason
+from vllm.v1.engine import EngineCoreOutput
+from vllm.v1.engine import EngineCoreRequest
+from vllm.v1.engine import FinishReason
 from vllm.v1.engine.detokenizer import IncrementalDetokenizer
 from vllm.v1.engine.logprobs import LogprobsProcessor
 from vllm.v1.engine.parallel_sampling import ParentRequest
-from vllm.v1.metrics.stats import (IterationStats, LoRARequestStates,
-                                   RequestStateStats)
+from vllm.v1.metrics.stats import IterationStats
+from vllm.v1.metrics.stats import LoRARequestStates
+from vllm.v1.metrics.stats import RequestStateStats
 
 
 class RequestOutputCollector:

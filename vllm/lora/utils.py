@@ -2,34 +2,41 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import os
-from typing import TYPE_CHECKING, Optional, Union
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Union
 
 import huggingface_hub
+from huggingface_hub.utils import EntryNotFoundError
+from huggingface_hub.utils import HFValidationError
+from huggingface_hub.utils import HfHubHTTPError
+from huggingface_hub.utils import RepositoryNotFoundError
 import regex as re
-from huggingface_hub.utils import (EntryNotFoundError, HfHubHTTPError,
-                                   HFValidationError, RepositoryNotFoundError)
 from torch import nn
 from transformers import PretrainedConfig
 
 from vllm.config import LoRAConfig
-from vllm.utils.logger import init_logger
 from vllm.lora.fully_sharded_layers import (
-    ColumnParallelLinearWithShardedLoRA,
-    MergedColumnParallelLinearWithShardedLoRA,
-    MergedQKVParallelLinearWithShardedLoRA, QKVParallelLinearWithShardedLoRA,
-    RowParallelLinearWithShardedLoRA)
+    MergedColumnParallelLinearWithShardedLoRA)
+from vllm.lora.fully_sharded_layers import (
+    MergedQKVParallelLinearWithShardedLoRA)
+from vllm.lora.fully_sharded_layers import ColumnParallelLinearWithShardedLoRA
+from vllm.lora.fully_sharded_layers import QKVParallelLinearWithShardedLoRA
+from vllm.lora.fully_sharded_layers import RowParallelLinearWithShardedLoRA
 # being imported for _all_lora_classes below
 # yapf conflicts with isort for this block
 # yapf: disable
-from vllm.lora.layers import (BaseLayerWithLoRA, ColumnParallelLinearWithLoRA,
-                              LogitsProcessorWithLoRA,
-                              MergedColumnParallelLinearWithLoRA,
-                              MergedQKVParallelLinearWithLoRA,
-                              QKVParallelLinearWithLoRA,
-                              ReplicatedLinearWithLoRA,
-                              RowParallelLinearWithLoRA,
-                              VocabParallelEmbeddingWithLoRA)
+from vllm.lora.layers import BaseLayerWithLoRA
+from vllm.lora.layers import ColumnParallelLinearWithLoRA
+from vllm.lora.layers import LogitsProcessorWithLoRA
+from vllm.lora.layers import MergedColumnParallelLinearWithLoRA
+from vllm.lora.layers import MergedQKVParallelLinearWithLoRA
+from vllm.lora.layers import QKVParallelLinearWithLoRA
+from vllm.lora.layers import ReplicatedLinearWithLoRA
+from vllm.lora.layers import RowParallelLinearWithLoRA
+from vllm.lora.layers import VocabParallelEmbeddingWithLoRA
 from vllm.model_executor.layers.linear import LinearBase
+from vllm.utils.logger import init_logger
 
 # yapf: enable
 

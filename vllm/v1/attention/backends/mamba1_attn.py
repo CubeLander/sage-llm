@@ -8,9 +8,10 @@ import torch
 
 from vllm.attention.backends.abstract import AttentionBackend
 from vllm.config import VllmConfig
-from vllm.v1.attention.backends.utils import (AttentionMetadataBuilder,
-                                              CommonAttentionMetadata)
-from vllm.v1.kv_cache_interface import AttentionSpec, MambaSpec
+from vllm.v1.attention.backends.utils import AttentionMetadataBuilder
+from vllm.v1.attention.backends.utils import CommonAttentionMetadata
+from vllm.v1.kv_cache_interface import AttentionSpec
+from vllm.v1.kv_cache_interface import MambaSpec
 
 
 class Mamba1AttentionBackend(AttentionBackend):

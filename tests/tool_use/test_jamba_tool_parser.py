@@ -1,19 +1,21 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import json
 from collections.abc import Generator
+import json
 from typing import Optional
 
 import partial_json_parser
-import pytest
 from partial_json_parser.core.options import Allow
+import pytest
 
-from vllm.entrypoints.openai.protocol import (DeltaMessage, FunctionCall,
-                                              ToolCall)
+from vllm.entrypoints.openai.protocol import DeltaMessage
+from vllm.entrypoints.openai.protocol import FunctionCall
+from vllm.entrypoints.openai.protocol import ToolCall
 from vllm.entrypoints.openai.tool_parsers import JambaToolParser
 from vllm.transformers_utils.detokenizer import detokenize_incrementally
-from vllm.transformers_utils.tokenizer import AnyTokenizer, get_tokenizer
+from vllm.transformers_utils.tokenizer import AnyTokenizer
+from vllm.transformers_utils.tokenizer import get_tokenizer
 
 MODEL = "ai21labs/Jamba-tiny-dev"
 

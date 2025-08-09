@@ -8,17 +8,25 @@ from typing import Optional
 import pytest
 import torch
 
-from vllm.distributed.kv_events import AllBlocksCleared, BlockRemoved
-from vllm.io.inputs.multimodal.inputs import MultiModalKwargs, PlaceholderRange
+from vllm.distributed.kv_events import AllBlocksCleared
+from vllm.distributed.kv_events import BlockRemoved
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.inputs import PlaceholderRange
 from vllm.sampling_params import SamplingParams
-from vllm.utils import sha256, sha256_cbor_64bit
+from vllm.utils import sha256
+from vllm.utils import sha256_cbor_64bit
 from vllm.v1.core.block_pool import BlockPool
-from vllm.v1.core.kv_cache_manager import KVCacheManager, Request
-from vllm.v1.core.kv_cache_utils import (BlockHash, BlockHashWithGroupId,
-                                         KVCacheBlock, hash_block_tokens,
-                                         init_none_hash)
-from vllm.v1.kv_cache_interface import (FullAttentionSpec, KVCacheConfig,
-                                        KVCacheGroupSpec, SlidingWindowSpec)
+from vllm.v1.core.kv_cache_manager import KVCacheManager
+from vllm.v1.core.kv_cache_manager import Request
+from vllm.v1.core.kv_cache_utils import BlockHash
+from vllm.v1.core.kv_cache_utils import BlockHashWithGroupId
+from vllm.v1.core.kv_cache_utils import KVCacheBlock
+from vllm.v1.core.kv_cache_utils import hash_block_tokens
+from vllm.v1.core.kv_cache_utils import init_none_hash
+from vllm.v1.kv_cache_interface import FullAttentionSpec
+from vllm.v1.kv_cache_interface import KVCacheConfig
+from vllm.v1.kv_cache_interface import KVCacheGroupSpec
+from vllm.v1.kv_cache_interface import SlidingWindowSpec
 
 
 def make_request(request_id,

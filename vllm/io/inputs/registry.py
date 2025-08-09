@@ -2,21 +2,29 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 from collections.abc import Mapping
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Any, NamedTuple, Optional, Union
+from typing import Any
+from typing import NamedTuple
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Union
 
 import torch
-from transformers import BatchFeature, PretrainedConfig, ProcessorMixin
+from transformers import BatchFeature
+from transformers import PretrainedConfig
+from transformers import ProcessorMixin
 from typing_extensions import TypeVar
 
-from vllm.jsontree import JSONTree, json_map_leaves
-from vllm.utils.logger import init_logger
+from vllm.jsontree import JSONTree
+from vllm.jsontree import json_map_leaves
 from vllm.transformers_utils.processor import cached_processor_from_config
 from vllm.utils import get_allowed_kwarg_only_overrides
+from vllm.utils.logger import init_logger
 
 if TYPE_CHECKING:
     from vllm.config import ModelConfig
-    from vllm.io.inputs.multimodal import (MultiModalDataDict, MultiModalPlaceholderDict,
-                                 MultiModalRegistry)
+    from vllm.io.inputs.multimodal import MultiModalDataDict
+    from vllm.io.inputs.multimodal import MultiModalPlaceholderDict
+    from vllm.io.inputs.multimodal import MultiModalRegistry
     from vllm.sequence import SequenceData
     from vllm.transformers_utils.tokenizer import AnyTokenizer
 else:

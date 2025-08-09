@@ -5,13 +5,13 @@ from typing import Optional
 
 import torch
 
-import vllm.envs as envs
 from vllm import _custom_ops as ops
+import vllm.envs as envs
 from vllm.platforms import current_platform
 from vllm.utils import direct_register_custom_op
 
-from .cutlass import CutlassScaledMMLinearKernel
 from .ScaledMMLinearKernel import ScaledMMLinearLayerConfig
+from .cutlass import CutlassScaledMMLinearKernel
 
 
 def rocm_aiter_gemm_w8a8_impl(

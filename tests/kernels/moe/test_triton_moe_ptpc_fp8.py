@@ -8,7 +8,8 @@ import pytest
 import torch
 
 from vllm import _custom_ops as ops
-from vllm.config import VllmConfig, set_current_vllm_config
+from vllm.config import VllmConfig
+from vllm.config import set_current_vllm_config
 from vllm.model_executor.layers.activation import SiluAndMul
 from vllm.model_executor.layers.fused_moe import fused_moe
 from vllm.platforms import current_platform

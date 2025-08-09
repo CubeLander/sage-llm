@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from vllm import LLM, SamplingParams
+from vllm import LLM
+from vllm import SamplingParams
 
 
 def test_mistral():

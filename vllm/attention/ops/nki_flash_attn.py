@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from neuronxcc import nki
 import neuronxcc.nki.isa as nisa
 import neuronxcc.nki.language as nl
+from neuronxcc.nki.language import par_dim
 import numpy as np
 import torch
-from neuronxcc import nki
-from neuronxcc.nki.language import par_dim
 
 from vllm.utils import cdiv
 

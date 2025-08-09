@@ -7,11 +7,11 @@ Run `pytest tests/kernels/test_triton_flash_attention.py`.
 import pytest
 import torch
 
-from vllm.attention.ops.triton_flash_attention import (SUPPORTED_LAYOUTS,
-                                                       MetaData,
-                                                       compute_alibi_tensor,
-                                                       scale_fp8,
-                                                       triton_attention_rocm)
+from vllm.attention.ops.triton_flash_attention import MetaData
+from vllm.attention.ops.triton_flash_attention import SUPPORTED_LAYOUTS
+from vllm.attention.ops.triton_flash_attention import compute_alibi_tensor
+from vllm.attention.ops.triton_flash_attention import scale_fp8
+from vllm.attention.ops.triton_flash_attention import triton_attention_rocm
 from vllm.platforms import current_platform
 
 

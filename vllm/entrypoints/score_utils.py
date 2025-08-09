@@ -1,22 +1,31 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-from typing import Any, Optional, Union, cast
+from typing import Any
+from typing import Optional
+from typing import Union
+from typing import cast
 
 from torch.nn import CosineSimilarity
-from typing_extensions import Required, TypeAlias, TypedDict
+from typing_extensions import Required
+from typing_extensions import TypeAlias
+from typing_extensions import TypedDict
 
 from vllm.config import ModelConfig
 from vllm.entrypoints.chat_utils import (
-    BaseMultiModalItemTracker, ChatCompletionContentPartImageEmbedsParam,
-    ChatCompletionContentPartImageParam, ChatCompletionContentPartTextParam,
-    MultiModalItemTracker, _ContentPart, _parse_chat_message_content_part)
+    ChatCompletionContentPartImageEmbedsParam)
+from vllm.entrypoints.chat_utils import BaseMultiModalItemTracker
+from vllm.entrypoints.chat_utils import ChatCompletionContentPartImageParam
+from vllm.entrypoints.chat_utils import ChatCompletionContentPartTextParam
+from vllm.entrypoints.chat_utils import MultiModalItemTracker
+from vllm.entrypoints.chat_utils import _ContentPart
+from vllm.entrypoints.chat_utils import _parse_chat_message_content_part
 from vllm.io.inputs import TokensPrompt
-from vllm.model_executor.models.interfaces import supports_score_template
 from vllm.io.inputs.multimodal.inputs import MultiModalDataDict
+from vllm.model_executor.models.interfaces import supports_score_template
 from vllm.outputs import PoolingRequestOutput
-from vllm.transformers_utils.tokenizer import (AnyTokenizer,
-                                               PreTrainedTokenizer,
-                                               PreTrainedTokenizerFast)
+from vllm.transformers_utils.tokenizer import AnyTokenizer
+from vllm.transformers_utils.tokenizer import PreTrainedTokenizer
+from vllm.transformers_utils.tokenizer import PreTrainedTokenizerFast
 
 ScoreContentPartParam: TypeAlias = Union[
     ChatCompletionContentPartImageParam,

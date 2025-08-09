@@ -11,13 +11,16 @@ import functools
 import importlib
 import importlib.util
 import os
-from typing import Any, Callable, NoReturn, Optional
+from typing import Any
+from typing import Callable
+from typing import NoReturn
+from typing import Optional
 
 import requests
 
 import vllm.envs as envs
-from vllm.utils.logger import init_logger
 from vllm.platforms import current_platform
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

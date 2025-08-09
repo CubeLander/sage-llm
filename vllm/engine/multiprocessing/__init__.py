@@ -1,10 +1,14 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import uuid
-from dataclasses import dataclass, field
+from dataclasses import dataclass
+from dataclasses import field
 from enum import Enum
-from typing import List, Mapping, Optional, Union
+from typing import List
+from typing import Mapping
+from typing import Optional
+from typing import Union
+import uuid
 
 from vllm import PoolingParams
 from vllm.io.inputs import PromptType

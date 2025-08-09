@@ -23,15 +23,16 @@
 # variable in the code.
 
 import ctypes
-import platform
 from dataclasses import dataclass
-from typing import Any, Optional
+import platform
+from typing import Any
+from typing import Optional
 
 import torch
 from torch.distributed import ReduceOp
 
-from vllm.utils.logger import init_logger
 from vllm.utils import find_nccl_library
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

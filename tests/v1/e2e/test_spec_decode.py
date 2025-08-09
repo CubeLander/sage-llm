@@ -3,13 +3,15 @@
 from __future__ import annotations
 
 import random
-from typing import Any, Union
+from typing import Any
+from typing import Union
 
 import pytest
 import torch
 
 from tests.utils import get_attn_backend_list_based_on_platform
-from vllm import LLM, SamplingParams
+from vllm import LLM
+from vllm import SamplingParams
 from vllm.assets.base import VLLM_S3_BUCKET_URL
 from vllm.assets.image import VLM_IMAGES_DIR
 from vllm.distributed import cleanup_dist_env_and_memory

@@ -6,10 +6,13 @@ import pytest
 
 from vllm import PoolingParams
 
-from ...utils import EmbedModelInfo, RerankModelInfo
-from .embed_utils import (check_embeddings_close,
-                          correctness_test_embed_models, matryoshka_fy)
-from .mteb_utils import mteb_test_embed_models, mteb_test_rerank_models
+from ...utils import EmbedModelInfo
+from ...utils import RerankModelInfo
+from .embed_utils import check_embeddings_close
+from .embed_utils import correctness_test_embed_models
+from .embed_utils import matryoshka_fy
+from .mteb_utils import mteb_test_embed_models
+from .mteb_utils import mteb_test_rerank_models
 
 EMBEDDING_MODELS = [
     EmbedModelInfo("jinaai/jina-embeddings-v3",

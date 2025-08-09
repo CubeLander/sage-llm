@@ -2,14 +2,16 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import contextlib
-from typing import TYPE_CHECKING, Optional, Union
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Union
 
 import torch
 
 import vllm.envs as envs
-from vllm.utils.logger import init_logger
 from vllm.platforms import current_platform
 from vllm.scalar_type import ScalarType
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

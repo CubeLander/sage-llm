@@ -1,15 +1,25 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 from collections.abc import Sequence
-from typing import Literal, Optional, TypedDict, Union, cast, overload
+from typing import Literal
+from typing import Optional
+from typing import TypedDict
+from typing import Union
+from typing import cast
+from typing import overload
 
 from typing_extensions import TypeIs
 
 from vllm.utils import is_list_of
 
-from .data import (EmbedsPrompt, ExplicitEncoderDecoderPrompt, ProcessorInputs,
-                   PromptType, SingletonInputs, SingletonPrompt, TextPrompt,
-                   TokensPrompt)
+from .data import EmbedsPrompt
+from .data import ExplicitEncoderDecoderPrompt
+from .data import ProcessorInputs
+from .data import PromptType
+from .data import SingletonInputs
+from .data import SingletonPrompt
+from .data import TextPrompt
+from .data import TokensPrompt
 
 
 class ParsedText(TypedDict):

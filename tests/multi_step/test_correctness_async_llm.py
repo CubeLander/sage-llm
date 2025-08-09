@@ -9,8 +9,9 @@ import pytest
 from vllm.utils import STR_BACKEND_ENV_VAR
 
 from ..models.utils import check_logprobs_close
-from ..utils import (completions_with_server_args, get_client_text_generations,
-                     get_client_text_logprob_generations)
+from ..utils import completions_with_server_args
+from ..utils import get_client_text_generations
+from ..utils import get_client_text_logprob_generations
 
 MODELS = [
     "JackFram/llama-160m",

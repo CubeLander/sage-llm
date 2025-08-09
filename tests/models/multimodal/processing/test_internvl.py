@@ -4,8 +4,8 @@
 from collections.abc import Mapping
 from typing import Optional
 
-import pytest
 from PIL import Image
+import pytest
 from transformers import PretrainedConfig
 
 from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
@@ -23,8 +23,8 @@ def _get_expected_num_patches(
     min_num: int,
     max_num: int,
 ):
-    from vllm.model_executor.models.internvl import (
-        calculate_internvl_targets, get_internvl_target_ratios)
+    from vllm.model_executor.models.internvl import calculate_internvl_targets
+    from vllm.model_executor.models.internvl import get_internvl_target_ratios
 
     width, height = image.size
 

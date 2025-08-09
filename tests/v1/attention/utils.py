@@ -8,10 +8,17 @@ from typing import Union
 import pytest
 import torch
 
-from vllm.config import (CacheConfig, CompilationConfig, DeviceConfig,
-                         LoadConfig, ModelConfig, ModelDType, ParallelConfig,
-                         SchedulerConfig, VllmConfig)
-from vllm.platforms import _Backend, current_platform
+from vllm.config import CacheConfig
+from vllm.config import CompilationConfig
+from vllm.config import DeviceConfig
+from vllm.config import LoadConfig
+from vllm.config import ModelConfig
+from vllm.config import ModelDType
+from vllm.config import ParallelConfig
+from vllm.config import SchedulerConfig
+from vllm.config import VllmConfig
+from vllm.platforms import _Backend
+from vllm.platforms import current_platform
 from vllm.utils import resolve_obj_by_qualname
 from vllm.v1.attention.backends.utils import CommonAttentionMetadata
 from vllm.v1.kv_cache_interface import FullAttentionSpec

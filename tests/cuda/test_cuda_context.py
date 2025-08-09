@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import ctypes
 from concurrent.futures import ThreadPoolExecutor
+import ctypes
 
 import pytest
 import torch

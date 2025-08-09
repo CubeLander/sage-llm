@@ -2,33 +2,37 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 """Attention layer with FlashAttention."""
 from dataclasses import dataclass
-from typing import ClassVar, Optional
+from typing import ClassVar
+from typing import Optional
 
 import numpy as np
 import torch
 
 from vllm import _custom_ops as ops
-from vllm.attention.backends.abstract import (AttentionBackend, AttentionImpl,
-                                              AttentionMetadata, AttentionType,
-                                              is_quantized_kv_cache)
+from vllm.attention.backends.abstract import AttentionBackend
+from vllm.attention.backends.abstract import AttentionImpl
+from vllm.attention.backends.abstract import AttentionMetadata
+from vllm.attention.backends.abstract import AttentionType
+from vllm.attention.backends.abstract import is_quantized_kv_cache
 from vllm.attention.layer import Attention
 from vllm.attention.ops.merge_attn_states import merge_attn_states
-from vllm.attention.utils.fa_utils import (flash_attn_supports_fp8,
-                                           get_flash_attn_version,
-                                           is_flash_attn_varlen_func_available)
+from vllm.attention.utils.fa_utils import flash_attn_supports_fp8
+from vllm.attention.utils.fa_utils import get_flash_attn_version
+from vllm.attention.utils.fa_utils import is_flash_attn_varlen_func_available
 
 if is_flash_attn_varlen_func_available():
     from vllm.attention.utils.fa_utils import (flash_attn_varlen_func,
                                                get_scheduler_metadata,
                                                reshape_and_cache_flash)
 
-from vllm.config import VllmConfig, get_layers_from_vllm_config
-from vllm.utils.logger import init_logger
+from vllm.config import VllmConfig
+from vllm.config import get_layers_from_vllm_config
 from vllm.utils import cdiv
-from vllm.v1.attention.backends.utils import (AttentionCGSupport,
-                                              AttentionMetadataBuilder,
-                                              CommonAttentionMetadata,
-                                              get_kv_cache_layout)
+from vllm.utils.logger import init_logger
+from vllm.v1.attention.backends.utils import AttentionCGSupport
+from vllm.v1.attention.backends.utils import AttentionMetadataBuilder
+from vllm.v1.attention.backends.utils import CommonAttentionMetadata
+from vllm.v1.attention.backends.utils import get_kv_cache_layout
 from vllm.v1.kv_cache_interface import AttentionSpec
 
 logger = init_logger(__name__)

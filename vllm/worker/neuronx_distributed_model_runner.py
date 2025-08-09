@@ -1,29 +1,35 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from typing import List, Optional, Set
+from typing import List
+from typing import Optional
+from typing import Set
 
-import torch
 from neuronx_distributed_inference.models.mllama.aspect_ratio_utils import (
     get_all_supported_aspect_ratios)
 from neuronx_distributed_inference.modules.generation.sampling import (
     prepare_sampling_params)
 from neuronx_distributed_inference.modules.lora_serving import (
-    LoraCheckpoint, LoraServingConfig)
+    LoraServingConfig)
+from neuronx_distributed_inference.modules.lora_serving import LoraCheckpoint
+import torch
 
 from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.tensors.intermediate_tensors import SequenceGroupMetadata
 from vllm.entrypoints.openai.serving_models import LoRAModulePath
-from vllm.utils.logger import init_logger
+from vllm.io.inputs.multimodal import MultiModalKwargs
 from vllm.lora.layers import LoRAMapping
 from vllm.lora.request import LoRARequest
 from vllm.model_executor import SamplingMetadata
 from vllm.model_executor.layers.sampler import SamplerOutput
 from vllm.model_executor.model_loader.neuronx_distributed import (
-    _get_model_architecture, get_neuron_model)
-from vllm.io.inputs.multimodal import MultiModalKwargs
-from vllm.sequence import IntermediateTensors, SequenceGroupMetadata
-from vllm.worker.neuron_model_runner import (ModelInputForNeuron,
-                                             NeuronModelRunner)
+    _get_model_architecture)
+from vllm.model_executor.model_loader.neuronx_distributed import (
+    get_neuron_model)
+from vllm.utils.logger import init_logger
+from vllm.worker.neuron_model_runner import ModelInputForNeuron
+from vllm.worker.neuron_model_runner import NeuronModelRunner
 
 logger = init_logger(__name__)
 

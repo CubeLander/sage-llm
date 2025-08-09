@@ -6,13 +6,13 @@ from typing import Optional
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import torch_xla.distributed.spmd as xs
 from torch.nn.parameter import Parameter
+import torch_xla.distributed.spmd as xs
 
+from vllm.model_executor.layers.linear import ColumnParallelLinear
+from vllm.model_executor.layers.linear import QKVParallelLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
 from vllm.utils.logger import init_logger
-from vllm.model_executor.layers.linear import (ColumnParallelLinear,
-                                               QKVParallelLinear,
-                                               RowParallelLinear)
 
 logger = init_logger(__name__)
 

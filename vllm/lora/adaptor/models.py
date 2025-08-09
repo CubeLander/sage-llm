@@ -1,13 +1,17 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from abc import ABC, abstractmethod
-from typing import Any, Callable, Optional, TypeVar
+from abc import ABC
+from abc import abstractmethod
+from typing import Any
+from typing import Callable
+from typing import Optional
+from typing import TypeVar
 
 from torch import nn
 
-from vllm.utils.logger import init_logger
 from vllm.utils import LRUCache
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

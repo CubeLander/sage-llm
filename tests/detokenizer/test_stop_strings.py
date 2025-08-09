@@ -1,11 +1,14 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
 import pytest
 
-from vllm import LLM, SamplingParams, envs
+from vllm import LLM
+from vllm import SamplingParams
+from vllm import envs
 
 MODEL = "meta-llama/llama-2-7b-hf"
 MAX_TOKENS = 200

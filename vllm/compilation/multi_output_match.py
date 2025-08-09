@@ -2,9 +2,9 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import abc
-import operator
 from abc import abstractmethod
 from collections.abc import Iterable
+import operator
 
 from torch import fx
 from torch._higher_order_ops.auto_functionalize import auto_functionalized

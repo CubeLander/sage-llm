@@ -5,17 +5,19 @@
 Run `pytest tests/basic_correctness/test_basic_correctness.py`.
 """
 import os
-import weakref
 from unittest.mock import Mock
+import weakref
 
 import pytest
 import torch
 
-from vllm import LLM, envs
+from vllm import LLM
+from vllm import envs
 from vllm.platforms import current_platform
 from vllm.v1.engine.llm_engine import LLMEngine as LLMEngineV1
 
-from ..conftest import HfRunner, VllmRunner
+from ..conftest import HfRunner
+from ..conftest import VllmRunner
 from ..models.utils import check_outputs_equal
 from ..utils import multi_gpu_test
 

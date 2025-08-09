@@ -1,17 +1,24 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import warnings
 from collections.abc import Sequence
-from typing import Any, NamedTuple, Optional, Union
+from typing import Any
+from typing import NamedTuple
+from typing import Optional
+from typing import Union
+import warnings
 
 import torch
 import torch.nn.functional as F
 from transformers import PretrainedConfig
 
-from vllm.config import ModelConfig, ModelDType, RunnerOption
+from vllm.config import ModelConfig
+from vllm.config import ModelDType
+from vllm.config import RunnerOption
 from vllm.io.inputs import InputContext
-from vllm.sequence import Logprob, PromptLogprobs, SampleLogprobs
+from vllm.sequence import Logprob
+from vllm.sequence import PromptLogprobs
+from vllm.sequence import SampleLogprobs
 
 from .registry import HF_EXAMPLE_MODELS
 

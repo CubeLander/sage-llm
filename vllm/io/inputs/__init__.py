@@ -1,13 +1,26 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from .data import (DecoderOnlyInputs, EmbedsInputs, EncoderDecoderInputs,
-                   ExplicitEncoderDecoderPrompt, ProcessorInputs, PromptType,
-                   SingletonInputs, SingletonPrompt, TextPrompt, TokenInputs,
-                   TokensPrompt, build_explicit_enc_dec_prompt, embeds_inputs,
-                   to_enc_dec_tuple_list, token_inputs, zip_enc_dec_prompts)
-from .registry import (DummyData, InputContext, InputProcessingContext,
-                       InputRegistry)
+from .data import DecoderOnlyInputs
+from .data import EmbedsInputs
+from .data import EncoderDecoderInputs
+from .data import ExplicitEncoderDecoderPrompt
+from .data import ProcessorInputs
+from .data import PromptType
+from .data import SingletonInputs
+from .data import SingletonPrompt
+from .data import TextPrompt
+from .data import TokenInputs
+from .data import TokensPrompt
+from .data import build_explicit_enc_dec_prompt
+from .data import embeds_inputs
+from .data import to_enc_dec_tuple_list
+from .data import token_inputs
+from .data import zip_enc_dec_prompts
+from .registry import DummyData
+from .registry import InputContext
+from .registry import InputProcessingContext
+from .registry import InputRegistry
 
 INPUT_REGISTRY = InputRegistry()
 """

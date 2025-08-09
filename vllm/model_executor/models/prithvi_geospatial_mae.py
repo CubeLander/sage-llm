@@ -17,30 +17,42 @@
 # limitations under the License.
 """Inference-only IBM/NASA Prithvi Geospatial model."""
 
-from collections.abc import Iterable, Mapping, Sequence
-from typing import Optional, Union
+from collections.abc import Iterable
+from collections.abc import Mapping
+from collections.abc import Sequence
+from typing import Optional
+from typing import Union
 
 import torch
 import torch.nn as nn
 from transformers import BatchFeature
 
 from vllm.config import VllmConfig
-from vllm.model_executor.layers.pooler import (AllPool, PoolerHead,
-                                               PoolerIdentity, SimplePooler)
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import MultiModalDataDict
+from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
+from vllm.io.inputs.multimodal.inputs import MultiModalFieldElem
+from vllm.io.inputs.multimodal.inputs import MultiModalInputs
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargsItem
+from vllm.io.inputs.multimodal.inputs import MultiModalSharedField
+from vllm.io.inputs.multimodal.inputs import PlaceholderRange
+from vllm.io.inputs.multimodal.parse import MultiModalDataItems
+from vllm.io.inputs.multimodal.processing import BaseMultiModalProcessor
+from vllm.io.inputs.multimodal.processing import BaseProcessingInfo
+from vllm.io.inputs.multimodal.processing import PromptUpdate
+from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
+from vllm.model_executor.layers.pooler import AllPool
+from vllm.model_executor.layers.pooler import PoolerHead
+from vllm.model_executor.layers.pooler import PoolerIdentity
+from vllm.model_executor.layers.pooler import SimplePooler
 from vllm.model_executor.model_loader.weight_utils import default_weight_loader
 from vllm.model_executor.models.interfaces import (
-    IsAttentionFree, MultiModalEmbeddings, SupportsMultiModalWithRawInput)
+    SupportsMultiModalWithRawInput)
+from vllm.model_executor.models.interfaces import IsAttentionFree
+from vllm.model_executor.models.interfaces import MultiModalEmbeddings
 from vllm.model_executor.models.utils import AutoWeightsLoader
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
-                                    MultiModalFieldElem, MultiModalInputs,
-                                    MultiModalKwargs, MultiModalKwargsItem,
-                                    MultiModalSharedField, PlaceholderRange)
-from vllm.io.inputs.multimodal.parse import MultiModalDataItems
-from vllm.io.inputs.multimodal.processing import (BaseMultiModalProcessor,
-                                        BaseProcessingInfo, PromptUpdate)
-from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
-from vllm.sequence import IntermediateTensors
 
 
 class PrithviGeoSpatialMAEProcessingInfo(BaseProcessingInfo):

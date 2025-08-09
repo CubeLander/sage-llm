@@ -1,17 +1,20 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import os
 from collections.abc import Sequence
 from functools import cached_property
-from typing import Callable, Optional, Union
+import os
+from typing import Callable
+from typing import Optional
+from typing import Union
 
-from vllm.entrypoints.openai.protocol import (ChatCompletionRequest,
-                                              DeltaMessage,
-                                              ExtractedToolCallInformation)
-from vllm.utils.logger import init_logger
+from vllm.entrypoints.openai.protocol import ChatCompletionRequest
+from vllm.entrypoints.openai.protocol import DeltaMessage
+from vllm.entrypoints.openai.protocol import ExtractedToolCallInformation
 from vllm.transformers_utils.tokenizer import AnyTokenizer
-from vllm.utils import import_from_path, is_list_of
+from vllm.utils import import_from_path
+from vllm.utils import is_list_of
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

@@ -10,9 +10,10 @@
     - Handles buffer size constraints and provide backpressure mechanism to
       stop the prefill instance when the decode instance is slow.
 """
-import threading
 from collections import deque
-from typing import Optional, Union
+import threading
+from typing import Optional
+from typing import Union
 
 import torch
 

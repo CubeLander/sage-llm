@@ -5,19 +5,23 @@ from asyncio import Lock
 from collections import defaultdict
 from dataclasses import dataclass
 from http import HTTPStatus
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 from vllm.config import ModelConfig
 from vllm.engine.protocol import EngineClient
-from vllm.entrypoints.openai.protocol import (ErrorInfo, ErrorResponse,
-                                              LoadLoRAAdapterRequest,
-                                              ModelCard, ModelList,
-                                              ModelPermission,
-                                              UnloadLoRAAdapterRequest)
-from vllm.utils.logger import init_logger
+from vllm.entrypoints.openai.protocol import ErrorInfo
+from vllm.entrypoints.openai.protocol import ErrorResponse
+from vllm.entrypoints.openai.protocol import LoadLoRAAdapterRequest
+from vllm.entrypoints.openai.protocol import ModelCard
+from vllm.entrypoints.openai.protocol import ModelList
+from vllm.entrypoints.openai.protocol import ModelPermission
+from vllm.entrypoints.openai.protocol import UnloadLoRAAdapterRequest
 from vllm.lora.request import LoRARequest
-from vllm.lora.resolver import LoRAResolver, LoRAResolverRegistry
+from vllm.lora.resolver import LoRAResolver
+from vllm.lora.resolver import LoRAResolverRegistry
 from vllm.utils import AtomicCounter
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

@@ -1,57 +1,79 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import math
-from collections.abc import Iterable, Mapping, Sequence
-from dataclasses import dataclass, fields
+from collections.abc import Iterable
+from collections.abc import Mapping
+from collections.abc import Sequence
+from dataclasses import dataclass
+from dataclasses import fields
 from functools import cached_property
-from typing import Literal, Optional, TypedDict, Union
+import math
+from typing import Literal
+from typing import Optional
+from typing import TypedDict
+from typing import Union
 
+from PIL import Image
+from mistral_common.protocol.instruct.messages import ImageChunk
+from mistral_common.protocol.instruct.messages import TextChunk
+from mistral_common.protocol.instruct.messages import UserMessage
+from mistral_common.protocol.instruct.request import ChatCompletionRequest
+from mistral_common.tokens.tokenizers.multimodal import ImageEncoder
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from mistral_common.protocol.instruct.messages import (ImageChunk, TextChunk,
-                                                       UserMessage)
-from mistral_common.protocol.instruct.request import ChatCompletionRequest
-from mistral_common.tokens.tokenizers.multimodal import ImageEncoder
-from PIL import Image
-from transformers import PixtralVisionConfig, TensorType
+from transformers import PixtralVisionConfig
+from transformers import TensorType
 from transformers.image_utils import ImageInput
 from transformers.models.pixtral.image_processing_pixtral import (
     _num_image_tokens as _get_pixtral_hf_num_image_tokens)
 from transformers.models.pixtral.modeling_pixtral import (
-    PixtralRotaryEmbedding, apply_rotary_pos_emb, position_ids_in_meshgrid)
+    position_ids_in_meshgrid)
+from transformers.models.pixtral.modeling_pixtral import PixtralRotaryEmbedding
+from transformers.models.pixtral.modeling_pixtral import apply_rotary_pos_emb
 from transformers.tokenization_utils_base import TextInput
 
 from vllm.config import VllmConfig
-from vllm.distributed import divide, get_tensor_model_parallel_world_size
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.distributed import divide
+from vllm.distributed import get_tensor_model_parallel_world_size
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal import MultiModalKwargs
+from vllm.io.inputs.multimodal.inputs import MultiModalDataDict
+from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
+from vllm.io.inputs.multimodal.inputs import NestedTensors
+from vllm.io.inputs.multimodal.parse import ImageProcessorItems
+from vllm.io.inputs.multimodal.parse import ImageSize
+from vllm.io.inputs.multimodal.parse import MultiModalDataItems
+from vllm.io.inputs.multimodal.processing import BaseMultiModalProcessor
+from vllm.io.inputs.multimodal.processing import BaseProcessingInfo
+from vllm.io.inputs.multimodal.processing import MultiModalHashes
+from vllm.io.inputs.multimodal.processing import PromptReplacement
+from vllm.io.inputs.multimodal.processing import PromptUpdate
+from vllm.io.inputs.multimodal.processing import PromptUpdateDetails
+from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
+from vllm.io.inputs.multimodal.profiling import ProcessorInputs
 from vllm.model_executor.layers.activation import get_act_and_mul_fn
 from vllm.model_executor.layers.layernorm import RMSNorm
-from vllm.model_executor.layers.linear import (MergedColumnParallelLinear,
-                                               QKVParallelLinear,
-                                               RowParallelLinear)
+from vllm.model_executor.layers.linear import MergedColumnParallelLinear
+from vllm.model_executor.layers.linear import QKVParallelLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
 from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.model_executor.model_loader.weight_utils import default_weight_loader
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY, MultiModalKwargs
-from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
-                                    NestedTensors)
-from vllm.io.inputs.multimodal.parse import (ImageProcessorItems, ImageSize,
-                                   MultiModalDataItems)
-from vllm.io.inputs.multimodal.processing import (BaseMultiModalProcessor,
-                                        BaseProcessingInfo, MultiModalHashes,
-                                        PromptReplacement, PromptUpdate,
-                                        PromptUpdateDetails)
-from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder, ProcessorInputs
 from vllm.platforms import current_platform
-from vllm.sequence import IntermediateTensors
-from vllm.transformers_utils.tokenizer import (MistralTokenizer,
-                                               cached_tokenizer_from_config)
+from vllm.transformers_utils.tokenizer import MistralTokenizer
+from vllm.transformers_utils.tokenizer import cached_tokenizer_from_config
 
-from .interfaces import MultiModalEmbeddings, SupportsMultiModal, SupportsPP
-from .utils import (flatten_bn, init_vllm_registered_model, maybe_prefix,
-                    merge_multimodal_embeddings)
-from .vision import VisionEncoderInfo, resolve_visual_encoder_outputs
+from .interfaces import MultiModalEmbeddings
+from .interfaces import SupportsMultiModal
+from .interfaces import SupportsPP
+from .utils import flatten_bn
+from .utils import init_vllm_registered_model
+from .utils import maybe_prefix
+from .utils import merge_multimodal_embeddings
+from .vision import VisionEncoderInfo
+from .vision import resolve_visual_encoder_outputs
 
 try:
     from xformers import ops as xops

@@ -1,18 +1,23 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import os
 from dataclasses import dataclass
+import os
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Optional, Union, cast
+from typing import Any
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Union
+from typing import cast
 
 import huggingface_hub
+from huggingface_hub import HfApi
+from huggingface_hub import hf_hub_download
 import regex as re
-from huggingface_hub import HfApi, hf_hub_download
 
-from vllm.utils.logger import init_logger
 from vllm.transformers_utils.tokenizer_base import TokenizerBase
 from vllm.utils import is_list_of
+from vllm.utils.logger import init_logger
 
 if TYPE_CHECKING:
     # make sure `mistral_common` is lazy imported,
@@ -209,8 +214,8 @@ class MistralTokenizer(TokenizerBase):
         self.version: int = int(_mistral_version_str.split("v")[-1])
 
         tokenizer_ = tokenizer.instruct_tokenizer.tokenizer
-        from mistral_common.tokens.tokenizers.tekken import (
-            SpecialTokenPolicy, Tekkenizer)
+        from mistral_common.tokens.tokenizers.tekken import SpecialTokenPolicy
+        from mistral_common.tokens.tokenizers.tekken import Tekkenizer
         self.is_tekken = isinstance(tokenizer_, Tekkenizer)
         from mistral_common.tokens.tokenizers.sentencepiece import (
             SentencePieceTokenizer)

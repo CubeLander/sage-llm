@@ -2,51 +2,82 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import functools
-from typing import TYPE_CHECKING, Any, Callable, Optional
+from typing import Any
+from typing import Callable
+from typing import Optional
+from typing import TYPE_CHECKING
 
 import torch
-import torch.nn.functional as F
 from torch.nn import Module
+import torch.nn.functional as F
 from torch.nn.parameter import Parameter
 
-import vllm.envs as envs
 from vllm import _custom_ops as ops
 from vllm.distributed import get_tensor_model_parallel_world_size
-from vllm.utils.logger import init_logger
+import vllm.envs as envs
 from vllm.model_executor.layers.fused_moe import (
-    FusedMoE, FusedMoEActivationFormat, FusedMoEConfig, FusedMoEMethodBase,
-    FusedMoEPermuteExpertsUnpermute, FusedMoEPrepareAndFinalize,
-    FusedMoeWeightScaleSupported)
-from vllm.model_executor.layers.linear import (LinearBase, LinearMethodBase,
-                                               UnquantizedLinearMethod)
+    FusedMoEPermuteExpertsUnpermute)
+from vllm.model_executor.layers.fused_moe import FusedMoE
+from vllm.model_executor.layers.fused_moe import FusedMoEActivationFormat
+from vllm.model_executor.layers.fused_moe import FusedMoEConfig
+from vllm.model_executor.layers.fused_moe import FusedMoEMethodBase
+from vllm.model_executor.layers.fused_moe import FusedMoEPrepareAndFinalize
+from vllm.model_executor.layers.fused_moe import FusedMoeWeightScaleSupported
+from vllm.model_executor.layers.linear import LinearBase
+from vllm.model_executor.layers.linear import LinearMethodBase
+from vllm.model_executor.layers.linear import UnquantizedLinearMethod
 from vllm.model_executor.layers.quantization import QuantizationMethods
 from vllm.model_executor.layers.quantization.base_config import (
-    QuantizationConfig, QuantizeMethodBase)
+    QuantizationConfig)
+from vllm.model_executor.layers.quantization.base_config import (
+    QuantizeMethodBase)
 from vllm.model_executor.layers.quantization.kv_cache import BaseKVCacheMethod
 from vllm.model_executor.layers.quantization.utils.flashinfer_utils import (
-    apply_flashinfer_per_tensor_scale_fp8, rotate_flashinfer_fp8_moe_weights,
+    apply_flashinfer_per_tensor_scale_fp8)
+from vllm.model_executor.layers.quantization.utils.flashinfer_utils import (
+    rotate_flashinfer_fp8_moe_weights)
+from vllm.model_executor.layers.quantization.utils.flashinfer_utils import (
     swap_w13_to_w31)
 from vllm.model_executor.layers.quantization.utils.fp8_utils import (
-    get_col_major_tma_aligned_tensor, requant_weight_ue8m0_inplace)
+    get_col_major_tma_aligned_tensor)
+from vllm.model_executor.layers.quantization.utils.fp8_utils import (
+    requant_weight_ue8m0_inplace)
 from vllm.model_executor.layers.quantization.utils.marlin_utils_fp8 import (
-    apply_fp8_marlin_linear, prepare_fp8_layer_for_marlin,
+    apply_fp8_marlin_linear)
+from vllm.model_executor.layers.quantization.utils.marlin_utils_fp8 import (
+    prepare_fp8_layer_for_marlin)
+from vllm.model_executor.layers.quantization.utils.marlin_utils_fp8 import (
     prepare_moe_fp8_layer_for_marlin)
 from vllm.model_executor.layers.quantization.utils.quant_utils import (
-    GroupShape, is_layer_skipped)
+    GroupShape)
+from vllm.model_executor.layers.quantization.utils.quant_utils import (
+    is_layer_skipped)
 from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
-    Fp8LinearOp, all_close_1d, cutlass_block_fp8_supported,
-    cutlass_fp8_supported, maybe_create_device_identity,
-    normalize_e4m3fn_to_e4m3fnuz, per_tensor_dequantize,
+    Fp8LinearOp)
+from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
+    all_close_1d)
+from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
+    cutlass_block_fp8_supported)
+from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
+    cutlass_fp8_supported)
+from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
+    maybe_create_device_identity)
+from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
+    normalize_e4m3fn_to_e4m3fnuz)
+from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
+    per_tensor_dequantize)
+from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
     requantize_with_max_scale)
-from vllm.model_executor.parameter import (BlockQuantScaleParameter,
-                                           ModelWeightParameter,
-                                           PerTensorScaleParameter)
+from vllm.model_executor.parameter import BlockQuantScaleParameter
+from vllm.model_executor.parameter import ModelWeightParameter
+from vllm.model_executor.parameter import PerTensorScaleParameter
 from vllm.model_executor.utils import set_weight_attrs
 from vllm.platforms import current_platform
 from vllm.scalar_type import scalar_types
 from vllm.utils import has_deep_gemm
 from vllm.utils.deep_gemm import is_blackwell_deep_gemm_used
 from vllm.utils.flashinfer import has_flashinfer_moe
+from vllm.utils.logger import init_logger
 
 if TYPE_CHECKING:
     from vllm.model_executor.models.utils import WeightsMapper
@@ -674,7 +705,9 @@ class Fp8MoEMethod(FusedMoEMethodBase):
     def process_weights_after_loading(self, layer: Module) -> None:
         # Lazy import to avoid importing triton too early.
         from vllm.model_executor.layers.fused_moe.rocm_aiter_fused_moe import (
-            is_rocm_aiter_moe_enabled, shuffle_weights)
+            is_rocm_aiter_moe_enabled)
+        from vllm.model_executor.layers.fused_moe.rocm_aiter_fused_moe import (
+            shuffle_weights)
 
         self.rocm_aiter_moe_enabled = is_rocm_aiter_moe_enabled()
 
@@ -880,7 +913,9 @@ class Fp8MoEMethod(FusedMoEMethodBase):
         moe: FusedMoEConfig,
     ) -> FusedMoEPermuteExpertsUnpermute:
         from vllm.model_executor.layers.fused_moe import (
-            BatchedTritonOrDeepGemmExperts, TritonOrDeepGemmExperts)
+            BatchedTritonOrDeepGemmExperts)
+        from vllm.model_executor.layers.fused_moe import (
+            TritonOrDeepGemmExperts)
 
         assert not self.use_marlin and not self.rocm_aiter_moe_enabled, (
             "Marlin and ROCm AITER are not supported with all2all yet.")

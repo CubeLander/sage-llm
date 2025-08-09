@@ -1,24 +1,36 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from abc import ABC
+from abc import abstractmethod
 import asyncio
-from abc import ABC, abstractmethod
-from typing import AsyncGenerator, Mapping, Optional
+from typing import AsyncGenerator
+from typing import Mapping
+from typing import Optional
 
-from vllm.beam_search import BeamSearchSequence, create_sort_beams_key_function
-from vllm.config import DecodingConfig, ModelConfig, VllmConfig
+from vllm.beam_search import BeamSearchSequence
+from vllm.beam_search import create_sort_beams_key_function
+from vllm.config import DecodingConfig
+from vllm.config import ModelConfig
+from vllm.config import VllmConfig
 from vllm.core.scheduler import SchedulerOutputs
-from vllm.io.inputs.data import PromptType, TokensPrompt
+from vllm.io.inputs.data import PromptType
+from vllm.io.inputs.data import TokensPrompt
 from vllm.io.inputs.parse import is_explicit_encoder_decoder_prompt
 from vllm.io.inputs.preprocess import InputPreprocessor
-from vllm.utils.logger import init_logger
 from vllm.lora.request import LoRARequest
 from vllm.model_executor.layers.sampler import SamplerOutput
-from vllm.outputs import CompletionOutput, PoolingRequestOutput, RequestOutput
+from vllm.outputs import CompletionOutput
+from vllm.outputs import PoolingRequestOutput
+from vllm.outputs import RequestOutput
 from vllm.pooling_params import PoolingParams
-from vllm.sampling_params import BeamSearchParams, SamplingParams
+from vllm.sampling_params import BeamSearchParams
+from vllm.sampling_params import SamplingParams
 from vllm.transformers_utils.tokenizer import AnyTokenizer
-from vllm.utils import Device, collect_from_async_generator, random_uuid
+from vllm.utils import Device
+from vllm.utils import collect_from_async_generator
+from vllm.utils import random_uuid
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

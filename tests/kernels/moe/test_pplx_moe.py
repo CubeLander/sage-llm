@@ -7,25 +7,30 @@ Run `pytest tests/kernels/test_pplx_moe.py`.
 import itertools
 import textwrap
 import traceback
-from typing import Callable, Optional
+from typing import Callable
+from typing import Optional
 
 import pytest
 import torch
 
 try:
     from pplx_kernels import AllToAll
-    from pplx_kernels.nvshmem import (nvshmem_alloc_empty_unique_id,
-                                      nvshmem_finalize, nvshmem_get_unique_id,
-                                      nvshmem_init)
+    from pplx_kernels.nvshmem import nvshmem_alloc_empty_unique_id
+    from pplx_kernels.nvshmem import nvshmem_finalize
+    from pplx_kernels.nvshmem import nvshmem_get_unique_id
+    from pplx_kernels.nvshmem import nvshmem_init
     has_pplx = True
 except ImportError:
     has_pplx = False
 
-from tests.kernels.moe.utils import make_test_weights, naive_batched_moe
+from tests.kernels.moe.utils import make_test_weights
+from tests.kernels.moe.utils import naive_batched_moe
 from tests.kernels.quant_utils import dequant
 from tests.kernels.utils import torch_experts
-from vllm.config import VllmConfig, set_current_vllm_config
-from vllm.model_executor.layers.fused_moe import fused_topk, override_config
+from vllm.config import VllmConfig
+from vllm.config import set_current_vllm_config
+from vllm.model_executor.layers.fused_moe import fused_topk
+from vllm.model_executor.layers.fused_moe import override_config
 from vllm.model_executor.layers.fused_moe.config import FusedMoEQuantConfig
 from vllm.model_executor.layers.fused_moe.fused_batched_moe import (
     BatchedTritonExperts)
@@ -37,7 +42,8 @@ from vllm.model_executor.layers.fused_moe.topk_weight_and_reduce import (
 from vllm.platforms import current_platform
 from vllm.utils import round_up
 
-from .parallel_utils import ProcessGroupInfo, parallel_launch
+from .parallel_utils import ProcessGroupInfo
+from .parallel_utils import parallel_launch
 
 requires_pplx = pytest.mark.skipif(
     not has_pplx,
@@ -206,7 +212,9 @@ def create_pplx_prepare_finalize(
     group_name: Optional[str],
 ):
     from vllm.model_executor.layers.fused_moe.pplx_prepare_finalize import (
-        PplxPrepareAndFinalize, pplx_hidden_dim_scale_bytes)
+        PplxPrepareAndFinalize)
+    from vllm.model_executor.layers.fused_moe.pplx_prepare_finalize import (
+        pplx_hidden_dim_scale_bytes)
 
     max_num_tokens = max(rank_chunk(num_tokens, 0, world_size), 1)
     num_local_experts = rank_chunk(num_experts, 0, world_size)

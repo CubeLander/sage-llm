@@ -1,16 +1,16 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import base64
 from abc import abstractmethod
+import base64
 from functools import partial
 from io import BytesIO
 from pathlib import Path
 from typing import Any
 
+from PIL import Image
 import numpy as np
 import numpy.typing as npt
-from PIL import Image
 
 from vllm import envs
 

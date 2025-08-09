@@ -10,8 +10,9 @@ import pytest_asyncio
 import torch.cuda
 
 from vllm.engine.arg_utils import EngineArgs
-from vllm.model_executor.model_loader.tensorizer import (
-    TensorizerConfig, tensorize_lora_adapter, tensorize_vllm_model)
+from vllm.model_executor.model_loader.tensorizer import TensorizerConfig
+from vllm.model_executor.model_loader.tensorizer import tensorize_lora_adapter
+from vllm.model_executor.model_loader.tensorizer import tensorize_vllm_model
 
 from ...utils import RemoteOpenAIServer
 

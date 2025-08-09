@@ -2,7 +2,8 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 # Datastructures defining a TPU input batch
 
-from typing import Optional, cast
+from typing import Optional
+from typing import cast
 
 import numpy as np
 import torch

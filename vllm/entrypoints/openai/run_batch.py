@@ -1,41 +1,46 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import asyncio
-import tempfile
 from argparse import Namespace
+import asyncio
 from collections.abc import Awaitable
 from http import HTTPStatus
 from io import StringIO
-from typing import Callable, Optional
+import tempfile
+from typing import Callable
+from typing import Optional
 
 import aiohttp
-import torch
 from prometheus_client import start_http_server
+import torch
 from tqdm import tqdm
 
-import vllm.envs as envs
 from vllm.config import VllmConfig
-from vllm.engine.arg_utils import AsyncEngineArgs, optional_type
+from vllm.engine.arg_utils import AsyncEngineArgs
+from vllm.engine.arg_utils import optional_type
 from vllm.engine.protocol import EngineClient
 from vllm.entrypoints.logger import RequestLogger
 # yapf: disable
 from vllm.entrypoints.openai.api_server import build_async_engine_client
-from vllm.entrypoints.openai.protocol import (BatchRequestInput,
-                                              BatchRequestOutput,
-                                              BatchResponseData,
-                                              ChatCompletionResponse,
-                                              EmbeddingResponse, ErrorResponse,
-                                              RerankResponse, ScoreResponse)
+from vllm.entrypoints.openai.protocol import BatchRequestInput
+from vllm.entrypoints.openai.protocol import BatchRequestOutput
+from vllm.entrypoints.openai.protocol import BatchResponseData
+from vllm.entrypoints.openai.protocol import ChatCompletionResponse
+from vllm.entrypoints.openai.protocol import EmbeddingResponse
+from vllm.entrypoints.openai.protocol import ErrorResponse
+from vllm.entrypoints.openai.protocol import RerankResponse
+from vllm.entrypoints.openai.protocol import ScoreResponse
 # yapf: enable
 from vllm.entrypoints.openai.serving_chat import OpenAIServingChat
 from vllm.entrypoints.openai.serving_embedding import OpenAIServingEmbedding
-from vllm.entrypoints.openai.serving_models import (BaseModelPath,
-                                                    OpenAIServingModels)
+from vllm.entrypoints.openai.serving_models import BaseModelPath
+from vllm.entrypoints.openai.serving_models import OpenAIServingModels
 from vllm.entrypoints.openai.serving_score import ServingScores
-from vllm.utils.logger import init_logger
+import vllm.envs as envs
 from vllm.usage.usage_lib import UsageContext
-from vllm.utils import FlexibleArgumentParser, random_uuid
+from vllm.utils import FlexibleArgumentParser
+from vllm.utils import random_uuid
+from vllm.utils.logger import init_logger
 from vllm.version import __version__ as VLLM_VERSION
 
 logger = init_logger(__name__)

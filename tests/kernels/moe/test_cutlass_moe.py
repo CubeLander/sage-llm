@@ -8,11 +8,14 @@ import pytest
 import torch
 
 from vllm import _custom_ops as ops
-from vllm.config import ParallelConfig, VllmConfig, set_current_vllm_config
+from vllm.config import ParallelConfig
+from vllm.config import VllmConfig
+from vllm.config import set_current_vllm_config
 from vllm.model_executor.layers.fused_moe.cutlass_moe import (
-    cutlass_moe_fp8, run_cutlass_moe_fp8)
-from vllm.model_executor.layers.fused_moe.fused_moe import (fused_experts,
-                                                            fused_topk)
+    run_cutlass_moe_fp8)
+from vllm.model_executor.layers.fused_moe.cutlass_moe import cutlass_moe_fp8
+from vllm.model_executor.layers.fused_moe.fused_moe import fused_experts
+from vllm.model_executor.layers.fused_moe.fused_moe import fused_topk
 from vllm.model_executor.layers.fused_moe.utils import (
     moe_kernel_quantize_input)
 from vllm.platforms import current_platform

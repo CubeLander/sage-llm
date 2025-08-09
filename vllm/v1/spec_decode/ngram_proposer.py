@@ -2,8 +2,8 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 from typing import Optional
 
-import numpy as np
 from numba import jit
+import numpy as np
 
 from vllm.config import VllmConfig
 

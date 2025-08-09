@@ -1,17 +1,21 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 import functools
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
 import torch
 from tqdm import tqdm
 
 import vllm.envs as env
-import vllm.model_executor.layers.fused_moe.modular_kernel as mk
-from vllm.utils.logger import init_logger
 from vllm.model_executor.layers.fused_moe.config import FusedMoEQuantConfig
 from vllm.model_executor.layers.fused_moe.deep_gemm_utils import (
-    compute_aligned_M, deepgemm_moe_permute, deepgemm_unpermute_and_reduce)
+    compute_aligned_M)
+from vllm.model_executor.layers.fused_moe.deep_gemm_utils import (
+    deepgemm_moe_permute)
+from vllm.model_executor.layers.fused_moe.deep_gemm_utils import (
+    deepgemm_unpermute_and_reduce)
+import vllm.model_executor.layers.fused_moe.modular_kernel as mk
 from vllm.model_executor.layers.fused_moe.prepare_finalize import (
     MoEPrepareAndFinalizeNoEP)
 from vllm.model_executor.layers.fused_moe.topk_weight_and_reduce import (
@@ -19,8 +23,10 @@ from vllm.model_executor.layers.fused_moe.topk_weight_and_reduce import (
 from vllm.model_executor.layers.fused_moe.utils import _resize_cache
 from vllm.model_executor.layers.quantization.utils.fp8_utils import (
     per_token_group_quant_fp8)
-from vllm.utils import has_deep_gemm, run_once
+from vllm.utils import has_deep_gemm
+from vllm.utils import run_once
 from vllm.utils.deep_gemm import m_grouped_fp8_gemm_nt_contiguous
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

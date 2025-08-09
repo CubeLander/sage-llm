@@ -1,15 +1,19 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
 import torch
 
-import vllm.model_executor.layers.fused_moe.modular_kernel as mk
 from vllm.model_executor.layers.fused_moe.config import FusedMoEQuantConfig
 from vllm.model_executor.layers.fused_moe.deep_gemm_moe import (
-    DeepGemmExperts, _valid_deep_gemm, _valid_deep_gemm_shape,
+    _valid_deep_gemm_shape)
+from vllm.model_executor.layers.fused_moe.deep_gemm_moe import (
     deep_gemm_block_shape)
+from vllm.model_executor.layers.fused_moe.deep_gemm_moe import DeepGemmExperts
+from vllm.model_executor.layers.fused_moe.deep_gemm_moe import _valid_deep_gemm
 from vllm.model_executor.layers.fused_moe.fused_moe import TritonExperts
+import vllm.model_executor.layers.fused_moe.modular_kernel as mk
 from vllm.utils.deep_gemm import is_blackwell_deep_gemm_used
 
 

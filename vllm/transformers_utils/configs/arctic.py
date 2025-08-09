@@ -8,7 +8,8 @@
 # https://huggingface.co/Snowflake/snowflake-arctic-instruct/blob/main/configuration_arctic.py
 """ Arctic model configuration"""
 
-from dataclasses import asdict, dataclass
+from dataclasses import asdict
+from dataclasses import dataclass
 from typing import Any
 
 from transformers.configuration_utils import PretrainedConfig

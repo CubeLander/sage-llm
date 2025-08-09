@@ -5,8 +5,8 @@
 Run `pytest tests/samplers/test_seeded_generate.py`.
 """
 import copy
-import random
 from itertools import combinations
+import random
 
 import pytest
 

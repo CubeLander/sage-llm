@@ -1,29 +1,50 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import math
-from collections.abc import Iterable, Mapping, Sequence
+from collections.abc import Iterable
+from collections.abc import Mapping
+from collections.abc import Sequence
 from contextlib import nullcontext
-from typing import Optional, TypedDict, Union, cast
+import math
+from typing import Optional
+from typing import TypedDict
+from typing import Union
+from typing import cast
 
 import numpy as np
 import torch
 from torch import nn
-from transformers import (BatchFeature, WhisperConfig, WhisperFeatureExtractor,
-                          WhisperProcessor)
+from transformers import BatchFeature
+from transformers import WhisperConfig
+from transformers import WhisperFeatureExtractor
+from transformers import WhisperProcessor
 from transformers.models.whisper.modeling_whisper import sinusoids
 
-from vllm.attention import Attention, AttentionType
+from vllm.attention import Attention
+from vllm.attention import AttentionType
 from vllm.attention.layer import MultiHeadAttention
-from vllm.config import (CacheConfig, ModelConfig, SpeechToTextConfig,
-                         VllmConfig)
+from vllm.config import CacheConfig
+from vllm.config import ModelConfig
+from vllm.config import SpeechToTextConfig
+from vllm.config import VllmConfig
 from vllm.distributed import get_tensor_model_parallel_world_size
 from vllm.io.inputs.data import PromptType
-from vllm.utils.logger import init_logger
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal import NestedTensors
+from vllm.io.inputs.multimodal.inputs import MultiModalDataDict
+from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.parse import MultiModalDataItems
+from vllm.io.inputs.multimodal.parse import MultiModalDataParser
+from vllm.io.inputs.multimodal.processing import BaseProcessingInfo
+from vllm.io.inputs.multimodal.processing import EncDecMultiModalProcessor
+from vllm.io.inputs.multimodal.processing import PromptReplacement
+from vllm.io.inputs.multimodal.processing import PromptUpdate
+from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
 from vllm.model_executor.layers.activation import get_act_fn
-from vllm.model_executor.layers.linear import (ColumnParallelLinear,
-                                               QKVParallelLinear,
-                                               RowParallelLinear)
+from vllm.model_executor.layers.linear import ColumnParallelLinear
+from vllm.model_executor.layers.linear import QKVParallelLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
 from vllm.model_executor.layers.logits_processor import LogitsProcessor
 from vllm.model_executor.layers.quantization.base_config import (
     QuantizationConfig)
@@ -31,20 +52,17 @@ from vllm.model_executor.layers.vocab_parallel_embedding import ParallelLMHead
 from vllm.model_executor.model_loader.utils import set_default_torch_dtype
 from vllm.model_executor.model_loader.weight_utils import default_weight_loader
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY, NestedTensors
-from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
-                                    MultiModalKwargs)
-from vllm.io.inputs.multimodal.parse import MultiModalDataItems, MultiModalDataParser
-from vllm.io.inputs.multimodal.processing import (BaseProcessingInfo,
-                                        EncDecMultiModalProcessor,
-                                        PromptReplacement, PromptUpdate)
-from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
 from vllm.transformers_utils.processor import cached_get_processor
+from vllm.utils.logger import init_logger
 
-from .interfaces import (MultiModalEmbeddings, SupportsMultiModal,
-                         SupportsTranscription, SupportsV0Only)
-from .utils import (AutoWeightsLoader, WeightsMapper, cast_overflow_tensors,
-                    make_layers)
+from .interfaces import MultiModalEmbeddings
+from .interfaces import SupportsMultiModal
+from .interfaces import SupportsTranscription
+from .interfaces import SupportsV0Only
+from .utils import AutoWeightsLoader
+from .utils import WeightsMapper
+from .utils import cast_overflow_tensors
+from .utils import make_layers
 
 logger = init_logger(__name__)
 

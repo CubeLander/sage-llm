@@ -1,22 +1,38 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
+from collections.abc import Iterable
+from collections.abc import Sequence
 import datetime
 import json
-from collections.abc import Iterable, Sequence
-from typing import Literal, Optional, Union
+from typing import Literal
+from typing import Optional
+from typing import Union
 
-from openai.types.responses import (ResponseFunctionToolCall,
-                                    ResponseOutputItem, ResponseOutputMessage,
-                                    ResponseOutputText, ResponseReasoningItem)
+from openai.types.responses import ResponseFunctionToolCall
+from openai.types.responses import ResponseOutputItem
+from openai.types.responses import ResponseOutputMessage
+from openai.types.responses import ResponseOutputText
+from openai.types.responses import ResponseReasoningItem
 from openai.types.responses.response_function_web_search import (
-    ActionFind, ActionOpenPage, ActionSearch, ResponseFunctionWebSearch)
+    ResponseFunctionWebSearch)
+from openai.types.responses.response_function_web_search import ActionFind
+from openai.types.responses.response_function_web_search import ActionOpenPage
+from openai.types.responses.response_function_web_search import ActionSearch
 from openai.types.responses.response_reasoning_item import (
     Content as ResponseReasoningTextContent)
 from openai.types.responses.tool import Tool
-from openai_harmony import (Author, Conversation, DeveloperContent,
-                            HarmonyEncodingName, Message, ReasoningEffort,
-                            Role, StreamableParser, SystemContent, TextContent,
-                            ToolDescription, load_harmony_encoding)
+from openai_harmony import Author
+from openai_harmony import Conversation
+from openai_harmony import DeveloperContent
+from openai_harmony import HarmonyEncodingName
+from openai_harmony import Message
+from openai_harmony import ReasoningEffort
+from openai_harmony import Role
+from openai_harmony import StreamableParser
+from openai_harmony import SystemContent
+from openai_harmony import TextContent
+from openai_harmony import ToolDescription
+from openai_harmony import load_harmony_encoding
 
 from vllm.entrypoints.openai.protocol import ResponseInputOutputItem
 from vllm.utils import random_uuid

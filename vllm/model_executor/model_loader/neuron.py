@@ -12,14 +12,18 @@ import torch
 import torch.nn as nn
 from transformers import PretrainedConfig
 
-from vllm.config import (ModelConfig, ParallelConfig, SchedulerConfig,
-                         SpeculativeConfig)
+from vllm.config import ModelConfig
+from vllm.config import ParallelConfig
+from vllm.config import SchedulerConfig
+from vllm.config import SpeculativeConfig
 from vllm.model_executor.layers.logits_processor import LogitsProcessor
 from vllm.model_executor.layers.quantization import get_quantization_config
-from vllm.model_executor.layers.sampler import Sampler, SamplerOutput
+from vllm.model_executor.layers.sampler import Sampler
+from vllm.model_executor.layers.sampler import SamplerOutput
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.sequence import (CompletionSequenceGroupOutput, Logprob,
-                           SequenceOutput)
+from vllm.sequence import CompletionSequenceGroupOutput
+from vllm.sequence import Logprob
+from vllm.sequence import SequenceOutput
 
 TORCH_DTYPE_TO_NEURON_AMP = {
     "auto": "f32",
@@ -261,11 +265,12 @@ def _is_neuron_on_device_sampling_disabled(model_config: ModelConfig) -> bool:
 
 def _get_neuron_config_after_override(default_neuron_config,
                                       overridden_neuron_config):
-    from transformers_neuronx.config import (ContinuousBatchingConfig,
-                                             GenerationConfig,
-                                             KVCacheQuantizationConfig,
-                                             NeuronConfig, QuantizationConfig,
-                                             SparseAttnConfig)
+    from transformers_neuronx.config import ContinuousBatchingConfig
+    from transformers_neuronx.config import GenerationConfig
+    from transformers_neuronx.config import KVCacheQuantizationConfig
+    from transformers_neuronx.config import NeuronConfig
+    from transformers_neuronx.config import QuantizationConfig
+    from transformers_neuronx.config import SparseAttnConfig
 
     sparse_attn = overridden_neuron_config.pop("sparse_attn", {})
     if sparse_attn:

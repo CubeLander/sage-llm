@@ -2,23 +2,27 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 import os
 import platform
-from typing import Callable, Optional
+from typing import Callable
+from typing import Optional
 
 import torch
 
 from vllm import envs
 from vllm.config import VllmConfig
-from vllm.distributed.parallel_state import get_pp_group, get_tp_group
-from vllm.utils.logger import init_logger
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.distributed.parallel_state import get_pp_group
+from vllm.distributed.parallel_state import get_tp_group
 from vllm.model_executor.utils import set_random_seed
-from vllm.platforms import CpuArchEnum, current_platform
-from vllm.platforms.cpu import CpuPlatform, LogicalCPUInfo
-from vllm.sequence import IntermediateTensors
+from vllm.platforms import CpuArchEnum
+from vllm.platforms import current_platform
+from vllm.platforms.cpu import CpuPlatform
+from vllm.platforms.cpu import LogicalCPUInfo
+from vllm.utils.logger import init_logger
 from vllm.v1.core.sched.output import SchedulerOutput
 from vllm.v1.outputs import ModelRunnerOutput
 from vllm.v1.worker.cpu_model_runner import CPUModelRunner
-from vllm.v1.worker.gpu_worker import (Worker,
-                                       init_worker_distributed_environment)
+from vllm.v1.worker.gpu_worker import Worker
+from vllm.v1.worker.gpu_worker import init_worker_distributed_environment
 
 logger = init_logger(__name__)
 

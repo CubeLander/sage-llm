@@ -3,10 +3,12 @@
 
 import numpy as np
 
-from vllm.config import ModelConfig, SpeculativeConfig, VllmConfig
-from vllm.v1.spec_decode.ngram_proposer import (NgramProposer,
-                                                _find_subarray_kmp,
-                                                _kmp_lps_array)
+from vllm.config import ModelConfig
+from vllm.config import SpeculativeConfig
+from vllm.config import VllmConfig
+from vllm.v1.spec_decode.ngram_proposer import NgramProposer
+from vllm.v1.spec_decode.ngram_proposer import _find_subarray_kmp
+from vllm.v1.spec_decode.ngram_proposer import _kmp_lps_array
 
 
 def test_kmp_lps_array():

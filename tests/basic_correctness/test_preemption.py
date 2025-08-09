@@ -7,13 +7,13 @@ VLLM_TEST_ENABLE_ARTIFICIAL_PREEMPT=1 has to be set before running this test.
 Run `VLLM_TEST_ENABLE_ARTIFICIAL_PREEMPT=1
 pytest tests/basic_correctness/test_preemption.py`.
 """
-import pytest
 from prometheus_client import REGISTRY
+import pytest
 
-import vllm.envs as envs
 from vllm import SamplingParams
-from vllm.core.scheduler import (ARTIFICIAL_PREEMPTION_MAX_CNT,
-                                 ENABLE_ARTIFICIAL_PREEMPT)
+from vllm.core.scheduler import ARTIFICIAL_PREEMPTION_MAX_CNT
+from vllm.core.scheduler import ENABLE_ARTIFICIAL_PREEMPT
+import vllm.envs as envs
 
 from ..models.utils import check_outputs_equal
 

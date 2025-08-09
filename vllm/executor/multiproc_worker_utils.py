@@ -2,21 +2,30 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import asyncio
-import os
-import threading
-import uuid
 from dataclasses import dataclass
 from multiprocessing import Queue
 from multiprocessing.connection import wait
 from multiprocessing.process import BaseProcess
-from typing import Any, Callable, Dict, Generic, List, Optional, TypeVar, Union
+import os
+import threading
+from typing import Any
+from typing import Callable
+from typing import Dict
+from typing import Generic
+from typing import List
+from typing import Optional
+from typing import TypeVar
+from typing import Union
+import uuid
 
 import torch
 
 from vllm.config import VllmConfig
+from vllm.utils import _maybe_force_spawn
+from vllm.utils import decorate_logs
+from vllm.utils import get_mp_context
+from vllm.utils import run_method
 from vllm.utils.logger import init_logger
-from vllm.utils import (_maybe_force_spawn, decorate_logs, get_mp_context,
-                        run_method)
 
 logger = init_logger(__name__)
 

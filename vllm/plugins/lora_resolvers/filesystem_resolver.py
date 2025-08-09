@@ -6,7 +6,8 @@ from typing import Optional
 
 import vllm.envs as envs
 from vllm.lora.request import LoRARequest
-from vllm.lora.resolver import LoRAResolver, LoRAResolverRegistry
+from vllm.lora.resolver import LoRAResolver
+from vllm.lora.resolver import LoRAResolverRegistry
 
 
 class FilesystemResolver(LoRAResolver):

@@ -1,20 +1,27 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from typing import Any, Callable, Optional
+from typing import Any
+from typing import Callable
+from typing import Optional
 
 import torch
 
 from vllm import _custom_ops as ops
-from vllm.utils.logger import init_logger
-from vllm.model_executor.layers.fused_moe import (FusedMoE, FusedMoEMethodBase,
-                                                  FusedMoeWeightScaleSupported)
+from vllm.model_executor.layers.fused_moe import FusedMoE
+from vllm.model_executor.layers.fused_moe import FusedMoEMethodBase
+from vllm.model_executor.layers.fused_moe import FusedMoeWeightScaleSupported
 from vllm.model_executor.layers.quantization.utils.mxfp4_utils import (
     OCP_MX_BLOCK_SIZE)
 from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
-    all_close_1d, normalize_e4m3fn_to_e4m3fnuz, per_tensor_dequantize)
+    all_close_1d)
+from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
+    normalize_e4m3fn_to_e4m3fnuz)
+from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
+    per_tensor_dequantize)
 from vllm.model_executor.utils import set_weight_attrs
 from vllm.platforms import current_platform
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

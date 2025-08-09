@@ -1,40 +1,51 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from contextlib import contextmanager
 import pickle
 import signal
-from contextlib import contextmanager
-from typing import Iterator, List, Optional, Union
+from typing import Iterator
+from typing import List
+from typing import Optional
+from typing import Union
 
 import cloudpickle
 import zmq
 
-from vllm import AsyncEngineArgs, SamplingParams
+from vllm import AsyncEngineArgs
+from vllm import SamplingParams
 from vllm.config import VllmConfig
 from vllm.engine.llm_engine import LLMEngine
 # yapf conflicts with isort for this block
 # yapf: disable
-from vllm.engine.multiprocessing import (ENGINE_DEAD_ERROR, IPC_DATA_EXT,
-                                         IPC_HEALTH_EXT, IPC_INPUT_EXT,
-                                         IPC_OUTPUT_EXT, REQUEST_OUTPUTS_T,
-                                         VLLM_RPC_SUCCESS_STR, RPCAbortRequest,
-                                         RPCAdapterLoadedResponse, RPCError,
-                                         RPCIsSleepingRequest,
-                                         RPCIsSleepingResponse,
-                                         RPCLoadAdapterRequest,
-                                         RPCProcessRequest,
-                                         RPCResetMultiModalCacheRequest,
-                                         RPCResetPrefixCacheRequest,
-                                         RPCSleepRequest, RPCStartupRequest,
-                                         RPCStartupResponse,
-                                         RPCUProfileRequest, RPCWakeUpRequest)
-# yapf: enable
-from vllm.utils.logger import init_logger
+from vllm.engine.multiprocessing import ENGINE_DEAD_ERROR
+from vllm.engine.multiprocessing import IPC_DATA_EXT
+from vllm.engine.multiprocessing import IPC_HEALTH_EXT
+from vllm.engine.multiprocessing import IPC_INPUT_EXT
+from vllm.engine.multiprocessing import IPC_OUTPUT_EXT
+from vllm.engine.multiprocessing import REQUEST_OUTPUTS_T
+from vllm.engine.multiprocessing import RPCAbortRequest
+from vllm.engine.multiprocessing import RPCAdapterLoadedResponse
+from vllm.engine.multiprocessing import RPCError
+from vllm.engine.multiprocessing import RPCIsSleepingRequest
+from vllm.engine.multiprocessing import RPCIsSleepingResponse
+from vllm.engine.multiprocessing import RPCLoadAdapterRequest
+from vllm.engine.multiprocessing import RPCProcessRequest
+from vllm.engine.multiprocessing import RPCResetMultiModalCacheRequest
+from vllm.engine.multiprocessing import RPCResetPrefixCacheRequest
+from vllm.engine.multiprocessing import RPCSleepRequest
+from vllm.engine.multiprocessing import RPCStartupRequest
+from vllm.engine.multiprocessing import RPCStartupResponse
+from vllm.engine.multiprocessing import RPCUProfileRequest
+from vllm.engine.multiprocessing import RPCWakeUpRequest
+from vllm.engine.multiprocessing import VLLM_RPC_SUCCESS_STR
 from vllm.outputs import RequestOutput
 from vllm.transformers_utils.config import (
     maybe_register_config_serialize_by_value)
 from vllm.usage.usage_lib import UsageContext
 from vllm.utils import deprecate_kwargs
+# yapf: enable
+from vllm.utils.logger import init_logger
 from vllm.worker.model_runner_base import InputProcessingError
 
 logger = init_logger(__name__)

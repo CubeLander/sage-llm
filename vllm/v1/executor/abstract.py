@@ -2,18 +2,19 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from concurrent.futures import Future
-from typing import Callable, Union
+from typing import Callable
+from typing import Union
 
 import torch
 import torch.distributed as dist
 
 from vllm.config import VllmConfig
 from vllm.executor.executor_base import ExecutorBase
-from vllm.executor.uniproc_executor import (  # noqa
-    ExecutorWithExternalLauncher as ExecutorWithExternalLauncherV0)
-from vllm.executor.uniproc_executor import (  # noqa
-    UniProcExecutor as UniProcExecutorV0)
-from vllm.v1.kv_cache_interface import KVCacheConfig, KVCacheSpec
+from vllm.executor.uniproc_executor import (
+    ExecutorWithExternalLauncher as ExecutorWithExternalLauncherV0)  # noqa
+from vllm.executor.uniproc_executor import UniProcExecutor as UniProcExecutorV0  # noqa
+from vllm.v1.kv_cache_interface import KVCacheConfig
+from vllm.v1.kv_cache_interface import KVCacheSpec
 from vllm.v1.outputs import ModelRunnerOutput
 
 FailureCallback = Callable[[], None]

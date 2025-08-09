@@ -3,7 +3,9 @@
 """This file is used for /tests and /benchmarks"""
 from collections.abc import Mapping
 from types import MappingProxyType
-from typing import ClassVar, NamedTuple, Optional
+from typing import ClassVar
+from typing import NamedTuple
+from typing import Optional
 
 import numpy
 import torch
@@ -12,7 +14,8 @@ from vllm._custom_ops import cutlass_scaled_mm_supports_fp4
 from vllm.model_executor.layers.quantization.qqq import (
     MARLIN_QQQ_SUPPORTED_NUM_BITS)
 from vllm.platforms import current_platform
-from vllm.scalar_type import ScalarType, scalar_types
+from vllm.scalar_type import ScalarType
+from vllm.scalar_type import scalar_types
 
 
 # Use proxy as NamedTuple direct subclasses cannot have static members

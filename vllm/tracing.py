@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import os
 from collections.abc import Mapping
+import os
 from typing import Optional
 
-from vllm.utils.logger import init_logger
 from vllm.utils import run_once
+from vllm.utils.logger import init_logger
 
 TRACE_HEADERS = ["traceparent", "tracestate"]
 
@@ -20,7 +20,9 @@ try:
         OTEL_EXPORTER_OTLP_TRACES_PROTOCOL)
     from opentelemetry.sdk.trace import TracerProvider
     from opentelemetry.sdk.trace.export import BatchSpanProcessor
-    from opentelemetry.trace import SpanKind, Tracer, set_tracer_provider
+    from opentelemetry.trace import SpanKind
+    from opentelemetry.trace import Tracer
+    from opentelemetry.trace import set_tracer_provider
     from opentelemetry.trace.propagation.tracecontext import (
         TraceContextTextMapPropagator)
     _is_otel_imported = True

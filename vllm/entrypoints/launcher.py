@@ -2,22 +2,26 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import asyncio
+from http import HTTPStatus
 import signal
 import socket
-from http import HTTPStatus
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
+from fastapi import FastAPI
+from fastapi import Request
+from fastapi import Response
 import uvicorn
-from fastapi import FastAPI, Request, Response
 
 from vllm import envs
 from vllm.engine.async_llm_engine import AsyncEngineDeadError
 from vllm.engine.multiprocessing import MQEngineDeadError
 from vllm.engine.protocol import EngineClient
 from vllm.entrypoints.ssl import SSLCertRefresher
-from vllm.utils.logger import init_logger
 from vllm.utils import find_process_using_port
-from vllm.v1.engine.exceptions import EngineDeadError, EngineGenerateError
+from vllm.utils.logger import init_logger
+from vllm.v1.engine.exceptions import EngineDeadError
+from vllm.v1.engine.exceptions import EngineGenerateError
 
 logger = init_logger(__name__)
 

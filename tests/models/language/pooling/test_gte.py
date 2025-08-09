@@ -5,7 +5,8 @@ from typing import Any
 import pytest
 
 from ...utils import check_transformers_version
-from .embed_utils import EmbedModelInfo, correctness_test_embed_models
+from .embed_utils import EmbedModelInfo
+from .embed_utils import correctness_test_embed_models
 from .mteb_utils import mteb_test_embed_models
 
 MODELS = [

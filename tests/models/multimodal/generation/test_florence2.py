@@ -3,14 +3,18 @@
 
 from typing import Optional
 
-import pytest
 from PIL import Image
+import pytest
 
-from vllm.io.inputs.data import ExplicitEncoderDecoderPrompt, TextPrompt
+from vllm.io.inputs.data import ExplicitEncoderDecoderPrompt
+from vllm.io.inputs.data import TextPrompt
 from vllm.io.inputs.multimodal.image import rescale_image_size
 from vllm.sequence import SampleLogprobs
 
-from ....conftest import IMAGE_ASSETS, HfRunner, ImageTestAssets, VllmRunner
+from ....conftest import HfRunner
+from ....conftest import IMAGE_ASSETS
+from ....conftest import ImageTestAssets
+from ....conftest import VllmRunner
 from ...utils import check_logprobs_close
 
 MODELS = ["microsoft/Florence-2-base"]

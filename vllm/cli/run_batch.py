@@ -9,8 +9,8 @@ import importlib.metadata
 import typing
 
 from vllm.cli.types import CLISubcommand
-from vllm.entrypoints.utils import (VLLM_SUBCMD_PARSER_EPILOG,
-                                    show_filtered_argument_or_group_from_help)
+from vllm.entrypoints.utils import VLLM_SUBCMD_PARSER_EPILOG
+from vllm.entrypoints.utils import show_filtered_argument_or_group_from_help
 from vllm.utils.logger import init_logger
 
 if typing.TYPE_CHECKING:

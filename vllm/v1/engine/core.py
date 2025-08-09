@@ -1,48 +1,64 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
+from collections import deque
+from collections.abc import Generator
+from concurrent.futures import Future
+from contextlib import ExitStack
+from contextlib import contextmanager
+from inspect import isclass
+from inspect import signature
+from logging import DEBUG
 import os
 import queue
 import signal
 import threading
 import time
-from collections import deque
-from collections.abc import Generator
-from concurrent.futures import Future
-from contextlib import ExitStack, contextmanager
-from inspect import isclass, signature
-from logging import DEBUG
-from typing import Any, Callable, Optional, TypeVar, Union
+from typing import Any
+from typing import Callable
+from typing import Optional
+from typing import TypeVar
+from typing import Union
 
 import msgspec
 import zmq
 
-from vllm.config import ParallelConfig, VllmConfig
+from vllm.config import ParallelConfig
+from vllm.config import VllmConfig
 from vllm.distributed import stateless_destroy_torch_distributed_process_group
-from vllm.utils.logger import init_logger
-from vllm.utils.logging_utils.dump_input import dump_engine_exception
 from vllm.lora.request import LoRARequest
-from vllm.tasks import POOLING_TASKS, SupportedTask
+from vllm.tasks import POOLING_TASKS
+from vllm.tasks import SupportedTask
 from vllm.transformers_utils.config import (
     maybe_register_config_serialize_by_value)
-from vllm.utils import (decorate_logs, make_zmq_socket,
-                        resolve_obj_by_qualname, set_process_title)
-from vllm.v1.core.kv_cache_utils import (get_kv_cache_config,
-                                         unify_kv_cache_configs)
+from vllm.utils import decorate_logs
+from vllm.utils import make_zmq_socket
+from vllm.utils import resolve_obj_by_qualname
+from vllm.utils import set_process_title
+from vllm.utils.logger import init_logger
+from vllm.utils.logging_utils.dump_input import dump_engine_exception
+from vllm.v1.core.kv_cache_utils import get_kv_cache_config
+from vllm.v1.core.kv_cache_utils import unify_kv_cache_configs
 from vllm.v1.core.sched.interface import SchedulerInterface
 from vllm.v1.core.sched.output import SchedulerOutput
 from vllm.v1.core.sched.scheduler import Scheduler as V1Scheduler
-from vllm.v1.engine import (EngineCoreOutputs, EngineCoreRequest,
-                            EngineCoreRequestType,
-                            ReconfigureDistributedRequest, ReconfigureRankType,
-                            UtilityOutput, UtilityResult)
+from vllm.v1.engine import EngineCoreOutputs
+from vllm.v1.engine import EngineCoreRequest
+from vllm.v1.engine import EngineCoreRequestType
+from vllm.v1.engine import ReconfigureDistributedRequest
+from vllm.v1.engine import ReconfigureRankType
+from vllm.v1.engine import UtilityOutput
+from vllm.v1.engine import UtilityResult
 from vllm.v1.engine.mm_input_cache import MultiModalInputCacheServer
-from vllm.v1.engine.utils import EngineHandshakeMetadata, EngineZmqAddresses
+from vllm.v1.engine.utils import EngineHandshakeMetadata
+from vllm.v1.engine.utils import EngineZmqAddresses
 from vllm.v1.executor.abstract import Executor
 from vllm.v1.kv_cache_interface import KVCacheConfig
 from vllm.v1.metrics.stats import SchedulerStats
 from vllm.v1.outputs import ModelRunnerOutput
-from vllm.v1.request import Request, RequestStatus
-from vllm.v1.serial_utils import MsgpackDecoder, MsgpackEncoder
+from vllm.v1.request import Request
+from vllm.v1.request import RequestStatus
+from vllm.v1.serial_utils import MsgpackDecoder
+from vllm.v1.serial_utils import MsgpackEncoder
 from vllm.v1.structured_output import StructuredOutputManager
 from vllm.version import __version__ as VLLM_VERSION
 

@@ -1,11 +1,15 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from typing import Callable, List, Optional, Tuple
+from typing import Callable
+from typing import List
+from typing import Optional
+from typing import Tuple
 
 from vllm.lora.request import LoRARequest
 from vllm.sampling_params import SamplingParams
-from vllm.sequence import Sequence, SequenceStatus
+from vllm.sequence import Sequence
+from vllm.sequence import SequenceStatus
 from vllm.transformers_utils.tokenizer import AnyTokenizer
 
 

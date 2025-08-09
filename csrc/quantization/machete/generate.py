@@ -1,29 +1,34 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from collections.abc import Iterable
+from copy import deepcopy
+from dataclasses import dataclass
+from dataclasses import fields
+from functools import reduce
 import itertools
 import math
 import os
 import shutil
-from collections.abc import Iterable
-from copy import deepcopy
-from dataclasses import dataclass, fields
-from functools import reduce
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 import jinja2
 # yapf conflicts with isort for this block
 # yapf: disable
-from vllm_cutlass_library_extension import (DataType, EpilogueScheduleTag,
-                                            EpilogueScheduleType,
-                                            MixedInputKernelScheduleType,
-                                            TileSchedulerTag,
-                                            TileSchedulerType, VLLMDataType,
-                                            VLLMDataTypeNames,
-                                            VLLMDataTypeSize, VLLMDataTypeTag,
-                                            VLLMDataTypeTorchDataTypeTag,
-                                            VLLMDataTypeVLLMScalarTypeTag,
-                                            VLLMKernelScheduleTag)
+from vllm_cutlass_library_extension import DataType
+from vllm_cutlass_library_extension import EpilogueScheduleTag
+from vllm_cutlass_library_extension import EpilogueScheduleType
+from vllm_cutlass_library_extension import MixedInputKernelScheduleType
+from vllm_cutlass_library_extension import TileSchedulerTag
+from vllm_cutlass_library_extension import TileSchedulerType
+from vllm_cutlass_library_extension import VLLMDataType
+from vllm_cutlass_library_extension import VLLMDataTypeNames
+from vllm_cutlass_library_extension import VLLMDataTypeSize
+from vllm_cutlass_library_extension import VLLMDataTypeTag
+from vllm_cutlass_library_extension import VLLMDataTypeTorchDataTypeTag
+from vllm_cutlass_library_extension import VLLMDataTypeVLLMScalarTypeTag
+from vllm_cutlass_library_extension import VLLMKernelScheduleTag
 
 # yapf: enable
 

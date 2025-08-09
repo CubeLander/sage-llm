@@ -4,51 +4,68 @@
 from abc import abstractmethod
 from collections.abc import Iterable
 from enum import Enum
-from typing import Callable, Literal, Optional, overload
+from typing import Callable
+from typing import Literal
+from typing import Optional
+from typing import overload
 
 import torch
 import torch.nn.functional as F
 from torch.nn.parameter import UninitializedParameter
 
-import vllm.envs as envs
 from vllm.config import get_current_vllm_config
-from vllm.distributed import (get_dp_group, get_ep_group,
-                              get_tensor_model_parallel_world_size,
-                              tensor_model_parallel_all_reduce)
+from vllm.distributed import get_dp_group
+from vllm.distributed import get_ep_group
+from vllm.distributed import get_tensor_model_parallel_world_size
+from vllm.distributed import tensor_model_parallel_all_reduce
 from vllm.distributed.eplb.eplb_state import EplbState
-from vllm.forward_context import ForwardContext, get_forward_context
-from vllm.utils.logger import init_logger
+import vllm.envs as envs
+from vllm.forward_context import ForwardContext
+from vllm.forward_context import get_forward_context
 from vllm.model_executor.custom_op import CustomOp
 # yapf: disable
-from vllm.model_executor.layers.fused_moe.config import (
-    FusedMoEConfig, FusedMoEParallelConfig)
+from vllm.model_executor.layers.fused_moe.config import FusedMoEConfig
+from vllm.model_executor.layers.fused_moe.config import FusedMoEParallelConfig
 # yapf: enable
 from vllm.model_executor.layers.fused_moe.modular_kernel import (
-    FusedMoEActivationFormat, FusedMoEModularKernel,
-    FusedMoEPermuteExpertsUnpermute, FusedMoEPrepareAndFinalize)
+    FusedMoEActivationFormat)
+from vllm.model_executor.layers.fused_moe.modular_kernel import (
+    FusedMoEModularKernel)
+from vllm.model_executor.layers.fused_moe.modular_kernel import (
+    FusedMoEPermuteExpertsUnpermute)
+from vllm.model_executor.layers.fused_moe.modular_kernel import (
+    FusedMoEPrepareAndFinalize)
 from vllm.model_executor.layers.fused_moe.rocm_aiter_fused_moe import (
     is_rocm_aiter_moe_enabled)
 from vllm.model_executor.layers.fused_moe.routing_simulator import (
     RoutingSimulator)
 from vllm.model_executor.layers.quantization.base_config import (
-    QuantizationConfig, QuantizeMethodBase)
+    QuantizationConfig)
+from vllm.model_executor.layers.quantization.base_config import (
+    QuantizeMethodBase)
 from vllm.model_executor.utils import set_weight_attrs
 from vllm.platforms import current_platform
 from vllm.platforms.interface import CpuArchEnum
-from vllm.utils import (direct_register_custom_op, has_deep_ep, has_pplx,
-                        has_triton_kernels, is_torch_equal_or_newer, round_up)
+from vllm.utils import direct_register_custom_op
+from vllm.utils import has_deep_ep
+from vllm.utils import has_pplx
+from vllm.utils import has_triton_kernels
+from vllm.utils import is_torch_equal_or_newer
+from vllm.utils import round_up
 from vllm.utils.flashinfer import has_flashinfer
+from vllm.utils.logger import init_logger
 
 if current_platform.is_cuda_alike():
     from .fused_batched_moe import BatchedTritonExperts
-    from .fused_moe import TritonExperts, fused_experts
+    from .fused_moe import TritonExperts
+    from .fused_moe import fused_experts
     if has_pplx():
-        from .pplx_prepare_finalize import (PplxPrepareAndFinalize,
-                                            pplx_hidden_dim_scale_bytes)
+        from .pplx_prepare_finalize import PplxPrepareAndFinalize
+        from .pplx_prepare_finalize import pplx_hidden_dim_scale_bytes
     if has_deep_ep():
         from .deepep_ht_prepare_finalize import DeepEPHTPrepareAndFinalize
-        from .deepep_ll_prepare_finalize import (DEEPEP_QUANT_BLOCK_SHAPE,
-                                                 DeepEPLLPrepareAndFinalize)
+        from .deepep_ll_prepare_finalize import DEEPEP_QUANT_BLOCK_SHAPE
+        from .deepep_ll_prepare_finalize import DeepEPLLPrepareAndFinalize
     if has_flashinfer():
         from .flashinfer_cutlass_prepare_finalize import (
             FlashInferCutlassMoEPrepareAndFinalize)
@@ -57,8 +74,8 @@ else:
     FusedMoEPermuteExpertsUnpermute = None  # type: ignore
     FusedMoEPrepareAndFinalize = None  # type: ignore
 if is_rocm_aiter_moe_enabled():
-    from vllm.model_executor.layers.fused_moe.rocm_aiter_fused_moe import (  # noqa: E501
-        rocm_aiter_grouped_topk as grouped_topk)
+    from vllm.model_executor.layers.fused_moe.rocm_aiter_fused_moe import (
+        rocm_aiter_grouped_topk as grouped_topk)  # noqa: E501
 elif current_platform.is_cpu():
     pass
 else:

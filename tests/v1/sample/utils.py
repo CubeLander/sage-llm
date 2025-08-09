@@ -3,14 +3,16 @@
 
 from collections.abc import Iterator
 from enum import Enum
-from typing import NamedTuple, Optional
+from typing import NamedTuple
+from typing import Optional
 
 import regex as re
 import torch
 
 from vllm import CompletionOutput
 from vllm.utils import make_tensor_with_pad
-from vllm.v1.sample.logits_processor import BatchUpdate, LogitsProcessor
+from vllm.v1.sample.logits_processor import BatchUpdate
+from vllm.v1.sample.logits_processor import LogitsProcessor
 from vllm.v1.sample.metadata import SamplingMetadata
 
 

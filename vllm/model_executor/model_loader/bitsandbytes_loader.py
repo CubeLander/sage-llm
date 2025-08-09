@@ -1,44 +1,54 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 # ruff: noqa: SIM117
+from collections.abc import Generator
 import fnmatch
 import glob
 import itertools
 import math
 import os
-from collections.abc import Generator
-from typing import Any, Callable, Optional
+from typing import Any
+from typing import Callable
+from typing import Optional
 
-import numpy as np
-import torch
 from huggingface_hub import HfApi
+import numpy as np
 from packaging import version
+import torch
 from torch import nn
 from transformers.utils import SAFE_WEIGHTS_INDEX_NAME
 
-from vllm.config import LoadConfig, ModelConfig
-from vllm.distributed import (get_tensor_model_parallel_rank,
-                              get_tensor_model_parallel_world_size)
+from vllm.config import LoadConfig
+from vllm.config import ModelConfig
+from vllm.distributed import get_tensor_model_parallel_rank
+from vllm.distributed import get_tensor_model_parallel_world_size
+from vllm.model_executor.layers.fused_moe import FusedMoE
+from vllm.model_executor.layers.linear import LinearBase
+from vllm.model_executor.layers.linear import MergedColumnParallelLinear
+from vllm.model_executor.layers.linear import QKVParallelLinear
+from vllm.model_executor.layers.linear import ReplicatedLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
+from vllm.model_executor.model_loader.base_loader import BaseModelLoader
+from vllm.model_executor.model_loader.utils import ParamMapping
+from vllm.model_executor.model_loader.utils import set_default_torch_dtype
+from vllm.model_executor.model_loader.weight_utils import (
+    download_safetensors_index_file_from_hf)
+from vllm.model_executor.model_loader.weight_utils import (
+    download_weights_from_hf)
+from vllm.model_executor.model_loader.weight_utils import (
+    filter_duplicate_safetensors_files)
+from vllm.model_executor.model_loader.weight_utils import (
+    filter_files_not_needed_for_inference)
+from vllm.model_executor.model_loader.weight_utils import (
+    safetensors_weights_iterator)
+from vllm.model_executor.model_loader.weight_utils import pt_weights_iterator
+from vllm.model_executor.models import is_pooling_model
+from vllm.model_executor.utils import get_moe_expert_mapping
+from vllm.model_executor.utils import get_packed_modules_mapping
+from vllm.model_executor.utils import set_weight_attrs
+from vllm.platforms import current_platform
 # yapf: enable
 from vllm.utils.logger import init_logger
-from vllm.model_executor.layers.fused_moe import FusedMoE
-from vllm.model_executor.layers.linear import (LinearBase,
-                                               MergedColumnParallelLinear,
-                                               QKVParallelLinear,
-                                               ReplicatedLinear,
-                                               RowParallelLinear)
-from vllm.model_executor.model_loader.base_loader import BaseModelLoader
-from vllm.model_executor.model_loader.utils import (ParamMapping,
-                                                    set_default_torch_dtype)
-from vllm.model_executor.model_loader.weight_utils import (
-    download_safetensors_index_file_from_hf, download_weights_from_hf,
-    filter_duplicate_safetensors_files, filter_files_not_needed_for_inference,
-    pt_weights_iterator, safetensors_weights_iterator)
-from vllm.model_executor.models import is_pooling_model
-from vllm.model_executor.utils import (get_moe_expert_mapping,
-                                       get_packed_modules_mapping,
-                                       set_weight_attrs)
-from vllm.platforms import current_platform
 
 # yapf conflicts with isort for this block
 
@@ -544,7 +554,8 @@ class BitsAndBytesModelLoader(BaseModelLoader):
         thereby avoiding this computational overhead during inference. This 
         comes at the cost of increased memory usage.
         """
-        from bitsandbytes.functional import QuantState, dequantize_blockwise
+        from bitsandbytes.functional import QuantState
+        from bitsandbytes.functional import dequantize_blockwise
 
         def _dequantize_single_state(quant_state):
             """Helper function to dequantize a single QuantState object."""

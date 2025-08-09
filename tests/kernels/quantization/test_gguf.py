@@ -3,10 +3,13 @@
 
 from pathlib import Path
 
+from gguf import GGMLQuantizationType
+from gguf import GGUFReader
+from gguf import ReaderTensor
+from gguf import dequantize
+from huggingface_hub import snapshot_download
 import pytest
 import torch
-from gguf import GGMLQuantizationType, GGUFReader, ReaderTensor, dequantize
-from huggingface_hub import snapshot_download
 
 import vllm._custom_ops as ops
 from vllm.model_executor.layers.fused_moe import fused_experts

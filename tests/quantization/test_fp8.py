@@ -9,8 +9,8 @@ import torch
 
 from tests.quantization.utils import is_quant_method_supported
 from vllm import _custom_ops as ops
-from vllm.model_executor.layers.quantization.fp8 import (Fp8KVCacheMethod,
-                                                         Fp8LinearMethod)
+from vllm.model_executor.layers.quantization.fp8 import Fp8KVCacheMethod
+from vllm.model_executor.layers.quantization.fp8 import Fp8LinearMethod
 from vllm.platforms import current_platform
 
 MODELS = [

@@ -1,32 +1,38 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-from collections.abc import Iterable, Set
-from typing import Optional, Union
+from collections.abc import Iterable
+from collections.abc import Set
+from typing import Optional
+from typing import Union
 
 import torch
 from torch import nn
 from transformers import ModernBertConfig
 
-from vllm.attention import Attention, AttentionType
+from vllm.attention import Attention
+from vllm.attention import AttentionType
 from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
 from vllm.distributed import get_tensor_model_parallel_world_size
-from vllm.model_executor.layers.linear import (QKVParallelLinear,
-                                               RowParallelLinear)
-from vllm.model_executor.layers.pooler import (ClassifierPooler,
-                                               DispatchPooler, Pooler,
-                                               PoolingMethod,
-                                               PoolingParamsUpdate,
-                                               PoolingType)
+from vllm.model_executor.layers.linear import QKVParallelLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
+from vllm.model_executor.layers.pooler import ClassifierPooler
+from vllm.model_executor.layers.pooler import DispatchPooler
+from vllm.model_executor.layers.pooler import Pooler
+from vllm.model_executor.layers.pooler import PoolingMethod
+from vllm.model_executor.layers.pooler import PoolingParamsUpdate
+from vllm.model_executor.layers.pooler import PoolingType
 from vllm.model_executor.layers.rotary_embedding import RotaryEmbedding
 from vllm.model_executor.layers.vocab_parallel_embedding import (
     VocabParallelEmbedding)
 from vllm.model_executor.model_loader.weight_utils import default_weight_loader
 from vllm.model_executor.pooling_metadata import PoolingMetadata
-from vllm.sequence import IntermediateTensors
 from vllm.tasks import PoolingTask
 
-from .interfaces import SupportsCrossEncoding, SupportsV0Only
-from .utils import WeightsMapper, maybe_prefix
+from .interfaces import SupportsCrossEncoding
+from .interfaces import SupportsV0Only
+from .utils import WeightsMapper
+from .utils import maybe_prefix
 
 
 class ModernBertEmbeddings(nn.Module):

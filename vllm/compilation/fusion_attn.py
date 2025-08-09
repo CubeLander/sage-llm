@@ -2,18 +2,22 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import torch
-import torch._inductor.pattern_matcher as pm
 from torch._higher_order_ops.auto_functionalize import auto_functionalized
+import torch._inductor.pattern_matcher as pm
 from torch._inductor.pattern_matcher import PatternMatcherPass
-from torch._subclasses.fake_tensor import (FakeTensorMode,
-                                           unset_fake_temporarily)
+from torch._subclasses.fake_tensor import FakeTensorMode
+from torch._subclasses.fake_tensor import unset_fake_temporarily
 
 from vllm.attention import Attention
 from vllm.config import VllmConfig
-from vllm.utils.logger import init_logger
 from vllm.platforms import current_platform
+from vllm.utils.logger import init_logger
 
-from .fusion import QUANT_OPS, GroupShape, QuantKey, empty_bf16, empty_fp32
+from .fusion import GroupShape
+from .fusion import QUANT_OPS
+from .fusion import QuantKey
+from .fusion import empty_bf16
+from .fusion import empty_fp32
 from .vllm_inductor_pass import VllmInductorPass
 
 logger = init_logger(__name__)

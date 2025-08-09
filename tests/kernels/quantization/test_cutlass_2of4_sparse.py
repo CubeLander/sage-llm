@@ -8,7 +8,9 @@ Run `pytest tests/kernels/test_semi_structured.py`.
 import pytest
 import torch
 
-from tests.kernels.utils import baseline_scaled_mm, to_fp8, to_int8
+from tests.kernels.utils import baseline_scaled_mm
+from tests.kernels.utils import to_fp8
+from tests.kernels.utils import to_int8
 from vllm import _custom_ops as ops
 from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
     sparse_cutlass_supported)

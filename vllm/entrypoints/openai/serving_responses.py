@@ -2,18 +2,25 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import asyncio
-import time
-from collections.abc import AsyncGenerator, AsyncIterator
+from collections.abc import AsyncGenerator
+from collections.abc import AsyncIterator
 from contextlib import AsyncExitStack
 from copy import copy
 from http import HTTPStatus
-from typing import Any, Callable, Final, Optional, Union
+import time
+from typing import Any
+from typing import Callable
+from typing import Final
+from typing import Optional
+from typing import Union
 
-import jinja2
 from fastapi import Request
-from openai.types.responses import (ResponseFunctionToolCall,
-                                    ResponseOutputItem, ResponseOutputMessage,
-                                    ResponseOutputText, ResponseReasoningItem)
+import jinja2
+from openai.types.responses import ResponseFunctionToolCall
+from openai.types.responses import ResponseOutputItem
+from openai.types.responses import ResponseOutputMessage
+from openai.types.responses import ResponseOutputText
+from openai.types.responses import ResponseReasoningItem
 from openai.types.responses.response_reasoning_item import (
     Content as ResponseReasoningTextContent)
 from openai_harmony import Message as OpenAIHarmonyMessage
@@ -21,34 +28,43 @@ from openai_harmony import Message as OpenAIHarmonyMessage
 from vllm import envs
 from vllm.config import ModelConfig
 from vllm.engine.protocol import EngineClient
-from vllm.entrypoints.chat_utils import (ChatCompletionMessageParam,
-                                         ChatTemplateContentFormatOption)
-from vllm.entrypoints.context import (ConversationContext, HarmonyContext,
-                                      SimpleContext, StreamingHarmonyContext)
+from vllm.entrypoints.chat_utils import ChatCompletionMessageParam
+from vllm.entrypoints.chat_utils import ChatTemplateContentFormatOption
+from vllm.entrypoints.context import ConversationContext
+from vllm.entrypoints.context import HarmonyContext
+from vllm.entrypoints.context import SimpleContext
+from vllm.entrypoints.context import StreamingHarmonyContext
 from vllm.entrypoints.harmony_utils import (
-    get_developer_message, get_stop_tokens_for_assistant_actions,
-    get_system_message, get_user_message, parse_output_message,
-    parse_remaining_state, parse_response_input, render_for_completion)
+    get_stop_tokens_for_assistant_actions)
+from vllm.entrypoints.harmony_utils import get_developer_message
+from vllm.entrypoints.harmony_utils import get_system_message
+from vllm.entrypoints.harmony_utils import get_user_message
+from vllm.entrypoints.harmony_utils import parse_output_message
+from vllm.entrypoints.harmony_utils import parse_remaining_state
+from vllm.entrypoints.harmony_utils import parse_response_input
+from vllm.entrypoints.harmony_utils import render_for_completion
 from vllm.entrypoints.logger import RequestLogger
 # yapf conflicts with isort for this block
 # yapf: disable
-from vllm.entrypoints.openai.protocol import (ErrorResponse,
-                                              InputTokensDetails,
-                                              OutputTokensDetails,
-                                              RequestResponseMetadata,
-                                              ResponsesRequest,
-                                              ResponsesResponse, ResponseUsage)
+from vllm.entrypoints.openai.protocol import ErrorResponse
+from vllm.entrypoints.openai.protocol import InputTokensDetails
+from vllm.entrypoints.openai.protocol import OutputTokensDetails
+from vllm.entrypoints.openai.protocol import RequestResponseMetadata
+from vllm.entrypoints.openai.protocol import ResponseUsage
+from vllm.entrypoints.openai.protocol import ResponsesRequest
+from vllm.entrypoints.openai.protocol import ResponsesResponse
 # yapf: enable
 from vllm.entrypoints.openai.serving_engine import OpenAIServing
 from vllm.entrypoints.openai.serving_models import OpenAIServingModels
 from vllm.entrypoints.tool_server import ToolServer
 from vllm.io.inputs.data import TokensPrompt as EngineTokensPrompt
-from vllm.utils.logger import init_logger
+from vllm.io.reasoning import ReasoningParser
+from vllm.io.reasoning import ReasoningParserManager
 from vllm.outputs import CompletionOutput
-from vllm.io.reasoning import ReasoningParser, ReasoningParserManager
 from vllm.sampling_params import SamplingParams
 from vllm.transformers_utils.tokenizer import AnyTokenizer
 from vllm.utils import random_uuid
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

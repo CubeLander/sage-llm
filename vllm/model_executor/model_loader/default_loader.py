@@ -1,11 +1,13 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
+from collections.abc import Generator
+from collections.abc import Iterable
 import dataclasses
 import glob
 import os
 import time
-from collections.abc import Generator, Iterable
-from typing import Optional, cast
+from typing import Optional
+from typing import cast
 
 import huggingface_hub
 import torch
@@ -13,15 +15,27 @@ from torch import nn
 from transformers.utils import SAFE_WEIGHTS_INDEX_NAME
 
 from vllm import envs
-from vllm.config import LoadConfig, ModelConfig
-from vllm.utils.logger import init_logger
+from vllm.config import LoadConfig
+from vllm.config import ModelConfig
 from vllm.model_executor.model_loader.base_loader import BaseModelLoader
 from vllm.model_executor.model_loader.weight_utils import (
-    download_safetensors_index_file_from_hf, download_weights_from_hf,
-    fastsafetensors_weights_iterator, filter_duplicate_safetensors_files,
-    filter_files_not_needed_for_inference, get_lock, np_cache_weights_iterator,
-    pt_weights_iterator, safetensors_weights_iterator)
+    download_safetensors_index_file_from_hf)
+from vllm.model_executor.model_loader.weight_utils import (
+    download_weights_from_hf)
+from vllm.model_executor.model_loader.weight_utils import (
+    fastsafetensors_weights_iterator)
+from vllm.model_executor.model_loader.weight_utils import (
+    filter_duplicate_safetensors_files)
+from vllm.model_executor.model_loader.weight_utils import (
+    filter_files_not_needed_for_inference)
+from vllm.model_executor.model_loader.weight_utils import (
+    np_cache_weights_iterator)
+from vllm.model_executor.model_loader.weight_utils import (
+    safetensors_weights_iterator)
+from vllm.model_executor.model_loader.weight_utils import get_lock
+from vllm.model_executor.model_loader.weight_utils import pt_weights_iterator
 from vllm.platforms import current_platform
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

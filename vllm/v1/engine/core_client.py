@@ -1,41 +1,56 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
+from abc import ABC
+from abc import abstractmethod
 import asyncio
+from collections import defaultdict
+from collections import deque
+from collections.abc import Awaitable
+from collections.abc import Sequence
+from concurrent.futures import Future
 import contextlib
+from dataclasses import dataclass
 import multiprocessing
 import queue
 import sys
+from threading import Thread
+from typing import Any
+from typing import Callable
+from typing import Optional
+from typing import TypeVar
+from typing import Union
 import uuid
 import weakref
-from abc import ABC, abstractmethod
-from collections import defaultdict, deque
-from collections.abc import Awaitable, Sequence
-from concurrent.futures import Future
-from dataclasses import dataclass
-from threading import Thread
-from typing import Any, Callable, Optional, TypeVar, Union
 
 import msgspec.msgpack
 import zmq
 import zmq.asyncio
 
 from vllm.config import VllmConfig
-from vllm.utils.logger import init_logger
 from vllm.lora.request import LoRARequest
 from vllm.tasks import SupportedTask
-from vllm.utils import (cancel_task_threadsafe, get_open_port,
-                        get_open_zmq_inproc_path, make_zmq_socket)
-from vllm.v1.engine import (EngineCoreOutputs, EngineCoreRequest,
-                            EngineCoreRequestType,
-                            ReconfigureDistributedRequest, ReconfigureRankType,
-                            UtilityOutput)
+from vllm.utils import cancel_task_threadsafe
+from vllm.utils import get_open_port
+from vllm.utils import get_open_zmq_inproc_path
+from vllm.utils import make_zmq_socket
+from vllm.utils.logger import init_logger
+from vllm.v1.engine import EngineCoreOutputs
+from vllm.v1.engine import EngineCoreRequest
+from vllm.v1.engine import EngineCoreRequestType
+from vllm.v1.engine import ReconfigureDistributedRequest
+from vllm.v1.engine import ReconfigureRankType
+from vllm.v1.engine import UtilityOutput
 from vllm.v1.engine.coordinator import DPCoordinator
-from vllm.v1.engine.core import EngineCore, EngineCoreProc
+from vllm.v1.engine.core import EngineCore
+from vllm.v1.engine.core import EngineCoreProc
 from vllm.v1.engine.exceptions import EngineDeadError
-from vllm.v1.engine.utils import (CoreEngineActorManager,
-                                  CoreEngineProcManager, launch_core_engines)
+from vllm.v1.engine.utils import CoreEngineActorManager
+from vllm.v1.engine.utils import CoreEngineProcManager
+from vllm.v1.engine.utils import launch_core_engines
 from vllm.v1.executor.abstract import Executor
-from vllm.v1.serial_utils import MsgpackDecoder, MsgpackEncoder, bytestr
+from vllm.v1.serial_utils import MsgpackDecoder
+from vllm.v1.serial_utils import MsgpackEncoder
+from vllm.v1.serial_utils import bytestr
 
 logger = init_logger(__name__)
 

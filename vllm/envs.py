@@ -5,7 +5,10 @@ import hashlib
 import os
 import sys
 import tempfile
-from typing import TYPE_CHECKING, Any, Callable, Optional
+from typing import Any
+from typing import Callable
+from typing import Optional
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     VLLM_HOST_IP: str = ""

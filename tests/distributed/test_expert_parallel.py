@@ -2,14 +2,17 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from dataclasses import dataclass
-from typing import Literal, NamedTuple, Optional
+from typing import Literal
+from typing import NamedTuple
+from typing import Optional
 
 import pytest
 
 from vllm.config import RunnerOption
 from vllm.utils.logger import init_logger
 
-from ..utils import compare_two_settings, create_new_process_for_each_test
+from ..utils import compare_two_settings
+from ..utils import create_new_process_for_each_test
 
 logger = init_logger("test_expert_parallel")
 

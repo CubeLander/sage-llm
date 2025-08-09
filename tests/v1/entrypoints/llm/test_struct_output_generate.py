@@ -4,21 +4,23 @@
 
 from __future__ import annotations
 
-import json
 from enum import Enum
-from typing import TYPE_CHECKING, Any
+import json
+from typing import Any
+from typing import TYPE_CHECKING
 
 import jsonschema
+from pydantic import BaseModel
 import pytest
 import regex as re
-from pydantic import BaseModel
 
 from tests.reasoning.utils import run_reasoning_extraction
 from vllm.entrypoints.llm import LLM
+from vllm.io.reasoning.abs_reasoning_parsers import ReasoningParserManager
 from vllm.outputs import RequestOutput
 from vllm.platforms import current_platform
-from vllm.io.reasoning.abs_reasoning_parsers import ReasoningParserManager
-from vllm.sampling_params import GuidedDecodingParams, SamplingParams
+from vllm.sampling_params import GuidedDecodingParams
+from vllm.sampling_params import SamplingParams
 
 if TYPE_CHECKING:
     from vllm.config import TokenizerMode

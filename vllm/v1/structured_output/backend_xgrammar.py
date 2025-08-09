@@ -3,23 +3,25 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass
+from dataclasses import field
 import json
-from dataclasses import dataclass, field
-from typing import TYPE_CHECKING, Any
+from typing import Any
+from typing import TYPE_CHECKING
 
 import torch
 
 import vllm.envs
-from vllm.utils.logger import init_logger
 from vllm.sampling_params import SamplingParams
 from vllm.transformers_utils.tokenizers.mistral import MistralTokenizer
 from vllm.utils import LazyLoader
-from vllm.v1.structured_output.backend_types import (StructuredOutputBackend,
-                                                     StructuredOutputGrammar,
-                                                     StructuredOutputOptions)
-from vllm.v1.structured_output.utils import (choice_as_grammar,
-                                             convert_lark_to_ebnf,
-                                             grammar_is_likely_lark)
+from vllm.utils.logger import init_logger
+from vllm.v1.structured_output.backend_types import StructuredOutputBackend
+from vllm.v1.structured_output.backend_types import StructuredOutputGrammar
+from vllm.v1.structured_output.backend_types import StructuredOutputOptions
+from vllm.v1.structured_output.utils import choice_as_grammar
+from vllm.v1.structured_output.utils import convert_lark_to_ebnf
+from vllm.v1.structured_output.utils import grammar_is_likely_lark
 
 if TYPE_CHECKING:
     import xgrammar as xgr

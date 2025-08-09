@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
 import pytest
 import torch
@@ -9,8 +10,8 @@ import torch.nn.functional as F
 from vllm.platforms import current_platform
 from vllm.v1.sample.logits_processor import LogitsProcessorManager
 from vllm.v1.sample.metadata import SamplingMetadata
-from vllm.v1.sample.rejection_sampler import (PLACEHOLDER_TOKEN_ID,
-                                              RejectionSampler)
+from vllm.v1.sample.rejection_sampler import PLACEHOLDER_TOKEN_ID
+from vllm.v1.sample.rejection_sampler import RejectionSampler
 from vllm.v1.spec_decode.metadata import SpecDecodeMetadata
 
 DEVICE = current_platform.device_type

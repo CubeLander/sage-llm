@@ -1,16 +1,18 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from einops import rearrange
+from einops import repeat
 import pytest
 import torch
 import torch.nn.functional as F
-from einops import rearrange, repeat
 
 from tests.kernels.utils import opcheck
 from vllm import _custom_ops as ops  # noqa: F401
 from vllm.attention.backends.utils import PAD_SLOT_ID
 from vllm.model_executor.layers.mamba.ops.mamba_ssm import (
-    selective_scan_fn, selective_state_update)
+    selective_state_update)
+from vllm.model_executor.layers.mamba.ops.mamba_ssm import selective_scan_fn
 from vllm.platforms import current_platform
 
 

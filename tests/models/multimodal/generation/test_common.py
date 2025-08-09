@@ -3,27 +3,38 @@
 """Common tests for testing .generate() functionality for single / multiple
 image, embedding, and video support for different VLMs in vLLM.
 """
+from collections import defaultdict
 import math
 import os
-from collections import defaultdict
 from pathlib import PosixPath
 
 import pytest
-from transformers import (AutoModel, AutoModelForImageTextToText,
-                          AutoModelForTextToWaveform, AutoModelForVision2Seq)
+from transformers import AutoModel
+from transformers import AutoModelForImageTextToText
+from transformers import AutoModelForTextToWaveform
+from transformers import AutoModelForVision2Seq
 
 from vllm.platforms import current_platform
 from vllm.utils import identity
 
-from ....conftest import (IMAGE_ASSETS, AudioTestAssets, HfRunner,
-                          ImageTestAssets, VideoTestAssets, VllmRunner)
-from ....utils import (create_new_process_for_each_test, large_gpu_mark,
-                       multi_gpu_marks)
+from ....conftest import AudioTestAssets
+from ....conftest import HfRunner
+from ....conftest import IMAGE_ASSETS
+from ....conftest import ImageTestAssets
+from ....conftest import VideoTestAssets
+from ....conftest import VllmRunner
+from ....utils import create_new_process_for_each_test
+from ....utils import large_gpu_mark
+from ....utils import multi_gpu_marks
 from ...utils import check_outputs_equal
-from .vlm_utils import custom_inputs, model_utils, runners
+from .vlm_utils import custom_inputs
+from .vlm_utils import model_utils
+from .vlm_utils import runners
 from .vlm_utils.case_filtering import get_parametrized_options
-from .vlm_utils.types import (CustomTestOptions, ExpandableVLMTestArgs,
-                              VLMTestInfo, VLMTestType)
+from .vlm_utils.types import CustomTestOptions
+from .vlm_utils.types import ExpandableVLMTestArgs
+from .vlm_utils.types import VLMTestInfo
+from .vlm_utils.types import VLMTestType
 
 # This hack is needed for phi3v & paligemma models
 # ROCm Triton FA can run into shared memory issues with these models,

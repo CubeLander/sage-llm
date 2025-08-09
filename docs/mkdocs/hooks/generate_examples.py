@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
+from dataclasses import dataclass
+from dataclasses import field
 import itertools
 import logging
-from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Literal
 

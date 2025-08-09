@@ -1,17 +1,22 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
+from abc import ABC
+from abc import abstractmethod
+from collections.abc import Iterator
+from collections.abc import Sequence
 import dataclasses
-from abc import ABC, abstractmethod
-from collections.abc import Iterator, Sequence
-from dataclasses import dataclass, field
+from dataclasses import dataclass
+from dataclasses import field
 from enum import Enum
 from itertools import chain
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 import torch
 from torch._prims_common import DeviceLikeType
 
-from vllm import PoolingParams, SamplingParams
+from vllm import PoolingParams
+from vllm import SamplingParams
 from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)

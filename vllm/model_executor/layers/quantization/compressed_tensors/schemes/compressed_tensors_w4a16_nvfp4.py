@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-from typing import Callable, Optional
+from typing import Callable
+from typing import Optional
 
 import torch
 from torch.nn.parameter import Parameter
@@ -8,10 +9,12 @@ from torch.nn.parameter import Parameter
 from vllm.model_executor.layers.quantization.compressed_tensors.schemes import (
     CompressedTensorsScheme)
 from vllm.model_executor.layers.quantization.utils.marlin_utils_fp4 import (
-    apply_fp4_marlin_linear, prepare_fp4_layer_for_marlin)
-from vllm.model_executor.parameter import (GroupQuantScaleParameter,
-                                           ModelWeightParameter,
-                                           PerTensorScaleParameter)
+    apply_fp4_marlin_linear)
+from vllm.model_executor.layers.quantization.utils.marlin_utils_fp4 import (
+    prepare_fp4_layer_for_marlin)
+from vllm.model_executor.parameter import GroupQuantScaleParameter
+from vllm.model_executor.parameter import ModelWeightParameter
+from vllm.model_executor.parameter import PerTensorScaleParameter
 
 __all__ = ["CompressedTensorsW4A16Fp4"]
 

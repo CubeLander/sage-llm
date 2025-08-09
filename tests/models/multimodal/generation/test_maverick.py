@@ -11,20 +11,23 @@ This script creates a new model with fewer layers by:
 """
 
 import json
-import shutil
 from pathlib import Path
+import shutil
 from typing import Any
 
 import pytest
-import torch
 from safetensors.torch import save_file
-from transformers import (AutoConfig, AutoProcessor, AutoTokenizer,
-                          GenerationConfig)
+import torch
+from transformers import AutoConfig
+from transformers import AutoProcessor
+from transformers import AutoTokenizer
+from transformers import GenerationConfig
 
-from vllm import LLM, SamplingParams
+from vllm import LLM
+from vllm import SamplingParams
 from vllm.v1.executor.abstract import Executor
-from vllm.v1.kv_cache_interface import (ChunkedLocalAttentionSpec,
-                                        FullAttentionSpec)
+from vllm.v1.kv_cache_interface import ChunkedLocalAttentionSpec
+from vllm.v1.kv_cache_interface import FullAttentionSpec
 
 from ....utils import multi_gpu_test
 

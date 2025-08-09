@@ -1,6 +1,11 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-from typing import Annotated, Any, Union, get_args, get_origin, get_type_hints
+from typing import Annotated
+from typing import Any
+from typing import Union
+from typing import get_args
+from typing import get_origin
+from typing import get_type_hints
 
 import torch
 

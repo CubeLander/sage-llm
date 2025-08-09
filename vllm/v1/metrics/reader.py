@@ -4,8 +4,8 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from prometheus_client import REGISTRY
 from prometheus_client import Metric as PromMetric
+from prometheus_client import REGISTRY
 from prometheus_client.samples import Sample
 
 

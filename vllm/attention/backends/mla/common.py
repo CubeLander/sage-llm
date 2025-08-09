@@ -187,35 +187,48 @@ for chunk_idx in range(cdiv(C, MCC)):
 return curr_o @ W_O
 """
 
-import functools
 from abc import abstractmethod
 from collections import defaultdict
 from contextlib import contextmanager
 from dataclasses import dataclass
+import functools
 from itertools import accumulate
-from typing import (TYPE_CHECKING, Any, Dict, Generic, List, Optional, Tuple,
-                    Type, TypeVar)
+from typing import Any
+from typing import Dict
+from typing import Generic
+from typing import List
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Tuple
+from typing import Type
+from typing import TypeVar
 
 import torch
 
 from vllm import _custom_ops as ops
 from vllm import envs
-from vllm.attention.backends.abstract import (AttentionBackend, AttentionLayer,
-                                              AttentionMetadata,
-                                              AttentionMetadataBuilder,
-                                              AttentionState, MLAAttentionImpl)
-from vllm.attention.backends.utils import (PAD_SLOT_ID, compute_slot_mapping,
-                                           compute_slot_mapping_start_idx,
-                                           is_block_tables_empty)
+from vllm.attention.backends.abstract import AttentionBackend
+from vllm.attention.backends.abstract import AttentionLayer
+from vllm.attention.backends.abstract import AttentionMetadata
+from vllm.attention.backends.abstract import AttentionMetadataBuilder
+from vllm.attention.backends.abstract import AttentionState
+from vllm.attention.backends.abstract import MLAAttentionImpl
+from vllm.attention.backends.utils import PAD_SLOT_ID
+from vllm.attention.backends.utils import compute_slot_mapping
+from vllm.attention.backends.utils import compute_slot_mapping_start_idx
+from vllm.attention.backends.utils import is_block_tables_empty
 from vllm.attention.ops.merge_attn_states import merge_attn_states
 from vllm.attention.utils.fa_utils import get_flash_attn_version
-from vllm.model_executor.layers.linear import (ColumnParallelLinear,
-                                               LinearBase,
-                                               UnquantizedLinearMethod)
 from vllm.io.inputs.multimodal import MultiModalPlaceholderMap
+from vllm.model_executor.layers.linear import ColumnParallelLinear
+from vllm.model_executor.layers.linear import LinearBase
+from vllm.model_executor.layers.linear import UnquantizedLinearMethod
 from vllm.platforms import current_platform
 from vllm.platforms.triton_tuils import HAS_TRITON
-from vllm.utils import async_tensor_h2d, cdiv, make_tensor_with_pad, round_down
+from vllm.utils import async_tensor_h2d
+from vllm.utils import cdiv
+from vllm.utils import make_tensor_with_pad
+from vllm.utils import round_down
 
 if HAS_TRITON:
     from vllm.attention.ops.triton_flash_attention import triton_attention
@@ -234,8 +247,8 @@ except ImportError:
         flash_attn_varlen_func = None
 
 if TYPE_CHECKING:
-    from vllm.worker.model_runner import (ModelInputForGPUBuilder,
-                                          ModelInputForGPUWithSamplingMetadata)
+    from vllm.worker.model_runner import ModelInputForGPUBuilder
+    from vllm.worker.model_runner import ModelInputForGPUWithSamplingMetadata
 
 is_hip = current_platform.is_rocm()
 

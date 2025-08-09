@@ -4,21 +4,24 @@
 import os
 
 import pytest
-import torch
 from safetensors.torch import load_file
+import torch
 from torch import nn
 
 from vllm.config import LoRAConfig
-from vllm.lora.layers import (ColumnParallelLinearWithLoRA,
-                              MergedColumnParallelLinearWithLoRA,
-                              RowParallelLinearWithLoRA)
-from vllm.lora.lora import LoRALayerWeights, PackedLoRALayerWeights
-from vllm.lora.models import (LoRAMapping, LoRAModel, LoRAModelManager,
-                              LRUCacheLoRAModelManager)
+from vllm.lora.layers import ColumnParallelLinearWithLoRA
+from vllm.lora.layers import MergedColumnParallelLinearWithLoRA
+from vllm.lora.layers import RowParallelLinearWithLoRA
+from vllm.lora.lora import LoRALayerWeights
+from vllm.lora.lora import PackedLoRALayerWeights
+from vllm.lora.models import LRUCacheLoRAModelManager
+from vllm.lora.models import LoRAMapping
+from vllm.lora.models import LoRAModel
+from vllm.lora.models import LoRAModelManager
 from vllm.lora.peft_helper import PEFTHelper
 from vllm.lora.request import LoRARequest
-from vllm.lora.worker_manager import (LRUCacheWorkerLoRAManager,
-                                      WorkerLoRAManager)
+from vllm.lora.worker_manager import LRUCacheWorkerLoRAManager
+from vllm.lora.worker_manager import WorkerLoRAManager
 from vllm.platforms import current_platform
 
 EMBEDDING_MODULES = {

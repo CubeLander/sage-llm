@@ -4,17 +4,20 @@
 import os
 from typing import Optional
 
+from vllm.model_executor.layers.quantization.kernels.scaled_mm.ScaledMMLinearKernel import (
+    ScaledMMLinearLayerConfig)
+from vllm.model_executor.layers.quantization.kernels.scaled_mm.ScaledMMLinearKernel import (  # noqa: E501
+    ScaledMMLinearKernel)
 from vllm.model_executor.layers.quantization.kernels.scaled_mm.aiter import (
     AiterScaledMMLinearKernel)
 from vllm.model_executor.layers.quantization.kernels.scaled_mm.cutlass import (
     CutlassScaledMMLinearKernel)
-from vllm.model_executor.layers.quantization.kernels.scaled_mm.ScaledMMLinearKernel import (  # noqa: E501
-    ScaledMMLinearKernel, ScaledMMLinearLayerConfig)
 from vllm.model_executor.layers.quantization.kernels.scaled_mm.triton import (
     TritonScaledMMLinearKernel)
 from vllm.model_executor.layers.quantization.kernels.scaled_mm.xla import (
     XLAScaledMMLinearKernel)
-from vllm.platforms import PlatformEnum, current_platform
+from vllm.platforms import PlatformEnum
+from vllm.platforms import current_platform
 
 # in priority/performance order (when available)
 _POSSIBLE_KERNELS: dict[PlatformEnum, list[type[ScaledMMLinearKernel]]] = {

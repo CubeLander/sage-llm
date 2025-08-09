@@ -23,32 +23,40 @@
 # limitations under the License.
 """Inference-only Qwen3 model compatible with HuggingFace weights."""
 from collections.abc import Iterable
-from typing import Any, Optional, Union
+from typing import Any
+from typing import Optional
+from typing import Union
 
 import torch
 from torch import nn
 from transformers import Qwen3Config
 
-from vllm.attention import Attention, AttentionType
+from vllm.attention import Attention
+from vllm.attention import AttentionType
 from vllm.compilation.decorators import support_torch_compile
-from vllm.config import CacheConfig, VllmConfig
-from vllm.distributed import get_pp_group, get_tensor_model_parallel_world_size
-from vllm.utils.logger import init_logger
+from vllm.config import CacheConfig
+from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.distributed import get_pp_group
+from vllm.distributed import get_tensor_model_parallel_world_size
 from vllm.model_executor.layers.layernorm import RMSNorm
-from vllm.model_executor.layers.linear import (QKVParallelLinear,
-                                               RowParallelLinear)
+from vllm.model_executor.layers.linear import QKVParallelLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
 from vllm.model_executor.layers.logits_processor import LogitsProcessor
 from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.model_executor.layers.rotary_embedding import get_rope
 from vllm.model_executor.layers.vocab_parallel_embedding import ParallelLMHead
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.sequence import IntermediateTensors
+from vllm.utils.logger import init_logger
 
-from .interfaces import SupportsLoRA, SupportsPP
+from .interfaces import SupportsLoRA
+from .interfaces import SupportsPP
 from .qwen2 import Qwen2MLP as Qwen3MLP
 from .qwen2 import Qwen2Model
-from .utils import (AutoWeightsLoader, PPMissingLayer, extract_layer_index,
-                    maybe_prefix)
+from .utils import AutoWeightsLoader
+from .utils import PPMissingLayer
+from .utils import extract_layer_index
+from .utils import maybe_prefix
 
 logger = init_logger(__name__)
 

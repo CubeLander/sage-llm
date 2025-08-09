@@ -3,12 +3,14 @@
 import pytest
 import torch
 
-from tests.kernels.quantization.nvfp4_utils import (FLOAT4_E2M1_MAX,
-                                                    FLOAT8_E4M3_MAX,
-                                                    dequantize_nvfp4_to_dtype)
+from tests.kernels.quantization.nvfp4_utils import FLOAT4_E2M1_MAX
+from tests.kernels.quantization.nvfp4_utils import FLOAT8_E4M3_MAX
+from tests.kernels.quantization.nvfp4_utils import dequantize_nvfp4_to_dtype
 from tests.kernels.utils import torch_moe
 from vllm import _custom_ops as ops
-from vllm.config import ParallelConfig, VllmConfig, set_current_vllm_config
+from vllm.config import ParallelConfig
+from vllm.config import VllmConfig
+from vllm.config import set_current_vllm_config
 from vllm.model_executor.layers.fused_moe.cutlass_moe import cutlass_moe_fp4
 from vllm.model_executor.layers.fused_moe.fused_moe import fused_topk
 from vllm.platforms import current_platform

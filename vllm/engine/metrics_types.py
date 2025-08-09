@@ -13,12 +13,14 @@ the env variable before launch, but since we are a library, we need to
 do this in Python code and lazily import prometheus_client.
 """
 
-import time
-from abc import ABC, abstractmethod
+from abc import ABC
+from abc import abstractmethod
 from dataclasses import dataclass
+import time
 from typing import List
 
-from vllm.config import SupportsMetricsInfo, VllmConfig
+from vllm.config import SupportsMetricsInfo
+from vllm.config import VllmConfig
 
 
 @dataclass

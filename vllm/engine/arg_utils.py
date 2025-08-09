@@ -5,43 +5,88 @@
 import argparse
 import copy
 import dataclasses
+from dataclasses import MISSING
+from dataclasses import dataclass
+from dataclasses import fields
+from dataclasses import is_dataclass
 import functools
+from itertools import permutations
 import json
 import sys
 import threading
-from dataclasses import MISSING, dataclass, fields, is_dataclass
-from itertools import permutations
-from typing import (TYPE_CHECKING, Annotated, Any, Callable, Dict, List,
-                    Literal, Optional, Type, TypeVar, Union, cast, get_args,
-                    get_origin)
+from typing import Annotated
+from typing import Any
+from typing import Callable
+from typing import Dict
+from typing import List
+from typing import Literal
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Type
+from typing import TypeVar
+from typing import Union
+from typing import cast
+from typing import get_args
+from typing import get_origin
 
+from pydantic import TypeAdapter
+from pydantic import ValidationError
 import regex as re
 import torch
-from pydantic import TypeAdapter, ValidationError
-from typing_extensions import TypeIs, deprecated
+from typing_extensions import TypeIs
+from typing_extensions import deprecated
 
+from vllm.config import BlockSize
+from vllm.config import CacheConfig
+from vllm.config import CacheDType
+from vllm.config import CompilationConfig
+from vllm.config import ConfigFormat
+from vllm.config import ConfigType
+from vllm.config import ConvertOption
+from vllm.config import DecodingConfig
+from vllm.config import DetailedTraceModules
+from vllm.config import Device
+from vllm.config import DeviceConfig
+from vllm.config import DistributedExecutorBackend
+from vllm.config import GuidedDecodingBackend
+from vllm.config import HfOverrides
+from vllm.config import KVEventsConfig
+from vllm.config import KVTransferConfig
+from vllm.config import LoRAConfig
+from vllm.config import LoadConfig
+from vllm.config import LogprobsMode
+from vllm.config import ModelConfig
+from vllm.config import ModelDType
+from vllm.config import ModelImpl
+from vllm.config import MultiModalConfig
+from vllm.config import ObservabilityConfig
+from vllm.config import ParallelConfig
+from vllm.config import PoolerConfig
+from vllm.config import PrefixCachingHashAlgo
+from vllm.config import RunnerOption
+from vllm.config import SchedulerConfig
+from vllm.config import SchedulerPolicy
+from vllm.config import SpeculativeConfig
+from vllm.config import TaskOption
+from vllm.config import TokenizerMode
+from vllm.config import VllmConfig
+from vllm.config import get_attr_docs
+from vllm.config import get_field
 import vllm.envs as envs
-from vllm.config import (BlockSize, CacheConfig, CacheDType, CompilationConfig,
-                         ConfigFormat, ConfigType, ConvertOption,
-                         DecodingConfig, DetailedTraceModules, Device,
-                         DeviceConfig, DistributedExecutorBackend,
-                         GuidedDecodingBackend, HfOverrides, KVEventsConfig,
-                         KVTransferConfig, LoadConfig, LogprobsMode,
-                         LoRAConfig, ModelConfig, ModelDType, ModelImpl,
-                         MultiModalConfig, ObservabilityConfig, ParallelConfig,
-                         PoolerConfig, PrefixCachingHashAlgo, RunnerOption,
-                         SchedulerConfig, SchedulerPolicy, SpeculativeConfig,
-                         TaskOption, TokenizerMode, VllmConfig, get_attr_docs,
-                         get_field)
-from vllm.utils.logger import init_logger
-from vllm.platforms import CpuArchEnum, current_platform
-from vllm.plugins import load_general_plugins
-from vllm.utils.ray.lazy_utils import is_ray_initialized
 from vllm.io.reasoning import ReasoningParserManager
-from vllm.test_utils import MODEL_WEIGHTS_S3_BUCKET, MODELS_ON_S3
+from vllm.platforms import CpuArchEnum
+from vllm.platforms import current_platform
+from vllm.plugins import load_general_plugins
+from vllm.test_utils import MODELS_ON_S3
+from vllm.test_utils import MODEL_WEIGHTS_S3_BUCKET
 from vllm.transformers_utils.utils import check_gguf_file
-from vllm.utils import (STR_DUAL_CHUNK_FLASH_ATTN_VAL, FlexibleArgumentParser,
-                        GiB_bytes, get_ip, is_in_ray_actor)
+from vllm.utils import FlexibleArgumentParser
+from vllm.utils import GiB_bytes
+from vllm.utils import STR_DUAL_CHUNK_FLASH_ATTN_VAL
+from vllm.utils import get_ip
+from vllm.utils import is_in_ray_actor
+from vllm.utils.logger import init_logger
+from vllm.utils.ray.lazy_utils import is_ray_initialized
 
 # yapf: enable
 

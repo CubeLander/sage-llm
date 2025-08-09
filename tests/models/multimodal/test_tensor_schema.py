@@ -8,15 +8,18 @@ import pytest
 from vllm.config import ModelConfig
 from vllm.engine.llm_engine import LLMEngine as V0LLMEngine
 from vllm.io.inputs import InputProcessingContext
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY, MultiModalKwargs
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal import MultiModalKwargs
 from vllm.io.inputs.multimodal.processing import BaseMultiModalProcessor
 from vllm.transformers_utils.tokenizer import cached_tokenizer_from_config
-from vllm.utils import GiB_bytes, set_default_torch_num_threads
+from vllm.utils import GiB_bytes
+from vllm.utils import set_default_torch_num_threads
 from vllm.v1.core.kv_cache_utils import get_kv_cache_config
 from vllm.v1.engine.core import EngineCore as V1EngineCore
 
 from ...conftest import VllmRunner
-from ..registry import _MULTIMODAL_EXAMPLE_MODELS, HF_EXAMPLE_MODELS
+from ..registry import HF_EXAMPLE_MODELS
+from ..registry import _MULTIMODAL_EXAMPLE_MODELS
 from ..utils import dummy_hf_overrides
 
 ARCH_TO_SKIP = {

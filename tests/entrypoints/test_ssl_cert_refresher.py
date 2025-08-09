@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 import asyncio
-import tempfile
 from pathlib import Path
 from ssl import SSLContext
+import tempfile
 
 import pytest
 

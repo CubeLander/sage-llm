@@ -4,8 +4,8 @@
 from torch import fx as fx
 
 from vllm.config import VllmConfig
-from vllm.utils.logger import init_logger
 from vllm.platforms import current_platform
+from vllm.utils.logger import init_logger
 
 if current_platform.is_cuda_alike():
     from .fusion import FusionPass
@@ -16,7 +16,9 @@ if current_platform.is_cuda():
 
 from .activation_quant_fusion import ActivationQuantFusionPass
 from .fix_functionalization import FixFunctionalizationPass
-from .inductor_pass import CustomGraphPass, InductorPass, get_pass_context
+from .inductor_pass import CustomGraphPass
+from .inductor_pass import InductorPass
+from .inductor_pass import get_pass_context
 from .noop_elimination import NoOpEliminationPass
 from .sequence_parallelism import SequenceParallelismPass
 from .vllm_inductor_pass import VllmInductorPass

@@ -11,8 +11,8 @@ from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
     convert_to_channelwise)
 from vllm.platforms import current_platform
 
-from .ScaledMMLinearKernel import (ScaledMMLinearKernel,
-                                   ScaledMMLinearLayerConfig)
+from .ScaledMMLinearKernel import ScaledMMLinearKernel
+from .ScaledMMLinearKernel import ScaledMMLinearLayerConfig
 
 
 class CutlassScaledMMLinearKernel(ScaledMMLinearKernel):

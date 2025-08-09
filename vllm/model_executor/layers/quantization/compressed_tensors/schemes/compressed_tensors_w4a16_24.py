@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from typing import Callable, Optional
+from typing import Callable
+from typing import Optional
 
 import torch
 from torch.nn import Parameter
@@ -10,11 +11,13 @@ from vllm import _custom_ops as ops
 from vllm.model_executor.layers.quantization.compressed_tensors.schemes import (
     CompressedTensorsScheme)
 from vllm.model_executor.layers.quantization.gptq_marlin_24 import (
-    GPTQ_MARLIN_24_MAX_PARALLEL, GPTQ_MARLIN_24_MIN_THREAD_N)
-from vllm.model_executor.parameter import (BasevLLMParameter,
-                                           ChannelQuantScaleParameter,
-                                           GroupQuantScaleParameter,
-                                           PackedvLLMParameter)
+    GPTQ_MARLIN_24_MAX_PARALLEL)
+from vllm.model_executor.layers.quantization.gptq_marlin_24 import (
+    GPTQ_MARLIN_24_MIN_THREAD_N)
+from vllm.model_executor.parameter import BasevLLMParameter
+from vllm.model_executor.parameter import ChannelQuantScaleParameter
+from vllm.model_executor.parameter import GroupQuantScaleParameter
+from vllm.model_executor.parameter import PackedvLLMParameter
 from vllm.scalar_type import scalar_types
 
 __all__ = ["CompressedTensorsW4A16Sparse24"]

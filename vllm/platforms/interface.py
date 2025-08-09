@@ -1,23 +1,29 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
+from datetime import timedelta
 import enum
 import os
 import platform
+from platform import uname
 import random
 import sys
-from datetime import timedelta
-from platform import uname
-from typing import TYPE_CHECKING, NamedTuple, Optional, Union
+from typing import NamedTuple
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Union
 
 import numpy as np
 import torch
-from torch.distributed import PrefixStore, ProcessGroup
+from torch.distributed import PrefixStore
+from torch.distributed import ProcessGroup
 
-from vllm.io.inputs import ProcessorInputs, PromptType
+from vllm.io.inputs import ProcessorInputs
+from vllm.io.inputs import PromptType
 from vllm.utils.logger import init_logger
 
 if TYPE_CHECKING:
-    from vllm.config import ModelConfig, VllmConfig
+    from vllm.config import ModelConfig
+    from vllm.config import VllmConfig
     from vllm.lora.request import LoRARequest
     from vllm.pooling_params import PoolingParams
     from vllm.sampling_params import SamplingParams
@@ -475,8 +481,8 @@ class Platform:
         """
         Whether to use allgather in LogitsProcessor to gather the logits.
         """
-        import vllm.envs as envs
         from vllm.config import get_current_vllm_config
+        import vllm.envs as envs
 
         parallel_config = get_current_vllm_config().parallel_config
         return (envs.VLLM_USE_V1

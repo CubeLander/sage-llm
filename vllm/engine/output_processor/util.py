@@ -6,7 +6,8 @@ from typing import Sequence as GenericSequence
 from typing import cast
 
 from vllm.model_executor.layers.sampler import SamplerOutput
-from vllm.sequence import CompletionSequenceGroupOutput, SequenceGroupOutput
+from vllm.sequence import CompletionSequenceGroupOutput
+from vllm.sequence import SequenceGroupOutput
 
 
 def create_output_by_sequence_group(

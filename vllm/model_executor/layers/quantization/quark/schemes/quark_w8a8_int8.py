@@ -1,18 +1,21 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from typing import Callable, Optional
+from typing import Callable
+from typing import Optional
 
 import torch
 
-from vllm.utils.logger import init_logger
 from vllm.model_executor.layers.quantization.kernels.scaled_mm import (
-    ScaledMMLinearLayerConfig, choose_scaled_mm_linear_kernel)
+    ScaledMMLinearLayerConfig)
+from vllm.model_executor.layers.quantization.kernels.scaled_mm import (
+    choose_scaled_mm_linear_kernel)
 from vllm.model_executor.layers.quantization.quark.schemes import QuarkScheme
-from vllm.model_executor.parameter import (BasevLLMParameter,
-                                           ChannelQuantScaleParameter,
-                                           ModelWeightParameter,
-                                           PerTensorScaleParameter)
+from vllm.model_executor.parameter import BasevLLMParameter
+from vllm.model_executor.parameter import ChannelQuantScaleParameter
+from vllm.model_executor.parameter import ModelWeightParameter
+from vllm.model_executor.parameter import PerTensorScaleParameter
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

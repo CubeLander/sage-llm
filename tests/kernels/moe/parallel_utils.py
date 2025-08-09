@@ -6,15 +6,18 @@ DeepEP test utilities
 import dataclasses
 import os
 import traceback
-from typing import Callable, Optional
+from typing import Callable
+from typing import Optional
 
 import torch
 from torch.distributed import ProcessGroup
 from torch.multiprocessing import (
     spawn)  # pyright: ignore[reportPrivateImportUsage]
-from typing_extensions import Concatenate, ParamSpec
+from typing_extensions import Concatenate
+from typing_extensions import ParamSpec
 
-from vllm.utils import get_open_port, has_deep_ep
+from vllm.utils import get_open_port
+from vllm.utils import has_deep_ep
 
 if has_deep_ep():
     from vllm.model_executor.layers.fused_moe.deepep_ht_prepare_finalize import (  # noqa: E501

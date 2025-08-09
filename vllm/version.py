@@ -2,7 +2,8 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 try:
-    from ._version import __version__, __version_tuple__
+    from ._version import __version__
+    from ._version import __version_tuple__
 except Exception as e:
     import warnings
 

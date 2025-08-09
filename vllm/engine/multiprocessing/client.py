@@ -2,50 +2,68 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import asyncio
+from contextlib import contextmanager
+from contextlib import suppress
 import copy
 import pickle
-from contextlib import contextmanager, suppress
-from typing import (Any, AsyncGenerator, Dict, Iterator, List, Mapping,
-                    Optional, Union, cast)
+from typing import Any
+from typing import AsyncGenerator
+from typing import Dict
+from typing import Iterator
+from typing import List
+from typing import Mapping
+from typing import Optional
+from typing import Union
+from typing import cast
 
 import cloudpickle
 import psutil
 import zmq
-import zmq.asyncio
 from zmq import Frame  # type: ignore[attr-defined]
+import zmq.asyncio
 from zmq.asyncio import Socket
 
 from vllm import PoolingParams
-from vllm.config import DecodingConfig, ModelConfig, VllmConfig
+from vllm.config import DecodingConfig
+from vllm.config import ModelConfig
+from vllm.config import VllmConfig
 from vllm.core.scheduler import SchedulerOutputs
 # yapf conflicts with isort for this block
 # yapf: disable
-from vllm.engine.multiprocessing import (ENGINE_DEAD_ERROR, IPC_DATA_EXT,
-                                         IPC_HEALTH_EXT, IPC_INPUT_EXT,
-                                         IPC_OUTPUT_EXT, RPC_REQUEST_T,
-                                         VLLM_RPC_SUCCESS_STR, RPCAbortRequest,
-                                         RPCAdapterLoadedResponse, RPCError,
-                                         RPCIsSleepingRequest,
-                                         RPCIsSleepingResponse,
-                                         RPCLoadAdapterRequest,
-                                         RPCProcessRequest,
-                                         RPCResetMultiModalCacheRequest,
-                                         RPCResetPrefixCacheRequest,
-                                         RPCSleepRequest, RPCStartupRequest,
-                                         RPCStartupResponse,
-                                         RPCUProfileRequest, RPCWakeUpRequest)
+from vllm.engine.multiprocessing import ENGINE_DEAD_ERROR
+from vllm.engine.multiprocessing import IPC_DATA_EXT
+from vllm.engine.multiprocessing import IPC_HEALTH_EXT
+from vllm.engine.multiprocessing import IPC_INPUT_EXT
+from vllm.engine.multiprocessing import IPC_OUTPUT_EXT
+from vllm.engine.multiprocessing import RPCAbortRequest
+from vllm.engine.multiprocessing import RPCAdapterLoadedResponse
+from vllm.engine.multiprocessing import RPCError
+from vllm.engine.multiprocessing import RPCIsSleepingRequest
+from vllm.engine.multiprocessing import RPCIsSleepingResponse
+from vllm.engine.multiprocessing import RPCLoadAdapterRequest
+from vllm.engine.multiprocessing import RPCProcessRequest
+from vllm.engine.multiprocessing import RPCResetMultiModalCacheRequest
+from vllm.engine.multiprocessing import RPCResetPrefixCacheRequest
+from vllm.engine.multiprocessing import RPCSleepRequest
+from vllm.engine.multiprocessing import RPCStartupRequest
+from vllm.engine.multiprocessing import RPCStartupResponse
+from vllm.engine.multiprocessing import RPCUProfileRequest
+from vllm.engine.multiprocessing import RPCWakeUpRequest
+from vllm.engine.multiprocessing import RPC_REQUEST_T
+from vllm.engine.multiprocessing import VLLM_RPC_SUCCESS_STR
 from vllm.engine.protocol import EngineClient
 # yapf: enable
 from vllm.envs import VLLM_RPC_TIMEOUT
 from vllm.io.inputs import PromptType
 from vllm.io.inputs.preprocess import InputPreprocessor
-from vllm.utils.logger import init_logger
 from vllm.lora.request import LoRARequest
 from vllm.model_executor.layers.sampler import SamplerOutput
-from vllm.outputs import PoolingRequestOutput, RequestOutput
+from vllm.outputs import PoolingRequestOutput
+from vllm.outputs import RequestOutput
 from vllm.sampling_params import SamplingParams
 from vllm.transformers_utils.tokenizer_group import init_tokenizer_from_configs
 from vllm.utils import Device
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

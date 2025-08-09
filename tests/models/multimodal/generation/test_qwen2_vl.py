@@ -1,18 +1,25 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from typing import Any, Optional, TypedDict, Union
+from typing import Any
+from typing import Optional
+from typing import TypedDict
+from typing import Union
 
+from PIL import Image
 import numpy.typing as npt
 import pytest
 import torch
-from PIL import Image
 
 from vllm.io.inputs.multimodal.image import rescale_image_size
-from vllm.io.inputs.multimodal.video import rescale_video_size, sample_frames_from_video
+from vllm.io.inputs.multimodal.video import rescale_video_size
+from vllm.io.inputs.multimodal.video import sample_frames_from_video
 
-from ....conftest import (IMAGE_ASSETS, VIDEO_ASSETS, PromptImageInput,
-                          PromptVideoInput, VllmRunner)
+from ....conftest import IMAGE_ASSETS
+from ....conftest import PromptImageInput
+from ....conftest import PromptVideoInput
+from ....conftest import VIDEO_ASSETS
+from ....conftest import VllmRunner
 from ...utils import check_logprobs_close
 
 

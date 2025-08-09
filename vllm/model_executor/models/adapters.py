@@ -2,14 +2,19 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from collections.abc import Iterable
-from typing import TYPE_CHECKING, Any, Optional, TypeVar, cast
+from typing import Any
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import TypeVar
+from typing import cast
 
 import torch
 import torch.nn as nn
 
 from vllm.model_executor.models.config import VerifyAndUpdateConfig
 
-from .interfaces_base import VllmModelForPooling, is_pooling_model
+from .interfaces_base import VllmModelForPooling
+from .interfaces_base import is_pooling_model
 
 if TYPE_CHECKING:
     from vllm.config import VllmConfig
@@ -35,7 +40,8 @@ def _get_pooling_model_name(orig_model_name: str, pooling_suffix: str) -> str:
 
 def _create_pooling_model_cls(orig_cls: _T) -> _T:
     # Lazy import
-    from .utils import AutoWeightsLoader, WeightsMapper
+    from .utils import AutoWeightsLoader
+    from .utils import WeightsMapper
 
     class ModelForPooling(orig_cls, VllmModelForPooling):
 
@@ -115,7 +121,8 @@ def as_embedding_model(cls: _T) -> _T:
         return cls
 
     # Lazy import
-    from vllm.model_executor.layers.pooler import DispatchPooler, Pooler
+    from vllm.model_executor.layers.pooler import DispatchPooler
+    from vllm.model_executor.layers.pooler import Pooler
 
     class ModelForEmbedding(_create_pooling_model_cls(cls)):
 
@@ -152,12 +159,14 @@ def as_seq_cls_model(cls: _T) -> _T:
         return cls
 
     # Lazy import
+    from vllm.core.tensors.intermediate_tensors import IntermediateTensors
     from vllm.model_executor.layers.linear import RowParallelLinear
-    from vllm.model_executor.layers.pooler import (ClassifierPooler,
-                                                   DispatchPooler, Pooler,
-                                                   PoolingMethod, PoolingType)
+    from vllm.model_executor.layers.pooler import ClassifierPooler
+    from vllm.model_executor.layers.pooler import DispatchPooler
+    from vllm.model_executor.layers.pooler import Pooler
+    from vllm.model_executor.layers.pooler import PoolingMethod
+    from vllm.model_executor.layers.pooler import PoolingType
     from vllm.model_executor.models.interfaces import SupportsCrossEncoding
-    from vllm.sequence import IntermediateTensors
 
     from .utils import maybe_prefix
 
@@ -251,7 +260,8 @@ def as_reward_model(cls: _T) -> _T:
         return cls
 
     # Lazy import
-    from vllm.model_executor.layers.pooler import DispatchPooler, Pooler
+    from vllm.model_executor.layers.pooler import DispatchPooler
+    from vllm.model_executor.layers.pooler import Pooler
 
     class ModelForReward(_create_pooling_model_cls(cls)):
 

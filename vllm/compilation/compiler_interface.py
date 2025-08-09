@@ -1,20 +1,22 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 import contextlib
+from contextlib import ExitStack
 import copy
 import hashlib
 import os
-from contextlib import ExitStack
-from typing import Any, Callable, Optional
+from typing import Any
+from typing import Callable
+from typing import Optional
 from unittest.mock import patch
 
 import torch
 import torch._inductor.compile_fx
 import torch.fx as fx
 
-import vllm.envs as envs
 from vllm.compilation.counter import compilation_counter
 from vllm.config import VllmConfig
+import vllm.envs as envs
 from vllm.utils import is_torch_equal_or_newer
 
 from .inductor_pass import pass_context
@@ -308,8 +310,8 @@ class InductorAdaptor(CompilerInterface):
         # it to get the hash of the compiled graph directly.
 
         hash_str, file_path = None, None
-        from torch._inductor.codecache import (FxGraphCache,
-                                               compiled_fx_graph_hash)
+        from torch._inductor.codecache import FxGraphCache
+        from torch._inductor.codecache import compiled_fx_graph_hash
         if torch.__version__.startswith("2.5"):
             original_load = FxGraphCache.load
             original_load_name = "torch._inductor.codecache.FxGraphCache.load"

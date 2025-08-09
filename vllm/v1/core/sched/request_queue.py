@@ -3,11 +3,13 @@
 
 from __future__ import annotations
 
-import heapq
-from abc import ABC, abstractmethod
+from abc import ABC
+from abc import abstractmethod
 from collections import deque
-from collections.abc import Iterable, Iterator
+from collections.abc import Iterable
+from collections.abc import Iterator
 from enum import Enum
+import heapq
 
 from vllm.v1.request import Request
 

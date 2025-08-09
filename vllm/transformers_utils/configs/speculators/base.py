@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 import os
-from typing import Any, Union
+from typing import Any
+from typing import Union
 
 from transformers import PretrainedConfig
 

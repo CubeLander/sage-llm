@@ -24,24 +24,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Inference-only MiniCPM3 model compatible with HuggingFace weights."""
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
 import torch
 from torch import nn
 from transformers import PretrainedConfig
 
 from vllm.attention import Attention
-from vllm.config import CacheConfig, VllmConfig
+from vllm.config import CacheConfig
+from vllm.config import VllmConfig
 from vllm.distributed import get_tensor_model_parallel_world_size
 from vllm.model_executor.layers.layernorm import RMSNorm
-from vllm.model_executor.layers.linear import (ColumnParallelLinear,
-                                               ReplicatedLinear,
-                                               RowParallelLinear)
+from vllm.model_executor.layers.linear import ColumnParallelLinear
+from vllm.model_executor.layers.linear import ReplicatedLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
 from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.model_executor.layers.rotary_embedding import get_rope
-from vllm.model_executor.models.minicpm import (MiniCPMDecoderLayer,
-                                                MiniCPMForCausalLM,
-                                                MiniCPMModel)
+from vllm.model_executor.models.minicpm import MiniCPMDecoderLayer
+from vllm.model_executor.models.minicpm import MiniCPMForCausalLM
+from vllm.model_executor.models.minicpm import MiniCPMModel
 
 from .utils import make_layers
 

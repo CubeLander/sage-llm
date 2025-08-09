@@ -3,7 +3,8 @@
 
 import pytest
 
-from vllm import LLM, SamplingParams
+from vllm import LLM
+from vllm import SamplingParams
 
 from ...utils import create_new_process_for_each_test
 

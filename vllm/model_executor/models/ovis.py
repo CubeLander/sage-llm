@@ -17,17 +17,35 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """ PyTorch Ovis model."""
+from collections.abc import Iterable
+from collections.abc import Mapping
 import math
-from collections.abc import Iterable, Mapping
-from typing import Literal, Optional, TypedDict, Union
+from typing import Literal
+from typing import Optional
+from typing import TypedDict
+from typing import Union
 
 import torch
-import torch.nn as nn
 from torch import Tensor
-from torch.nn.functional import gumbel_softmax, pad, softmax
-from transformers import BatchFeature, PretrainedConfig
+import torch.nn as nn
+from torch.nn.functional import gumbel_softmax
+from torch.nn.functional import pad
+from torch.nn.functional import softmax
+from transformers import BatchFeature
+from transformers import PretrainedConfig
 
 from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import MultiModalDataDict
+from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.parse import ImageSize
+from vllm.io.inputs.multimodal.parse import MultiModalDataItems
+from vllm.io.inputs.multimodal.processing import BaseMultiModalProcessor
+from vllm.io.inputs.multimodal.processing import BaseProcessingInfo
+from vllm.io.inputs.multimodal.processing import PromptReplacement
+from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
 from vllm.model_executor.layers.linear import ReplicatedLinear
 from vllm.model_executor.layers.quantization.base_config import (
     QuantizationConfig)
@@ -36,21 +54,16 @@ from vllm.model_executor.layers.quantization.gptq_marlin import (
     GPTQMarlinConfig)
 from vllm.model_executor.models.aimv2 import AIMv2Model
 from vllm.model_executor.models.siglip import SiglipVisionModel
-from vllm.model_executor.models.utils import (AutoWeightsLoader, flatten_bn,
-                                              init_vllm_registered_model,
-                                              maybe_prefix)
+from vllm.model_executor.models.utils import AutoWeightsLoader
+from vllm.model_executor.models.utils import flatten_bn
+from vllm.model_executor.models.utils import init_vllm_registered_model
+from vllm.model_executor.models.utils import maybe_prefix
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
-                                    MultiModalKwargs)
-from vllm.io.inputs.multimodal.parse import ImageSize, MultiModalDataItems
-from vllm.io.inputs.multimodal.processing import (BaseMultiModalProcessor,
-                                        BaseProcessingInfo, PromptReplacement)
-from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
-from vllm.sequence import IntermediateTensors
 from vllm.transformers_utils.processors.ovis import OvisProcessor
 
-from .interfaces import MultiModalEmbeddings, SupportsMultiModal, SupportsPP
+from .interfaces import MultiModalEmbeddings
+from .interfaces import SupportsMultiModal
+from .interfaces import SupportsPP
 from .utils import merge_multimodal_embeddings
 
 # Cannot find the following number from hf config.

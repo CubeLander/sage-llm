@@ -3,9 +3,11 @@
 
 import asyncio
 from ssl import SSLContext
-from typing import Callable, Optional
+from typing import Callable
+from typing import Optional
 
-from watchfiles import Change, awatch
+from watchfiles import Change
+from watchfiles import awatch
 
 from vllm.utils.logger import init_logger
 

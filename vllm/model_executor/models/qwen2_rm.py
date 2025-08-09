@@ -7,21 +7,25 @@
 # Copyright 2023 The vLLM team.
 """Inference-only Qwen2-RM model compatible with HuggingFace weights."""
 from collections.abc import Iterable
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 import torch
 from torch import nn
 
 from vllm.config import VllmConfig
-from vllm.model_executor.layers.linear import (ColumnParallelLinear,
-                                               RowParallelLinear)
-from vllm.model_executor.layers.pooler import (DispatchPooler, Pooler,
-                                               PoolingType)
-from vllm.sequence import IntermediateTensors
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.model_executor.layers.linear import ColumnParallelLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
+from vllm.model_executor.layers.pooler import DispatchPooler
+from vllm.model_executor.layers.pooler import Pooler
+from vllm.model_executor.layers.pooler import PoolingType
 
-from .interfaces import SupportsLoRA, SupportsPP
+from .interfaces import SupportsLoRA
+from .interfaces import SupportsPP
 from .qwen2 import Qwen2Model
-from .utils import AutoWeightsLoader, maybe_prefix
+from .utils import AutoWeightsLoader
+from .utils import maybe_prefix
 
 
 class Qwen2RewardBaseModel(nn.Module, SupportsLoRA, SupportsPP):

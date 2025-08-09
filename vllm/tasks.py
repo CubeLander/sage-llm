@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-from typing import Literal, get_args
+from typing import Literal
+from typing import get_args
 
 GenerationTask = Literal["generate", "transcription"]
 GENERATION_TASKS = get_args(GenerationTask)

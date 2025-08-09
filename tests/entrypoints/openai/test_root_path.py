@@ -3,7 +3,8 @@
 
 import contextlib
 import os
-from typing import Any, NamedTuple
+from typing import Any
+from typing import NamedTuple
 
 import openai  # use the official client for correctness check
 import pytest

@@ -1,27 +1,36 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 import argparse
-import multiprocessing
-import time
-import weakref
 from collections.abc import Sequence
+import multiprocessing
 from multiprocessing import connection
 from multiprocessing.process import BaseProcess
-from typing import (TYPE_CHECKING, Any, Callable, Generic, Optional, TypeVar,
-                    Union, overload)
+import time
+from typing import Any
+from typing import Callable
+from typing import Generic
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import TypeVar
+from typing import Union
+from typing import overload
+import weakref
 
 import torch
 
+from vllm.usage.usage_lib import UsageContext
+from vllm.usage.usage_lib import is_usage_stats_enabled
+from vllm.usage.usage_lib import usage_message
+from vllm.utils import get_open_port
+from vllm.utils import get_open_zmq_ipc_path
+from vllm.utils import get_tcp_uri
+from vllm.utils import kill_process_tree
 from vllm.utils.logger import init_logger
-from vllm.usage.usage_lib import (UsageContext, is_usage_stats_enabled,
-                                  usage_message)
-from vllm.utils import (get_open_port, get_open_zmq_ipc_path, get_tcp_uri,
-                        kill_process_tree)
 
 if TYPE_CHECKING:
     from vllm.v1.engine.coordinator import DPCoordinator
-    from vllm.v1.engine.utils import (CoreEngineActorManager,
-                                      CoreEngineProcManager)
+    from vllm.v1.engine.utils import CoreEngineActorManager
+    from vllm.v1.engine.utils import CoreEngineProcManager
 
 logger = init_logger(__name__)
 
@@ -194,8 +203,8 @@ def wait_for_completion_or_failure(
         coordinator: The coordinator for data parallel.
     """
 
-    from vllm.v1.engine.utils import (CoreEngineActorManager,
-                                      CoreEngineProcManager)
+    from vllm.v1.engine.utils import CoreEngineActorManager
+    from vllm.v1.engine.utils import CoreEngineProcManager
 
     try:
         logger.info("Waiting for API servers to complete ...")

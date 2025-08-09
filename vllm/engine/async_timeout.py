@@ -10,7 +10,9 @@ import asyncio
 import enum
 import sys
 from types import TracebackType
-from typing import Any, Optional, Type
+from typing import Any
+from typing import Optional
+from typing import Type
 
 if sys.version_info[:2] >= (3, 11):
     from asyncio import timeout as asyncio_timeout

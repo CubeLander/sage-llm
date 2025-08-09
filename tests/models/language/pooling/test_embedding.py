@@ -7,7 +7,8 @@ import pytest
 from vllm.config import PoolerConfig
 from vllm.platforms import current_platform
 
-from ...utils import check_embeddings_close, check_transformers_version
+from ...utils import check_embeddings_close
+from ...utils import check_transformers_version
 
 
 @pytest.fixture(autouse=True)

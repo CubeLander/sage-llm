@@ -3,9 +3,16 @@
 
 from collections import deque
 from dataclasses import dataclass
-from typing import Deque, Dict, Iterable, List, Optional, Protocol, Tuple
+from typing import Deque
+from typing import Dict
+from typing import Iterable
+from typing import List
+from typing import Optional
+from typing import Protocol
+from typing import Tuple
 
-from vllm.core.block.interfaces import Block, BlockAllocator
+from vllm.core.block.interfaces import Block
+from vllm.core.block.interfaces import BlockAllocator
 
 BlockId = int
 RefCount = int

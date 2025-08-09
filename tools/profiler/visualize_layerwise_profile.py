@@ -7,7 +7,8 @@ import json
 import math
 import os
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
 import matplotlib.pyplot as plt
 import pandas as pd

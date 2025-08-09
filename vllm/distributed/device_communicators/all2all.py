@@ -1,15 +1,18 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-from typing import TYPE_CHECKING, Any
+from typing import Any
+from typing import TYPE_CHECKING
 
 import torch
 import torch.distributed as dist
 
 from vllm.forward_context import get_forward_context
+from vllm.utils import has_deep_ep
+from vllm.utils import has_pplx
 from vllm.utils.logger import init_logger
-from vllm.utils import has_deep_ep, has_pplx
 
-from .base_device_communicator import All2AllManagerBase, Cache
+from .base_device_communicator import All2AllManagerBase
+from .base_device_communicator import Cache
 
 logger = init_logger(__name__)
 
@@ -87,9 +90,9 @@ class PPLXAll2AllManager(All2AllManagerBase):
         if self.internode:
             # inter-node communication needs nvshmem,
             # intra-node communication uses p2p mapping directly
-            from pplx_kernels.nvshmem import (nvshmem_alloc_empty_unique_id,
-                                              nvshmem_get_unique_id,
-                                              nvshmem_init)
+            from pplx_kernels.nvshmem import nvshmem_alloc_empty_unique_id
+            from pplx_kernels.nvshmem import nvshmem_get_unique_id
+            from pplx_kernels.nvshmem import nvshmem_init
             logger.debug(
                 "Initialize NVSHMEM for pplx_kernels: "
                 "rank=%d, world size=%d", self.rank, self.world_size)

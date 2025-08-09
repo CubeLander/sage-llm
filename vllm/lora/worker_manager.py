@@ -2,22 +2,28 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from contextlib import contextmanager
-from typing import Any, Literal, Optional, Union
+from typing import Any
+from typing import Literal
+from typing import Optional
+from typing import Union
 
 import torch
 
-from .adapter.utils import (add_adapter_worker,
-                                        apply_adapters_worker,
-                                        list_adapters_worker,
-                                        set_active_adapters_worker)
-from .abc_worker_manager import AbstractWorkerManager
 from vllm.config import LoRAConfig
-from vllm.utils.logger import init_logger
-from vllm.lora.models import (LoRAModel, LoRAModelManager,
-                              LRUCacheLoRAModelManager, create_lora_manager)
+from vllm.lora.models import LRUCacheLoRAModelManager
+from vllm.lora.models import LoRAModel
+from vllm.lora.models import LoRAModelManager
+from vllm.lora.models import create_lora_manager
 from vllm.lora.peft_helper import PEFTHelper
 from vllm.lora.request import LoRARequest
 from vllm.lora.utils import get_adapter_absolute_path
+from vllm.utils.logger import init_logger
+
+from .abc_worker_manager import AbstractWorkerManager
+from .adapter.utils import add_adapter_worker
+from .adapter.utils import apply_adapters_worker
+from .adapter.utils import list_adapters_worker
+from .adapter.utils import set_active_adapters_worker
 
 logger = init_logger(__name__)
 

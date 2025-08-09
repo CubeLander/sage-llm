@@ -5,14 +5,16 @@ Test deepep dispatch-combine logic
 """
 
 import dataclasses
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 import pytest
 import torch.distributed
 from torch.distributed import ProcessGroup
 
 from vllm import _custom_ops as ops
-from vllm.config import VllmConfig, set_current_vllm_config
+from vllm.config import VllmConfig
+from vllm.config import set_current_vllm_config
 from vllm.model_executor.layers.activation import SiluAndMul
 from vllm.model_executor.layers.fused_moe import TritonExperts
 from vllm.model_executor.layers.fused_moe.fused_batched_moe import (
@@ -24,7 +26,8 @@ from vllm.model_executor.layers.quantization.utils.fp8_utils import (
 from vllm.platforms import current_platform
 from vllm.utils import has_deep_ep
 
-from .parallel_utils import ProcessGroupInfo, parallel_launch
+from .parallel_utils import ProcessGroupInfo
+from .parallel_utils import parallel_launch
 
 if has_deep_ep():
     from vllm.model_executor.layers.fused_moe.deepep_ht_prepare_finalize import (  # noqa: E501
@@ -32,7 +35,9 @@ if has_deep_ep():
     from vllm.model_executor.layers.fused_moe.deepep_ll_prepare_finalize import (  # noqa: E501
         DeepEPLLPrepareAndFinalize)
 
-    from .parallel_utils import DeepEPHTArgs, DeepEPLLArgs, make_deepep_a2a
+    from .parallel_utils import DeepEPHTArgs
+    from .parallel_utils import DeepEPLLArgs
+    from .parallel_utils import make_deepep_a2a
 
 requires_deep_ep = pytest.mark.skipif(
     not has_deep_ep(),

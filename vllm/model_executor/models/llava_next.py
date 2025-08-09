@@ -2,32 +2,50 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from abc import abstractmethod
-from collections.abc import Iterable, Mapping
-from typing import (Final, Literal, Optional, Protocol, TypedDict, TypeVar,
-                    Union)
+from collections.abc import Iterable
+from collections.abc import Mapping
+from typing import Final
+from typing import Literal
+from typing import Optional
+from typing import Protocol
+from typing import TypeVar
+from typing import TypedDict
+from typing import Union
 
 import torch
 import torch.nn as nn
-from transformers import BatchFeature, LlavaNextConfig, LlavaNextProcessor
+from transformers import BatchFeature
+from transformers import LlavaNextConfig
+from transformers import LlavaNextProcessor
 from transformers.models.llava_next.modeling_llava_next import (
-    get_anyres_image_grid_shape, unpad_image)
+    get_anyres_image_grid_shape)
+from transformers.models.llava_next.modeling_llava_next import unpad_image
 from typing_extensions import NotRequired
 
 from vllm.config import VllmConfig
-from vllm.model_executor.sampling_metadata import SamplingMetadata
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
 from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
 from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
 from vllm.io.inputs.multimodal.parse import ImageSize
-from vllm.sequence import IntermediateTensors
+from vllm.model_executor.sampling_metadata import SamplingMetadata
 
 from .clip import CLIPVisionModel
-from .interfaces import MultiModalEmbeddings, SupportsMultiModal, SupportsPP
-from .llava import (BaseLlavaMultiModalProcessor, BaseLlavaProcessingInfo,
-                    LlavaDummyInputsBuilder, LlavaLikeConfig,
-                    LlavaMultiModalProjector, init_vision_tower_for_llava)
+from .interfaces import MultiModalEmbeddings
+from .interfaces import SupportsMultiModal
+from .interfaces import SupportsPP
+from .llava import BaseLlavaMultiModalProcessor
+from .llava import BaseLlavaProcessingInfo
+from .llava import LlavaDummyInputsBuilder
+from .llava import LlavaLikeConfig
+from .llava import LlavaMultiModalProjector
+from .llava import init_vision_tower_for_llava
 from .siglip import SiglipVisionModel
-from .utils import (AutoWeightsLoader, WeightsMapper, embed_multimodal,
-                    flatten_bn, init_vllm_registered_model, maybe_prefix)
+from .utils import AutoWeightsLoader
+from .utils import WeightsMapper
+from .utils import embed_multimodal
+from .utils import flatten_bn
+from .utils import init_vllm_registered_model
+from .utils import maybe_prefix
 
 
 class LlavaNextImagePixelInputs(TypedDict):

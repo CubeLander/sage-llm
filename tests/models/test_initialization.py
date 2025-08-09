@@ -14,8 +14,10 @@ from vllm.v1.core.kv_cache_utils import get_kv_cache_config
 from vllm.v1.engine.core import EngineCore as V1EngineCore
 
 from ..utils import create_new_process_for_each_test
-from .registry import (_TRANSFORMERS_BACKEND_MODELS, AUTO_EXAMPLE_MODELS,
-                       HF_EXAMPLE_MODELS, HfExampleModels)
+from .registry import AUTO_EXAMPLE_MODELS
+from .registry import HF_EXAMPLE_MODELS
+from .registry import HfExampleModels
+from .registry import _TRANSFORMERS_BACKEND_MODELS
 from .utils import dummy_hf_overrides
 
 

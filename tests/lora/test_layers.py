@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import random
 from copy import deepcopy
 from dataclasses import dataclass
+import random
 from typing import Optional
 from unittest.mock import patch
 
@@ -13,31 +13,39 @@ import torch.nn.functional as F
 
 from vllm.config import LoRAConfig
 from vllm.lora.fully_sharded_layers import (
-    ColumnParallelLinearWithShardedLoRA,
-    MergedColumnParallelLinearWithShardedLoRA,
-    MergedQKVParallelLinearWithShardedLoRA, QKVParallelLinearWithShardedLoRA,
-    RowParallelLinearWithShardedLoRA)
+    MergedColumnParallelLinearWithShardedLoRA)
+from vllm.lora.fully_sharded_layers import (
+    MergedQKVParallelLinearWithShardedLoRA)
+from vllm.lora.fully_sharded_layers import ColumnParallelLinearWithShardedLoRA
+from vllm.lora.fully_sharded_layers import QKVParallelLinearWithShardedLoRA
+from vllm.lora.fully_sharded_layers import RowParallelLinearWithShardedLoRA
 # yapf conflicts with isort for this block
 # yapf: disable
-from vllm.lora.layers import (BaseLayerWithLoRA, ColumnParallelLinearWithLoRA,
-                              LogitsProcessorWithLoRA, LoRAMapping,
-                              MergedColumnParallelLinearWithLoRA,
-                              MergedQKVParallelLinearWithLoRA,
-                              QKVParallelLinearWithLoRA,
-                              ReplicatedLinearWithLoRA,
-                              RowParallelLinearWithLoRA,
-                              VocabParallelEmbeddingWithLoRA)
+from vllm.lora.layers import BaseLayerWithLoRA
+from vllm.lora.layers import ColumnParallelLinearWithLoRA
+from vllm.lora.layers import LoRAMapping
+from vllm.lora.layers import LogitsProcessorWithLoRA
+from vllm.lora.layers import MergedColumnParallelLinearWithLoRA
+from vllm.lora.layers import MergedQKVParallelLinearWithLoRA
+from vllm.lora.layers import QKVParallelLinearWithLoRA
+from vllm.lora.layers import ReplicatedLinearWithLoRA
+from vllm.lora.layers import RowParallelLinearWithLoRA
+from vllm.lora.layers import VocabParallelEmbeddingWithLoRA
 # yapf: enable
-from vllm.lora.models import LoRALayerWeights, PackedLoRALayerWeights
+from vllm.lora.models import LoRALayerWeights
+from vllm.lora.models import PackedLoRALayerWeights
 from vllm.lora.punica_wrapper import get_punica_wrapper
-from vllm.model_executor.layers.linear import (ColumnParallelLinear,
-                                               MergedColumnParallelLinear,
-                                               QKVParallelLinear,
-                                               ReplicatedLinear,
-                                               RowParallelLinear)
+from vllm.model_executor.layers.linear import ColumnParallelLinear
+from vllm.model_executor.layers.linear import MergedColumnParallelLinear
+from vllm.model_executor.layers.linear import QKVParallelLinear
+from vllm.model_executor.layers.linear import ReplicatedLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
 from vllm.model_executor.layers.logits_processor import LogitsProcessor
 from vllm.model_executor.layers.vocab_parallel_embedding import (
-    ParallelLMHead, VocabParallelEmbedding, get_masked_input_and_mask)
+    VocabParallelEmbedding)
+from vllm.model_executor.layers.vocab_parallel_embedding import (
+    get_masked_input_and_mask)
+from vllm.model_executor.layers.vocab_parallel_embedding import ParallelLMHead
 from vllm.model_executor.utils import set_random_seed
 from vllm.platforms import current_platform
 
@@ -68,8 +76,8 @@ VOCAB_PARALLEL_EMBEDDING_TEST_NUM_RANDOM_SEEDS = 128
 @pytest.fixture(autouse=True)
 def clean_cache_reset_device(reset_default_device):
     # Release any memory we might be holding on to. CI runs OOMs otherwise.
-    from vllm.lora.ops.triton_ops.utils import (_LORA_A_PTR_DICT,
-                                                _LORA_B_PTR_DICT)
+    from vllm.lora.ops.triton_ops.utils import _LORA_A_PTR_DICT
+    from vllm.lora.ops.triton_ops.utils import _LORA_B_PTR_DICT
     _LORA_B_PTR_DICT.clear()
     _LORA_A_PTR_DICT.clear()
 

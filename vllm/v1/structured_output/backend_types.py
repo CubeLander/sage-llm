@@ -3,9 +3,10 @@
 
 from __future__ import annotations
 
-import enum
-from abc import ABC, abstractmethod
+from abc import ABC
+from abc import abstractmethod
 from dataclasses import dataclass
+import enum
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:

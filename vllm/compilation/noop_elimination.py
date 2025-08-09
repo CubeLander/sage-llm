@@ -4,8 +4,8 @@
 from collections.abc import Iterable
 from typing import Union
 
-import torch.fx
 from torch import SymInt
+import torch.fx
 
 from vllm.utils.logger import init_logger
 

@@ -1,34 +1,41 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import itertools
 from abc import abstractmethod
-from typing import Any, Literal, Optional, Union
+import itertools
+from typing import Any
+from typing import Literal
+from typing import Optional
+from typing import Union
 
 import torch
 import torch.nn as nn
-from torch.nn.parameter import Parameter, UninitializedParameter
+from torch.nn.parameter import Parameter
+from torch.nn.parameter import UninitializedParameter
 
 from vllm import envs
-from vllm.distributed import (divide, get_tensor_model_parallel_rank,
-                              get_tensor_model_parallel_world_size,
-                              split_tensor_along_last_dim,
-                              tensor_model_parallel_all_gather,
-                              tensor_model_parallel_all_reduce)
-from vllm.utils.logger import init_logger
+from vllm.distributed import divide
+from vllm.distributed import get_tensor_model_parallel_rank
+from vllm.distributed import get_tensor_model_parallel_world_size
+from vllm.distributed import split_tensor_along_last_dim
+from vllm.distributed import tensor_model_parallel_all_gather
+from vllm.distributed import tensor_model_parallel_all_reduce
 from vllm.model_executor.layers.quantization.base_config import (
-    QuantizationConfig, QuantizeMethodBase)
+    QuantizationConfig)
+from vllm.model_executor.layers.quantization.base_config import (
+    QuantizeMethodBase)
 from vllm.model_executor.layers.utils import dispatch_unquantized_gemm
 # yapf: disable
-from vllm.model_executor.parameter import (BasevLLMParameter,
-                                           BlockQuantScaleParameter,
-                                           PackedColumnParameter,
-                                           PackedvLLMParameter,
-                                           PerTensorScaleParameter,
-                                           RowvLLMParameter)
+from vllm.model_executor.parameter import BasevLLMParameter
+from vllm.model_executor.parameter import BlockQuantScaleParameter
+from vllm.model_executor.parameter import PackedColumnParameter
+from vllm.model_executor.parameter import PackedvLLMParameter
+from vllm.model_executor.parameter import PerTensorScaleParameter
+from vllm.model_executor.parameter import RowvLLMParameter
 # yapf: enable
 from vllm.model_executor.utils import set_weight_attrs
 from vllm.platforms import current_platform
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 
@@ -421,7 +428,9 @@ class MergedReplicatedLinear(ReplicatedLinear):
 
         if isinstance(param, BlockQuantScaleParameter):
             from vllm.model_executor.layers.quantization.fp8 import (
-                Fp8LinearMethod, Fp8MoEMethod)
+                Fp8LinearMethod)
+            from vllm.model_executor.layers.quantization.fp8 import (
+                Fp8MoEMethod)
             assert self.quant_method is not None
             assert isinstance(self.quant_method,
                               (Fp8LinearMethod, Fp8MoEMethod))
@@ -861,7 +870,9 @@ class MergedColumnParallelLinear(ColumnParallelLinear):
 
         if isinstance(param, BlockQuantScaleParameter):
             from vllm.model_executor.layers.quantization.fp8 import (
-                Fp8LinearMethod, Fp8MoEMethod)
+                Fp8LinearMethod)
+            from vllm.model_executor.layers.quantization.fp8 import (
+                Fp8MoEMethod)
             assert self.quant_method is not None
             assert isinstance(self.quant_method,
                               (Fp8LinearMethod, Fp8MoEMethod))

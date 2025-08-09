@@ -2,15 +2,17 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from collections import OrderedDict
-from typing import NamedTuple, Optional
+from typing import NamedTuple
+from typing import Optional
 from unittest.mock import patch
 
-import pytest
 from huggingface_hub.utils import HfHubHTTPError
+import pytest
 from torch import nn
 
-from vllm.lora.utils import (get_adapter_absolute_path,
-                             parse_fine_tuned_lora_name, replace_submodule)
+from vllm.lora.utils import get_adapter_absolute_path
+from vllm.lora.utils import parse_fine_tuned_lora_name
+from vllm.lora.utils import replace_submodule
 from vllm.model_executor.models.utils import WeightsMapper
 
 

@@ -13,22 +13,25 @@ from typing import Any
 import pytest
 import torch
 
-import vllm.model_executor.model_loader.tensorizer
-from vllm import LLM, SamplingParams
+from vllm import LLM
+from vllm import SamplingParams
 from vllm.engine.arg_utils import EngineArgs
+import vllm.model_executor.model_loader.tensorizer
+from vllm.model_executor.model_loader.tensorizer import TensorSerializer
 # yapf: disable
-from vllm.model_executor.model_loader.tensorizer import (TensorizerConfig,
-                                                         TensorSerializer,
-                                                         is_vllm_tensorized,
-                                                         open_stream,
-                                                         tensorize_vllm_model)
+from vllm.model_executor.model_loader.tensorizer import TensorizerConfig
+from vllm.model_executor.model_loader.tensorizer import is_vllm_tensorized
+from vllm.model_executor.model_loader.tensorizer import open_stream
+from vllm.model_executor.model_loader.tensorizer import tensorize_vllm_model
 from vllm.model_executor.model_loader.tensorizer_loader import (
     BLACKLISTED_TENSORIZER_ARGS)
 # yapf: enable
 from vllm.utils import PlaceholderModule
 
-from ..utils import VLLM_PATH, RemoteOpenAIServer
-from .conftest import DummyExecutor, assert_from_collective_rpc
+from ..utils import RemoteOpenAIServer
+from ..utils import VLLM_PATH
+from .conftest import DummyExecutor
+from .conftest import assert_from_collective_rpc
 
 try:
     import tensorizer

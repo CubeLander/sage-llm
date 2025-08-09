@@ -2,12 +2,14 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import asyncio
-import os
-import uuid
 from asyncio import CancelledError
 from copy import copy
-from dataclasses import dataclass, field
-from typing import Any, Optional
+from dataclasses import dataclass
+from dataclasses import field
+import os
+from typing import Any
+from typing import Optional
+import uuid
 
 import pytest
 import pytest_asyncio
@@ -16,7 +18,8 @@ import torch
 from vllm import SamplingParams
 from vllm.config import ParallelConfig
 from vllm.distributed import cleanup_dist_env_and_memory
-from vllm.engine.async_llm_engine import AsyncEngineArgs, AsyncLLMEngine
+from vllm.engine.async_llm_engine import AsyncEngineArgs
+from vllm.engine.async_llm_engine import AsyncLLMEngine
 from vllm.outputs import RequestOutput as RealRequestOutput
 from vllm.sampling_params import RequestOutputKind
 

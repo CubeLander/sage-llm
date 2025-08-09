@@ -3,7 +3,8 @@
 """Utils for model executor."""
 
 import copy
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
 import torch
 

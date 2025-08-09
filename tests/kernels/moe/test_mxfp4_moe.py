@@ -1,13 +1,13 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from dataclasses import dataclass
 import importlib
 import importlib.metadata
-from dataclasses import dataclass
 
+from packaging import version
 import pytest
 import torch
-from packaging import version
 
 QUARK_MXFP4_AVAILABLE = importlib.util.find_spec(
     "quark") is not None and version.parse(

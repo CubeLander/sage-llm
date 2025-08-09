@@ -2,7 +2,8 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import copy
-from dataclasses import dataclass, fields
+from dataclasses import dataclass
+from dataclasses import fields
 from math import prod
 from typing import Optional
 
@@ -10,8 +11,9 @@ import torch
 from typing_extensions import Self
 
 from vllm.config import VllmConfig
+from vllm.utils import cdiv
+from vllm.utils import get_dtype_size
 from vllm.utils.logger import init_logger
-from vllm.utils import cdiv, get_dtype_size
 
 logger = init_logger(__name__)
 

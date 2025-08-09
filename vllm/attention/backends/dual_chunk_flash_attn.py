@@ -2,25 +2,33 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 """Attention layer with Dual chunk flash attention and sparse attention.
 """
-import math
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Any, Dict, List, Optional, Tuple, Type
+import math
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Tuple
+from typing import Type
 
 import torch
 import torch.distributed
 import torch.nn.functional as F
 
 from vllm import _custom_ops as ops
-from vllm.attention.backends.abstract import AttentionLayer, AttentionType
-from vllm.attention.backends.flash_attn import (FlashAttentionBackend,
-                                                FlashAttentionImpl,
-                                                FlashAttentionMetadata,
-                                                FlashAttentionMetadataBuilder)
+from vllm.attention.backends.abstract import AttentionLayer
+from vllm.attention.backends.abstract import AttentionType
+from vllm.attention.backends.flash_attn import FlashAttentionBackend
+from vllm.attention.backends.flash_attn import FlashAttentionImpl
+from vllm.attention.backends.flash_attn import FlashAttentionMetadata
+from vllm.attention.backends.flash_attn import FlashAttentionMetadataBuilder
 from vllm.distributed.parallel_state import get_tensor_model_parallel_rank
-from vllm.utils.logger import init_logger
 from vllm.utils import async_tensor_h2d
-from vllm.vllm_flash_attn import (flash_attn_varlen_func,
-                                  flash_attn_with_kvcache, sparse_attn_func)
+from vllm.utils.logger import init_logger
+from vllm.vllm_flash_attn import flash_attn_varlen_func
+from vllm.vllm_flash_attn import flash_attn_with_kvcache
+from vllm.vllm_flash_attn import sparse_attn_func
 
 if TYPE_CHECKING:
     from vllm.worker.model_runner import ModelInputForGPUBuilder

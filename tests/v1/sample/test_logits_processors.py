@@ -1,30 +1,34 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import random
 from collections.abc import Callable
-from typing import NamedTuple, Optional, Union
+import random
+from typing import NamedTuple
+from typing import Optional
+from typing import Union
 
 import numpy as np
 import pytest
 import torch
 
-from tests.v1.sample.utils import (LogitsprocsTestFakes, create_fake_logits,
-                                   create_penalty_tensor,
-                                   create_prompt_tokens_tensor,
-                                   fake_apply_logitsprocs,
-                                   fake_update_logitsprocs_state)
+from tests.v1.sample.utils import LogitsprocsTestFakes
+from tests.v1.sample.utils import create_fake_logits
+from tests.v1.sample.utils import create_penalty_tensor
+from tests.v1.sample.utils import create_prompt_tokens_tensor
+from tests.v1.sample.utils import fake_apply_logitsprocs
+from tests.v1.sample.utils import fake_update_logitsprocs_state
 from vllm.platforms import current_platform
 from vllm.sampling_params import SamplingParams
 from vllm.utils import is_pin_memory_available
 # yapf: disable
-from vllm.v1.sample.logits_processor import (BatchUpdate, BatchUpdateBuilder,
-                                             LogitBiasLogitsProcessor,
-                                             LogitsProcessor,
-                                             MinPLogitsProcessor,
-                                             MinTokensLogitsProcessor,
-                                             MoveDirectionality,
-                                             init_builtin_logitsprocs)
+from vllm.v1.sample.logits_processor import BatchUpdate
+from vllm.v1.sample.logits_processor import BatchUpdateBuilder
+from vllm.v1.sample.logits_processor import LogitBiasLogitsProcessor
+from vllm.v1.sample.logits_processor import LogitsProcessor
+from vllm.v1.sample.logits_processor import MinPLogitsProcessor
+from vllm.v1.sample.logits_processor import MinTokensLogitsProcessor
+from vllm.v1.sample.logits_processor import MoveDirectionality
+from vllm.v1.sample.logits_processor import init_builtin_logitsprocs
 # yapf: enable
 from vllm.v1.sample.metadata import SamplingMetadata
 

@@ -8,7 +8,8 @@ from tests.utils import multi_gpu_test
 from vllm.engine.arg_utils import EngineArgs
 from vllm.sampling_params import SamplingParams
 
-from ...utils import check_logprobs_close, check_outputs_equal
+from ...utils import check_logprobs_close
+from ...utils import check_outputs_equal
 
 # Mark all tests as hybrid
 pytestmark = pytest.mark.hybrid_model

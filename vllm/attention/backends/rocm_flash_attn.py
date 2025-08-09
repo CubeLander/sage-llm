@@ -1,28 +1,34 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 """Attention layer ROCm GPUs."""
-import itertools
 from dataclasses import dataclass
 from functools import cache
-from typing import TYPE_CHECKING, List, Optional, Tuple, Type
+import itertools
+from typing import List
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Tuple
+from typing import Type
 
 import torch
 
-import vllm.envs as envs
 from vllm import _custom_ops as ops
-from vllm.attention.backends.abstract import (AttentionBackend, AttentionImpl,
-                                              AttentionLayer,
-                                              AttentionMetadata, AttentionType)
-from vllm.attention.backends.utils import (CommonAttentionState,
-                                           CommonMetadataBuilder)
-from vllm.attention.ops.paged_attn import (PagedAttention,
-                                           PagedAttentionMetadata)
+from vllm.attention.backends.abstract import AttentionBackend
+from vllm.attention.backends.abstract import AttentionImpl
+from vllm.attention.backends.abstract import AttentionLayer
+from vllm.attention.backends.abstract import AttentionMetadata
+from vllm.attention.backends.abstract import AttentionType
+from vllm.attention.backends.utils import CommonAttentionState
+from vllm.attention.backends.utils import CommonMetadataBuilder
+from vllm.attention.ops.paged_attn import PagedAttention
+from vllm.attention.ops.paged_attn import PagedAttentionMetadata
 from vllm.config import get_current_vllm_config
-from vllm.utils.logger import init_logger
+import vllm.envs as envs
 from vllm.model_executor.layers.quantization.utils.quant_utils import (
     GroupShape)
 from vllm.platforms import current_platform
 from vllm.platforms.rocm import use_rocm_custom_paged_attention
+from vllm.utils.logger import init_logger
 
 if TYPE_CHECKING:
     from vllm.worker.model_runner import ModelInputForGPUWithSamplingMetadata

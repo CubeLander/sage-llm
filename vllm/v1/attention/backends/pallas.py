@@ -5,19 +5,22 @@ from dataclasses import dataclass
 from typing import Optional
 
 import torch
-import torch_xla.core.xla_builder as xb
-import torch_xla.experimental.custom_kernel  # noqa: F401
 # Required to register custom ops.
 from torch.library import impl
 from torch_xla._internal.jax_workarounds import requires_jax
+import torch_xla.core.xla_builder as xb
+import torch_xla.experimental.custom_kernel  # noqa: F401
 from torch_xla.experimental.custom_kernel import XLA_LIB
 
-from vllm.attention.backends.abstract import (AttentionBackend, AttentionImpl,
-                                              AttentionLayer, AttentionType)
+from vllm.attention.backends.abstract import AttentionBackend
+from vllm.attention.backends.abstract import AttentionImpl
+from vllm.attention.backends.abstract import AttentionLayer
+from vllm.attention.backends.abstract import AttentionType
 from vllm.attention.backends.utils import CommonAttentionState
 from vllm.config import VllmConfig
+from vllm.utils import cdiv
+from vllm.utils import next_power_of_2
 from vllm.utils.logger import init_logger
-from vllm.utils import cdiv, next_power_of_2
 
 logger = init_logger(__name__)
 

@@ -2,10 +2,16 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import asyncio
-import os
 from collections import defaultdict
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional, Union
+import os
+from typing import Any
+from typing import Callable
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Union
 
 import cloudpickle
 import msgspec
@@ -14,15 +20,19 @@ import vllm.envs as envs
 from vllm.executor.executor_base import (
     DistributedExecutorBase)  # yapf: disable
 from vllm.executor.msgspec_utils import encode_hook
-from vllm.executor.ray_utils import (RayWorkerWrapper, initialize_ray_cluster,
-                                     ray)
-from vllm.utils.logger import init_logger
+from vllm.executor.ray_utils import RayWorkerWrapper
+from vllm.executor.ray_utils import initialize_ray_cluster
+from vllm.executor.ray_utils import ray
 from vllm.model_executor.layers.sampler import SamplerOutput
 from vllm.platforms import current_platform
-from vllm.utils.ray.ray_env import get_env_vars_to_copy
 from vllm.sequence import ExecuteModelRequest
-from vllm.utils import (_run_task_with_lock, get_distributed_init_method,
-                        get_ip, get_open_port, make_async)
+from vllm.utils import _run_task_with_lock
+from vllm.utils import get_distributed_init_method
+from vllm.utils import get_ip
+from vllm.utils import get_open_port
+from vllm.utils import make_async
+from vllm.utils.logger import init_logger
+from vllm.utils.ray.ray_env import get_env_vars_to_copy
 
 if ray is not None:
     from ray.actor import ActorHandle
@@ -546,7 +556,8 @@ class RayDistributedExecutor(DistributedExecutorBase):
         # Note: we should set this env var before importing
         # ray.dag, otherwise it will not take effect.
         os.environ.setdefault("RAY_CGRAPH_get_timeout", "300")  # noqa: SIM112
-        from ray.dag import InputNode, MultiOutputNode
+        from ray.dag import InputNode
+        from ray.dag import MultiOutputNode
         logger.info("RAY_CGRAPH_get_timeout is set to %s",
                     os.environ["RAY_CGRAPH_get_timeout"])  # noqa: SIM112
         logger.info("VLLM_USE_RAY_COMPILED_DAG_CHANNEL_TYPE = %s",

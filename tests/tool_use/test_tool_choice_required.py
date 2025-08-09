@@ -1,15 +1,15 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-import json
 from copy import deepcopy
+import json
 from unittest.mock import MagicMock
 
+from pydantic import TypeAdapter
 import pytest
 import regex as re
-from pydantic import TypeAdapter
 
-from vllm.entrypoints.openai.protocol import (ChatCompletionRequest,
-                                              ChatCompletionToolsParam)
+from vllm.entrypoints.openai.protocol import ChatCompletionRequest
+from vllm.entrypoints.openai.protocol import ChatCompletionToolsParam
 from vllm.entrypoints.openai.serving_chat import OpenAIServingChat
 
 EXAMPLE_TOOLS = [

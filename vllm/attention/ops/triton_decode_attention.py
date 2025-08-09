@@ -34,7 +34,8 @@ import logging
 from packaging import version
 
 from vllm.platforms import current_platform
-from vllm.platforms.triton_tuils import tl, triton
+from vllm.platforms.triton_tuils import tl
+from vllm.platforms.triton_tuils import triton
 
 is_hip_ = current_platform.is_rocm()
 

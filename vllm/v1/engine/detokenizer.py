@@ -1,18 +1,21 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-from abc import ABC, abstractmethod
+from abc import ABC
+from abc import abstractmethod
 from typing import Optional
 
-import tokenizers
 from packaging import version
+import tokenizers
 from tokenizers import Tokenizer
 from tokenizers.decoders import DecodeStream
 from transformers import PreTrainedTokenizerFast
 
 from vllm.engine.output_processor.stop_checker import StopChecker
-from vllm.utils.logger import init_logger
 from vllm.transformers_utils.detokenizer_utils import (
-    AnyTokenizer, convert_prompt_ids_to_tokens, detokenize_incrementally)
+    convert_prompt_ids_to_tokens)
+from vllm.transformers_utils.detokenizer_utils import AnyTokenizer
+from vllm.transformers_utils.detokenizer_utils import detokenize_incrementally
+from vllm.utils.logger import init_logger
 from vllm.v1.engine import EngineCoreRequest
 
 logger = init_logger(__name__)

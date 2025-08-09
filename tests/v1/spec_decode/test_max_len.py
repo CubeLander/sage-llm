@@ -5,7 +5,8 @@
 import pytest
 
 from tests.utils import get_attn_backend_list_based_on_platform
-from vllm import LLM, SamplingParams
+from vllm import LLM
+from vllm import SamplingParams
 from vllm.platforms import current_platform
 
 _PROMPTS = [

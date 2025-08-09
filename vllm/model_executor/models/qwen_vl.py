@@ -6,45 +6,63 @@
 # Copyright (c) Alibaba Cloud.
 """Inference-only Qwen-VL model compatible with HuggingFace weights."""
 
+from collections.abc import Collection
+from collections.abc import Mapping
+from collections.abc import Sequence
+from collections.abc import Set
 import copy
+from functools import lru_cache
+from functools import partial
 import math
+from typing import Callable
+from typing import Literal
+from typing import Optional
+from typing import TypedDict
+from typing import Union
 import unicodedata
-from collections.abc import Collection, Mapping, Sequence, Set
-from functools import lru_cache, partial
-from typing import Callable, Literal, Optional, TypedDict, Union
 
 import regex as re
 import torch
 from torch import nn
 from torchvision import transforms
 from torchvision.transforms import InterpolationMode
-from transformers import (BatchFeature, PretrainedConfig, PreTrainedTokenizer,
-                          TensorType)
+from transformers import BatchFeature
+from transformers import PreTrainedTokenizer
+from transformers import PretrainedConfig
+from transformers import TensorType
 from transformers.image_utils import ImageInput
 from transformers.tokenization_utils_base import TextInput
 
 from vllm.config import VllmConfig
-from vllm.model_executor.layers.activation import get_act_fn
-from vllm.model_executor.layers.linear import (ColumnParallelLinear,
-                                               ReplicatedLinear,
-                                               RowParallelLinear)
-from vllm.model_executor.layers.quantization import QuantizationConfig
-from vllm.model_executor.layers.resampler import Resampler2, get_abs_pos
-from vllm.model_executor.models.module_mapping import MultiModelKeys
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
 from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
-                                    MultiModalKwargs)
+from vllm.io.inputs.multimodal.inputs import MultiModalDataDict
+from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
 from vllm.io.inputs.multimodal.parse import MultiModalDataItems
-from vllm.io.inputs.multimodal.processing import (BaseMultiModalProcessor,
-                                        BaseProcessingInfo, PromptReplacement,
-                                        PromptUpdate, PromptUpdateDetails)
+from vllm.io.inputs.multimodal.processing import BaseMultiModalProcessor
+from vllm.io.inputs.multimodal.processing import BaseProcessingInfo
+from vllm.io.inputs.multimodal.processing import PromptReplacement
+from vllm.io.inputs.multimodal.processing import PromptUpdate
+from vllm.io.inputs.multimodal.processing import PromptUpdateDetails
 from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
-from vllm.sequence import IntermediateTensors
+from vllm.model_executor.layers.activation import get_act_fn
+from vllm.model_executor.layers.linear import ColumnParallelLinear
+from vllm.model_executor.layers.linear import ReplicatedLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
+from vllm.model_executor.layers.quantization import QuantizationConfig
+from vllm.model_executor.layers.resampler import Resampler2
+from vllm.model_executor.layers.resampler import get_abs_pos
+from vllm.model_executor.models.module_mapping import MultiModelKeys
 
-from .interfaces import (MultiModalEmbeddings, SupportsLoRA,
-                         SupportsMultiModal, SupportsPP)
-from .qwen import QWenBaseModel, QWenModel
-from .utils import flatten_bn, merge_multimodal_embeddings
+from .interfaces import MultiModalEmbeddings
+from .interfaces import SupportsLoRA
+from .interfaces import SupportsMultiModal
+from .interfaces import SupportsPP
+from .qwen import QWenBaseModel
+from .qwen import QWenModel
+from .utils import flatten_bn
+from .utils import merge_multimodal_embeddings
 
 
 class QwenImagePixelInputs(TypedDict):

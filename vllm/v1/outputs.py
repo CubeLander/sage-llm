@@ -2,7 +2,8 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from dataclasses import dataclass
-from typing import NamedTuple, Optional
+from typing import NamedTuple
+from typing import Optional
 
 import torch
 

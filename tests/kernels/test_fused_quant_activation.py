@@ -3,8 +3,8 @@
 import pytest
 import torch
 
-import vllm._custom_ops as ops
 from tests.kernels.utils import opcheck
+import vllm._custom_ops as ops
 from vllm.model_executor.layers.activation import SiluAndMul
 from vllm.platforms import current_platform
 

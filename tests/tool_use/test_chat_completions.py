@@ -4,8 +4,10 @@
 import openai
 import pytest
 
-from .utils import (MESSAGES_WITHOUT_TOOLS, WEATHER_TOOL, ServerConfig,
-                    ensure_system_prompt)
+from .utils import MESSAGES_WITHOUT_TOOLS
+from .utils import ServerConfig
+from .utils import WEATHER_TOOL
+from .utils import ensure_system_prompt
 
 
 # test: make sure chat completions without tools provided work even when tools

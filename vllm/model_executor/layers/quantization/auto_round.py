@@ -2,19 +2,22 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from fractions import Fraction
-from typing import TYPE_CHECKING, Any, Optional, Union
+from typing import Any
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Union
 
 import torch
 
-from vllm.utils.logger import init_logger
-from vllm.model_executor.layers.linear import (LinearBase,
-                                               UnquantizedLinearMethod)
+from vllm.model_executor.layers.linear import LinearBase
+from vllm.model_executor.layers.linear import UnquantizedLinearMethod
 from vllm.model_executor.layers.quantization import QuantizationMethods
 from vllm.model_executor.layers.quantization.base_config import (
     QuantizationConfig)
 from vllm.model_executor.layers.vocab_parallel_embedding import ParallelLMHead
 from vllm.platforms import current_platform
 from vllm.scalar_type import scalar_types
+from vllm.utils.logger import init_logger
 
 if TYPE_CHECKING:
     from vllm.model_executor.models.utils import WeightsMapper
@@ -185,7 +188,9 @@ class AutoRoundConfig(QuantizationConfig):
     def apply_awq_quant_layer(self, layer, prefix: str, backend: str = "auto"):
         from vllm.model_executor.layers.fused_moe import FusedMoE
         from vllm.model_executor.layers.quantization.utils.marlin_utils import (
-            check_marlin_supported, check_moe_marlin_supports_layer)
+            check_marlin_supported)
+        from vllm.model_executor.layers.quantization.utils.marlin_utils import (
+            check_moe_marlin_supports_layer)
 
         weight_bits, group_size, sym = self.get_layer_config(layer, prefix)
         if not self.check_quantized(weight_bits):
@@ -219,7 +224,11 @@ class AutoRoundConfig(QuantizationConfig):
             use_marlin = False
         if use_marlin:
             from vllm.model_executor.layers.quantization.awq_marlin import (
-                AWQMarlinConfig, AWQMarlinLinearMethod, AWQMoEMethod)
+                AWQMarlinConfig)
+            from vllm.model_executor.layers.quantization.awq_marlin import (
+                AWQMarlinLinearMethod)
+            from vllm.model_executor.layers.quantization.awq_marlin import (
+                AWQMoEMethod)
 
             quant_args_marlin = AWQMarlinConfig(
                 weight_bits=weight_bits,
@@ -231,7 +240,8 @@ class AutoRoundConfig(QuantizationConfig):
             )
         else:
             from vllm.model_executor.layers.quantization.awq import (
-                AWQConfig, AWQLinearMethod)
+                AWQLinearMethod)
+            from vllm.model_executor.layers.quantization.awq import AWQConfig
 
             quant_args = AWQConfig(
                 weight_bits=weight_bits,
@@ -268,7 +278,9 @@ class AutoRoundConfig(QuantizationConfig):
                                backend: str = "auto"):
         from vllm.model_executor.layers.fused_moe import FusedMoE
         from vllm.model_executor.layers.quantization.utils.marlin_utils import (
-            check_marlin_supported, check_moe_marlin_supports_layer)
+            check_marlin_supported)
+        from vllm.model_executor.layers.quantization.utils.marlin_utils import (
+            check_moe_marlin_supports_layer)
 
         weight_bits, group_size, sym = self.get_layer_config(layer, prefix)
         if not self.check_quantized(weight_bits):
@@ -302,7 +314,11 @@ class AutoRoundConfig(QuantizationConfig):
             use_marlin = False
         if use_marlin:
             from vllm.model_executor.layers.quantization.gptq_marlin import (
-                GPTQMarlinConfig, GPTQMarlinLinearMethod, GPTQMarlinMoEMethod)
+                GPTQMarlinConfig)
+            from vllm.model_executor.layers.quantization.gptq_marlin import (
+                GPTQMarlinLinearMethod)
+            from vllm.model_executor.layers.quantization.gptq_marlin import (
+                GPTQMarlinMoEMethod)
 
             quant_args_marlin = GPTQMarlinConfig(
                 weight_bits=weight_bits,
@@ -315,7 +331,8 @@ class AutoRoundConfig(QuantizationConfig):
             )
         else:
             from vllm.model_executor.layers.quantization.gptq import (
-                GPTQConfig, GPTQLinearMethod)
+                GPTQLinearMethod)
+            from vllm.model_executor.layers.quantization.gptq import GPTQConfig
 
             quant_args = GPTQConfig(
                 weight_bits=weight_bits,
@@ -357,7 +374,11 @@ class AutoRoundConfig(QuantizationConfig):
             else:
                 return None
         from vllm.model_executor.layers.quantization.ipex_quant import (
-            IPEXAWQLinearMethod, IPEXConfig, IPEXGPTQLinearMethod)
+            IPEXAWQLinearMethod)
+        from vllm.model_executor.layers.quantization.ipex_quant import (
+            IPEXConfig)
+        from vllm.model_executor.layers.quantization.ipex_quant import (
+            IPEXGPTQLinearMethod)
 
         if isinstance(layer, (LinearBase, ParallelLMHead)):
             if "awq" in self.packing_format:

@@ -2,26 +2,32 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import ast
+from collections.abc import Sequence
+from contextlib import contextmanager
 import dataclasses
 import os
 import pprint
 import time
-from collections.abc import Sequence
-from contextlib import contextmanager
-from typing import Any, Callable, Optional
+from typing import Any
+from typing import Callable
+from typing import Optional
 
 import torch
-import torch.fx as fx
 from torch._dispatch.python import enable_python_dispatcher
+import torch.fx as fx
 
+from vllm.config import CompilationConfig
+from vllm.config import VllmConfig
 import vllm.envs as envs
-from vllm.config import CompilationConfig, VllmConfig
-from vllm.utils.logger import init_logger
 from vllm.platforms import current_platform
-from vllm.utils import is_torch_equal_or_newer, resolve_obj_by_qualname
+from vllm.utils import is_torch_equal_or_newer
+from vllm.utils import resolve_obj_by_qualname
+from vllm.utils.logger import init_logger
 
-from .compiler_interface import (CompilerInterface, EagerAdaptor,
-                                 InductorAdaptor, InductorStandaloneAdaptor)
+from .compiler_interface import CompilerInterface
+from .compiler_interface import EagerAdaptor
+from .compiler_interface import InductorAdaptor
+from .compiler_interface import InductorStandaloneAdaptor
 from .counter import compilation_counter
 from .inductor_pass import InductorPass
 from .pass_manager import PostGradPassManager

@@ -8,14 +8,16 @@ from typing import Optional
 import torch
 
 import vllm.envs as envs
-import vllm.model_executor.layers.fused_moe.modular_kernel as mk
-from vllm.utils.logger import init_logger
 from vllm.model_executor.layers.fused_moe.config import FusedMoEParallelConfig
 from vllm.model_executor.layers.fused_moe.flashinfer_cutlass_moe import (
-    FlashInferExperts, is_valid_flashinfer_cutlass_fused_moe)
+    FlashInferExperts)
+from vllm.model_executor.layers.fused_moe.flashinfer_cutlass_moe import (
+    is_valid_flashinfer_cutlass_fused_moe)
 from vllm.model_executor.layers.fused_moe.flashinfer_cutlass_prepare_finalize import (  # noqa: E501
     FlashInferCutlassMoEPrepareAndFinalize)
+import vllm.model_executor.layers.fused_moe.modular_kernel as mk
 from vllm.platforms import current_platform
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

@@ -7,15 +7,19 @@ from typing import Union
 import regex as re
 
 from vllm.entrypoints.chat_utils import random_tool_call_id
-from vllm.entrypoints.openai.protocol import (ChatCompletionRequest,
-                                              DeltaFunctionCall, DeltaMessage,
-                                              DeltaToolCall,
-                                              ExtractedToolCallInformation,
-                                              FunctionCall, ToolCall)
+from vllm.entrypoints.openai.protocol import ChatCompletionRequest
+from vllm.entrypoints.openai.protocol import DeltaFunctionCall
+from vllm.entrypoints.openai.protocol import DeltaMessage
+from vllm.entrypoints.openai.protocol import DeltaToolCall
+from vllm.entrypoints.openai.protocol import ExtractedToolCallInformation
+from vllm.entrypoints.openai.protocol import FunctionCall
+from vllm.entrypoints.openai.protocol import ToolCall
 from vllm.entrypoints.openai.tool_parsers.abstract_tool_parser import (
-    ToolParser, ToolParserManager)
-from vllm.utils.logger import init_logger
+    ToolParser)
+from vllm.entrypoints.openai.tool_parsers.abstract_tool_parser import (
+    ToolParserManager)
 from vllm.transformers_utils.tokenizer import AnyTokenizer
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

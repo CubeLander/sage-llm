@@ -4,6 +4,10 @@
 from typing import Optional
 
 import vllm.envs as envs
+from vllm.model_executor.layers.quantization.kernels.mixed_precision.MPLinearKernel import (
+    MPLinearLayerConfig)
+from vllm.model_executor.layers.quantization.kernels.mixed_precision.MPLinearKernel import (  # noqa: E501
+    MPLinearKernel)
 from vllm.model_executor.layers.quantization.kernels.mixed_precision.allspark import (  # noqa: E501
     AllSparkLinearKernel)
 from vllm.model_executor.layers.quantization.kernels.mixed_precision.bitblas import (  # noqa: E501
@@ -18,8 +22,6 @@ from vllm.model_executor.layers.quantization.kernels.mixed_precision.machete imp
     MacheteLinearKernel)
 from vllm.model_executor.layers.quantization.kernels.mixed_precision.marlin import (  # noqa: E501
     MarlinLinearKernel)
-from vllm.model_executor.layers.quantization.kernels.mixed_precision.MPLinearKernel import (  # noqa: E501
-    MPLinearKernel, MPLinearLayerConfig)
 from vllm.platforms import current_platform
 
 # in priority/performance order (when available)

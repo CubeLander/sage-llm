@@ -4,14 +4,18 @@
 modality, getting all combinations (similar to pytest's parametrization),
 handling multimodal placeholder substitution, and so on.
 """
-import itertools
 from collections import OrderedDict
 from collections.abc import Iterable
+import itertools
 
 import pytest
 
-from .types import (EMBEDDING_SIZE_FACTORS, ExpandableVLMTestArgs,
-                    ImageSizeWrapper, SizeType, VLMTestInfo, VLMTestType)
+from .types import EMBEDDING_SIZE_FACTORS
+from .types import ExpandableVLMTestArgs
+from .types import ImageSizeWrapper
+from .types import SizeType
+from .types import VLMTestInfo
+from .types import VLMTestType
 
 
 def get_filtered_test_settings(

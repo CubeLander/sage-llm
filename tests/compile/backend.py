@@ -3,7 +3,8 @@
 
 from collections.abc import Sequence
 from copy import deepcopy
-from typing import Callable, Union
+from typing import Callable
+from typing import Union
 
 from torch import fx
 from torch._ops import OpOverload

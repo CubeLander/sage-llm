@@ -6,20 +6,31 @@ from unittest.mock import Mock
 import pytest
 import torch
 
-from vllm.config import (CacheConfig, KVTransferConfig, ModelConfig,
-                         SchedulerConfig, SpeculativeConfig, VllmConfig)
-from vllm.io.inputs.multimodal.inputs import MultiModalKwargs, PlaceholderRange
-from vllm.sampling_params import GuidedDecodingParams, SamplingParams
-from vllm.v1.core.sched.output import CachedRequestData, SchedulerOutput
+from vllm.config import CacheConfig
+from vllm.config import KVTransferConfig
+from vllm.config import ModelConfig
+from vllm.config import SchedulerConfig
+from vllm.config import SpeculativeConfig
+from vllm.config import VllmConfig
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.inputs import PlaceholderRange
+from vllm.sampling_params import GuidedDecodingParams
+from vllm.sampling_params import SamplingParams
+from vllm.v1.core.sched.output import CachedRequestData
+from vllm.v1.core.sched.output import SchedulerOutput
 from vllm.v1.core.sched.scheduler import Scheduler
-from vllm.v1.kv_cache_interface import (FullAttentionSpec, KVCacheConfig,
-                                        KVCacheGroupSpec)
+from vllm.v1.kv_cache_interface import FullAttentionSpec
+from vllm.v1.kv_cache_interface import KVCacheConfig
+from vllm.v1.kv_cache_interface import KVCacheGroupSpec
 from vllm.v1.outputs import ModelRunnerOutput
-from vllm.v1.request import Request, RequestStatus
+from vllm.v1.request import Request
+from vllm.v1.request import RequestStatus
 from vllm.v1.structured_output import StructuredOutputManager
 from vllm.v1.structured_output.request import StructuredOutputRequest
 
-from .utils import EOS_TOKEN_ID, create_requests, create_scheduler
+from .utils import EOS_TOKEN_ID
+from .utils import create_requests
+from .utils import create_scheduler
 
 
 def test_add_requests():

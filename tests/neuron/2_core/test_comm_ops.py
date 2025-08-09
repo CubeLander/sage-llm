@@ -9,11 +9,12 @@ import torch
 import torch_xla.distributed.xla_multiprocessing as xmp
 from typing_extensions import ParamSpec
 
-from vllm.distributed.communication_op import (
-    tensor_model_parallel_all_gather, tensor_model_parallel_all_reduce)
-from vllm.distributed.parallel_state import (ensure_model_parallel_initialized,
-                                             init_distributed_environment)
-from vllm.utils import get_distributed_init_method, get_open_port
+from vllm.distributed.communication_op import tensor_model_parallel_all_gather
+from vllm.distributed.communication_op import tensor_model_parallel_all_reduce
+from vllm.distributed.parallel_state import ensure_model_parallel_initialized
+from vllm.distributed.parallel_state import init_distributed_environment
+from vllm.utils import get_distributed_init_method
+from vllm.utils import get_open_port
 
 _P = ParamSpec("_P")
 

@@ -1,17 +1,18 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
 import torch
 
-import vllm.model_executor.layers.fused_moe.modular_kernel as mk
-from vllm.utils.logger import init_logger
 from vllm.model_executor.layers.fused_moe.config import FusedMoEQuantConfig
+import vllm.model_executor.layers.fused_moe.modular_kernel as mk
 from vllm.model_executor.layers.fused_moe.topk_weight_and_reduce import (
     TopKWeightAndReduceDelegate)
 from vllm.model_executor.layers.fused_moe.utils import extract_required_args
-from vllm.utils.flashinfer import (flashinfer_cutlass_fused_moe,
-                                   has_flashinfer_cutlass_fused_moe)
+from vllm.utils.flashinfer import flashinfer_cutlass_fused_moe
+from vllm.utils.flashinfer import has_flashinfer_cutlass_fused_moe
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

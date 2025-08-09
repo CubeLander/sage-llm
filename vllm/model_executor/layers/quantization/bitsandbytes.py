@@ -1,16 +1,20 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from typing import Any, Callable, Optional, Union
+from typing import Any
+from typing import Callable
+from typing import Optional
+from typing import Union
 
-import torch
 from packaging import version
+import torch
 
-from vllm.model_executor.layers.fused_moe.layer import (FusedMoE,
-                                                        FusedMoEMethodBase)
-from vllm.model_executor.layers.linear import (LinearBase, LinearMethodBase,
-                                               UnquantizedLinearMethod,
-                                               set_weight_attrs)
+from vllm.model_executor.layers.fused_moe.layer import FusedMoE
+from vllm.model_executor.layers.fused_moe.layer import FusedMoEMethodBase
+from vllm.model_executor.layers.linear import LinearBase
+from vllm.model_executor.layers.linear import LinearMethodBase
+from vllm.model_executor.layers.linear import UnquantizedLinearMethod
+from vllm.model_executor.layers.linear import set_weight_attrs
 from vllm.model_executor.layers.quantization import QuantizationMethods
 from vllm.model_executor.layers.quantization.base_config import (
     QuantizationConfig)
@@ -253,7 +257,8 @@ class BitsAndBytesLinearMethod(LinearMethodBase):
             bias: Optional[torch.Tensor] = None) -> torch.Tensor:
 
         # only load the bitsandbytes module when needed
-        from bitsandbytes import MatmulLtState, matmul
+        from bitsandbytes import MatmulLtState
+        from bitsandbytes import matmul
 
         original_type = x.dtype
         original_shape = x.shape

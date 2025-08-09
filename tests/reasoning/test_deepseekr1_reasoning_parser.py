@@ -5,7 +5,8 @@ import pytest
 from transformers import AutoTokenizer
 
 from tests.reasoning.utils import run_reasoning_extraction
-from vllm.io.reasoning import ReasoningParser, ReasoningParserManager
+from vllm.io.reasoning import ReasoningParser
+from vllm.io.reasoning import ReasoningParserManager
 
 parser_name = "deepseek_r1"
 start_token = "<think>"

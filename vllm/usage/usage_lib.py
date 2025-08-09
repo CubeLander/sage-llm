@@ -2,15 +2,17 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import datetime
+from enum import Enum
 import json
 import logging
 import os
-import platform
-import time
-from enum import Enum
 from pathlib import Path
+import platform
 from threading import Thread
-from typing import Any, Optional, Union
+import time
+from typing import Any
+from typing import Optional
+from typing import Union
 from uuid import uuid4
 
 import cpuinfo
@@ -19,9 +21,10 @@ import requests
 import torch
 
 import vllm.envs as envs
-from vllm.utils.network.httpconnection import global_http_connection
+from vllm.utils import cuda_device_count_stateless
+from vllm.utils import cuda_get_device_properties
 from vllm.utils.logger import init_logger
-from vllm.utils import cuda_device_count_stateless, cuda_get_device_properties
+from vllm.utils.network.httpconnection import global_http_connection
 from vllm.version import __version__ as VLLM_VERSION
 
 logger = init_logger(__name__)

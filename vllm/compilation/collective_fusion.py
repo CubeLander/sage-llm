@@ -4,19 +4,21 @@ from importlib.util import find_spec
 from typing import Optional
 
 import torch
-import torch._inductor.pattern_matcher as pm
-import torch.fx as fx
 from torch._higher_order_ops.auto_functionalize import auto_functionalized
+import torch._inductor.pattern_matcher as pm
 from torch._inductor.pattern_matcher import PatternMatcherPass
 from torch.distributed._symmetric_memory import enable_symm_mem_for_group
+import torch.fx as fx
 
 from vllm.config import VllmConfig
-from vllm.distributed import get_tp_group, tensor_model_parallel_all_reduce
+from vllm.distributed import get_tp_group
+from vllm.distributed import tensor_model_parallel_all_reduce
 from vllm.distributed.parallel_state import (
-    get_tensor_model_parallel_rank, get_tensor_model_parallel_world_size)
-from vllm.utils.logger import init_logger
+    get_tensor_model_parallel_world_size)
+from vllm.distributed.parallel_state import get_tensor_model_parallel_rank
 from vllm.platforms import current_platform
 from vllm.utils import direct_register_custom_op
+from vllm.utils.logger import init_logger
 
 from .vllm_inductor_pass import VllmInductorPass
 

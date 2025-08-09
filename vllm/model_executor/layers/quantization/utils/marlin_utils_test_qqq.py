@@ -5,7 +5,8 @@ import numpy
 import torch
 
 from .marlin_utils_test import marlin_permute_weights
-from .quant_utils import get_pack_factor, qqq_quantize_weights
+from .quant_utils import get_pack_factor
+from .quant_utils import qqq_quantize_weights
 
 
 def marlin_qqq_weights(q_w, size_k, size_n, num_bits, perm, group_size):

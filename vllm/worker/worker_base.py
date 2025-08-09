@@ -1,30 +1,42 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from abc import abstractmethod
 import dataclasses
 import os
 import time
-from abc import abstractmethod
-from typing import Any, Dict, List, Optional, Set, Tuple, Type, Union
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import Set
+from typing import Tuple
+from typing import Type
+from typing import Union
 
 import cloudpickle
 import torch
 import torch.nn as nn
 
-from vllm.config import (ObservabilityConfig, VllmConfig,
-                         set_current_vllm_config)
-from vllm.distributed import broadcast_tensor_dict, get_pp_group, get_tp_group
-from vllm.utils.logger import init_logger
+from vllm.config import ObservabilityConfig
+from vllm.config import VllmConfig
+from vllm.config import set_current_vllm_config
+from vllm.distributed import broadcast_tensor_dict
+from vllm.distributed import get_pp_group
+from vllm.distributed import get_tp_group
 from vllm.lora.request import LoRARequest
 from vllm.model_executor.layers.sampler import SamplerOutput
-from vllm.sequence import ExecuteModelRequest, IntermediateTensors
-from vllm.utils import (enable_trace_function_call_for_thread,
-                        resolve_obj_by_qualname, run_method,
-                        update_environment_variables,
-                        warn_for_unimplemented_methods)
-from vllm.worker.model_runner_base import (BroadcastableModelInput,
-                                           ModelRunnerBase,
-                                           ModelRunnerInputBase)
+from vllm.sequence import ExecuteModelRequest
+from vllm.sequence import IntermediateTensors
+from vllm.utils import enable_trace_function_call_for_thread
+from vllm.utils import resolve_obj_by_qualname
+from vllm.utils import run_method
+from vllm.utils import update_environment_variables
+from vllm.utils import warn_for_unimplemented_methods
+from vllm.utils.logger import init_logger
+from vllm.worker.model_runner_base import BroadcastableModelInput
+from vllm.worker.model_runner_base import ModelRunnerBase
+from vllm.worker.model_runner_base import ModelRunnerInputBase
 
 logger = init_logger(__name__)
 

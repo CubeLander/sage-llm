@@ -5,7 +5,8 @@ import pytest
 import torch
 import torch.nn.functional as F
 
-from vllm.model_executor.layers.activation import FastGELU, SiluAndMul
+from vllm.model_executor.layers.activation import FastGELU
+from vllm.model_executor.layers.activation import SiluAndMul
 from vllm.platforms import current_platform
 
 

@@ -2,15 +2,17 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from collections.abc import Sequence
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 import regex as re
 from transformers import PreTrainedTokenizerBase
 
-from vllm.entrypoints.openai.protocol import (ChatCompletionRequest,
-                                              DeltaMessage)
+from vllm.entrypoints.openai.protocol import ChatCompletionRequest
+from vllm.entrypoints.openai.protocol import DeltaMessage
+from vllm.io.reasoning import ReasoningParser
+from vllm.io.reasoning import ReasoningParserManager
 from vllm.utils.logger import init_logger
-from vllm.io.reasoning import ReasoningParser, ReasoningParserManager
 
 logger = init_logger(__name__)
 

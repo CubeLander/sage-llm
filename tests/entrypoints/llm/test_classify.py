@@ -6,7 +6,8 @@ import weakref
 import pytest
 import torch
 
-from vllm import LLM, PoolingParams
+from vllm import LLM
+from vllm import PoolingParams
 from vllm.distributed import cleanup_dist_env_and_memory
 
 from ...models.utils import softmax

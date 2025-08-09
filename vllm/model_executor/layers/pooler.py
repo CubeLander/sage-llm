@@ -1,23 +1,30 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-from abc import ABC, abstractmethod
-from collections.abc import Mapping, Set
+from abc import ABC
+from abc import abstractmethod
+from collections.abc import Mapping
+from collections.abc import Set
 from dataclasses import dataclass
 from enum import IntEnum
 from itertools import groupby
-from typing import Callable, Optional, TypeVar, Union
+from typing import Callable
+from typing import Optional
+from typing import TypeVar
+from typing import Union
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from transformers import PretrainedConfig
 
-from vllm.config import ModelConfig, PoolerConfig
-from vllm.model_executor.pooling_metadata import (  # noqa: E501
-    PoolingMetadata as V0PoolingMetadata)
+from vllm.config import ModelConfig
+from vllm.config import PoolerConfig
+from vllm.model_executor.pooling_metadata import (
+    PoolingMetadata as V0PoolingMetadata)  # noqa: E501
 from vllm.model_executor.pooling_metadata import PoolingTensors
 from vllm.pooling_params import PoolingParams
-from vllm.sequence import PoolerOutput, PoolingSequenceGroupOutput
+from vllm.sequence import PoolerOutput
+from vllm.sequence import PoolingSequenceGroupOutput
 from vllm.tasks import PoolingTask
 from vllm.utils import resolve_obj_by_qualname
 from vllm.v1.pool.metadata import PoolingMetadata as V1PoolingMetadata

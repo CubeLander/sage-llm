@@ -4,33 +4,38 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import ClassVar, Optional, Union
+from typing import ClassVar
+from typing import Optional
+from typing import Union
 
-import torch
-from flashinfer import (BatchDecodeWithPagedKVCacheWrapper,
-                        BatchPrefillWithPagedKVCacheWrapper,
-                        MultiLevelCascadeAttentionWrapper)
-from flashinfer.decode import (_get_range_buf, get_seq_lens,
-                               trtllm_batch_decode_with_kv_cache)
+from flashinfer import BatchDecodeWithPagedKVCacheWrapper
+from flashinfer import BatchPrefillWithPagedKVCacheWrapper
+from flashinfer import MultiLevelCascadeAttentionWrapper
+from flashinfer.decode import _get_range_buf
+from flashinfer.decode import get_seq_lens
+from flashinfer.decode import trtllm_batch_decode_with_kv_cache
 from flashinfer.prefill import trtllm_batch_context_with_kv_cache
+import torch
 
-import vllm.envs as envs
-from vllm.attention.backends.abstract import (AttentionBackend, AttentionImpl,
-                                              AttentionType)
+from vllm.attention.backends.abstract import AttentionBackend
+from vllm.attention.backends.abstract import AttentionImpl
+from vllm.attention.backends.abstract import AttentionType
 from vllm.config import VllmConfig
-from vllm.utils.logger import init_logger
-from vllm.utils import cdiv, is_pin_memory_available
+import vllm.envs as envs
+from vllm.utils import cdiv
+from vllm.utils import is_pin_memory_available
 from vllm.utils.flashinfer import use_trtllm_attention
+from vllm.utils.logger import init_logger
 from vllm.v1.attention.backends.flash_attn import use_cascade_attention
 # yapf conflicts with isort for this block
 # yapf: disable
-from vllm.v1.attention.backends.utils import (AttentionCGSupport,
-                                              AttentionMetadataBuilder,
-                                              CommonAttentionMetadata,
-                                              get_kv_cache_layout,
-                                              get_per_layer_parameters,
-                                              infer_global_hyperparameters,
-                                              split_decodes_and_prefills)
+from vllm.v1.attention.backends.utils import AttentionCGSupport
+from vllm.v1.attention.backends.utils import AttentionMetadataBuilder
+from vllm.v1.attention.backends.utils import CommonAttentionMetadata
+from vllm.v1.attention.backends.utils import get_kv_cache_layout
+from vllm.v1.attention.backends.utils import get_per_layer_parameters
+from vllm.v1.attention.backends.utils import infer_global_hyperparameters
+from vllm.v1.attention.backends.utils import split_decodes_and_prefills
 from vllm.v1.kv_cache_interface import AttentionSpec
 
 FLASHINFER_WORKSPACE_BUFFER_SIZE = 256 * 1024 * 1024

@@ -2,13 +2,16 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import asyncio
-import time
-from collections.abc import AsyncGenerator, AsyncIterator
+from collections.abc import AsyncGenerator
+from collections.abc import AsyncIterator
 from collections.abc import Sequence as GenericSequence
-from typing import Optional, Union, cast
+import time
+from typing import Optional
+from typing import Union
+from typing import cast
 
-import jinja2
 from fastapi import Request
+import jinja2
 from typing_extensions import assert_never
 
 from vllm.config import ModelConfig
@@ -16,33 +19,36 @@ from vllm.engine.protocol import EngineClient
 from vllm.entrypoints.logger import RequestLogger
 # yapf conflicts with isort for this block
 # yapf: disable
-from vllm.entrypoints.openai.protocol import (CompletionLogProbs,
-                                              CompletionRequest,
-                                              CompletionResponse,
-                                              CompletionResponseChoice,
-                                              CompletionResponseStreamChoice,
-                                              CompletionStreamResponse,
-                                              ErrorResponse,
-                                              PromptTokenUsageInfo,
-                                              RequestResponseMetadata,
-                                              UsageInfo)
+from vllm.entrypoints.openai.protocol import CompletionLogProbs
+from vllm.entrypoints.openai.protocol import CompletionRequest
+from vllm.entrypoints.openai.protocol import CompletionResponse
+from vllm.entrypoints.openai.protocol import CompletionResponseChoice
+from vllm.entrypoints.openai.protocol import CompletionResponseStreamChoice
+from vllm.entrypoints.openai.protocol import CompletionStreamResponse
+from vllm.entrypoints.openai.protocol import ErrorResponse
+from vllm.entrypoints.openai.protocol import PromptTokenUsageInfo
+from vllm.entrypoints.openai.protocol import RequestResponseMetadata
+from vllm.entrypoints.openai.protocol import UsageInfo
 from vllm.entrypoints.openai.serving_engine import (
     EmbedsPrompt as ServingEngineEmbedsPrompt)
-from vllm.entrypoints.openai.serving_engine import (OpenAIServing,
-                                                    TextTokensPrompt,
-                                                    clamp_prompt_logprobs,
-                                                    is_text_tokens_prompt)
+from vllm.entrypoints.openai.serving_engine import OpenAIServing
+from vllm.entrypoints.openai.serving_engine import TextTokensPrompt
+from vllm.entrypoints.openai.serving_engine import clamp_prompt_logprobs
+from vllm.entrypoints.openai.serving_engine import is_text_tokens_prompt
 # yapf: enable
 from vllm.entrypoints.openai.serving_models import OpenAIServingModels
 from vllm.entrypoints.utils import get_max_tokens
-from vllm.io.inputs.data import (EmbedsPrompt, TokensPrompt, is_embeds_prompt,
-                              is_tokens_prompt)
-from vllm.utils.logger import init_logger
+from vllm.io.inputs.data import EmbedsPrompt
+from vllm.io.inputs.data import TokensPrompt
+from vllm.io.inputs.data import is_embeds_prompt
+from vllm.io.inputs.data import is_tokens_prompt
 from vllm.outputs import RequestOutput
-from vllm.sampling_params import BeamSearchParams, SamplingParams
+from vllm.sampling_params import BeamSearchParams
+from vllm.sampling_params import SamplingParams
 from vllm.sequence import Logprob
 from vllm.transformers_utils.tokenizer import AnyTokenizer
 from vllm.utils import merge_async_iterators
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

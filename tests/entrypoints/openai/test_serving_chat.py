@@ -3,8 +3,10 @@
 
 import asyncio
 from contextlib import suppress
-from dataclasses import dataclass, field
-from typing import Any, Optional
+from dataclasses import dataclass
+from dataclasses import field
+from typing import Any
+from typing import Optional
 from unittest.mock import MagicMock
 
 import pytest
@@ -13,8 +15,8 @@ from vllm.config import MultiModalConfig
 from vllm.engine.multiprocessing.client import MQLLMEngineClient
 from vllm.entrypoints.openai.protocol import ChatCompletionRequest
 from vllm.entrypoints.openai.serving_chat import OpenAIServingChat
-from vllm.entrypoints.openai.serving_models import (BaseModelPath,
-                                                    OpenAIServingModels)
+from vllm.entrypoints.openai.serving_models import BaseModelPath
+from vllm.entrypoints.openai.serving_models import OpenAIServingModels
 from vllm.transformers_utils.tokenizer import get_tokenizer
 
 MODEL_NAME = "openai-community/gpt2"

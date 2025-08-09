@@ -1,33 +1,42 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-from typing import Callable, Optional
+from typing import Callable
+from typing import Optional
 
 import torch
 from torch.nn.parameter import Parameter
 
 from vllm import envs
-from vllm.model_executor.layers.fused_moe import (FusedMoE, FusedMoEConfig,
-                                                  FusedMoEMethodBase)
+from vllm.model_executor.layers.fused_moe import FusedMoE
+from vllm.model_executor.layers.fused_moe import FusedMoEConfig
+from vllm.model_executor.layers.fused_moe import FusedMoEMethodBase
 from vllm.model_executor.layers.fused_moe.gpt_oss_triton_kernels_moe import (
     triton_kernel_moe_forward)
-from vllm.model_executor.layers.linear import (LinearBase,
-                                               UnquantizedLinearMethod)
+from vllm.model_executor.layers.linear import LinearBase
+from vllm.model_executor.layers.linear import UnquantizedLinearMethod
 from vllm.model_executor.layers.quantization import QuantizationMethods
 from vllm.model_executor.layers.quantization.base_config import (
-    QuantizationConfig, QuantizeMethodBase)
+    QuantizationConfig)
+from vllm.model_executor.layers.quantization.base_config import (
+    QuantizeMethodBase)
 from vllm.model_executor.layers.quantization.utils.mxfp4_utils import (
-    _can_support_mxfp4, _swizzle_mxfp4)
+    _can_support_mxfp4)
+from vllm.model_executor.layers.quantization.utils.mxfp4_utils import (
+    _swizzle_mxfp4)
 from vllm.model_executor.layers.quantization.utils.quant_utils import (
     is_layer_skipped)
 from vllm.model_executor.utils import set_weight_attrs
 from vllm.platforms import current_platform
-from vllm.utils import next_power_of_2, round_up
+from vllm.utils import next_power_of_2
+from vllm.utils import round_up
 
 if (envs.VLLM_USE_FLASHINFER_MOE_MXFP4_MXFP8
         or envs.VLLM_USE_FLASHINFER_MOE_MXFP4_BF16):
     # from flashinfer.fused_moe import cutlass_fused_moe
-    from flashinfer import (mxfp8_quantize, shuffle_matrix_a,
-                            shuffle_matrix_sf_a, trtllm_fp4_block_scale_moe)
+    from flashinfer import mxfp8_quantize
+    from flashinfer import shuffle_matrix_a
+    from flashinfer import shuffle_matrix_sf_a
+    from flashinfer import trtllm_fp4_block_scale_moe
 
 
 class Mxfp4Config(QuantizationConfig):
@@ -314,7 +323,8 @@ class Mxfp4MoEMethod(FusedMoEMethodBase):
                 self.num_experts, -1),
                                       requires_grad=False)
         else:
-            from triton_kernels.matmul_ogs import FlexCtx, PrecisionConfig
+            from triton_kernels.matmul_ogs import FlexCtx
+            from triton_kernels.matmul_ogs import PrecisionConfig
 
             w13_bias = layer.w13_bias.to(torch.float32)
             w2_bias = layer.w2_bias.to(torch.float32)

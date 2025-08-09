@@ -8,8 +8,8 @@ import torch
 from torch.distributed import ProcessGroup
 
 from vllm.config import get_current_vllm_config
-from vllm.utils.logger import init_logger
 from vllm.platforms import current_platform
+from vllm.utils.logger import init_logger
 
 from .base_device_communicator import DeviceCommunicatorBase
 
@@ -20,11 +20,11 @@ logger = init_logger(__name__)
 
 if current_platform.is_tpu():
     import torch_xla
-    import torch_xla.core.xla_model as xm
-    import torch_xla.runtime as xr
     from torch_xla._internal import pjrt
+    import torch_xla.core.xla_model as xm
     from torch_xla.distributed.xla_multiprocessing import (
         create_optimized_replica_groups)
+    import torch_xla.runtime as xr
 
     if USE_RAY:
         from vllm.executor import ray_utils

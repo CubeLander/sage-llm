@@ -1,20 +1,26 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from abc import ABC
+from abc import abstractmethod
 import logging
 import time
-from abc import ABC, abstractmethod
-from typing import Callable, Optional, Union
+from typing import Callable
+from typing import Optional
+from typing import Union
 
 import prometheus_client
 
-from vllm.config import SupportsMetricsInfo, VllmConfig
+from vllm.config import SupportsMetricsInfo
+from vllm.config import VllmConfig
 from vllm.utils.logger import init_logger
 from vllm.v1.core.kv_cache_utils import PrefixCachingMetrics
 from vllm.v1.engine import FinishReason
 from vllm.v1.metrics.prometheus import unregister_vllm_metrics
-from vllm.v1.metrics.stats import IterationStats, SchedulerStats
-from vllm.v1.spec_decode.metrics import SpecDecodingLogging, SpecDecodingProm
+from vllm.v1.metrics.stats import IterationStats
+from vllm.v1.metrics.stats import SchedulerStats
+from vllm.v1.spec_decode.metrics import SpecDecodingLogging
+from vllm.v1.spec_decode.metrics import SpecDecodingProm
 
 logger = init_logger(__name__)
 

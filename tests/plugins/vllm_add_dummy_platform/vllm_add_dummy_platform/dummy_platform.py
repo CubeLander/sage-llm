@@ -2,7 +2,8 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 from typing import TYPE_CHECKING
 
-from vllm.platforms.interface import Platform, PlatformEnum
+from vllm.platforms.interface import Platform
+from vllm.platforms.interface import PlatformEnum
 
 if TYPE_CHECKING:
     from vllm.config import VllmConfig

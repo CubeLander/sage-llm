@@ -1,13 +1,14 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 import pytest
 import torch
 
-import vllm._custom_ops as ops
 from tests.kernels.utils import opcheck
+import vllm._custom_ops as ops
 from vllm.model_executor.layers.layernorm import RMSNorm
 
 DTYPES = [torch.bfloat16, torch.float]

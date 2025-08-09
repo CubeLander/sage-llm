@@ -5,9 +5,10 @@ import pytest
 import torch
 
 from tests.kernels.moe.utils import make_test_weights
-from tests.kernels.quant_utils import (native_per_token_group_quant_int8,
-                                       native_w8a8_block_matmul)
-from vllm.config import VllmConfig, set_current_vllm_config
+from tests.kernels.quant_utils import native_per_token_group_quant_int8
+from tests.kernels.quant_utils import native_w8a8_block_matmul
+from vllm.config import VllmConfig
+from vllm.config import set_current_vllm_config
 from vllm.model_executor.layers.activation import SiluAndMul
 from vllm.model_executor.layers.fused_moe import fused_moe
 from vllm.platforms import current_platform

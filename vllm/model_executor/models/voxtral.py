@@ -1,51 +1,70 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import math
-from collections.abc import Iterable, Mapping, Sequence
+from collections.abc import Iterable
+from collections.abc import Mapping
+from collections.abc import Sequence
 from functools import cached_property
+import math
 from math import ceil
-from typing import Optional, Union, cast
+from typing import Optional
+from typing import Union
+from typing import cast
 
+from mistral_common.audio import mel_filter_bank
+from mistral_common.protocol.instruct.messages import AudioChunk
+from mistral_common.protocol.instruct.messages import RawAudio
+from mistral_common.protocol.instruct.messages import TextChunk
+from mistral_common.protocol.instruct.messages import UserMessage
+from mistral_common.protocol.instruct.request import ChatCompletionRequest
+from mistral_common.protocol.transcription.request import TranscriptionRequest
+from mistral_common.tokens.tokenizers.audio import Audio
+from mistral_common.tokens.tokenizers.audio import AudioEncoder
 import numpy as np
 import regex as re
 import torch
 import torch.nn as nn
-from mistral_common.audio import mel_filter_bank
-from mistral_common.protocol.instruct.messages import (AudioChunk, RawAudio,
-                                                       TextChunk, UserMessage)
-from mistral_common.protocol.instruct.request import ChatCompletionRequest
-from mistral_common.protocol.transcription.request import TranscriptionRequest
-from mistral_common.tokens.tokenizers.audio import Audio, AudioEncoder
-from transformers import TensorType, WhisperConfig
+from transformers import TensorType
+from transformers import WhisperConfig
 from transformers.tokenization_utils_base import TextInput
 
-from vllm.config import ModelConfig, SpeechToTextConfig, VllmConfig
+from vllm.config import ModelConfig
+from vllm.config import SpeechToTextConfig
+from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
 from vllm.io.inputs.data import PromptType
-from vllm.utils.logger import init_logger
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import MultiModalDataDict
+from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.inputs import NestedTensors
+from vllm.io.inputs.multimodal.parse import AudioProcessorItems
+from vllm.io.inputs.multimodal.parse import MultiModalDataItems
+from vllm.io.inputs.multimodal.parse import MultiModalDataParser
+from vllm.io.inputs.multimodal.processing import BaseMultiModalProcessor
+from vllm.io.inputs.multimodal.processing import BaseProcessingInfo
+from vllm.io.inputs.multimodal.processing import MultiModalHashes
+from vllm.io.inputs.multimodal.processing import PromptReplacement
+from vllm.io.inputs.multimodal.processing import PromptUpdate
+from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
+from vllm.io.inputs.multimodal.profiling import ProcessorInputs
 from vllm.model_executor.model_loader.weight_utils import default_weight_loader
 from vllm.model_executor.models import SupportsPP
 # yapf: disable
 from vllm.model_executor.models.whisper import WhisperEncoder
 # yapf: enable
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
-                                    MultiModalKwargs, NestedTensors)
-from vllm.io.inputs.multimodal.parse import (AudioProcessorItems, MultiModalDataItems,
-                                   MultiModalDataParser)
-from vllm.io.inputs.multimodal.processing import (BaseMultiModalProcessor,
-                                        BaseProcessingInfo, MultiModalHashes,
-                                        PromptReplacement, PromptUpdate)
-from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder, ProcessorInputs
-from vllm.sequence import IntermediateTensors
-from vllm.transformers_utils.tokenizer import (MistralTokenizer,
-                                               cached_tokenizer_from_config)
+from vllm.transformers_utils.tokenizer import MistralTokenizer
+from vllm.transformers_utils.tokenizer import cached_tokenizer_from_config
+from vllm.utils.logger import init_logger
 
-from .interfaces import (MultiModalEmbeddings, SupportsMultiModal,
-                         SupportsTranscription)
-from .utils import (flatten_bn, init_vllm_registered_model, maybe_prefix,
-                    merge_multimodal_embeddings)
+from .interfaces import MultiModalEmbeddings
+from .interfaces import SupportsMultiModal
+from .interfaces import SupportsTranscription
+from .utils import flatten_bn
+from .utils import init_vllm_registered_model
+from .utils import maybe_prefix
+from .utils import merge_multimodal_embeddings
 
 logger = init_logger(__name__)
 

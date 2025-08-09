@@ -1,14 +1,18 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from collections import defaultdict
+from collections.abc import Iterator
+from contextlib import contextmanager
 import dataclasses
 import gc
 import itertools
 import time
-from collections import defaultdict
-from collections.abc import Iterator
-from contextlib import contextmanager
-from typing import TYPE_CHECKING, Any, Optional, Union, cast
+from typing import Any
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Union
+from typing import cast
 
 import numpy as np
 import torch
@@ -16,51 +20,76 @@ import torch.distributed
 import torch.nn as nn
 from tqdm import tqdm
 
-import vllm.envs as envs
-from vllm.attention import Attention, AttentionType
+from vllm.attention import Attention
+from vllm.attention import AttentionType
 from vllm.attention.backends.abstract import AttentionBackend
 from vllm.attention.layers.chunked_local_attention import ChunkedLocalAttention
 from vllm.compilation.counter import compilation_counter
-from vllm.config import (CompilationLevel, VllmConfig,
-                         get_layers_from_vllm_config, update_config)
+from vllm.config import CompilationLevel
+from vllm.config import VllmConfig
+from vllm.config import get_layers_from_vllm_config
+from vllm.config import update_config
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.tensors.intermediate_tensors import PoolerOutput
 from vllm.distributed.eplb.eplb_state import EplbState
-from vllm.distributed.kv_transfer import (get_kv_transfer_group,
-                                          has_kv_transfer_group)
+from vllm.distributed.kv_transfer import get_kv_transfer_group
+from vllm.distributed.kv_transfer import has_kv_transfer_group
 from vllm.distributed.parallel_state import (
-    get_pp_group, get_tp_group, graph_capture, is_global_first_rank,
     prepare_communication_buffer_for_model)
-from vllm.forward_context import DPMetadata, set_forward_context
-from vllm.utils.logger import init_logger
+from vllm.distributed.parallel_state import get_pp_group
+from vllm.distributed.parallel_state import get_tp_group
+from vllm.distributed.parallel_state import graph_capture
+from vllm.distributed.parallel_state import is_global_first_rank
+import vllm.envs as envs
+from vllm.forward_context import DPMetadata
+from vllm.forward_context import set_forward_context
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import BatchedTensorInputs
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.inputs import PlaceholderRange
+from vllm.io.inputs.multimodal.utils import group_mm_inputs_by_modality
 from vllm.model_executor.layers.mamba.mamba_mixer2 import MambaBase
 from vllm.model_executor.layers.rotary_embedding import MRotaryEmbedding
-from vllm.model_executor.model_loader import TensorizerLoader, get_model_loader
-from vllm.model_executor.models.interfaces import (is_mixture_of_experts,
-                                                   supports_transcription)
-from vllm.model_executor.models.interfaces_base import (
-    VllmModelForPooling, is_pooling_model, is_text_generation_model)
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.io.inputs.multimodal.inputs import (BatchedTensorInputs, MultiModalKwargs,
-                                    PlaceholderRange)
-from vllm.io.inputs.multimodal.utils import group_mm_inputs_by_modality
+from vllm.model_executor.model_loader import TensorizerLoader
+from vllm.model_executor.model_loader import get_model_loader
+from vllm.model_executor.models.interfaces import is_mixture_of_experts
+from vllm.model_executor.models.interfaces import supports_transcription
+from vllm.model_executor.models.interfaces_base import VllmModelForPooling
+from vllm.model_executor.models.interfaces_base import is_pooling_model
+from vllm.model_executor.models.interfaces_base import is_text_generation_model
 from vllm.pooling_params import PoolingParams
 from vllm.sampling_params import SamplingType
-from vllm.sequence import IntermediateTensors, PoolerOutput
-from vllm.tasks import GenerationTask, PoolingTask, SupportedTask
-from vllm.utils import (STR_DTYPE_TO_TORCH_DTYPE, DeviceMemoryProfiler,
-                        GiB_bytes, LazyLoader, check_use_alibi, get_dtype_size,
-                        is_pin_memory_available, round_up, supports_dynamo)
+from vllm.tasks import GenerationTask
+from vllm.tasks import PoolingTask
+from vllm.tasks import SupportedTask
+from vllm.utils import DeviceMemoryProfiler
+from vllm.utils import GiB_bytes
+from vllm.utils import LazyLoader
+from vllm.utils import STR_DTYPE_TO_TORCH_DTYPE
+from vllm.utils import check_use_alibi
+from vllm.utils import get_dtype_size
+from vllm.utils import is_pin_memory_available
+from vllm.utils import round_up
+from vllm.utils import supports_dynamo
+from vllm.utils.logger import init_logger
 from vllm.v1.attention.backends.mamba_selectors import get_mamba_attn_backend
 from vllm.v1.attention.backends.utils import (
-    AttentionCGSupport, AttentionMetadataBuilder, CommonAttentionMetadata,
-    make_kv_sharing_fast_prefill_attention_metadata,
+    make_kv_sharing_fast_prefill_attention_metadata)
+from vllm.v1.attention.backends.utils import (
     reorder_batch_to_split_decodes_and_prefills)
-from vllm.v1.kv_cache_interface import (AttentionSpec,
-                                        ChunkedLocalAttentionSpec,
-                                        FullAttentionSpec, KVCacheConfig,
-                                        KVCacheSpec, MambaSpec,
-                                        SlidingWindowSpec)
-from vllm.v1.outputs import (EMPTY_MODEL_RUNNER_OUTPUT, LogprobsTensors,
-                             ModelRunnerOutput)
+from vllm.v1.attention.backends.utils import AttentionCGSupport
+from vllm.v1.attention.backends.utils import AttentionMetadataBuilder
+from vllm.v1.attention.backends.utils import CommonAttentionMetadata
+from vllm.v1.kv_cache_interface import AttentionSpec
+from vllm.v1.kv_cache_interface import ChunkedLocalAttentionSpec
+from vllm.v1.kv_cache_interface import FullAttentionSpec
+from vllm.v1.kv_cache_interface import KVCacheConfig
+from vllm.v1.kv_cache_interface import KVCacheSpec
+from vllm.v1.kv_cache_interface import MambaSpec
+from vllm.v1.kv_cache_interface import SlidingWindowSpec
+from vllm.v1.outputs import EMPTY_MODEL_RUNNER_OUTPUT
+from vllm.v1.outputs import LogprobsTensors
+from vllm.v1.outputs import ModelRunnerOutput
 from vllm.v1.pool.metadata import PoolingMetadata
 from vllm.v1.sample.metadata import SamplingMetadata
 from vllm.v1.sample.rejection_sampler import RejectionSampler
@@ -69,15 +98,21 @@ from vllm.v1.spec_decode.eagle import EagleProposer
 from vllm.v1.spec_decode.medusa import MedusaProposer
 from vllm.v1.spec_decode.metadata import SpecDecodeMetadata
 from vllm.v1.spec_decode.ngram_proposer import NgramProposer
-from vllm.v1.worker.gpu_input_batch import CachedRequestState, InputBatch
+from vllm.v1.worker.gpu_input_batch import CachedRequestState
+from vllm.v1.worker.gpu_input_batch import InputBatch
 from vllm.v1.worker.kv_connector_model_runner_mixin import (
-    KVConnectorModelRunnerMixin, KVConnectorOutput)
+    KVConnectorModelRunnerMixin)
+from vllm.v1.worker.kv_connector_model_runner_mixin import KVConnectorOutput
 from vllm.v1.worker.lora_model_runner_mixin import LoRAModelRunnerMixin
 
 from ..sample.logits_processor import LogitsProcessorManager
-from .utils import (AttentionGroup, MultiModalBudget, bind_kv_cache,
-                    gather_mm_placeholders, initialize_kv_cache_for_kv_sharing,
-                    sanity_check_mm_encoder_outputs, scatter_mm_placeholders)
+from .utils import AttentionGroup
+from .utils import MultiModalBudget
+from .utils import bind_kv_cache
+from .utils import gather_mm_placeholders
+from .utils import initialize_kv_cache_for_kv_sharing
+from .utils import sanity_check_mm_encoder_outputs
+from .utils import scatter_mm_placeholders
 
 if TYPE_CHECKING:
     import xgrammar as xgr

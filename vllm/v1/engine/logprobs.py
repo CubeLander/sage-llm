@@ -1,17 +1,22 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import itertools
 from collections.abc import Iterable
 from dataclasses import dataclass
+import itertools
 from typing import Optional
 
-from vllm.utils.logger import init_logger
-from vllm.sequence import Logprob, PromptLogprobs, SampleLogprobs
+from vllm.sequence import Logprob
+from vllm.sequence import PromptLogprobs
+from vllm.sequence import SampleLogprobs
 from vllm.transformers_utils.detokenizer_utils import (
-    AnyTokenizer, convert_ids_list_to_tokens)
-from vllm.v1.engine import EngineCoreOutput, EngineCoreRequest
-from vllm.v1.outputs import LogprobsLists, LogprobsTensors
+    convert_ids_list_to_tokens)
+from vllm.transformers_utils.detokenizer_utils import AnyTokenizer
+from vllm.utils.logger import init_logger
+from vllm.v1.engine import EngineCoreOutput
+from vllm.v1.engine import EngineCoreRequest
+from vllm.v1.outputs import LogprobsLists
+from vllm.v1.outputs import LogprobsTensors
 
 logger = init_logger(__name__)
 

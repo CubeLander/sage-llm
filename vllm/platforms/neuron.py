@@ -1,15 +1,17 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 import enum
-import os
 from functools import lru_cache
-from typing import TYPE_CHECKING, Optional
+import os
+from typing import Optional
+from typing import TYPE_CHECKING
 
 from vllm import envs
-from vllm.utils.logger import init_logger
 from vllm.utils import DEFAULT_MAX_NUM_BATCHED_TOKENS
+from vllm.utils.logger import init_logger
 
-from .interface import Platform, PlatformEnum
+from .interface import Platform
+from .interface import PlatformEnum
 
 if TYPE_CHECKING:
     from vllm.config import VllmConfig

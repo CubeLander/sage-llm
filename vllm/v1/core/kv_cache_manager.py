@@ -6,14 +6,18 @@ from dataclasses import dataclass
 from typing import Optional
 
 from vllm.distributed.kv_events import KVCacheEvent
+from vllm.utils import sha256
+from vllm.utils import sha256_cbor_64bit
 from vllm.utils.logger import init_logger
-from vllm.utils import sha256, sha256_cbor_64bit
 from vllm.v1.core.kv_cache_coordinator import get_kv_cache_coordinator
-from vllm.v1.core.kv_cache_utils import (BlockHash, KVCacheBlock,
-                                         hash_request_tokens, init_none_hash)
+from vllm.v1.core.kv_cache_utils import BlockHash
+from vllm.v1.core.kv_cache_utils import KVCacheBlock
+from vllm.v1.core.kv_cache_utils import hash_request_tokens
+from vllm.v1.core.kv_cache_utils import init_none_hash
 from vllm.v1.kv_cache_interface import KVCacheConfig
 from vllm.v1.metrics.stats import PrefixCacheStats
-from vllm.v1.request import Request, RequestStatus
+from vllm.v1.request import Request
+from vllm.v1.request import RequestStatus
 
 logger = init_logger(__name__)
 

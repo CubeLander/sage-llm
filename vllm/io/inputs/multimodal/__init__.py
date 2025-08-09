@@ -1,10 +1,15 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 from .base import MultiModalPlaceholderMap
-from .hasher import MultiModalHashDict, MultiModalHasher
-from .inputs import (BatchedTensorInputs, ModalityData, MultiModalDataBuiltins,
-                     MultiModalDataDict, MultiModalKwargs,
-                     MultiModalPlaceholderDict, NestedTensors)
+from .hasher import MultiModalHashDict
+from .hasher import MultiModalHasher
+from .inputs import BatchedTensorInputs
+from .inputs import ModalityData
+from .inputs import MultiModalDataBuiltins
+from .inputs import MultiModalDataDict
+from .inputs import MultiModalKwargs
+from .inputs import MultiModalPlaceholderDict
+from .inputs import NestedTensors
 from .registry import MultiModalRegistry
 
 MULTIMODAL_REGISTRY = MultiModalRegistry()

@@ -1,46 +1,71 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from collections.abc import Iterable
+from collections.abc import Mapping
+from collections.abc import Sequence
 import math
-from collections.abc import Iterable, Mapping, Sequence
-from typing import (Final, Literal, Optional, Protocol, TypedDict, TypeVar,
-                    Union, cast)
+from typing import Final
+from typing import Literal
+from typing import Optional
+from typing import Protocol
+from typing import TypeVar
+from typing import TypedDict
+from typing import Union
+from typing import cast
 
 import torch
 import torch.nn as nn
-from transformers import BatchFeature, CLIPVisionConfig
+from transformers import BatchFeature
+from transformers import CLIPVisionConfig
 from transformers import LlavaConfig as HfLlavaConfig
-from transformers import PretrainedConfig, SiglipVisionConfig
-from transformers.image_utils import ImageInput, get_image_size, to_numpy_array
+from transformers import PretrainedConfig
+from transformers import SiglipVisionConfig
+from transformers.image_utils import ImageInput
+from transformers.image_utils import get_image_size
+from transformers.image_utils import to_numpy_array
 from transformers.models.llava import LlavaProcessor
-from transformers.processing_utils import ProcessingKwargs, Unpack
-from transformers.tokenization_utils_base import PreTokenizedInput, TextInput
+from transformers.processing_utils import ProcessingKwargs
+from transformers.processing_utils import Unpack
+from transformers.tokenization_utils_base import PreTokenizedInput
+from transformers.tokenization_utils_base import TextInput
 
 from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
 from vllm.io.inputs import InputProcessingContext
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.parse import ImageEmbeddingItems
+from vllm.io.inputs.multimodal.parse import ImageProcessorItems
+from vllm.io.inputs.multimodal.parse import ImageSize
+from vllm.io.inputs.multimodal.parse import MultiModalDataItems
+from vllm.io.inputs.multimodal.processing import BaseMultiModalProcessor
+from vllm.io.inputs.multimodal.processing import BaseProcessingInfo
+from vllm.io.inputs.multimodal.processing import ProcessingCache
+from vllm.io.inputs.multimodal.processing import PromptReplacement
+from vllm.io.inputs.multimodal.processing import PromptUpdate
+from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
 from vllm.jsontree import json_map_leaves
 from vllm.model_executor.layers.activation import get_act_fn
-from vllm.model_executor.layers.linear import (ColumnParallelLinear,
-                                               RowParallelLinear)
+from vllm.model_executor.layers.linear import ColumnParallelLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
 from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.model_executor.models.llava import LlavaDummyInputsBuilder
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig, MultiModalKwargs
-from vllm.io.inputs.multimodal.parse import (ImageEmbeddingItems, ImageProcessorItems,
-                                   ImageSize, MultiModalDataItems)
-from vllm.io.inputs.multimodal.processing import (BaseMultiModalProcessor,
-                                        BaseProcessingInfo, ProcessingCache,
-                                        PromptReplacement, PromptUpdate)
-from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
-from vllm.sequence import IntermediateTensors
 
 from .clip import CLIPVisionModel
-from .interfaces import MultiModalEmbeddings, SupportsMultiModal, SupportsPP
+from .interfaces import MultiModalEmbeddings
+from .interfaces import SupportsMultiModal
+from .interfaces import SupportsPP
 from .siglip import SiglipVisionModel
-from .utils import (AutoWeightsLoader, flatten_bn, init_vllm_registered_model,
-                    maybe_prefix, merge_multimodal_embeddings)
-from .vision import VisionEncoderInfo, get_vision_encoder_info
+from .utils import AutoWeightsLoader
+from .utils import flatten_bn
+from .utils import init_vllm_registered_model
+from .utils import maybe_prefix
+from .utils import merge_multimodal_embeddings
+from .vision import VisionEncoderInfo
+from .vision import get_vision_encoder_info
 
 
 class TarsierImagePixelInputs(TypedDict):

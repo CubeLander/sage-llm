@@ -3,14 +3,20 @@
 
 import enum
 import time
-from typing import TYPE_CHECKING, Any, Optional, Union
+from typing import Any
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Union
 
-from vllm.io.inputs.multimodal.inputs import MultiModalKwargs, PlaceholderRange
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.inputs import PlaceholderRange
 from vllm.pooling_params import PoolingParams
 from vllm.sampling_params import SamplingParams
 from vllm.utils import is_list_of
-from vllm.v1.engine import (EngineCoreEvent, EngineCoreEventType,
-                            EngineCoreRequest, FinishReason)
+from vllm.v1.engine import EngineCoreEvent
+from vllm.v1.engine import EngineCoreEventType
+from vllm.v1.engine import EngineCoreRequest
+from vllm.v1.engine import FinishReason
 from vllm.v1.structured_output.request import StructuredOutputRequest
 from vllm.v1.utils import ConstantList
 

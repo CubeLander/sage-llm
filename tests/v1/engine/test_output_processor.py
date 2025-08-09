@@ -7,18 +7,21 @@ from typing import Optional
 
 import pytest
 
-from tests.v1.engine.utils import (NUM_PROMPT_LOGPROBS_UNDER_TEST,
-                                   NUM_SAMPLE_LOGPROBS_UNDER_TEST,
-                                   STOP_STRINGS,
-                                   DummyOutputProcessorTestVectors,
-                                   MockEngineCore)
-from vllm.outputs import CompletionOutput, RequestOutput
-from vllm.sampling_params import RequestOutputKind, SamplingParams
-from vllm.sequence import PromptLogprobs, SampleLogprobs
+from tests.v1.engine.utils import DummyOutputProcessorTestVectors
+from tests.v1.engine.utils import MockEngineCore
+from tests.v1.engine.utils import NUM_PROMPT_LOGPROBS_UNDER_TEST
+from tests.v1.engine.utils import NUM_SAMPLE_LOGPROBS_UNDER_TEST
+from tests.v1.engine.utils import STOP_STRINGS
+from vllm.outputs import CompletionOutput
+from vllm.outputs import RequestOutput
+from vllm.sampling_params import RequestOutputKind
+from vllm.sampling_params import SamplingParams
+from vllm.sequence import PromptLogprobs
+from vllm.sequence import SampleLogprobs
 from vllm.transformers_utils.tokenizer import AnyTokenizer
 from vllm.v1.engine import EngineCoreRequest
-from vllm.v1.engine.output_processor import (OutputProcessor,
-                                             RequestOutputCollector)
+from vllm.v1.engine.output_processor import OutputProcessor
+from vllm.v1.engine.output_processor import RequestOutputCollector
 from vllm.v1.metrics.stats import IterationStats
 
 

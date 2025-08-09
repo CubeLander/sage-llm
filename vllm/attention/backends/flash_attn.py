@@ -4,36 +4,48 @@
 from collections import defaultdict
 from dataclasses import dataclass
 from itertools import accumulate
-from typing import TYPE_CHECKING, Dict, List, Optional, Tuple, Type
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Tuple
+from typing import Type
 
 import torch
 
 from vllm import _custom_ops as ops
 # yapf conflicts with isort for this block
 # yapf: disable
-from vllm.attention.backends.abstract import (AttentionBackend, AttentionImpl,
-                                              AttentionLayer,
-                                              AttentionMetadata,
-                                              AttentionMetadataBuilder,
-                                              AttentionType,
-                                              is_quantized_kv_cache)
-# yapf: enable
+from vllm.attention.backends.abstract import AttentionBackend
+from vllm.attention.backends.abstract import AttentionImpl
+from vllm.attention.backends.abstract import AttentionLayer
+from vllm.attention.backends.abstract import AttentionMetadata
+from vllm.attention.backends.abstract import AttentionMetadataBuilder
+from vllm.attention.backends.abstract import AttentionType
+from vllm.attention.backends.abstract import is_quantized_kv_cache
 from vllm.attention.backends.utils import (
-    PAD_SLOT_ID, CommonAttentionState, compute_slot_mapping,
-    compute_slot_mapping_start_idx, get_num_prefill_decode_query_kv_tokens,
-    get_seq_len_block_table_args, is_all_cross_attn_metadata_set,
-    is_all_encoder_attn_metadata_set, is_block_tables_empty)
-from vllm.attention.utils.fa_utils import (flash_attn_supports_fp8,
-                                           get_flash_attn_version)
-from vllm.utils.logger import init_logger
+    get_num_prefill_decode_query_kv_tokens)
+from vllm.attention.backends.utils import CommonAttentionState
+# yapf: enable
+from vllm.attention.backends.utils import PAD_SLOT_ID
+from vllm.attention.backends.utils import compute_slot_mapping
+from vllm.attention.backends.utils import compute_slot_mapping_start_idx
+from vllm.attention.backends.utils import get_seq_len_block_table_args
+from vllm.attention.backends.utils import is_all_cross_attn_metadata_set
+from vllm.attention.backends.utils import is_all_encoder_attn_metadata_set
+from vllm.attention.backends.utils import is_block_tables_empty
+from vllm.attention.utils.fa_utils import flash_attn_supports_fp8
+from vllm.attention.utils.fa_utils import get_flash_attn_version
 from vllm.io.inputs.multimodal import MultiModalPlaceholderMap
-from vllm.utils import async_tensor_h2d, make_tensor_with_pad
-from vllm.vllm_flash_attn import (flash_attn_varlen_func,
-                                  flash_attn_with_kvcache)
+from vllm.utils import async_tensor_h2d
+from vllm.utils import make_tensor_with_pad
+from vllm.utils.logger import init_logger
+from vllm.vllm_flash_attn import flash_attn_varlen_func
+from vllm.vllm_flash_attn import flash_attn_with_kvcache
 
 if TYPE_CHECKING:
-    from vllm.worker.model_runner import (ModelInputForGPUBuilder,
-                                          ModelInputForGPUWithSamplingMetadata)
+    from vllm.worker.model_runner import ModelInputForGPUBuilder
+    from vllm.worker.model_runner import ModelInputForGPUWithSamplingMetadata
 
 logger = init_logger(__name__)
 

@@ -1,24 +1,29 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 import asyncio
-import time
-from collections.abc import AsyncGenerator, Mapping
+from collections.abc import AsyncGenerator
+from collections.abc import Mapping
 from copy import copy
-from typing import Any, Optional, Union
+import time
+from typing import Any
+from typing import Optional
+from typing import Union
 
 import numpy as np
 
-import vllm.envs as envs
-from vllm.config import ModelConfig, VllmConfig
+from vllm.config import ModelConfig
+from vllm.config import VllmConfig
 from vllm.engine.arg_utils import AsyncEngineArgs
 from vllm.engine.protocol import EngineClient
+import vllm.envs as envs
 from vllm.envs import VLLM_V1_OUTPUT_PROC_CHUNK_SIZE
 from vllm.io.inputs import PromptType
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal import MultiModalRegistry
 from vllm.io.inputs.preprocess import InputPreprocessor
-from vllm.utils.logger import init_logger
 from vllm.lora.request import LoRARequest
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY, MultiModalRegistry
-from vllm.outputs import PoolingRequestOutput, RequestOutput
+from vllm.outputs import PoolingRequestOutput
+from vllm.outputs import RequestOutput
 from vllm.pooling_params import PoolingParams
 from vllm.sampling_params import SamplingParams
 from vllm.tasks import SupportedTask
@@ -27,16 +32,22 @@ from vllm.transformers_utils.config import (
 from vllm.transformers_utils.tokenizer import AnyTokenizer
 from vllm.transformers_utils.tokenizer_group import init_tokenizer_from_configs
 from vllm.usage.usage_lib import UsageContext
-from vllm.utils import Device, cancel_task_threadsafe, cdiv, deprecate_kwargs
+from vllm.utils import Device
+from vllm.utils import cancel_task_threadsafe
+from vllm.utils import cdiv
+from vllm.utils import deprecate_kwargs
+from vllm.utils.logger import init_logger
 from vllm.v1.engine import EngineCoreRequest
 from vllm.v1.engine.core_client import EngineCoreClient
-from vllm.v1.engine.exceptions import EngineDeadError, EngineGenerateError
-from vllm.v1.engine.output_processor import (OutputProcessor,
-                                             RequestOutputCollector)
+from vllm.v1.engine.exceptions import EngineDeadError
+from vllm.v1.engine.exceptions import EngineGenerateError
+from vllm.v1.engine.output_processor import OutputProcessor
+from vllm.v1.engine.output_processor import RequestOutputCollector
 from vllm.v1.engine.parallel_sampling import ParentRequest
 from vllm.v1.engine.processor import Processor
 from vllm.v1.executor.abstract import Executor
-from vllm.v1.metrics.loggers import StatLoggerFactory, StatLoggerManager
+from vllm.v1.metrics.loggers import StatLoggerFactory
+from vllm.v1.metrics.loggers import StatLoggerManager
 from vllm.v1.metrics.prometheus import shutdown_prometheus
 from vllm.v1.metrics.stats import IterationStats
 

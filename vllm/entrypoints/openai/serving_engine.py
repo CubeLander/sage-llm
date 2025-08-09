@@ -1,21 +1,34 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 import asyncio
+from collections.abc import AsyncGenerator
+from collections.abc import Iterable
+from collections.abc import Mapping
+from collections.abc import Sequence
+from concurrent.futures import ThreadPoolExecutor
+from http import HTTPStatus
 import io
 import json
 import sys
 import time
-from collections.abc import AsyncGenerator, Iterable, Mapping, Sequence
-from concurrent.futures import ThreadPoolExecutor
-from http import HTTPStatus
-from typing import (Annotated, Any, Callable, ClassVar, Generic, Optional,
-                    TypeVar, Union, cast, overload)
+from typing import Annotated
+from typing import Any
+from typing import Callable
+from typing import ClassVar
+from typing import Generic
+from typing import Optional
+from typing import TypeVar
+from typing import Union
+from typing import cast
+from typing import overload
 
-import pybase64
-import torch
 from fastapi import Request
-from pydantic import BaseModel, ConfigDict, Field
+import pybase64
+from pydantic import BaseModel
+from pydantic import ConfigDict
+from pydantic import Field
 from starlette.datastructures import Headers
+import torch
 from typing_extensions import TypeIs
 
 if sys.version_info >= (3, 12):
@@ -23,59 +36,70 @@ if sys.version_info >= (3, 12):
 else:
     from typing_extensions import TypedDict
 
-import vllm.envs as envs
 from vllm.config import ModelConfig
 from vllm.engine.protocol import EngineClient
 # yapf conflicts with isort for this block
 # yapf: disable
-from vllm.entrypoints.chat_utils import (ChatCompletionMessageParam,
-                                         ChatTemplateContentFormatOption,
-                                         ConversationMessage,
-                                         apply_hf_chat_template,
-                                         apply_mistral_chat_template,
-                                         parse_chat_messages_futures,
-                                         resolve_chat_template_content_format)
+from vllm.entrypoints.chat_utils import ChatCompletionMessageParam
+from vllm.entrypoints.chat_utils import ChatTemplateContentFormatOption
+from vllm.entrypoints.chat_utils import ConversationMessage
+from vllm.entrypoints.chat_utils import apply_hf_chat_template
+from vllm.entrypoints.chat_utils import apply_mistral_chat_template
+from vllm.entrypoints.chat_utils import parse_chat_messages_futures
+from vllm.entrypoints.chat_utils import resolve_chat_template_content_format
 from vllm.entrypoints.context import ConversationContext
 from vllm.entrypoints.logger import RequestLogger
-from vllm.entrypoints.openai.protocol import (ChatCompletionRequest,
-                                              ChatCompletionResponse,
-                                              ClassificationRequest,
-                                              ClassificationResponse,
-                                              CompletionRequest,
-                                              CompletionResponse,
-                                              DetokenizeRequest,
-                                              EmbeddingChatRequest,
-                                              EmbeddingCompletionRequest,
-                                              EmbeddingRequest,
-                                              EmbeddingResponse, ErrorInfo,
-                                              ErrorResponse, PoolingResponse,
-                                              RerankRequest, ResponsesRequest,
-                                              ScoreRequest, ScoreResponse,
-                                              TokenizeChatRequest,
-                                              TokenizeCompletionRequest,
-                                              TokenizeResponse,
-                                              TranscriptionRequest,
-                                              TranscriptionResponse,
-                                              TranslationRequest)
+from vllm.entrypoints.openai.protocol import ChatCompletionRequest
+from vllm.entrypoints.openai.protocol import ChatCompletionResponse
+from vllm.entrypoints.openai.protocol import ClassificationRequest
+from vllm.entrypoints.openai.protocol import ClassificationResponse
+from vllm.entrypoints.openai.protocol import CompletionRequest
+from vllm.entrypoints.openai.protocol import CompletionResponse
+from vllm.entrypoints.openai.protocol import DetokenizeRequest
+from vllm.entrypoints.openai.protocol import EmbeddingChatRequest
+from vllm.entrypoints.openai.protocol import EmbeddingCompletionRequest
+from vllm.entrypoints.openai.protocol import EmbeddingRequest
+from vllm.entrypoints.openai.protocol import EmbeddingResponse
+from vllm.entrypoints.openai.protocol import ErrorInfo
+from vllm.entrypoints.openai.protocol import ErrorResponse
+from vllm.entrypoints.openai.protocol import PoolingResponse
+from vllm.entrypoints.openai.protocol import RerankRequest
+from vllm.entrypoints.openai.protocol import ResponsesRequest
+from vllm.entrypoints.openai.protocol import ScoreRequest
+from vllm.entrypoints.openai.protocol import ScoreResponse
+from vllm.entrypoints.openai.protocol import TokenizeChatRequest
+from vllm.entrypoints.openai.protocol import TokenizeCompletionRequest
+from vllm.entrypoints.openai.protocol import TokenizeResponse
+from vllm.entrypoints.openai.protocol import TranscriptionRequest
+from vllm.entrypoints.openai.protocol import TranscriptionResponse
+from vllm.entrypoints.openai.protocol import TranslationRequest
 from vllm.entrypoints.openai.serving_models import OpenAIServingModels
 from vllm.entrypoints.openai.tool_parsers import ToolParser
+import vllm.envs as envs
 # yapf: enable
 from vllm.io.inputs.data import EmbedsPrompt as EngineEmbedsPrompt
 from vllm.io.inputs.data import TokensPrompt as EngineTokensPrompt
-from vllm.io.inputs.parse import parse_and_batch_prompt
-from vllm.utils.logger import init_logger
-from vllm.lora.request import LoRARequest
 from vllm.io.inputs.multimodal import (  # noqa: F401 - Required to resolve Pydantic error in RequestProcessingMixin
     MultiModalDataDict)
-from vllm.outputs import PoolingRequestOutput, RequestOutput
+from vllm.io.inputs.parse import parse_and_batch_prompt
+from vllm.lora.request import LoRARequest
+from vllm.outputs import PoolingRequestOutput
+from vllm.outputs import RequestOutput
 from vllm.pooling_params import PoolingParams
-from vllm.sampling_params import BeamSearchParams, SamplingParams
-from vllm.sequence import Logprob, PromptLogprobs
-from vllm.tracing import (contains_trace_headers, extract_trace_headers,
-                          log_tracing_disabled_warning)
-from vllm.transformers_utils.tokenizer import AnyTokenizer, MistralTokenizer
-from vllm.utils import (AsyncMicrobatchTokenizer, is_list_of,
-                        merge_async_iterators, random_uuid)
+from vllm.sampling_params import BeamSearchParams
+from vllm.sampling_params import SamplingParams
+from vllm.sequence import Logprob
+from vllm.sequence import PromptLogprobs
+from vllm.tracing import contains_trace_headers
+from vllm.tracing import extract_trace_headers
+from vllm.tracing import log_tracing_disabled_warning
+from vllm.transformers_utils.tokenizer import AnyTokenizer
+from vllm.transformers_utils.tokenizer import MistralTokenizer
+from vllm.utils import AsyncMicrobatchTokenizer
+from vllm.utils import is_list_of
+from vllm.utils import merge_async_iterators
+from vllm.utils import random_uuid
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

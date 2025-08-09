@@ -10,7 +10,8 @@ from huggingface_hub import snapshot_download
 
 from vllm.lora.request import LoRARequest
 
-from ..conftest import AudioTestAssets, VllmRunner
+from ..conftest import AudioTestAssets
+from ..conftest import VllmRunner
 
 MODEL_PATH = snapshot_download("microsoft/Phi-4-multimodal-instruct")
 AUDIO_LORA_PATH = os.path.join(MODEL_PATH, "speech-lora")

@@ -3,20 +3,27 @@
 from collections.abc import Mapping
 from dataclasses import dataclass
 from functools import lru_cache
-from typing import TYPE_CHECKING, Generic, Optional, Protocol, TypeVar
+from typing import Generic
+from typing import Optional
+from typing import Protocol
+from typing import TYPE_CHECKING
+from typing import TypeVar
 
 import torch.nn as nn
 
 from vllm.io.inputs import InputProcessingContext
-from vllm.utils.logger import init_logger
-from vllm.transformers_utils.tokenizer import (AnyTokenizer,
-                                               cached_tokenizer_from_config)
+from vllm.transformers_utils.tokenizer import AnyTokenizer
+from vllm.transformers_utils.tokenizer import cached_tokenizer_from_config
 from vllm.utils import ClassRegistry
+from vllm.utils.logger import init_logger
 
-from .processing import (BaseMultiModalProcessor, BaseProcessingInfo,
-                         ProcessingCache)
-from .profiling import (BaseDummyInputsBuilder, DummyDecoderData,
-                        DummyEncoderData, MultiModalProfiler)
+from .processing import BaseMultiModalProcessor
+from .processing import BaseProcessingInfo
+from .processing import ProcessingCache
+from .profiling import BaseDummyInputsBuilder
+from .profiling import DummyDecoderData
+from .profiling import DummyEncoderData
+from .profiling import MultiModalProfiler
 
 if TYPE_CHECKING:
     from vllm.config import ModelConfig

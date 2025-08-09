@@ -2,7 +2,8 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import itertools
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 import numpy as np
 import torch

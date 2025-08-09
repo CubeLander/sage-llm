@@ -1,34 +1,45 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 import asyncio
+from collections.abc import AsyncGenerator
+from collections.abc import Mapping
 import time
-from collections.abc import AsyncGenerator, Mapping
-from typing import Any, Optional, Union
+from typing import Any
+from typing import Optional
+from typing import Union
 
 from fastapi import Request
 
 from vllm.config import ModelConfig
 from vllm.engine.protocol import EngineClient
 from vllm.entrypoints.logger import RequestLogger
-from vllm.entrypoints.openai.protocol import (ErrorResponse, RerankDocument,
-                                              RerankRequest, RerankResponse,
-                                              RerankResult, RerankUsage,
-                                              ScoreRequest, ScoreResponse,
-                                              ScoreResponseData, UsageInfo)
+from vllm.entrypoints.openai.protocol import ErrorResponse
+from vllm.entrypoints.openai.protocol import RerankDocument
+from vllm.entrypoints.openai.protocol import RerankRequest
+from vllm.entrypoints.openai.protocol import RerankResponse
+from vllm.entrypoints.openai.protocol import RerankResult
+from vllm.entrypoints.openai.protocol import RerankUsage
+from vllm.entrypoints.openai.protocol import ScoreRequest
+from vllm.entrypoints.openai.protocol import ScoreResponse
+from vllm.entrypoints.openai.protocol import ScoreResponseData
+from vllm.entrypoints.openai.protocol import UsageInfo
 from vllm.entrypoints.openai.serving_engine import OpenAIServing
 from vllm.entrypoints.openai.serving_models import OpenAIServingModels
-from vllm.entrypoints.score_utils import (ScoreContentPartParam,
-                                          ScoreMultiModalParam,
-                                          _cosine_similarity,
-                                          _validate_score_input_lens,
-                                          get_score_prompt)
+from vllm.entrypoints.score_utils import ScoreContentPartParam
+from vllm.entrypoints.score_utils import ScoreMultiModalParam
+from vllm.entrypoints.score_utils import _cosine_similarity
+from vllm.entrypoints.score_utils import _validate_score_input_lens
+from vllm.entrypoints.score_utils import get_score_prompt
 from vllm.entrypoints.utils import _validate_truncation_size
 from vllm.io.inputs.data import TokensPrompt
-from vllm.utils.logger import init_logger
 from vllm.lora.request import LoRARequest
-from vllm.outputs import PoolingRequestOutput, ScoringRequestOutput
-from vllm.transformers_utils.tokenizer import AnyTokenizer, MistralTokenizer
-from vllm.utils import make_async, merge_async_iterators
+from vllm.outputs import PoolingRequestOutput
+from vllm.outputs import ScoringRequestOutput
+from vllm.transformers_utils.tokenizer import AnyTokenizer
+from vllm.transformers_utils.tokenizer import MistralTokenizer
+from vllm.utils import make_async
+from vllm.utils import merge_async_iterators
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

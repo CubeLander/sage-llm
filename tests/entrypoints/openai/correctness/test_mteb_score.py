@@ -6,10 +6,13 @@ import pytest
 
 # yapf conflicts with isort for this block
 # yapf: disable
-from tests.models.language.pooling.mteb_utils import (
-    MTEB_RERANK_LANGS, MTEB_RERANK_TASKS, MTEB_RERANK_TOL,
-    RerankClientMtebEncoder, ScoreClientMtebEncoder,
-    mteb_test_rerank_models_hf, run_mteb_rerank)
+from tests.models.language.pooling.mteb_utils import MTEB_RERANK_LANGS
+from tests.models.language.pooling.mteb_utils import MTEB_RERANK_TASKS
+from tests.models.language.pooling.mteb_utils import MTEB_RERANK_TOL
+from tests.models.language.pooling.mteb_utils import RerankClientMtebEncoder
+from tests.models.language.pooling.mteb_utils import ScoreClientMtebEncoder
+from tests.models.language.pooling.mteb_utils import mteb_test_rerank_models_hf
+from tests.models.language.pooling.mteb_utils import run_mteb_rerank
 # yapf: enable
 from tests.utils import RemoteOpenAIServer
 

@@ -4,18 +4,25 @@
 import pytest
 
 from vllm.attention.layer import Attention
-from vllm.config import (CacheConfig, ModelConfig, SchedulerConfig, VllmConfig,
-                         set_current_vllm_config)
+from vllm.config import CacheConfig
+from vllm.config import ModelConfig
+from vllm.config import SchedulerConfig
+from vllm.config import VllmConfig
+from vllm.config import set_current_vllm_config
 from vllm.pooling_params import PoolingParams
 from vllm.sampling_params import SamplingParams
 from vllm.utils import GiB_bytes
-from vllm.v1.core.kv_cache_utils import (estimate_max_model_len,
-                                         get_kv_cache_config)
-from vllm.v1.core.sched.output import (CachedRequestData, NewRequestData,
-                                       SchedulerOutput)
+from vllm.v1.core.kv_cache_utils import estimate_max_model_len
+from vllm.v1.core.kv_cache_utils import get_kv_cache_config
+from vllm.v1.core.sched.output import CachedRequestData
+from vllm.v1.core.sched.output import NewRequestData
+from vllm.v1.core.sched.output import SchedulerOutput
 from vllm.v1.worker.tpu_model_runner import (
-    TPUModelRunner, _get_padded_num_reqs_with_upper_limit,
-    _get_padded_token_len, _get_req_paddings, _get_token_paddings)
+    _get_padded_num_reqs_with_upper_limit)
+from vllm.v1.worker.tpu_model_runner import TPUModelRunner
+from vllm.v1.worker.tpu_model_runner import _get_padded_token_len
+from vllm.v1.worker.tpu_model_runner import _get_req_paddings
+from vllm.v1.worker.tpu_model_runner import _get_token_paddings
 
 
 def get_vllm_config():

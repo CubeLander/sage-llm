@@ -24,58 +24,80 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Inference-only Qwen2-VL model compatible with HuggingFace weights."""
-from collections.abc import Iterable, Mapping, Sequence
+from collections.abc import Iterable
+from collections.abc import Mapping
+from collections.abc import Sequence
 from functools import partial
-from typing import Any, Callable, Literal, Optional, TypedDict, Union
+from typing import Any
+from typing import Callable
+from typing import Literal
+from typing import Optional
+from typing import TypedDict
+from typing import Union
 
+from einops import rearrange
+from einops import repeat
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from einops import rearrange, repeat
-from transformers import AutoConfig, BatchFeature
-from transformers.models.qwen2_vl import (Qwen2VLImageProcessor,
-                                          Qwen2VLProcessor)
+from transformers import AutoConfig
+from transformers import BatchFeature
+from transformers.models.qwen2_vl import Qwen2VLImageProcessor
+from transformers.models.qwen2_vl import Qwen2VLProcessor
 from transformers.models.qwen2_vl.configuration_qwen2_vl import (
-    Qwen2VLConfig, Qwen2VLVisionConfig)
+    Qwen2VLVisionConfig)
+from transformers.models.qwen2_vl.configuration_qwen2_vl import Qwen2VLConfig
 from transformers.models.qwen2_vl.image_processing_qwen2_vl import smart_resize
 from transformers.models.qwen2_vl.video_processing_qwen2_vl import (
     Qwen2VLVideoProcessor)
 
 from vllm.config import VllmConfig
-from vllm.distributed import parallel_state, tensor_model_parallel_all_gather
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.distributed import parallel_state
+from vllm.distributed import tensor_model_parallel_all_gather
 from vllm.distributed import utils as dist_utils
-from vllm.utils.logger import init_logger
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import ImageItem
+from vllm.io.inputs.multimodal.inputs import ModalityData
+from vllm.io.inputs.multimodal.inputs import MultiModalDataDict
+from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.inputs import VideoItem
+from vllm.io.inputs.multimodal.parse import DictEmbeddingItems
+from vllm.io.inputs.multimodal.parse import ImageSize
+from vllm.io.inputs.multimodal.parse import ModalityDataItems
+from vllm.io.inputs.multimodal.parse import MultiModalDataItems
+from vllm.io.inputs.multimodal.parse import MultiModalDataParser
+from vllm.io.inputs.multimodal.processing import BaseMultiModalProcessor
+from vllm.io.inputs.multimodal.processing import BaseProcessingInfo
+from vllm.io.inputs.multimodal.processing import PromptReplacement
+from vllm.io.inputs.multimodal.processing import PromptUpdate
+from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
 from vllm.model_executor import SamplingMetadata
 from vllm.model_executor.layers.activation import QuickGELU
-from vllm.model_executor.layers.linear import (ColumnParallelLinear,
-                                               RowParallelLinear)
+from vllm.model_executor.layers.linear import ColumnParallelLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
 from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.model_executor.layers.quantization.gptq import GPTQConfig
 from vllm.model_executor.layers.quantization.gptq_marlin import (
     GPTQMarlinConfig)
 from vllm.model_executor.model_loader.weight_utils import default_weight_loader
 from vllm.model_executor.models.module_mapping import MultiModelKeys
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.io.inputs.multimodal.inputs import (ImageItem, ModalityData,
-                                    MultiModalDataDict, MultiModalFieldConfig,
-                                    MultiModalKwargs, VideoItem)
-from vllm.io.inputs.multimodal.parse import (DictEmbeddingItems, ImageSize,
-                                   ModalityDataItems, MultiModalDataItems,
-                                   MultiModalDataParser)
-from vllm.io.inputs.multimodal.processing import (BaseMultiModalProcessor,
-                                        BaseProcessingInfo, PromptReplacement,
-                                        PromptUpdate)
-from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
-from vllm.platforms import _Backend, current_platform
-from vllm.sequence import IntermediateTensors
+from vllm.platforms import _Backend
+from vllm.platforms import current_platform
 from vllm.transformers_utils.config import uses_mrope
 from vllm.transformers_utils.tokenizer import AnyTokenizer
+from vllm.utils.logger import init_logger
 
-from .interfaces import (MultiModalEmbeddings, SupportsLoRA,
-                         SupportsMultiModal, SupportsPP)
-from .utils import (AutoWeightsLoader, WeightsMapper,
-                    init_vllm_registered_model, maybe_prefix,
-                    merge_multimodal_embeddings)
+from .interfaces import MultiModalEmbeddings
+from .interfaces import SupportsLoRA
+from .interfaces import SupportsMultiModal
+from .interfaces import SupportsPP
+from .utils import AutoWeightsLoader
+from .utils import WeightsMapper
+from .utils import init_vllm_registered_model
+from .utils import maybe_prefix
+from .utils import merge_multimodal_embeddings
 from .vision import get_vit_attn_backend
 
 logger = init_logger(__name__)

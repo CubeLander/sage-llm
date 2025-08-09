@@ -6,10 +6,11 @@
 
 # ruff: noqa: E501,SIM102
 
-import torch
 from packaging import version
+import torch
 
-from vllm.platforms.triton_tuils import tl, triton
+from vllm.platforms.triton_tuils import tl
+from vllm.platforms.triton_tuils import triton
 
 TRITON_22 = version.parse(triton.__version__) >= version.parse('2.2.0')
 

@@ -2,43 +2,71 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from enum import Enum
-from typing import Any, Callable, Optional, Union
+from typing import Any
+from typing import Callable
+from typing import Optional
+from typing import Union
 
 import torch
 from torch.nn import Module
 from torch.nn.parameter import Parameter
 
+from vllm._custom_ops import cutlass_scaled_fp4_mm
+from vllm._custom_ops import scaled_fp4_quant
 import vllm.envs as envs
-import vllm.model_executor.layers.fused_moe.modular_kernel as mk
-from vllm._custom_ops import cutlass_scaled_fp4_mm, scaled_fp4_quant
-from vllm.utils.logger import init_logger
 from vllm.model_executor.layers.fused_moe.config import FusedMoEParallelConfig
 from vllm.model_executor.layers.fused_moe.layer import (
-    FusedMoE, FusedMoEMethodBase, FusedMoeWeightScaleSupported)
-from vllm.model_executor.layers.linear import (LinearBase, LinearMethodBase,
-                                               UnquantizedLinearMethod)
+    FusedMoeWeightScaleSupported)
+from vllm.model_executor.layers.fused_moe.layer import FusedMoE
+from vllm.model_executor.layers.fused_moe.layer import FusedMoEMethodBase
+import vllm.model_executor.layers.fused_moe.modular_kernel as mk
+from vllm.model_executor.layers.linear import LinearBase
+from vllm.model_executor.layers.linear import LinearMethodBase
+from vllm.model_executor.layers.linear import UnquantizedLinearMethod
 from vllm.model_executor.layers.quantization import QuantizationMethods
 from vllm.model_executor.layers.quantization.base_config import (
-    QuantizationConfig, QuantizeMethodBase)
+    QuantizationConfig)
+from vllm.model_executor.layers.quantization.base_config import (
+    QuantizeMethodBase)
 from vllm.model_executor.layers.quantization.kv_cache import BaseKVCacheMethod
 from vllm.model_executor.layers.quantization.utils.flashinfer_fp4_moe import (
-    build_flashinfer_fp4_cutlass_moe_kernel,
-    flashinfer_fp4_cutlass_moe_forward, reorder_w1w3_to_w3w1)
+    build_flashinfer_fp4_cutlass_moe_kernel)
+from vllm.model_executor.layers.quantization.utils.flashinfer_fp4_moe import (
+    flashinfer_fp4_cutlass_moe_forward)
+from vllm.model_executor.layers.quantization.utils.flashinfer_fp4_moe import (
+    reorder_w1w3_to_w3w1)
 from vllm.model_executor.layers.quantization.utils.flashinfer_utils import (
-    apply_flashinfer_per_tensor_scale_fp8, rotate_flashinfer_fp8_moe_weights,
+    apply_flashinfer_per_tensor_scale_fp8)
+from vllm.model_executor.layers.quantization.utils.flashinfer_utils import (
+    rotate_flashinfer_fp8_moe_weights)
+from vllm.model_executor.layers.quantization.utils.flashinfer_utils import (
     swap_w13_to_w31)
 from vllm.model_executor.layers.quantization.utils.marlin_utils_fp4 import (
-    apply_fp4_marlin_linear, is_fp4_marlin_supported,
-    prepare_fp4_layer_for_marlin, prepare_moe_fp4_layer_for_marlin)
+    apply_fp4_marlin_linear)
+from vllm.model_executor.layers.quantization.utils.marlin_utils_fp4 import (
+    is_fp4_marlin_supported)
+from vllm.model_executor.layers.quantization.utils.marlin_utils_fp4 import (
+    prepare_fp4_layer_for_marlin)
+from vllm.model_executor.layers.quantization.utils.marlin_utils_fp4 import (
+    prepare_moe_fp4_layer_for_marlin)
 from vllm.model_executor.layers.quantization.utils.quant_utils import (
-    GroupShape, cutlass_fp4_supported, is_layer_skipped, swizzle_blockscale)
+    GroupShape)
+from vllm.model_executor.layers.quantization.utils.quant_utils import (
+    cutlass_fp4_supported)
+from vllm.model_executor.layers.quantization.utils.quant_utils import (
+    is_layer_skipped)
+from vllm.model_executor.layers.quantization.utils.quant_utils import (
+    swizzle_blockscale)
 from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
-    Fp8LinearOp, requantize_with_max_scale)
-from vllm.model_executor.parameter import (ModelWeightParameter,
-                                           PerTensorScaleParameter)
+    Fp8LinearOp)
+from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
+    requantize_with_max_scale)
+from vllm.model_executor.parameter import ModelWeightParameter
+from vllm.model_executor.parameter import PerTensorScaleParameter
 from vllm.scalar_type import scalar_types
 from vllm.utils import next_power_of_2
 from vllm.utils.flashinfer import has_flashinfer_moe
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 
@@ -1042,8 +1070,9 @@ class ModelOptNvFp4FusedMoE(FusedMoEMethodBase):
         num_experts: int,
     ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
         """Prepare quantized weights for kernel (done offline with weights)."""
-        from flashinfer import (reorder_rows_for_gated_act_gemm,
-                                shuffle_matrix_a, shuffle_matrix_sf_a)
+        from flashinfer import reorder_rows_for_gated_act_gemm
+        from flashinfer import shuffle_matrix_a
+        from flashinfer import shuffle_matrix_sf_a
         epilogue_tile_m = 128  # FIXME: this depends on the kernel internals
 
         # Convert quantized weights to proper formats

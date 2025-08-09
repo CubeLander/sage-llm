@@ -7,12 +7,16 @@ Punica: Multi-Tenant LoRA Serving.
 https://arxiv.org/abs/2310.18547
 """
 
-from typing import Optional, Union, final
+from typing import Optional
+from typing import Union
+from typing import final
 
 import torch
 
 from vllm.lora.layers import LoRAMapping
-from vllm.lora.ops.ipex_ops import bgmv_expand, bgmv_expand_slice, bgmv_shrink
+from vllm.lora.ops.ipex_ops import bgmv_expand
+from vllm.lora.ops.ipex_ops import bgmv_expand_slice
+from vllm.lora.ops.ipex_ops import bgmv_shrink
 
 from .punica_base import PunicaWrapperBase
 

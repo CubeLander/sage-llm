@@ -15,8 +15,9 @@ import torch
 from vllm.model_executor.layers.fused_moe.fused_moe import fused_experts
 from vllm.model_executor.layers.quantization.utils.fp8_utils import (
     per_token_group_quant_fp8)
-from vllm.utils.deep_gemm import (calc_diff, is_deep_gemm_supported,
-                                  per_block_cast_to_fp8)
+from vllm.utils.deep_gemm import calc_diff
+from vllm.utils.deep_gemm import is_deep_gemm_supported
+from vllm.utils.deep_gemm import per_block_cast_to_fp8
 
 BLOCK_SIZE = [128, 128]
 

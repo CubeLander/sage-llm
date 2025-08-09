@@ -7,7 +7,8 @@ import torch.nn as nn
 
 from vllm.config import LogprobsMode
 from vllm.utils import is_pin_memory_available
-from vllm.v1.outputs import LogprobsTensors, SamplerOutput
+from vllm.v1.outputs import LogprobsTensors
+from vllm.v1.outputs import SamplerOutput
 from vllm.v1.sample.metadata import SamplingMetadata
 from vllm.v1.sample.ops.bad_words import apply_bad_words
 from vllm.v1.sample.ops.logprobs import batched_count_greater_than

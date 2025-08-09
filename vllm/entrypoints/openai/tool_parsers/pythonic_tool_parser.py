@@ -2,21 +2,26 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import ast
-import json
 from collections.abc import Sequence
-from typing import Any, Union
+import json
+from typing import Any
+from typing import Union
 
 import regex as re
 from transformers import PreTrainedTokenizerBase
 
-import vllm.envs as envs
-from vllm.entrypoints.openai.protocol import (ChatCompletionRequest,
-                                              DeltaFunctionCall, DeltaMessage,
-                                              DeltaToolCall,
-                                              ExtractedToolCallInformation,
-                                              FunctionCall, ToolCall)
+from vllm.entrypoints.openai.protocol import ChatCompletionRequest
+from vllm.entrypoints.openai.protocol import DeltaFunctionCall
+from vllm.entrypoints.openai.protocol import DeltaMessage
+from vllm.entrypoints.openai.protocol import DeltaToolCall
+from vllm.entrypoints.openai.protocol import ExtractedToolCallInformation
+from vllm.entrypoints.openai.protocol import FunctionCall
+from vllm.entrypoints.openai.protocol import ToolCall
 from vllm.entrypoints.openai.tool_parsers.abstract_tool_parser import (
-    ToolParser, ToolParserManager)
+    ToolParser)
+from vllm.entrypoints.openai.tool_parsers.abstract_tool_parser import (
+    ToolParserManager)
+import vllm.envs as envs
 from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)

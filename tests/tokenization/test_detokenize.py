@@ -2,21 +2,26 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from collections.abc import Generator
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
 import pytest
-from transformers import (AutoTokenizer, PreTrainedTokenizer,
-                          PreTrainedTokenizerFast)
+from transformers import AutoTokenizer
+from transformers import PreTrainedTokenizer
+from transformers import PreTrainedTokenizerFast
 
 from vllm.io.inputs import token_inputs
-from vllm.sequence import Logprob, SamplingParams, Sequence, SequenceGroup
+from vllm.sequence import Logprob
+from vllm.sequence import SamplingParams
+from vllm.sequence import Sequence
+from vllm.sequence import SequenceGroup
 from vllm.transformers_utils.detokenizer import Detokenizer
 from vllm.transformers_utils.tokenizer_group import TokenizerGroup
 from vllm.transformers_utils.tokenizers.mistral import MistralTokenizer
 from vllm.v1.engine import EngineCoreRequest
-from vllm.v1.engine.detokenizer import (FastIncrementalDetokenizer,
-                                        IncrementalDetokenizer,
-                                        SlowIncrementalDetokenizer)
+from vllm.v1.engine.detokenizer import FastIncrementalDetokenizer
+from vllm.v1.engine.detokenizer import IncrementalDetokenizer
+from vllm.v1.engine.detokenizer import SlowIncrementalDetokenizer
 
 SPECIAL_TOKS_TRUTH = [
     "Some text with adjacent special tokens                <|padding|><|padding|><fim_prefix><fim_middle><fim_suffix>other text<fim_pad>",  # noqa

@@ -1,14 +1,15 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 from contextlib import contextmanager
-from typing import TYPE_CHECKING, Any
+from typing import Any
+from typing import TYPE_CHECKING
 
 import torch
 import torch.nn as nn
 
 from vllm.config import VllmConfig
-from vllm.utils.logger import init_logger
 from vllm.model_executor.model_loader import get_model
+from vllm.utils.logger import init_logger
 from vllm.v1.attention.backends.cpu_attn import TorchSDPAMetadataBuilderV1
 from vllm.v1.worker.gpu_model_runner import GPUModelRunner
 

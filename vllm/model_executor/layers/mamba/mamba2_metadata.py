@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 from dataclasses import dataclass
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 import numpy as np
 import torch
@@ -12,7 +13,8 @@ from vllm.attention.backends.placeholder_attn import (
 from vllm.attention.backends.utils import PAD_SLOT_ID
 from vllm.platforms import current_platform
 from vllm.v1.attention.backends.mamba_attn import (
-    Mamba2AttentionMetadata, _query_start_loc_to_chunk_indices_offsets)
+    _query_start_loc_to_chunk_indices_offsets)
+from vllm.v1.attention.backends.mamba_attn import Mamba2AttentionMetadata
 
 
 @dataclass

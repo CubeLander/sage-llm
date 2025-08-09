@@ -7,11 +7,12 @@ import os
 import shutil
 from tempfile import TemporaryDirectory
 
+from huggingface_hub import snapshot_download
 import pytest
 import torch
-from huggingface_hub import snapshot_download
 
-from vllm import LLM, SamplingParams
+from vllm import LLM
+from vllm import SamplingParams
 from vllm.model_executor.model_loader import ShardedStateLoader
 
 prompts = [

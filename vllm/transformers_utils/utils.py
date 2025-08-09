@@ -1,11 +1,12 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import json
 from functools import cache
+import json
 from os import PathLike
 from pathlib import Path
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 from vllm.envs import VLLM_MODEL_REDIRECT_PATH
 from vllm.utils.logger import init_logger

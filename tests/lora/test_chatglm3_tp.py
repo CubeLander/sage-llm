@@ -4,7 +4,8 @@
 import vllm
 from vllm.lora.request import LoRARequest
 
-from ..utils import create_new_process_for_each_test, multi_gpu_test
+from ..utils import create_new_process_for_each_test
+from ..utils import multi_gpu_test
 
 MODEL_PATH = "zai-org/chatglm3-6b"
 

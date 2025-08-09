@@ -7,9 +7,9 @@ import random
 import pytest
 import torch
 
-from vllm.attention.ops.flashmla import (flash_mla_with_kvcache,
-                                         get_mla_metadata,
-                                         is_flashmla_supported)
+from vllm.attention.ops.flashmla import flash_mla_with_kvcache
+from vllm.attention.ops.flashmla import get_mla_metadata
+from vllm.attention.ops.flashmla import is_flashmla_supported
 from vllm.platforms.triton_tuils import triton
 
 

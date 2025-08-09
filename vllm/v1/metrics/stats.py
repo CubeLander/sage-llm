@@ -1,14 +1,18 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from dataclasses import dataclass
+from dataclasses import field
 import time
-from dataclasses import dataclass, field
-from typing import TYPE_CHECKING, Optional
+from typing import Optional
+from typing import TYPE_CHECKING
 
 from vllm.v1.spec_decode.metrics import SpecDecodingStats
 
 if TYPE_CHECKING:
-    from vllm.v1.engine import EngineCoreEvent, EngineCoreOutput, FinishReason
+    from vllm.v1.engine import EngineCoreEvent
+    from vllm.v1.engine import EngineCoreOutput
+    from vllm.v1.engine import FinishReason
     from vllm.v1.engine.output_processor import RequestState
 
 

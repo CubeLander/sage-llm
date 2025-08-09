@@ -3,33 +3,51 @@
 # ruff: noqa
 
 import asyncio
+from collections.abc import AsyncIterator
 import hashlib
 import json
 import logging
 import pickle
 import socket
-from collections.abc import AsyncIterator
 from unittest.mock import patch
 
 import pytest
 import torch
-import zmq
 from transformers import AutoTokenizer
 from vllm_test_utils.monitor import monitor
+import zmq
 
-from vllm.config import ParallelConfig, VllmConfig, set_current_vllm_config
+from vllm.config import ParallelConfig
+from vllm.config import VllmConfig
+from vllm.config import set_current_vllm_config
 from vllm.transformers_utils.detokenizer_utils import (
     convert_ids_list_to_tokens)
-from vllm.utils import (CacheInfo, FlexibleArgumentParser, LRUCache,
-                        MemorySnapshot, PlaceholderModule, StoreBoolean,
-                        bind_kv_cache, common_broadcastable_dtype,
-                        current_stream, deprecate_kwargs, get_open_port,
-                        get_tcp_uri, is_lossless_cast, join_host_port,
-                        make_zmq_path, make_zmq_socket, memory_profiling,
-                        merge_async_iterators, sha256, split_host_port,
-                        split_zmq_path, supports_kw, swap_dict_values)
+from vllm.utils import CacheInfo
+from vllm.utils import FlexibleArgumentParser
+from vllm.utils import LRUCache
+from vllm.utils import MemorySnapshot
+from vllm.utils import PlaceholderModule
+from vllm.utils import StoreBoolean
+from vllm.utils import bind_kv_cache
+from vllm.utils import common_broadcastable_dtype
+from vllm.utils import current_stream
+from vllm.utils import deprecate_kwargs
+from vllm.utils import get_open_port
+from vllm.utils import get_tcp_uri
+from vllm.utils import is_lossless_cast
+from vllm.utils import join_host_port
+from vllm.utils import make_zmq_path
+from vllm.utils import make_zmq_socket
+from vllm.utils import memory_profiling
+from vllm.utils import merge_async_iterators
+from vllm.utils import sha256
+from vllm.utils import split_host_port
+from vllm.utils import split_zmq_path
+from vllm.utils import supports_kw
+from vllm.utils import swap_dict_values
 
-from .utils import create_new_process_for_each_test, error_on_warning
+from .utils import create_new_process_for_each_test
+from .utils import error_on_warning
 
 
 @pytest.mark.asyncio
@@ -505,7 +523,8 @@ def test_bind_kv_cache_encoder_decoder(monkeypatch: pytest.MonkeyPatch):
     with monkeypatch.context() as m:
         m.setenv("VLLM_USE_V1", "0")
 
-        from vllm.attention import Attention, AttentionType
+        from vllm.attention import Attention
+        from vllm.attention import AttentionType
 
         # example from bart
         ctx = {

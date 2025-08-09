@@ -4,19 +4,22 @@
 from __future__ import annotations
 
 import copy
+from dataclasses import dataclass
 import json
 import os
-from dataclasses import dataclass
-from typing import TYPE_CHECKING, Any, Optional, Union
+from typing import Any
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Union
 
 import torch
 
-from vllm.utils.logger import init_logger
 from vllm.sampling_params import SamplingParams
 from vllm.utils import LazyLoader
-from vllm.v1.structured_output.backend_types import (StructuredOutputBackend,
-                                                     StructuredOutputGrammar,
-                                                     StructuredOutputOptions)
+from vllm.utils.logger import init_logger
+from vllm.v1.structured_output.backend_types import StructuredOutputBackend
+from vllm.v1.structured_output.backend_types import StructuredOutputGrammar
+from vllm.v1.structured_output.backend_types import StructuredOutputOptions
 from vllm.v1.structured_output.request import get_structured_output_key
 
 if TYPE_CHECKING:

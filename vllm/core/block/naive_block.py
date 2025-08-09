@@ -2,11 +2,22 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from collections import deque
-from typing import Deque, FrozenSet, Iterable, List, Optional, Tuple, Union
+from typing import Deque
+from typing import FrozenSet
+from typing import Iterable
+from typing import List
+from typing import Optional
+from typing import Tuple
+from typing import Union
 
-from vllm.core.block.common import (BlockPool, CopyOnWriteTracker, RefCounter,
-                                    get_all_blocks_recursively)
-from vllm.core.block.interfaces import Block, BlockAllocator, BlockId, Device
+from vllm.core.block.common import BlockPool
+from vllm.core.block.common import CopyOnWriteTracker
+from vllm.core.block.common import RefCounter
+from vllm.core.block.common import get_all_blocks_recursively
+from vllm.core.block.interfaces import Block
+from vllm.core.block.interfaces import BlockAllocator
+from vllm.core.block.interfaces import BlockId
+from vllm.core.block.interfaces import Device
 
 Refcount = int
 

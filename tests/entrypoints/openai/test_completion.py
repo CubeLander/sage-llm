@@ -7,15 +7,15 @@ import shutil
 from tempfile import TemporaryDirectory
 from typing import Optional
 
+# downloading lora to test lora requests
+from huggingface_hub import snapshot_download
 import jsonschema
 import openai  # use the official client for correctness check
+from openai import BadRequestError
 import pytest
 import pytest_asyncio
 import regex as re
 import requests
-# downloading lora to test lora requests
-from huggingface_hub import snapshot_download
-from openai import BadRequestError
 from transformers import AutoTokenizer
 
 from vllm.transformers_utils.tokenizer import get_tokenizer

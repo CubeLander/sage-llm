@@ -4,7 +4,8 @@
 import openai
 import pytest
 
-from tests.tool_use.utils import MESSAGES_ASKING_FOR_TOOLS, WEATHER_TOOL
+from tests.tool_use.utils import MESSAGES_ASKING_FOR_TOOLS
+from tests.tool_use.utils import WEATHER_TOOL
 
 
 # test: a tool_choice with mistral-tokenizer results in an ID of length 9

@@ -4,15 +4,23 @@
 import pytest
 import torch
 
-import vllm.envs as envs
-from vllm import LLM, SamplingParams
+from vllm import LLM
+from vllm import SamplingParams
 from vllm.compilation.activation_quant_fusion import ActivationQuantFusionPass
 from vllm.compilation.fix_functionalization import FixFunctionalizationPass
-from vllm.compilation.fusion import (FUSED_OPS, FusionPass, QuantKey,
-                                     kFp8DynamicTokenSym, kFp8StaticTensorSym)
-from vllm.compilation.fx_utils import find_auto_fn, find_auto_fn_maybe, is_func
+from vllm.compilation.fusion import FUSED_OPS
+from vllm.compilation.fusion import FusionPass
+from vllm.compilation.fusion import QuantKey
+from vllm.compilation.fusion import kFp8DynamicTokenSym
+from vllm.compilation.fusion import kFp8StaticTensorSym
+from vllm.compilation.fx_utils import find_auto_fn
+from vllm.compilation.fx_utils import find_auto_fn_maybe
+from vllm.compilation.fx_utils import is_func
 from vllm.compilation.noop_elimination import NoOpEliminationPass
-from vllm.config import CompilationConfig, PassConfig, VllmConfig
+from vllm.config import CompilationConfig
+from vllm.config import PassConfig
+from vllm.config import VllmConfig
+import vllm.envs as envs
 
 from .backend import TestBackend
 

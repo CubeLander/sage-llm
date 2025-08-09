@@ -9,7 +9,8 @@ if the config `tractable_init` is set to True. Otherwise, the weights are
 initialized randomly with a fixed seed.
 """
 from dataclasses import dataclass
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
 import pytest
 import torch
@@ -18,8 +19,10 @@ from torch.library import Library
 
 from vllm.compilation.counter import compilation_counter
 from vllm.compilation.decorators import support_torch_compile
-from vllm.config import (CompilationConfig, CompilationLevel, VllmConfig,
-                         set_current_vllm_config)
+from vllm.config import CompilationConfig
+from vllm.config import CompilationLevel
+from vllm.config import VllmConfig
+from vllm.config import set_current_vllm_config
 from vllm.forward_context import set_forward_context
 from vllm.utils import direct_register_custom_op
 

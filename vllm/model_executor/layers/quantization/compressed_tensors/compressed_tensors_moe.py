@@ -3,30 +3,42 @@
 
 import enum
 from enum import Enum
-from typing import Callable, Optional
+from typing import Callable
+from typing import Optional
 
-import torch
 from compressed_tensors import CompressionFormat
-from compressed_tensors.quantization import (ActivationOrdering,
-                                             QuantizationStrategy)
+from compressed_tensors.quantization import ActivationOrdering
+from compressed_tensors.quantization import QuantizationStrategy
+import torch
 
-import vllm.envs as envs
 from vllm import _custom_ops as ops
-from vllm.utils.logger import init_logger
+import vllm.envs as envs
 from vllm.model_executor.layers.fused_moe import (
-    FusedMoE, FusedMoEActivationFormat, FusedMoEConfig, FusedMoEMethodBase,
-    FusedMoEPermuteExpertsUnpermute, FusedMoEPrepareAndFinalize,
-    FusedMoeWeightScaleSupported)
+    FusedMoEPermuteExpertsUnpermute)
+from vllm.model_executor.layers.fused_moe import FusedMoE
+from vllm.model_executor.layers.fused_moe import FusedMoEActivationFormat
+from vllm.model_executor.layers.fused_moe import FusedMoEConfig
+from vllm.model_executor.layers.fused_moe import FusedMoEMethodBase
+from vllm.model_executor.layers.fused_moe import FusedMoEPrepareAndFinalize
+from vllm.model_executor.layers.fused_moe import FusedMoeWeightScaleSupported
 from vllm.model_executor.layers.fused_moe.flashinfer_cutlass_prepare_finalize import (  # noqa
     FlashInferCutlassMoEPrepareAndFinalize)
+from vllm.model_executor.layers.quantization.compressed_tensors.schemes.compressed_tensors_wNa16 import (
+    WNA16_SUPPORTED_TYPES_MAP)
 from vllm.model_executor.layers.quantization.compressed_tensors.schemes.compressed_tensors_wNa16 import (  # noqa
-    WNA16_SUPPORTED_BITS, WNA16_SUPPORTED_TYPES_MAP)
+    WNA16_SUPPORTED_BITS)
 from vllm.model_executor.layers.quantization.utils import replace_parameter
 from vllm.model_executor.layers.quantization.utils.flashinfer_fp4_moe import (
-    build_flashinfer_fp4_cutlass_moe_kernel,
-    flashinfer_fp4_cutlass_moe_forward, reorder_w1w3_to_w3w1)
+    build_flashinfer_fp4_cutlass_moe_kernel)
+from vllm.model_executor.layers.quantization.utils.flashinfer_fp4_moe import (
+    flashinfer_fp4_cutlass_moe_forward)
+from vllm.model_executor.layers.quantization.utils.flashinfer_fp4_moe import (
+    reorder_w1w3_to_w3w1)
 from vllm.model_executor.layers.quantization.utils.marlin_utils import (
-    check_moe_marlin_supports_layer, marlin_make_workspace_new,
+    check_moe_marlin_supports_layer)
+from vllm.model_executor.layers.quantization.utils.marlin_utils import (
+    marlin_make_workspace_new)
+from vllm.model_executor.layers.quantization.utils.marlin_utils import (
     marlin_moe_permute_scales)
 from vllm.model_executor.layers.quantization.utils.marlin_utils_fp4 import (
     prepare_moe_fp4_layer_for_marlin)
@@ -35,10 +47,15 @@ from vllm.model_executor.layers.quantization.utils.marlin_utils_fp8 import (
 from vllm.model_executor.layers.quantization.utils.quant_utils import (
     swizzle_blockscale)
 from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
-    all_close_1d, normalize_e4m3fn_to_e4m3fnuz, per_tensor_dequantize)
+    all_close_1d)
+from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
+    normalize_e4m3fn_to_e4m3fnuz)
+from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
+    per_tensor_dequantize)
 from vllm.model_executor.utils import set_weight_attrs
 from vllm.platforms import current_platform
 from vllm.scalar_type import scalar_types
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 
@@ -582,8 +599,10 @@ class CompressedTensorsW8A8Fp8MoEMethod(CompressedTensorsMoEMethod):
 
         # Property to determine if AITER is used
         if self.rocm_aiter_moe_enabled:
+            from vllm.model_executor.layers.fused_moe.rocm_aiter_fused_moe import (
+                shuffle_weights)
             from vllm.model_executor.layers.fused_moe.rocm_aiter_fused_moe import (  # noqa E501
-                rocm_aiter_fused_experts, shuffle_weights)
+                rocm_aiter_fused_experts)
 
             # reshaping weights is required for aiter moe kernel.
             shuffled_w13, shuffled_w2 = shuffle_weights(

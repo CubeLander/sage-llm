@@ -4,7 +4,8 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Optional
+from typing import Optional
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     import numpy as np
@@ -12,8 +13,9 @@ if TYPE_CHECKING:
 
     from vllm.distributed.kv_transfer.kv_connector.v1.base import (
         KVConnectorMetadata)
+    from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+    from vllm.io.inputs.multimodal.inputs import PlaceholderRange
     from vllm.lora.request import LoRARequest
-    from vllm.io.inputs.multimodal.inputs import MultiModalKwargs, PlaceholderRange
     from vllm.pooling_params import PoolingParams
     from vllm.sampling_params import SamplingParams
     from vllm.v1.request import Request

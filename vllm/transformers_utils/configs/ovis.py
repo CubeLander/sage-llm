@@ -6,9 +6,12 @@
 # adapted from https://huggingface.co/AIDC-AI/Ovis2-1B/blob/main/configuration_aimv2.py
 # and https://huggingface.co/AIDC-AI/Ovis2-1B/blob/main/configuration_ovis.py
 # Ovis Config with AimV2 config registration removed for Transformers compatibility
-from typing import Any, Optional, Union
+from typing import Any
+from typing import Optional
+from typing import Union
 
-from transformers import AutoConfig, PretrainedConfig
+from transformers import AutoConfig
+from transformers import PretrainedConfig
 
 
 class AIMv2Config(PretrainedConfig):

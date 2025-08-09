@@ -5,8 +5,9 @@
 Run `pytest tests/kernels/test_machete_mm.py`.
 """
 
+from dataclasses import dataclass
+from dataclasses import fields
 import math
-from dataclasses import dataclass, fields
 from typing import Optional
 
 import pytest
@@ -17,9 +18,11 @@ from vllm import _custom_ops as ops
 from vllm.model_executor.layers.quantization.utils.machete_utils import (
     query_machete_supported_group_sizes)
 from vllm.model_executor.layers.quantization.utils.quant_utils import (
-    pack_rows, quantize_weights)
+    quantize_weights)
+from vllm.model_executor.layers.quantization.utils.quant_utils import pack_rows
 from vllm.platforms import current_platform
-from vllm.scalar_type import ScalarType, scalar_types
+from vllm.scalar_type import ScalarType
+from vllm.scalar_type import scalar_types
 
 CUDA_DEVICES = [
     f"cuda:{i}" for i in range(1 if torch.cuda.device_count() == 1 else 2)

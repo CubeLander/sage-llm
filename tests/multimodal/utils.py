@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from PIL import Image
 import cv2
 import numpy as np
 import numpy.typing as npt
-from PIL import Image
 
 
 def random_image(rng: np.random.RandomState, min_wh: int, max_wh: int):

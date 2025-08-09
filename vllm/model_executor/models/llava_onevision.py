@@ -1,38 +1,59 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from collections.abc import Iterable
+from collections.abc import Mapping
+from collections.abc import Sequence
 import math
-from collections.abc import Iterable, Mapping, Sequence
-from typing import Final, Literal, Optional, Protocol, TypedDict, Union
+from typing import Final
+from typing import Literal
+from typing import Optional
+from typing import Protocol
+from typing import TypedDict
+from typing import Union
 
 import torch
 import torch.nn as nn
-from transformers import (BatchFeature, LlavaOnevisionConfig,
-                          LlavaOnevisionProcessor)
+from transformers import BatchFeature
+from transformers import LlavaOnevisionConfig
+from transformers import LlavaOnevisionProcessor
 from transformers.models.llava_onevision.modeling_llava_onevision import (
-    get_anyres_image_grid_shape, unpad_image)
+    get_anyres_image_grid_shape)
+from transformers.models.llava_onevision.modeling_llava_onevision import (
+    unpad_image)
 from typing_extensions import NotRequired
 
 from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import MultiModalDataDict
+from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.parse import ImageSize
+from vllm.io.inputs.multimodal.parse import MultiModalDataItems
+from vllm.io.inputs.multimodal.parse import VideoEmbeddingItems
+from vllm.io.inputs.multimodal.parse import VideoProcessorItems
+from vllm.io.inputs.multimodal.processing import PromptReplacement
+from vllm.io.inputs.multimodal.processing import PromptUpdate
 from vllm.model_executor.layers.activation import get_act_fn
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
-                                    MultiModalKwargs)
-from vllm.io.inputs.multimodal.parse import (ImageSize, MultiModalDataItems,
-                                   VideoEmbeddingItems, VideoProcessorItems)
-from vllm.io.inputs.multimodal.processing import PromptReplacement, PromptUpdate
-from vllm.sequence import IntermediateTensors
 
 from .clip import CLIPVisionModel
-from .interfaces import MultiModalEmbeddings, SupportsMultiModal, SupportsPP
-from .llava import LlavaDummyInputsBuilder, init_vision_tower_for_llava
-from .llava_next import (BaseLlavaNextMultiModalProcessor, LlavaNextLikeConfig,
-                         LlavaNextProcessingInfo)
+from .interfaces import MultiModalEmbeddings
+from .interfaces import SupportsMultiModal
+from .interfaces import SupportsPP
+from .llava import LlavaDummyInputsBuilder
+from .llava import init_vision_tower_for_llava
+from .llava_next import BaseLlavaNextMultiModalProcessor
+from .llava_next import LlavaNextLikeConfig
+from .llava_next import LlavaNextProcessingInfo
 from .siglip import SiglipVisionModel
-from .utils import (AutoWeightsLoader, WeightsMapper, flatten_bn,
-                    init_vllm_registered_model, maybe_prefix,
-                    merge_multimodal_embeddings)
+from .utils import AutoWeightsLoader
+from .utils import WeightsMapper
+from .utils import flatten_bn
+from .utils import init_vllm_registered_model
+from .utils import maybe_prefix
+from .utils import merge_multimodal_embeddings
 
 # For profile run
 _MAX_FRAMES_PER_VIDEO = 16

@@ -2,24 +2,33 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 """Attention layer with xFormers and PagedAttention."""
 from dataclasses import dataclass
-from typing import Dict, List, Optional, Tuple, Type
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import Tuple
+from typing import Type
 
 import torch
 from xformers import ops as xops
-from xformers.ops.fmha.attn_bias import (AttentionBias,
-                                         BlockDiagonalCausalMask,
-                                         BlockDiagonalMask,
-                                         LowerTriangularMaskWithTensorBias)
+from xformers.ops.fmha.attn_bias import AttentionBias
+from xformers.ops.fmha.attn_bias import BlockDiagonalCausalMask
+from xformers.ops.fmha.attn_bias import BlockDiagonalMask
+from xformers.ops.fmha.attn_bias import LowerTriangularMaskWithTensorBias
 
-from vllm.attention.backends.abstract import (AttentionBackend, AttentionImpl,
-                                              AttentionLayer,
-                                              AttentionMetadata, AttentionType)
+from vllm.attention.backends.abstract import AttentionBackend
+from vllm.attention.backends.abstract import AttentionImpl
+from vllm.attention.backends.abstract import AttentionLayer
+from vllm.attention.backends.abstract import AttentionMetadata
+from vllm.attention.backends.abstract import AttentionType
 from vllm.attention.backends.utils import (
-    CommonAttentionState, CommonMetadataBuilder,
-    get_num_prefill_decode_query_kv_tokens, get_seq_len_block_table_args,
-    is_all_cross_attn_metadata_set, is_all_encoder_attn_metadata_set)
-from vllm.attention.ops.paged_attn import (PagedAttention,
-                                           PagedAttentionMetadata)
+    get_num_prefill_decode_query_kv_tokens)
+from vllm.attention.backends.utils import CommonAttentionState
+from vllm.attention.backends.utils import CommonMetadataBuilder
+from vllm.attention.backends.utils import get_seq_len_block_table_args
+from vllm.attention.backends.utils import is_all_cross_attn_metadata_set
+from vllm.attention.backends.utils import is_all_encoder_attn_metadata_set
+from vllm.attention.ops.paged_attn import PagedAttention
+from vllm.attention.ops.paged_attn import PagedAttentionMetadata
 from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)

@@ -1,13 +1,13 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-import pickle
 from copy import deepcopy
+import pickle
 
 import pytest
 from transformers import AutoTokenizer
 
-from vllm.transformers_utils.tokenizer import (AnyTokenizer,
-                                               get_cached_tokenizer)
+from vllm.transformers_utils.tokenizer import AnyTokenizer
+from vllm.transformers_utils.tokenizer import get_cached_tokenizer
 
 
 @pytest.mark.parametrize("model_id", ["gpt2", "zai-org/chatglm3-6b"])

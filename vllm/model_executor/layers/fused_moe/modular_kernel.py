@@ -1,17 +1,21 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-from abc import ABC, abstractmethod
+from abc import ABC
+from abc import abstractmethod
 from dataclasses import dataclass
 from enum import Enum
 from math import prod
-from typing import Any, Optional, final
+from typing import Any
+from typing import Optional
+from typing import final
 
 import torch
 
 import vllm.envs as envs
 from vllm.model_executor.layers.fused_moe.config import FusedMoEQuantConfig
-from vllm.model_executor.layers.fused_moe.utils import (  # yapf: disable
-    _resize_cache, count_expert_num_tokens)
+from vllm.model_executor.layers.fused_moe.utils import (
+    _resize_cache)  # yapf: disable
+from vllm.model_executor.layers.fused_moe.utils import count_expert_num_tokens
 from vllm.utils import cdiv
 
 #

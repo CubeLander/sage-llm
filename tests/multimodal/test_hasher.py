@@ -2,10 +2,11 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 from pathlib import Path
 
+from PIL import Image
+from PIL import ImageDraw
 import numpy as np
 import pytest
 import torch
-from PIL import Image, ImageDraw
 
 from vllm.io.inputs.multimodal.hasher import MultiModalHasher
 

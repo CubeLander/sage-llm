@@ -1,27 +1,37 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import pickle
-import time
 from contextlib import contextmanager
-from dataclasses import dataclass, field
+from dataclasses import dataclass
+from dataclasses import field
 from multiprocessing import shared_memory
+import pickle
 from threading import Event
-from typing import Any, Optional, Union
+import time
+from typing import Any
+from typing import Optional
+from typing import Union
 from unittest.mock import patch
 
 import torch
 import torch.distributed as dist
-import zmq
 from torch.distributed import ProcessGroup
-from zmq import IPV6  # type: ignore
-from zmq import SUB, SUBSCRIBE, XPUB, XPUB_VERBOSE, Context  # type: ignore
+import zmq
+from zmq import Context
+from zmq import IPV6  # type: ignore; type: ignore
+from zmq import SUB
+from zmq import SUBSCRIBE
+from zmq import XPUB
+from zmq import XPUB_VERBOSE
 
+from vllm.distributed.utils import StatelessProcessGroup
+from vllm.distributed.utils import sched_yield
 import vllm.envs as envs
-from vllm.distributed.utils import StatelessProcessGroup, sched_yield
+from vllm.utils import get_ip
+from vllm.utils import get_open_port
+from vllm.utils import get_open_zmq_ipc_path
+from vllm.utils import is_valid_ipv6_address
 from vllm.utils.logger import init_logger
-from vllm.utils import (get_ip, get_open_port, get_open_zmq_ipc_path,
-                        is_valid_ipv6_address)
 
 VLLM_RINGBUFFER_WARNING_INTERVAL = envs.VLLM_RINGBUFFER_WARNING_INTERVAL
 

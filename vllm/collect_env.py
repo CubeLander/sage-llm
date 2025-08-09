@@ -4,15 +4,15 @@
 # ruff: noqa
 # code borrowed from https://github.com/pytorch/pytorch/blob/main/torch/utils/collect_env.py
 
+# Unlike the rest of the PyTorch this file must be python2 compliant.
+# This script outputs relevant system environment info
+# Run it with `python collect_env.py` or `python -m torch.utils.collect_env`
+from collections import namedtuple
 import datetime
 import locale
 import os
 import subprocess
 import sys
-# Unlike the rest of the PyTorch this file must be python2 compliant.
-# This script outputs relevant system environment info
-# Run it with `python collect_env.py` or `python -m torch.utils.collect_env`
-from collections import namedtuple
 
 import regex as re
 
@@ -285,7 +285,8 @@ def get_neuron_sdk_version(run_lambda):
 
 
 def get_vllm_version():
-    from vllm import __version__, __version_tuple__
+    from vllm import __version__
+    from vllm import __version_tuple__
 
     if __version__ == "dev":
         return "N/A (dev)"

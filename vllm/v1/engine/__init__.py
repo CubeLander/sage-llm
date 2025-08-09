@@ -1,21 +1,24 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from collections.abc import Sequence
 import enum
 import time
-from collections.abc import Sequence
-from typing import Any, Optional, Union
+from typing import Any
+from typing import Optional
+from typing import Union
 
 import msgspec
 import torch
 
-from vllm.lora.request import LoRARequest
 from vllm.io.inputs.multimodal import MultiModalKwargs
 from vllm.io.inputs.multimodal.inputs import PlaceholderRange
+from vllm.lora.request import LoRARequest
 from vllm.pooling_params import PoolingParams
 from vllm.sampling_params import SamplingParams
 from vllm.v1.metrics.stats import SchedulerStats
-from vllm.v1.outputs import LogprobsLists, LogprobsTensors
+from vllm.v1.outputs import LogprobsLists
+from vllm.v1.outputs import LogprobsTensors
 
 # These are possible values of RequestOutput.finish_reason,
 # so form part of the external API.

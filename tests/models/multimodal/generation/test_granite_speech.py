@@ -10,8 +10,10 @@ from transformers import AutoModelForSpeechSeq2Seq
 from vllm.lora.request import LoRARequest
 from vllm.sequence import SampleLogprobs
 
-from ....conftest import (AudioTestAssets, HfRunner, PromptAudioInput,
-                          VllmRunner)
+from ....conftest import AudioTestAssets
+from ....conftest import HfRunner
+from ....conftest import PromptAudioInput
+from ....conftest import VllmRunner
 from ...registry import HF_EXAMPLE_MODELS
 from ...utils import check_logprobs_close
 

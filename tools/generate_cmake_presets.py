@@ -3,8 +3,8 @@
 import json
 import multiprocessing
 import os
-import sys
 from shutil import which
+import sys
 
 try:
     # Try to get CUDA_HOME from PyTorch installation, which is the

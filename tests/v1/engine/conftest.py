@@ -5,16 +5,18 @@ import pytest
 import torch
 from transformers import AutoTokenizer
 
-from tests.v1.engine.utils import (NUM_PROMPT_LOGPROBS_UNDER_TEST,
-                                   NUM_SAMPLE_LOGPROBS_UNDER_TEST, PROMPT_LEN,
-                                   TOKENIZER_NAME,
-                                   DummyOutputProcessorTestVectors,
-                                   generate_dummy_prompt_logprobs_tensors,
-                                   generate_dummy_sample_logprobs)
+from tests.v1.engine.utils import DummyOutputProcessorTestVectors
+from tests.v1.engine.utils import NUM_PROMPT_LOGPROBS_UNDER_TEST
+from tests.v1.engine.utils import NUM_SAMPLE_LOGPROBS_UNDER_TEST
+from tests.v1.engine.utils import PROMPT_LEN
+from tests.v1.engine.utils import TOKENIZER_NAME
+from tests.v1.engine.utils import generate_dummy_prompt_logprobs_tensors
+from tests.v1.engine.utils import generate_dummy_sample_logprobs
 from vllm.engine.arg_utils import EngineArgs
 from vllm.transformers_utils.tokenizer_group import init_tokenizer_from_configs
 
-from ...distributed.conftest import publisher_config, random_port  # noqa: F401
+from ...distributed.conftest import publisher_config  # noqa: F401
+from ...distributed.conftest import random_port
 
 from tests.v1.engine.utils import FULL_STRINGS  # isort: skip
 

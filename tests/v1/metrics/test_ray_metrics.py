@@ -7,7 +7,8 @@ import ray
 
 from vllm.config import ModelDType
 from vllm.sampling_params import SamplingParams
-from vllm.v1.engine.async_llm import AsyncEngineArgs, AsyncLLM
+from vllm.v1.engine.async_llm import AsyncEngineArgs
+from vllm.v1.engine.async_llm import AsyncLLM
 from vllm.v1.metrics.ray_wrappers import RayPrometheusStatLogger
 
 

@@ -4,9 +4,10 @@
 import pytest
 from torch import nn
 
-from vllm.config import LoadConfig, ModelConfig
-from vllm.model_executor.model_loader import (get_model_loader,
-                                              register_model_loader)
+from vllm.config import LoadConfig
+from vllm.config import ModelConfig
+from vllm.model_executor.model_loader import get_model_loader
+from vllm.model_executor.model_loader import register_model_loader
 from vllm.model_executor.model_loader.base_loader import BaseModelLoader
 
 

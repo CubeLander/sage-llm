@@ -3,11 +3,15 @@
 
 import asyncio
 import os
-from typing import Any, Callable, Optional, Union
+from typing import Any
+from typing import Callable
+from typing import Optional
+from typing import Union
 
 import pytest
 
-from vllm.engine.arg_utils import AsyncEngineArgs, EngineArgs
+from vllm.engine.arg_utils import AsyncEngineArgs
+from vllm.engine.arg_utils import EngineArgs
 from vllm.engine.async_llm_engine import AsyncLLMEngine
 from vllm.engine.llm_engine import LLMEngine
 from vllm.executor.uniproc_executor import UniProcExecutor

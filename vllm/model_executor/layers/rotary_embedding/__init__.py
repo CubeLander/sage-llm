@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 """Rotary Positional Embeddings."""
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
 import torch
 

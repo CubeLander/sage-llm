@@ -8,8 +8,9 @@ from typing import Optional
 import pytest
 import torch
 
-import vllm.model_executor.layers.fused_moe.modular_kernel as mk
-from vllm.config import VllmConfig, current_platform, set_current_vllm_config
+from vllm.config import VllmConfig
+from vllm.config import current_platform
+from vllm.config import set_current_vllm_config
 from vllm.model_executor.layers.fused_moe.batched_triton_or_deep_gemm_moe import (  # noqa: E501
     BatchedTritonOrDeepGemmExperts)
 from vllm.model_executor.layers.fused_moe.config import FusedMoEQuantConfig
@@ -17,18 +18,26 @@ from vllm.model_executor.layers.fused_moe.cutlass_moe import CutlassExpertsFp8
 from vllm.model_executor.layers.fused_moe.fused_batched_moe import (
     BatchedTritonExperts)
 from vllm.model_executor.layers.fused_moe.layer import TritonExperts
+import vllm.model_executor.layers.fused_moe.modular_kernel as mk
 from vllm.model_executor.layers.fused_moe.triton_deep_gemm_moe import (
     TritonOrDeepGemmExperts)
-from vllm.utils import has_deep_ep, has_deep_gemm, has_pplx
+from vllm.utils import has_deep_ep
+from vllm.utils import has_deep_gemm
+from vllm.utils import has_pplx
 
-from .modular_kernel_tools.common import (Config, RankTensors, WeightTensors,
-                                          reference_moe_impl,
-                                          run_modular_kernel)
+from .modular_kernel_tools.common import Config
+from .modular_kernel_tools.common import RankTensors
+from .modular_kernel_tools.common import WeightTensors
+from .modular_kernel_tools.common import reference_moe_impl
+from .modular_kernel_tools.common import run_modular_kernel
 from .modular_kernel_tools.mk_objects import (
-    MK_FUSED_EXPERT_TYPES, MK_MULTI_GPU_PREPARE_FINALIZE_TYPES,
-    MK_QUANT_CONFIGS, MK_SINGLE_GPU_PREPARE_FINALIZE_TYPES)
-from .modular_kernel_tools.parallel_utils import (ProcessGroupInfo,
-                                                  parallel_launch_with_config)
+    MK_MULTI_GPU_PREPARE_FINALIZE_TYPES)
+from .modular_kernel_tools.mk_objects import (
+    MK_SINGLE_GPU_PREPARE_FINALIZE_TYPES)
+from .modular_kernel_tools.mk_objects import MK_FUSED_EXPERT_TYPES
+from .modular_kernel_tools.mk_objects import MK_QUANT_CONFIGS
+from .modular_kernel_tools.parallel_utils import ProcessGroupInfo
+from .modular_kernel_tools.parallel_utils import parallel_launch_with_config
 
 # TODO (varun): These requirements are very strict and could be relaxed.
 has_all_packages = (has_deep_ep() and has_deep_gemm() and has_pplx())
@@ -201,8 +210,8 @@ def test_modular_kernel_combinations_singlegpu(
 
 if __name__ == '__main__':
     # Ability to test individual PrepareAndFinalize and FusedExperts combination
-    from .modular_kernel_tools.cli_args import (make_config,
-                                                make_config_arg_parser)
+    from .modular_kernel_tools.cli_args import make_config
+    from .modular_kernel_tools.cli_args import make_config_arg_parser
     parser = make_config_arg_parser(description=(
         "Run single prepare-finalize & fused-experts combination test"
         "Example : python3 -m tests.kernels.moe.test_modular_kernel_combinations "  #noqa: E501

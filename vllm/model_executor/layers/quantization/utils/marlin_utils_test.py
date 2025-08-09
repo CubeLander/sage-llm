@@ -9,10 +9,13 @@ import torch
 
 from vllm.scalar_type import ScalarType
 
-from .marlin_utils import (GPTQ_MARLIN_TILE, marlin_permute_scales,
-                           marlin_zero_points)
-from .quant_utils import (get_pack_factor, gptq_quantize_weights,
-                          quantize_weights, sort_weights)
+from .marlin_utils import GPTQ_MARLIN_TILE
+from .marlin_utils import marlin_permute_scales
+from .marlin_utils import marlin_zero_points
+from .quant_utils import get_pack_factor
+from .quant_utils import gptq_quantize_weights
+from .quant_utils import quantize_weights
+from .quant_utils import sort_weights
 
 
 class MarlinWorkspace:

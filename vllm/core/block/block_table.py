@@ -2,11 +2,15 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import math
-from typing import List, Optional
+from typing import List
+from typing import Optional
 
 from vllm.core.block.common import BlockList
-from vllm.core.block.interfaces import Block, DeviceAwareBlockAllocator
-from vllm.utils import Device, cdiv, chunk_list
+from vllm.core.block.interfaces import Block
+from vllm.core.block.interfaces import DeviceAwareBlockAllocator
+from vllm.utils import Device
+from vllm.utils import cdiv
+from vllm.utils import chunk_list
 
 
 class BlockTable:

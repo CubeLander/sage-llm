@@ -4,10 +4,10 @@ import os
 
 import pytest
 
-from tests.models.language.pooling.mteb_utils import (MTEB_EMBED_TASKS,
-                                                      MTEB_EMBED_TOL,
-                                                      OpenAIClientMtebEncoder,
-                                                      run_mteb_embed_task)
+from tests.models.language.pooling.mteb_utils import MTEB_EMBED_TASKS
+from tests.models.language.pooling.mteb_utils import MTEB_EMBED_TOL
+from tests.models.language.pooling.mteb_utils import OpenAIClientMtebEncoder
+from tests.models.language.pooling.mteb_utils import run_mteb_embed_task
 from tests.utils import RemoteOpenAIServer
 
 os.environ["VLLM_LOGGING_LEVEL"] = "WARNING"

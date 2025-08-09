@@ -7,7 +7,8 @@ import vllm
 from vllm.lora.request import LoRARequest
 from vllm.platforms import current_platform
 
-from ..utils import create_new_process_for_each_test, multi_gpu_test
+from ..utils import create_new_process_for_each_test
+from ..utils import multi_gpu_test
 
 MODEL_PATH = "hmellor/Ilama-3.2-1B"
 

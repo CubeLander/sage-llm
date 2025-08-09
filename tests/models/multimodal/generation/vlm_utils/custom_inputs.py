@@ -4,16 +4,21 @@
 from io import BytesIO
 from typing import Callable
 
-import requests
 from PIL import Image
+import requests
 
 from vllm.io.inputs.multimodal.image import rescale_image_size
-from vllm.io.inputs.multimodal.video import (rescale_video_size, resize_video,
-                                   sample_frames_from_video)
+from vllm.io.inputs.multimodal.video import rescale_video_size
+from vllm.io.inputs.multimodal.video import resize_video
+from vllm.io.inputs.multimodal.video import sample_frames_from_video
 
-from .....conftest import IMAGE_ASSETS, VIDEO_ASSETS
-from .builders import build_multi_image_inputs, build_single_image_inputs
-from .types import ImageSizeWrapper, PromptWithMultiModalInput, SizeType
+from .....conftest import IMAGE_ASSETS
+from .....conftest import VIDEO_ASSETS
+from .builders import build_multi_image_inputs
+from .builders import build_single_image_inputs
+from .types import ImageSizeWrapper
+from .types import PromptWithMultiModalInput
+from .types import SizeType
 
 
 def multi_image_multi_aspect_ratio_inputs(formatter: Callable[[str], str]):

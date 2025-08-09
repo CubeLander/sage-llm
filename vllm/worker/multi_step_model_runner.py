@@ -2,29 +2,45 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import dataclasses
+from dataclasses import dataclass
+from dataclasses import field
 import functools
-from dataclasses import dataclass, field
-from typing import (TYPE_CHECKING, Any, Callable, Dict, List, Optional, Tuple,
-                    Union)
+from typing import Any
+from typing import Callable
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Tuple
+from typing import Union
 
 import torch
 
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
 from vllm.distributed import get_pp_group
-from vllm.utils.logger import init_logger
-from vllm.model_executor.layers.sampler import (PromptLogprobs, SampleLogprobs,
-                                                SamplerOutput,
-                                                SamplingMetadata, get_logprobs,
-                                                get_pythonized_sample_results)
+from vllm.model_executor.layers.sampler import PromptLogprobs
+from vllm.model_executor.layers.sampler import SampleLogprobs
+from vllm.model_executor.layers.sampler import SamplerOutput
+from vllm.model_executor.layers.sampler import SamplingMetadata
+from vllm.model_executor.layers.sampler import get_logprobs
+from vllm.model_executor.layers.sampler import get_pythonized_sample_results
 from vllm.platforms import current_platform
-from vllm.sequence import (CompletionSequenceGroupOutput, IntermediateTensors,
-                           Logprob, SequenceGroupMetadata, SequenceOutput)
-from vllm.utils import PyObjectCache, async_tensor_h2d, current_stream
-from vllm.worker.model_runner import (GPUModelRunnerBase,
-                                      ModelInputForGPUWithSamplingMetadata)
+from vllm.sequence import CompletionSequenceGroupOutput
+from vllm.sequence import Logprob
+from vllm.sequence import SequenceGroupMetadata
+from vllm.sequence import SequenceOutput
+from vllm.utils import PyObjectCache
+from vllm.utils import async_tensor_h2d
+from vllm.utils import current_stream
+from vllm.utils.logger import init_logger
+from vllm.worker.model_runner import GPUModelRunnerBase
+from vllm.worker.model_runner import ModelInputForGPUWithSamplingMetadata
 from vllm.worker.model_runner_base import (
-    BroadcastableModelInput, _init_attn_metadata_from_tensor_dict,
-    _init_frozen_model_input_from_tensor_dict,
+    _init_frozen_model_input_from_tensor_dict)
+from vllm.worker.model_runner_base import (
     _init_sampling_metadata_from_tensor_dict)
+from vllm.worker.model_runner_base import BroadcastableModelInput
+from vllm.worker.model_runner_base import _init_attn_metadata_from_tensor_dict
 
 from ..model_executor.model_loader.tensorizer import TensorizerConfig
 

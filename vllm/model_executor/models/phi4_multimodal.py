@@ -1,51 +1,79 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
+from collections.abc import Iterable
+from collections.abc import Mapping
+from collections.abc import Sequence
 import math
-from collections.abc import Iterable, Mapping, Sequence
-from typing import Any, Literal, Optional, TypedDict, Union
+from typing import Any
+from typing import Literal
+from typing import Optional
+from typing import TypedDict
+from typing import Union
 
 import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from transformers import (BatchFeature, Phi4MultimodalAudioConfig,
-                          Phi4MultimodalConfig, Phi4MultimodalFeatureExtractor,
-                          Phi4MultimodalImageProcessorFast)
+from transformers import BatchFeature
+from transformers import Phi4MultimodalAudioConfig
+from transformers import Phi4MultimodalConfig
+from transformers import Phi4MultimodalFeatureExtractor
+from transformers import Phi4MultimodalImageProcessorFast
 from transformers import Phi4MultimodalProcessor as Phi4MMProcessor
 from transformers.models.phi4_multimodal.modeling_phi4_multimodal import (
-    Phi4MultimodalAudioConvModule, Phi4MultimodalAudioNemoConvSubsampling,
-    Phi4MultimodalAudioRelativeAttentionBias, adaptive_enc_mask, unfold_tensor)
+    Phi4MultimodalAudioConvModule)
+from transformers.models.phi4_multimodal.modeling_phi4_multimodal import (
+    Phi4MultimodalAudioNemoConvSubsampling)
+from transformers.models.phi4_multimodal.modeling_phi4_multimodal import (
+    Phi4MultimodalAudioRelativeAttentionBias)
+from transformers.models.phi4_multimodal.modeling_phi4_multimodal import (
+    adaptive_enc_mask)
+from transformers.models.phi4_multimodal.modeling_phi4_multimodal import (
+    unfold_tensor)
 
 from vllm.config import VllmConfig
-from vllm.distributed import (divide, get_tensor_model_parallel_rank,
-                              get_tensor_model_parallel_world_size)
-from vllm.model_executor.layers.activation import MulAndSilu, get_act_fn
-from vllm.model_executor.layers.linear import (ColumnParallelLinear,
-                                               MergedColumnParallelLinear,
-                                               QKVParallelLinear,
-                                               RowParallelLinear)
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.distributed import divide
+from vllm.distributed import get_tensor_model_parallel_rank
+from vllm.distributed import get_tensor_model_parallel_world_size
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import MultiModalDataDict
+from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
+from vllm.io.inputs.multimodal.inputs import NestedTensors
+from vllm.io.inputs.multimodal.parse import AudioProcessorItems
+from vllm.io.inputs.multimodal.parse import ImageEmbeddingItems
+from vllm.io.inputs.multimodal.parse import ImageProcessorItems
+from vllm.io.inputs.multimodal.parse import ImageSize
+from vllm.io.inputs.multimodal.parse import MultiModalDataItems
+from vllm.io.inputs.multimodal.parse import MultiModalDataParser
+from vllm.io.inputs.multimodal.processing import BaseMultiModalProcessor
+from vllm.io.inputs.multimodal.processing import BaseProcessingInfo
+from vllm.io.inputs.multimodal.processing import PromptReplacement
+from vllm.io.inputs.multimodal.processing import PromptUpdate
+from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
+from vllm.model_executor.layers.activation import MulAndSilu
+from vllm.model_executor.layers.activation import get_act_fn
+from vllm.model_executor.layers.linear import ColumnParallelLinear
+from vllm.model_executor.layers.linear import MergedColumnParallelLinear
+from vllm.model_executor.layers.linear import QKVParallelLinear
+from vllm.model_executor.layers.linear import RowParallelLinear
 from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.model_executor.model_loader.weight_utils import default_weight_loader
 from vllm.model_executor.models.module_mapping import MultiModelKeys
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
-                                    MultiModalKwargs, NestedTensors)
-from vllm.io.inputs.multimodal.parse import (AudioProcessorItems, ImageEmbeddingItems,
-                                   ImageProcessorItems, ImageSize,
-                                   MultiModalDataItems, MultiModalDataParser)
-from vllm.io.inputs.multimodal.processing import (BaseMultiModalProcessor,
-                                        BaseProcessingInfo, PromptReplacement,
-                                        PromptUpdate)
-from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
-from vllm.sequence import IntermediateTensors
 from vllm.utils import is_list_of
 
 from .idefics2_vision_model import Idefics2VisionTransformer
-from .interfaces import MultiModalEmbeddings, SupportsLoRA, SupportsMultiModal
-from .utils import (AutoWeightsLoader, WeightsMapper, flatten_bn,
-                    init_vllm_registered_model, maybe_prefix,
-                    merge_multimodal_embeddings)
+from .interfaces import MultiModalEmbeddings
+from .interfaces import SupportsLoRA
+from .interfaces import SupportsMultiModal
+from .utils import AutoWeightsLoader
+from .utils import WeightsMapper
+from .utils import flatten_bn
+from .utils import init_vllm_registered_model
+from .utils import maybe_prefix
+from .utils import merge_multimodal_embeddings
 
 # <|endoftext10|> (see vocab.json in hf model)
 _IMAGE_PLACEHOLDER_TOKEN_ID = 200010

@@ -2,25 +2,34 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import fnmatch
-from typing import Any, Optional, cast
+from typing import Any
+from typing import Optional
+from typing import cast
 
 import torch
 
-from vllm.utils.logger import init_logger
 from vllm.model_executor.layers.fused_moe import FusedMoE
-from vllm.model_executor.layers.linear import (LinearBase, LinearMethodBase,
-                                               UnquantizedLinearMethod)
+from vllm.model_executor.layers.linear import LinearBase
+from vllm.model_executor.layers.linear import LinearMethodBase
+from vllm.model_executor.layers.linear import UnquantizedLinearMethod
 from vllm.model_executor.layers.quantization import QuantizationMethods
+from vllm.model_executor.layers.quantization.base_config import (
+    QuantizeMethodBase)
 from vllm.model_executor.layers.quantization.base_config import (  # noqa: E501
-    QuantizationConfig, QuantizeMethodBase)
+    QuantizationConfig)
 from vllm.model_executor.layers.quantization.kv_cache import BaseKVCacheMethod
 from vllm.model_executor.layers.quantization.quark.quark_moe import (  # noqa: E501
     QuarkMoEMethod)
 from vllm.model_executor.layers.quantization.quark.schemes import (
-    QuarkScheme, QuarkW4A4MXFP4, QuarkW8A8Fp8, QuarkW8A8Int8)
+    QuarkW4A4MXFP4)
+from vllm.model_executor.layers.quantization.quark.schemes import QuarkScheme
+from vllm.model_executor.layers.quantization.quark.schemes import QuarkW8A8Fp8
+from vllm.model_executor.layers.quantization.quark.schemes import QuarkW8A8Int8
 from vllm.model_executor.layers.quantization.quark.utils import (
-    deep_compare, should_ignore_layer)
+    should_ignore_layer)
+from vllm.model_executor.layers.quantization.quark.utils import deep_compare
 from vllm.platforms import current_platform
+from vllm.utils.logger import init_logger
 
 __all__ = ["QuarkLinearMethod"]
 

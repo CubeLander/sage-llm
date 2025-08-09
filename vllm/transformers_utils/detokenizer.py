@@ -3,11 +3,14 @@
 
 from typing import Optional
 
-from vllm.sequence import (VLLM_INVALID_TOKEN_ID, Logprob, SamplingParams,
-                           Sequence, SequenceGroup)
+from vllm.sequence import Logprob
+from vllm.sequence import SamplingParams
+from vllm.sequence import Sequence
+from vllm.sequence import SequenceGroup
+from vllm.sequence import VLLM_INVALID_TOKEN_ID
 
-from .detokenizer_utils import (convert_prompt_ids_to_tokens,
-                                detokenize_incrementally)
+from .detokenizer_utils import convert_prompt_ids_to_tokens
+from .detokenizer_utils import detokenize_incrementally
 from .tokenizer import AnyTokenizer
 from .tokenizer_group import TokenizerGroup
 

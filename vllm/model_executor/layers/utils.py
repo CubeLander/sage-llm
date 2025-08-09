@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 """Utility methods for model layers."""
-from typing import Callable, Optional
+from typing import Callable
+from typing import Optional
 
 import torch
 

@@ -1,14 +1,15 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import pytest
-from mistral_common.protocol.instruct.messages import (AssistantMessage,
-                                                       ToolMessage,
-                                                       UserMessage)
+from mistral_common.protocol.instruct.messages import AssistantMessage
+from mistral_common.protocol.instruct.messages import ToolMessage
+from mistral_common.protocol.instruct.messages import UserMessage
 from mistral_common.protocol.instruct.request import ChatCompletionRequest
-from mistral_common.protocol.instruct.tool_calls import (Function,
-                                                         FunctionCall, Tool,
-                                                         ToolCall)
+from mistral_common.protocol.instruct.tool_calls import Function
+from mistral_common.protocol.instruct.tool_calls import FunctionCall
+from mistral_common.protocol.instruct.tool_calls import Tool
+from mistral_common.protocol.instruct.tool_calls import ToolCall
+import pytest
 
 from vllm.transformers_utils.tokenizers.mistral import (
     make_mistral_chat_completion_request)

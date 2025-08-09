@@ -12,13 +12,16 @@ from vllm.model_executor.layers.fused_moe.config import FusedMoEQuantConfig
 from vllm.model_executor.layers.fused_moe.cutlass_moe import CutlassExpertsFp8
 from vllm.model_executor.layers.fused_moe.deep_gemm_moe import DeepGemmExperts
 from vllm.model_executor.layers.fused_moe.fused_batched_moe import (
-    BatchedTritonExperts, NaiveBatchedExperts)
+    BatchedTritonExperts)
+from vllm.model_executor.layers.fused_moe.fused_batched_moe import (
+    NaiveBatchedExperts)
 from vllm.model_executor.layers.fused_moe.layer import TritonExperts
 from vllm.model_executor.layers.fused_moe.prepare_finalize import (
     MoEPrepareAndFinalizeNoEP)
 from vllm.model_executor.layers.fused_moe.triton_deep_gemm_moe import (
     TritonOrDeepGemmExperts)
-from vllm.utils import has_deep_ep, has_pplx
+from vllm.utils import has_deep_ep
+from vllm.utils import has_pplx
 
 if has_deep_ep():
     from vllm.model_executor.layers.fused_moe.deepep_ht_prepare_finalize import (  # noqa: E501

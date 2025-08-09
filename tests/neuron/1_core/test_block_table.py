@@ -1,14 +1,15 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from neuronxcc import nki
 import neuronxcc.nki.language as nl
 import pytest
 import torch
 import torch.nn.functional as F
-from neuronxcc import nki
 
 from vllm.attention.ops.nki_flash_attn import (
-    load_block_tables, transform_block_tables_for_indirect_load)
+    transform_block_tables_for_indirect_load)
+from vllm.attention.ops.nki_flash_attn import load_block_tables
 
 
 def is_power_of_2(n):

@@ -9,8 +9,9 @@ from typing import Optional
 import pytest
 from transformers import AutoModelForSeq2SeqLM
 
-from vllm.attention.selector import (_Backend, _cached_get_attn_backend,
-                                     global_force_attn_backend_context_manager)
+from vllm.attention.selector import _Backend
+from vllm.attention.selector import _cached_get_attn_backend
+from vllm.attention.selector import global_force_attn_backend_context_manager
 from vllm.platforms import current_platform
 from vllm.sequence import SampleLogprobs
 

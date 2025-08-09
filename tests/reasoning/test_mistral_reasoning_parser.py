@@ -1,13 +1,14 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import pytest
 from mistral_common.tokens.tokenizers.base import SpecialTokens
-from mistral_common.tokens.tokenizers.tekken import (SpecialTokenInfo,
-                                                     Tekkenizer)
+from mistral_common.tokens.tokenizers.tekken import SpecialTokenInfo
+from mistral_common.tokens.tokenizers.tekken import Tekkenizer
+import pytest
 
 from tests.reasoning.utils import run_reasoning_extraction_mistral
-from vllm.io.reasoning import ReasoningParser, ReasoningParserManager
+from vllm.io.reasoning import ReasoningParser
+from vllm.io.reasoning import ReasoningParserManager
 from vllm.transformers_utils.tokenizers.mistral import MistralTokenizer
 
 parser_name = "mistral"

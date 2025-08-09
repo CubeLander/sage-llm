@@ -1,13 +1,21 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from dataclasses import MISSING, Field, asdict, dataclass, field
+from dataclasses import Field
+from dataclasses import MISSING
+from dataclasses import asdict
+from dataclasses import dataclass
+from dataclasses import field
 
 import pytest
 
 from vllm.compilation.backends import VllmBackend
-from vllm.config import (LoadConfig, ModelConfig, PoolerConfig, VllmConfig,
-                         get_field, update_config)
+from vllm.config import LoadConfig
+from vllm.config import ModelConfig
+from vllm.config import PoolerConfig
+from vllm.config import VllmConfig
+from vllm.config import get_field
+from vllm.config import update_config
 from vllm.model_executor.layers.pooler import PoolingType
 from vllm.platforms import current_platform
 

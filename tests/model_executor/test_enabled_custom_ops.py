@@ -4,20 +4,29 @@
 import pytest
 import torch
 
-from vllm.config import CompilationConfig, VllmConfig, set_current_vllm_config
+from vllm.config import CompilationConfig
+from vllm.config import VllmConfig
+from vllm.config import set_current_vllm_config
 from vllm.model_executor.custom_op import CustomOp
-from vllm.model_executor.layers.activation import (GeluAndMul,
-                                                   ReLUSquaredActivation,
-                                                   SiluAndMul)
-from vllm.model_executor.layers.fused_moe.fused_moe import (dispatch_topk_func,
-                                                            vllm_topk_softmax)
+from vllm.model_executor.layers.activation import GeluAndMul
+from vllm.model_executor.layers.activation import ReLUSquaredActivation
+from vllm.model_executor.layers.activation import SiluAndMul
+from vllm.model_executor.layers.fused_moe.fused_moe import dispatch_topk_func
+from vllm.model_executor.layers.fused_moe.fused_moe import vllm_topk_softmax
 from vllm.model_executor.layers.fused_moe.rocm_aiter_fused_moe import (
     is_rocm_aiter_moe_enabled)
-from vllm.model_executor.layers.layernorm import (
-    RMSNorm, dispatch_cuda_rmsnorm_func, fused_add_rms_norm, rms_norm,
-    rocm_aiter_fused_add_rms_norm, rocm_aiter_rms_norm)
+from vllm.model_executor.layers.layernorm import RMSNorm
+from vllm.model_executor.layers.layernorm import dispatch_cuda_rmsnorm_func
+from vllm.model_executor.layers.layernorm import fused_add_rms_norm
+from vllm.model_executor.layers.layernorm import rms_norm
+from vllm.model_executor.layers.layernorm import rocm_aiter_fused_add_rms_norm
+from vllm.model_executor.layers.layernorm import rocm_aiter_rms_norm
 from vllm.model_executor.layers.quantization.utils.fp8_utils import (
-    cutlass_scaled_mm, dispatch_w8a8_blockscale_func, w8a8_block_fp8_matmul)
+    cutlass_scaled_mm)
+from vllm.model_executor.layers.quantization.utils.fp8_utils import (
+    dispatch_w8a8_blockscale_func)
+from vllm.model_executor.layers.quantization.utils.fp8_utils import (
+    w8a8_block_fp8_matmul)
 from vllm.platforms import current_platform
 
 

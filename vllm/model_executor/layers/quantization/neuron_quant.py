@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import os
 from importlib.util import find_spec
-from typing import Any, Optional
+import os
+from typing import Any
+from typing import Optional
 
 from torch.nn import Module
 

@@ -1,25 +1,25 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from collections.abc import Sequence
 import ctypes
+from itertools import product
 import json
 import os
 import pickle
 import subprocess
 import sys
 import tempfile
-from collections.abc import Sequence
-from itertools import product
 from typing import Optional
 
 import torch.distributed as dist
 import torch.multiprocessing as mp
 
-import vllm.envs as envs
 from vllm.distributed.device_communicators.cuda_wrapper import CudaRTLibrary
+import vllm.envs as envs
+from vllm.utils import cuda_device_count_stateless
+from vllm.utils import update_environment_variables
 from vllm.utils.logger import init_logger
-from vllm.utils import (cuda_device_count_stateless,
-                        update_environment_variables)
 
 logger = init_logger(__name__)
 

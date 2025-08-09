@@ -1,28 +1,31 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from typing import Callable, Optional
+from typing import Callable
+from typing import Optional
 
-import torch
 from compressed_tensors.quantization import ActivationOrdering
+import torch
 
-from vllm.utils.logger import init_logger
 from vllm.model_executor.layers.quantization.compressed_tensors.schemes import (
     CompressedTensorsScheme)
 from vllm.model_executor.layers.quantization.kernels.mixed_precision import (
-    MPLinearLayerConfig, choose_mp_linear_kernel)
+    MPLinearLayerConfig)
+from vllm.model_executor.layers.quantization.kernels.mixed_precision import (
+    choose_mp_linear_kernel)
 from vllm.model_executor.layers.quantization.utils.marlin_utils import (
     marlin_repeat_scales_on_all_ranks)
 # yapf conflicts with isort for this block
 # yapf: disable
-from vllm.model_executor.parameter import (BasevLLMParameter,
-                                           ChannelQuantScaleParameter,
-                                           GroupQuantScaleParameter,
-                                           PackedColumnParameter,
-                                           PackedvLLMParameter,
-                                           RowvLLMParameter)
+from vllm.model_executor.parameter import BasevLLMParameter
+from vllm.model_executor.parameter import ChannelQuantScaleParameter
+from vllm.model_executor.parameter import GroupQuantScaleParameter
+from vllm.model_executor.parameter import PackedColumnParameter
+from vllm.model_executor.parameter import PackedvLLMParameter
+from vllm.model_executor.parameter import RowvLLMParameter
 # yapf: enable
 from vllm.scalar_type import scalar_types
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

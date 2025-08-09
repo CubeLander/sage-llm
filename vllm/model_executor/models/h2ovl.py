@@ -8,29 +8,39 @@
 # Copyright (c) 2024 H2O.AI
 # Licensed under Apache 2.0 License [see LICENSE for details]
 # --------------------------------------------------------
-from collections.abc import Mapping, Sequence
-from typing import Optional, Union
+from collections.abc import Mapping
+from collections.abc import Sequence
+from typing import Optional
+from typing import Union
 
-import torch
 from PIL import Image
+import torch
 from transformers import PretrainedConfig
 
-from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
 from vllm.io.inputs.multimodal.inputs import MultiModalKwargs
-from vllm.io.inputs.multimodal.parse import (ImageEmbeddingItems, ImageProcessorItems,
-                                   MultiModalDataItems)
-from vllm.io.inputs.multimodal.processing import (MultiModalHashes, PromptReplacement,
-                                        PromptUpdate, PromptUpdateDetails)
+from vllm.io.inputs.multimodal.parse import ImageEmbeddingItems
+from vllm.io.inputs.multimodal.parse import ImageProcessorItems
+from vllm.io.inputs.multimodal.parse import MultiModalDataItems
+from vllm.io.inputs.multimodal.processing import MultiModalHashes
+from vllm.io.inputs.multimodal.processing import PromptReplacement
+from vllm.io.inputs.multimodal.processing import PromptUpdate
+from vllm.io.inputs.multimodal.processing import PromptUpdateDetails
+from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.transformers_utils.tokenizer import AnyTokenizer
 
 from .intern_vit import InternVisionModel
-from .internvl import (IMG_CONTEXT, IMG_END, IMG_START,
-                       BaseInternVLDummyInputsBuilder,
-                       BaseInternVLMultiModalProcessor,
-                       BaseInternVLProcessingInfo, BaseInternVLProcessor,
-                       InternVLChatModel, build_transform,
-                       find_closest_aspect_ratio, get_internvl_target_ratios)
+from .internvl import BaseInternVLDummyInputsBuilder
+from .internvl import BaseInternVLMultiModalProcessor
+from .internvl import BaseInternVLProcessingInfo
+from .internvl import BaseInternVLProcessor
+from .internvl import IMG_CONTEXT
+from .internvl import IMG_END
+from .internvl import IMG_START
+from .internvl import InternVLChatModel
+from .internvl import build_transform
+from .internvl import find_closest_aspect_ratio
+from .internvl import get_internvl_target_ratios
 
 
 def resolve_h2ovl_min_max_num(

@@ -2,28 +2,33 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 """Utilities for selecting and loading models."""
 import contextlib
-import inspect
-import warnings
 from contextlib import contextmanager
-from dataclasses import dataclass, field
+from dataclasses import dataclass
+from dataclasses import field
+import inspect
 from typing import Optional
+import warnings
 
 import torch
 from torch import nn
 from typing_extensions import assert_never
 
 from vllm.attention import Attention
-from vllm.config import (ModelConfig, ModelImpl, VllmConfig,
-                         set_current_vllm_config)
-from vllm.utils.logger import init_logger
+from vllm.config import ModelConfig
+from vllm.config import ModelImpl
+from vllm.config import VllmConfig
+from vllm.config import set_current_vllm_config
 from vllm.model_executor.layers.linear import QKVCrossParallelLinear
 from vllm.model_executor.layers.quantization.base_config import (
-    QuantizationConfig, QuantizeMethodBase)
-from vllm.model_executor.models.adapters import (as_embedding_model,
-                                                 as_reward_model,
-                                                 as_seq_cls_model)
+    QuantizationConfig)
+from vllm.model_executor.layers.quantization.base_config import (
+    QuantizeMethodBase)
+from vllm.model_executor.models.adapters import as_embedding_model
+from vllm.model_executor.models.adapters import as_reward_model
+from vllm.model_executor.models.adapters import as_seq_cls_model
 from vllm.model_executor.models.interfaces import SupportsQuant
 from vllm.utils import is_pin_memory_available
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

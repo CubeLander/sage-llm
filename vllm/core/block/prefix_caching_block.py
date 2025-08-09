@@ -1,21 +1,34 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 """Token blocks."""
-import sys
 from bisect import bisect_left
 from os.path import commonprefix
-from typing import (Callable, Dict, FrozenSet, Iterable, List, Optional, Set,
-                    Tuple)
+import sys
+from typing import Callable
+from typing import Dict
+from typing import FrozenSet
+from typing import Iterable
+from typing import List
+from typing import Optional
+from typing import Set
+from typing import Tuple
 
-from vllm.core.block.common import (CacheMetricData, CopyOnWriteTracker,
-                                    get_all_blocks_recursively)
-from vllm.core.block.interfaces import (Block, BlockAllocator, BlockId, Device,
-                                        DeviceAwareBlockAllocator)
-from vllm.core.block.naive_block import (BlockPool, NaiveBlock,
-                                         NaiveBlockAllocator)
-from vllm.core.evictor import EvictionPolicy, Evictor, make_evictor
-from vllm.utils.logger import init_logger
+from vllm.core.block.common import CacheMetricData
+from vllm.core.block.common import CopyOnWriteTracker
+from vllm.core.block.common import get_all_blocks_recursively
+from vllm.core.block.interfaces import Block
+from vllm.core.block.interfaces import BlockAllocator
+from vllm.core.block.interfaces import BlockId
+from vllm.core.block.interfaces import Device
+from vllm.core.block.interfaces import DeviceAwareBlockAllocator
+from vllm.core.block.naive_block import BlockPool
+from vllm.core.block.naive_block import NaiveBlock
+from vllm.core.block.naive_block import NaiveBlockAllocator
+from vllm.core.evictor import EvictionPolicy
+from vllm.core.evictor import Evictor
+from vllm.core.evictor import make_evictor
 from vllm.sequence import Sequence
+from vllm.utils.logger import init_logger
 
 PrefixHash = int
 

@@ -7,18 +7,21 @@ Run `pytest tests/distributed/test_comm_ops.py`.
 
 from __future__ import annotations
 
-from typing import Any, Callable
+from typing import Any
+from typing import Callable
 
 import pytest
 import ray
 import torch
 
-from vllm.distributed import (broadcast_tensor_dict, get_pp_group,
-                              tensor_model_parallel_all_gather,
-                              tensor_model_parallel_all_reduce,
-                              tensor_model_parallel_reduce_scatter)
+from vllm.distributed import broadcast_tensor_dict
+from vllm.distributed import get_pp_group
+from vllm.distributed import tensor_model_parallel_all_gather
+from vllm.distributed import tensor_model_parallel_all_reduce
+from vllm.distributed import tensor_model_parallel_reduce_scatter
 
-from ..utils import init_test_distributed_environment, multi_process_parallel
+from ..utils import init_test_distributed_environment
+from ..utils import multi_process_parallel
 
 
 @ray.remote(num_gpus=1, max_calls=1)

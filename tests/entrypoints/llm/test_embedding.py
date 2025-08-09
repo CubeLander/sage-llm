@@ -7,7 +7,8 @@ import pytest
 import torch
 import torch.nn.functional as F
 
-from vllm import LLM, PoolingParams
+from vllm import LLM
+from vllm import PoolingParams
 from vllm.distributed import cleanup_dist_env_and_memory
 
 MODEL_NAME = "intfloat/multilingual-e5-small"

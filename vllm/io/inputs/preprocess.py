@@ -3,24 +3,39 @@
 
 import asyncio
 from collections.abc import Mapping
-from typing import Any, Optional, Union, cast
+from typing import Any
+from typing import Optional
+from typing import Union
+from typing import cast
 
 from typing_extensions import assert_never
 
 from vllm.config import ModelConfig
-from vllm.utils.logger import init_logger
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal import MultiModalRegistry
+from vllm.io.inputs.multimodal.inputs import MultiModalDataDict
+from vllm.io.inputs.multimodal.inputs import MultiModalEncDecInputs
+from vllm.io.inputs.multimodal.inputs import MultiModalInputs
 from vllm.lora.request import LoRARequest
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY, MultiModalRegistry
-from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalEncDecInputs,
-                                    MultiModalInputs)
 from vllm.transformers_utils.tokenizer import AnyTokenizer
 from vllm.transformers_utils.tokenizer_group import TokenizerGroup
+from vllm.utils.logger import init_logger
 
-from .data import (DecoderOnlyInputs, EmbedsInputs, EmbedsPrompt,
-                   EncoderDecoderInputs, ProcessorInputs, PromptType,
-                   SingletonInputs, SingletonPrompt, TextPrompt, TokenInputs,
-                   TokensPrompt, embeds_inputs, token_inputs)
-from .parse import is_explicit_encoder_decoder_prompt, parse_singleton_prompt
+from .data import DecoderOnlyInputs
+from .data import EmbedsInputs
+from .data import EmbedsPrompt
+from .data import EncoderDecoderInputs
+from .data import ProcessorInputs
+from .data import PromptType
+from .data import SingletonInputs
+from .data import SingletonPrompt
+from .data import TextPrompt
+from .data import TokenInputs
+from .data import TokensPrompt
+from .data import embeds_inputs
+from .data import token_inputs
+from .parse import is_explicit_encoder_decoder_prompt
+from .parse import parse_singleton_prompt
 
 logger = init_logger(__name__)
 

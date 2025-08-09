@@ -1,15 +1,16 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from collections import deque
+from contextlib import contextmanager
+from dataclasses import dataclass
 import logging
 import os
 import threading
 import time
 import typing
-from collections import deque
-from contextlib import contextmanager
-from dataclasses import dataclass
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
 import msgpack
 import torch
@@ -17,10 +18,15 @@ import zmq
 
 from vllm.config import KVTransferConfig
 from vllm.distributed.device_communicators.pynccl_wrapper import (
-    NCCLLibrary, buffer_type, cudaStream_t, ncclComm_t, ncclDataTypeEnum)
+    ncclDataTypeEnum)
+from vllm.distributed.device_communicators.pynccl_wrapper import NCCLLibrary
+from vllm.distributed.device_communicators.pynccl_wrapper import buffer_type
+from vllm.distributed.device_communicators.pynccl_wrapper import cudaStream_t
+from vllm.distributed.device_communicators.pynccl_wrapper import ncclComm_t
 from vllm.distributed.kv_transfer.kv_connector.v1.p2p.tensor_memory_pool import (  # noqa: E501
     TensorMemoryPool)
-from vllm.utils import current_stream, get_ip
+from vllm.utils import current_stream
+from vllm.utils import get_ip
 
 logger = logging.getLogger(__name__)
 

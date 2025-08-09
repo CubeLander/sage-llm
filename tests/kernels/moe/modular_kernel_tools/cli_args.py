@@ -5,12 +5,13 @@ import argparse
 
 import torch
 
-import vllm.model_executor.layers.fused_moe.modular_kernel as mk
 from vllm.model_executor.layers.fused_moe.config import FusedMoEQuantConfig
+import vllm.model_executor.layers.fused_moe.modular_kernel as mk
 
 from .common import Config
-from .mk_objects import (MK_ALL_PREPARE_FINALIZE_TYPES, MK_FUSED_EXPERT_TYPES,
-                         MK_SINGLE_GPU_PREPARE_FINALIZE_TYPES)
+from .mk_objects import MK_ALL_PREPARE_FINALIZE_TYPES
+from .mk_objects import MK_FUSED_EXPERT_TYPES
+from .mk_objects import MK_SINGLE_GPU_PREPARE_FINALIZE_TYPES
 
 
 def make_config_arg_parser(description: str):

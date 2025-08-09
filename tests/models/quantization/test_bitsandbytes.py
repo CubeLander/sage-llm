@@ -13,8 +13,10 @@ from transformers import BitsAndBytesConfig
 
 from tests.quantization.utils import is_quant_method_supported
 
-from ...utils import compare_two_settings, multi_gpu_test
-from ..utils import check_embeddings_close, check_logprobs_close
+from ...utils import compare_two_settings
+from ...utils import multi_gpu_test
+from ..utils import check_embeddings_close
+from ..utils import check_logprobs_close
 
 models_4bit_to_test = [
     ("facebook/opt-125m", "quantize opt model inflight"),

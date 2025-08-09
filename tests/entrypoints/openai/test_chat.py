@@ -7,12 +7,13 @@ from typing import Optional
 
 import jsonschema
 import openai  # use the official client for correctness check
+from openai import BadRequestError
+from openai import OpenAI
 import pytest
 import pytest_asyncio
 import regex as re
 import requests
 import torch
-from openai import BadRequestError, OpenAI
 
 from ...utils import RemoteOpenAIServer
 from .test_completion import zephyr_lora_added_tokens_files  # noqa: F401

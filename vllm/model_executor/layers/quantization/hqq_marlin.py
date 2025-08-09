@@ -1,27 +1,36 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
 import torch
 
 from vllm import _custom_ops as ops
-from vllm.utils.logger import init_logger
-from vllm.model_executor.layers.linear import (LinearBase, LinearMethodBase,
-                                               UnquantizedLinearMethod)
+from vllm.model_executor.layers.linear import LinearBase
+from vllm.model_executor.layers.linear import LinearMethodBase
+from vllm.model_executor.layers.linear import UnquantizedLinearMethod
 from vllm.model_executor.layers.quantization import QuantizationMethods
 from vllm.model_executor.layers.quantization.base_config import (
-    QuantizationConfig, QuantizeMethodBase)
+    QuantizationConfig)
+from vllm.model_executor.layers.quantization.base_config import (
+    QuantizeMethodBase)
 from vllm.model_executor.layers.quantization.utils.marlin_utils import (
-    GPTQ_MARLIN_MAX_PARALLEL, GPTQ_MARLIN_MIN_THREAD_N,
-    marlin_make_empty_g_idx, marlin_permute_scales)
+    GPTQ_MARLIN_MAX_PARALLEL)
+from vllm.model_executor.layers.quantization.utils.marlin_utils import (
+    GPTQ_MARLIN_MIN_THREAD_N)
+from vllm.model_executor.layers.quantization.utils.marlin_utils import (
+    marlin_make_empty_g_idx)
+from vllm.model_executor.layers.quantization.utils.marlin_utils import (
+    marlin_permute_scales)
 from vllm.model_executor.layers.quantization.utils.marlin_utils_test import (
     MarlinWorkspace)
 from vllm.model_executor.layers.quantization.utils.quant_utils import gptq_pack
-from vllm.model_executor.parameter import (BasevLLMParameter,
-                                           GroupQuantScaleParameter,
-                                           PackedvLLMParameter)
+from vllm.model_executor.parameter import BasevLLMParameter
+from vllm.model_executor.parameter import GroupQuantScaleParameter
+from vllm.model_executor.parameter import PackedvLLMParameter
 from vllm.scalar_type import scalar_types
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

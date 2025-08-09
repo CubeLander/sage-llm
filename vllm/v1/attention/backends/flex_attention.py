@@ -6,19 +6,22 @@ from dataclasses import dataclass
 from typing import Optional
 
 import torch
-from torch.nn.attention.flex_attention import (BlockMask, _mask_mod_signature,
-                                               _score_mod_signature,
-                                               create_block_mask,
-                                               flex_attention)
+from torch.nn.attention.flex_attention import BlockMask
+from torch.nn.attention.flex_attention import _mask_mod_signature
+from torch.nn.attention.flex_attention import _score_mod_signature
+from torch.nn.attention.flex_attention import create_block_mask
+from torch.nn.attention.flex_attention import flex_attention
 
-from vllm.attention.backends.abstract import (AttentionBackend, AttentionImpl,
-                                              AttentionMetadata, AttentionType,
-                                              is_quantized_kv_cache)
+from vllm.attention.backends.abstract import AttentionBackend
+from vllm.attention.backends.abstract import AttentionImpl
+from vllm.attention.backends.abstract import AttentionMetadata
+from vllm.attention.backends.abstract import AttentionType
+from vllm.attention.backends.abstract import is_quantized_kv_cache
 from vllm.config import VllmConfig
-from vllm.utils.logger import init_logger
 from vllm.platforms import current_platform
-from vllm.v1.attention.backends.utils import (AttentionMetadataBuilder,
-                                              CommonAttentionMetadata)
+from vllm.utils.logger import init_logger
+from vllm.v1.attention.backends.utils import AttentionMetadataBuilder
+from vllm.v1.attention.backends.utils import CommonAttentionMetadata
 from vllm.v1.kv_cache_interface import AttentionSpec
 
 logger = init_logger(__name__)

@@ -27,11 +27,14 @@ import torch.nn as nn
 
 from vllm.config import VllmConfig
 from vllm.model_executor.model_loader.weight_utils import default_weight_loader
-from vllm.model_executor.models.llama import LlamaForCausalLM, LlamaModel
+from vllm.model_executor.models.llama import LlamaForCausalLM
+from vllm.model_executor.models.llama import LlamaModel
 
 from .llama import LlamaDecoderLayer
-from .utils import (AutoWeightsLoader, PPMissingLayer, WeightsMapper,
-                    is_pp_missing_parameter)
+from .utils import AutoWeightsLoader
+from .utils import PPMissingLayer
+from .utils import WeightsMapper
+from .utils import is_pp_missing_parameter
 
 
 class TeleChat2Model(LlamaModel):

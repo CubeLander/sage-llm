@@ -2,7 +2,8 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 from typing import Any
 
-from transformers import PretrainedConfig, WhisperConfig
+from transformers import PretrainedConfig
+from transformers import WhisperConfig
 
 from vllm.utils.logger import init_logger
 

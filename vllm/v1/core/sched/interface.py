@@ -1,8 +1,11 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-from abc import ABC, abstractmethod
+from abc import ABC
+from abc import abstractmethod
 from collections.abc import Iterable
-from typing import TYPE_CHECKING, Optional, Union
+from typing import Optional
+from typing import TYPE_CHECKING
+from typing import Union
 
 if TYPE_CHECKING:
     from vllm.distributed.kv_transfer.kv_connector.v1 import KVConnectorBase_V1
@@ -10,7 +13,8 @@ if TYPE_CHECKING:
     from vllm.v1.engine import EngineCoreOutputs
     from vllm.v1.metrics.stats import SchedulerStats
     from vllm.v1.outputs import ModelRunnerOutput
-    from vllm.v1.request import Request, RequestStatus
+    from vllm.v1.request import Request
+    from vllm.v1.request import RequestStatus
 
 
 class SchedulerInterface(ABC):

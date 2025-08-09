@@ -1,20 +1,21 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
+from typing import Any
+from typing import Optional
 import uuid
-from typing import Any, Optional
 
 import ray
-import torch
 from ray.exceptions import RayChannelError
-from ray.experimental.channel.communicator import (Communicator,
-                                                   TorchTensorAllocator)
+from ray.experimental.channel.communicator import Communicator
+from ray.experimental.channel.communicator import TorchTensorAllocator
+import torch
 from torch.distributed import ReduceOp
 
 from vllm.distributed.device_communicators.base_device_communicator import (
     DeviceCommunicatorBase)
 from vllm.distributed.parallel_state import get_pp_group
-from vllm.utils.logger import init_logger
 from vllm.utils import current_stream
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

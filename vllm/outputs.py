@@ -1,21 +1,28 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import time
 from collections.abc import MutableSequence
 from collections.abc import Sequence as GenericSequence
 from dataclasses import dataclass
-from typing import Any, Generic, Optional, Union
+import time
+from typing import Any
+from typing import Generic
+from typing import Optional
+from typing import Union
 
 import torch
 from typing_extensions import TypeVar
 
-from vllm.utils.logger import init_logger
-from vllm.lora.request import LoRARequest
 from vllm.io.inputs.multimodal.inputs import MultiModalPlaceholderDict
+from vllm.lora.request import LoRARequest
 from vllm.sampling_params import RequestOutputKind
-from vllm.sequence import (PromptLogprobs, RequestMetrics, SampleLogprobs,
-                           SequenceGroup, SequenceGroupBase, SequenceStatus)
+from vllm.sequence import PromptLogprobs
+from vllm.sequence import RequestMetrics
+from vllm.sequence import SampleLogprobs
+from vllm.sequence import SequenceGroup
+from vllm.sequence import SequenceGroupBase
+from vllm.sequence import SequenceStatus
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

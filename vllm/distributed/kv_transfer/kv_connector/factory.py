@@ -2,11 +2,12 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import importlib
-from typing import TYPE_CHECKING, Callable
+from typing import Callable
+from typing import TYPE_CHECKING
 
-import vllm.envs as envs
 from vllm.distributed.kv_transfer.kv_connector.base import KVConnectorBase
 from vllm.distributed.kv_transfer.kv_connector.v1 import KVConnectorRole
+import vllm.envs as envs
 from vllm.utils.logger import init_logger
 
 if TYPE_CHECKING:

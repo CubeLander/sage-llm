@@ -2,13 +2,15 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from concurrent.futures import Future
-from typing import Optional, Union
+from typing import Optional
+from typing import Union
 
 from vllm.distributed.kv_transfer.kv_connector.utils import KVOutputAggregator
-from vllm.executor.ray_distributed_executor import (  # noqa
-    RayDistributedExecutor as RayDistributedExecutorV0)
+from vllm.executor.ray_distributed_executor import (
+    RayDistributedExecutor as RayDistributedExecutorV0)  # noqa
 from vllm.utils.logger import init_logger
-from vllm.v1.engine import ReconfigureDistributedRequest, ReconfigureRankType
+from vllm.v1.engine import ReconfigureDistributedRequest
+from vllm.v1.engine import ReconfigureRankType
 from vllm.v1.executor.abstract import Executor
 from vllm.v1.outputs import ModelRunnerOutput
 

@@ -1,38 +1,48 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
+from concurrent.futures import Future
+from concurrent.futures import ThreadPoolExecutor
+from dataclasses import dataclass
+from enum import Enum
+from enum import auto
+from functools import partial
 import multiprocessing
+from multiprocessing.connection import Connection
+from multiprocessing.process import BaseProcess
 import os
 import pickle
 import signal
 import threading
+from threading import Thread
 import time
 import traceback
+from typing import Any
+from typing import Callable
+from typing import Optional
+from typing import Union
+from typing import cast
 import weakref
-from concurrent.futures import Future, ThreadPoolExecutor
-from dataclasses import dataclass
-from enum import Enum, auto
-from functools import partial
-from multiprocessing.connection import Connection
-from multiprocessing.process import BaseProcess
-from threading import Thread
-from typing import Any, Callable, Optional, Union, cast
 
 import cloudpickle
 
-import vllm.envs as envs
 from vllm.config import VllmConfig
-from vllm.distributed import (destroy_distributed_environment,
-                              destroy_model_parallel)
-from vllm.distributed.device_communicators.shm_broadcast import (Handle,
-                                                                 MessageQueue)
+from vllm.distributed import destroy_distributed_environment
+from vllm.distributed import destroy_model_parallel
+from vllm.distributed.device_communicators.shm_broadcast import Handle
+from vllm.distributed.device_communicators.shm_broadcast import MessageQueue
 from vllm.distributed.kv_transfer.kv_connector.utils import KVOutputAggregator
+import vllm.envs as envs
 from vllm.executor.multiproc_worker_utils import (
     set_multiprocessing_worker_envs)
+from vllm.utils import decorate_logs
+from vllm.utils import get_distributed_init_method
+from vllm.utils import get_loopback_ip
+from vllm.utils import get_mp_context
+from vllm.utils import get_open_port
+from vllm.utils import set_process_title
 from vllm.utils.logger import init_logger
-from vllm.utils import (decorate_logs, get_distributed_init_method,
-                        get_loopback_ip, get_mp_context, get_open_port,
-                        set_process_title)
-from vllm.v1.executor.abstract import Executor, FailureCallback
+from vllm.v1.executor.abstract import Executor
+from vllm.v1.executor.abstract import FailureCallback
 from vllm.v1.outputs import ModelRunnerOutput
 from vllm.worker.worker_base import WorkerWrapperBase
 

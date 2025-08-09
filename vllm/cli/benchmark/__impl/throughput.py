@@ -7,30 +7,40 @@ import json
 import os
 import random
 import time
+from typing import Any
+from typing import Optional
+from typing import Union
 import warnings
-from typing import Any, Optional, Union
 
 import torch
-import uvloop
 from tqdm import tqdm
-from transformers import (AutoModelForCausalLM, AutoTokenizer,
-                          PreTrainedTokenizerBase)
+from transformers import AutoModelForCausalLM
+from transformers import AutoTokenizer
+from transformers import PreTrainedTokenizerBase
+import uvloop
 
-from .datasets import (AIMODataset, BurstGPTDataset,
-                                      ConversationDataset,
-                                      InstructCoderDataset, RandomDataset,
-                                      SampleRequest, ShareGPTDataset,
-                                      SonnetDataset, VisionArenaDataset)
-from .lib.utils import (convert_to_pytorch_benchmark_format,
-                                       write_to_json)
-from vllm.engine.arg_utils import AsyncEngineArgs, EngineArgs
+from vllm.engine.arg_utils import AsyncEngineArgs
+from vllm.engine.arg_utils import EngineArgs
 from vllm.entrypoints.openai.api_server import (
     build_async_engine_client_from_engine_args)
-from vllm.io.inputs import TextPrompt, TokensPrompt
+from vllm.io.inputs import TextPrompt
+from vllm.io.inputs import TokensPrompt
 from vllm.lora.request import LoRARequest
 from vllm.outputs import RequestOutput
 from vllm.sampling_params import BeamSearchParams
 from vllm.utils import merge_async_iterators
+
+from .datasets import AIMODataset
+from .datasets import BurstGPTDataset
+from .datasets import ConversationDataset
+from .datasets import InstructCoderDataset
+from .datasets import RandomDataset
+from .datasets import SampleRequest
+from .datasets import ShareGPTDataset
+from .datasets import SonnetDataset
+from .datasets import VisionArenaDataset
+from .lib.utils import convert_to_pytorch_benchmark_format
+from .lib.utils import write_to_json
 
 
 def run_vllm(
@@ -39,7 +49,8 @@ def run_vllm(
     engine_args: EngineArgs,
     disable_detokenize: bool = False,
 ) -> tuple[float, Optional[list[RequestOutput]]]:
-    from vllm import LLM, SamplingParams
+    from vllm import LLM
+    from vllm import SamplingParams
     llm = LLM(**dataclasses.asdict(engine_args))
     assert all(
         llm.llm_engine.model_config.max_model_len >= (
@@ -109,7 +120,8 @@ def run_vllm_chat(
     multimodal models as it properly handles multimodal inputs and chat
     formatting. For non-multimodal models, use run_vllm() instead.
     """
-    from vllm import LLM, SamplingParams
+    from vllm import LLM
+    from vllm import SamplingParams
     llm = LLM(**dataclasses.asdict(engine_args))
 
     assert all(

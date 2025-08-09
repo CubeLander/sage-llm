@@ -1,23 +1,27 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
+from dataclasses import dataclass
 import enum
 import json
+from json.decoder import JSONDecodeError
 import logging
 import os
 import sys
 import tempfile
-from dataclasses import dataclass
-from json.decoder import JSONDecodeError
 from tempfile import NamedTemporaryFile
 from typing import Any
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
+from unittest.mock import patch
 from uuid import uuid4
 
 import pytest
 
 from vllm.entrypoints.logger import RequestLogger
-from vllm.utils.logger import (_DATE_FORMAT, _FORMAT, _configure_vllm_root_logger,
-                         enable_trace_function_call, init_logger)
+from vllm.utils.logger import _DATE_FORMAT
+from vllm.utils.logger import _FORMAT
+from vllm.utils.logger import _configure_vllm_root_logger
+from vllm.utils.logger import enable_trace_function_call
+from vllm.utils.logger import init_logger
 from vllm.utils.logging_utils import NewLineFormatter
 from vllm.utils.logging_utils.dump_input import prepare_object_to_dump
 

@@ -1,24 +1,34 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
+from collections.abc import Iterable
+from collections.abc import Mapping
+from dataclasses import dataclass
+from dataclasses import field
 import itertools
-from collections.abc import Iterable, Mapping
-from dataclasses import dataclass, field
-from typing import Any, Callable, Literal, Optional, Protocol, Union, overload
+from typing import Any
+from typing import Callable
+from typing import Literal
+from typing import Optional
+from typing import Protocol
+from typing import Union
+from typing import overload
 
 import torch
-import torch.nn as nn
 from torch.func import functional_call
+import torch.nn as nn
 from transformers import PretrainedConfig
 
-import vllm.envs as envs
 from vllm.config import VllmConfig
-from vllm.utils.logger import init_logger
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+import vllm.envs as envs
+from vllm.io.inputs.multimodal import MultiModalPlaceholderMap
+from vllm.io.inputs.multimodal import NestedTensors
 from vllm.model_executor.model_loader.weight_utils import default_weight_loader
-from vllm.io.inputs.multimodal import MultiModalPlaceholderMap, NestedTensors
-from vllm.sequence import IntermediateTensors
-from vllm.utils import (get_cuda_view_from_cpu_tensor, is_pin_memory_available,
-                        is_uva_available)
+from vllm.utils import get_cuda_view_from_cpu_tensor
+from vllm.utils import is_pin_memory_available
+from vllm.utils import is_uva_available
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

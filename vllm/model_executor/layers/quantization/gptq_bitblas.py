@@ -1,34 +1,43 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
-import torch
 from packaging import version
+import torch
 from torch.nn.parameter import Parameter
 
-from vllm.utils.logger import init_logger
-from vllm.model_executor.layers.linear import (LinearBase, LinearMethodBase,
-                                               set_weight_attrs)
+from vllm.model_executor.layers.linear import LinearBase
+from vllm.model_executor.layers.linear import LinearMethodBase
+from vllm.model_executor.layers.linear import set_weight_attrs
 from vllm.model_executor.layers.quantization import QuantizationMethods
 from vllm.model_executor.layers.quantization.base_config import (
     QuantizationConfig)
 from vllm.model_executor.layers.quantization.kernels.mixed_precision import (
-    BitBLASLinearKernel, MPLinearLayerConfig)
+    BitBLASLinearKernel)
+from vllm.model_executor.layers.quantization.kernels.mixed_precision import (
+    MPLinearLayerConfig)
 from vllm.model_executor.layers.quantization.utils.bitblas_utils import (
     BITBLAS_SUPPORTED_NUM_BITS as GPTQ_BITBLAS_SUPPORTED_NUM_BITS)
 from vllm.model_executor.layers.quantization.utils.bitblas_utils import (
     BITBLAS_SUPPORTED_SYM as GPTQ_BITBLAS_SUPPORTED_SYM)
 from vllm.model_executor.layers.quantization.utils.bitblas_utils import (
-    MINIMUM_BITBLAS_VERSION, bitblas_repeat_scales_on_all_ranks,
-    check_bitblas_supported, verify_bitblas_supported)
+    MINIMUM_BITBLAS_VERSION)
+from vllm.model_executor.layers.quantization.utils.bitblas_utils import (
+    bitblas_repeat_scales_on_all_ranks)
+from vllm.model_executor.layers.quantization.utils.bitblas_utils import (
+    check_bitblas_supported)
+from vllm.model_executor.layers.quantization.utils.bitblas_utils import (
+    verify_bitblas_supported)
 from vllm.model_executor.layers.vocab_parallel_embedding import ParallelLMHead
-from vllm.model_executor.parameter import (ChannelQuantScaleParameter,
-                                           GroupQuantScaleParameter,
-                                           PackedColumnParameter,
-                                           PackedvLLMParameter,
-                                           RowvLLMParameter)
+from vllm.model_executor.parameter import ChannelQuantScaleParameter
+from vllm.model_executor.parameter import GroupQuantScaleParameter
+from vllm.model_executor.parameter import PackedColumnParameter
+from vllm.model_executor.parameter import PackedvLLMParameter
+from vllm.model_executor.parameter import RowvLLMParameter
 from vllm.platforms import current_platform
 from vllm.scalar_type import scalar_types
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

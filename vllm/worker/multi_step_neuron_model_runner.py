@@ -2,16 +2,17 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from importlib.util import find_spec
-from typing import List, Optional
+from typing import List
+from typing import Optional
 
 import torch
 
 from vllm.config import VllmConfig
-from vllm.model_executor.layers.sampler import SamplerOutput
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
 from vllm.io.inputs.multimodal import MultiModalKwargs
-from vllm.sequence import IntermediateTensors
-from vllm.worker.neuron_model_runner import (ModelInputForNeuron,
-                                             NeuronModelRunner)
+from vllm.model_executor.layers.sampler import SamplerOutput
+from vllm.worker.neuron_model_runner import ModelInputForNeuron
+from vllm.worker.neuron_model_runner import NeuronModelRunner
 
 
 class MultiStepNeuronModelRunner(NeuronModelRunner):
@@ -41,7 +42,8 @@ class MultiStepNeuronModelRunner(NeuronModelRunner):
     def load_model(self) -> None:
         if find_spec("transformers_neuronx") is not None:
             from vllm.model_executor.model_loader.neuron import (
-                get_neuron_eagle_speculation_model,
+                get_neuron_eagle_speculation_model)
+            from vllm.model_executor.model_loader.neuron import (
                 get_neuron_speculation_model)
             if self.speculation_config.speculative_token_tree is not None:
                 self.model = get_neuron_eagle_speculation_model(

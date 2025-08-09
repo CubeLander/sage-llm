@@ -1,11 +1,12 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-import functools
-import struct
 from dataclasses import dataclass
 from enum import Enum
-from typing import Optional, Union
+import functools
+import struct
+from typing import Optional
+from typing import Union
 
 _SCALAR_TYPES_ID_MAP = {}
 

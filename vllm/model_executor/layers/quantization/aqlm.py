@@ -5,14 +5,16 @@
 # and https://arxiv.org/pdf/2401.06118.pdf
 
 import math
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
 import torch
 import torch.nn.functional as F
 from torch.nn.parameter import Parameter
 
 from vllm import _custom_ops as ops
-from vllm.model_executor.layers.linear import LinearBase, LinearMethodBase
+from vllm.model_executor.layers.linear import LinearBase
+from vllm.model_executor.layers.linear import LinearMethodBase
 from vllm.model_executor.layers.quantization import QuantizationMethods
 from vllm.model_executor.layers.quantization.base_config import (
     QuantizationConfig)

@@ -6,12 +6,14 @@ import functools
 import json
 import logging
 import os
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
 import torch
 
 from vllm.platforms import current_platform
-from vllm.platforms.triton_tuils import tl, triton
+from vllm.platforms.triton_tuils import tl
+from vllm.platforms.triton_tuils import triton
 
 logger = logging.getLogger(__name__)
 

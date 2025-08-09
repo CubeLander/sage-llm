@@ -1,24 +1,31 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
-import torch
 from packaging import version
+import torch
 
-from vllm.utils.logger import init_logger
-from vllm.model_executor.layers.linear import LinearBase, LinearMethodBase
+from vllm.model_executor.layers.linear import LinearBase
+from vllm.model_executor.layers.linear import LinearMethodBase
 from vllm.model_executor.layers.quantization import QuantizationMethods
 from vllm.model_executor.layers.quantization.base_config import (
     QuantizationConfig)
 from vllm.model_executor.layers.quantization.utils.bitblas_utils import (
-    BITBLAS_OPTIMIZE_FEATURES, BITBLAS_SUPPORTED_NUM_BITS,
-    BITBLAS_SUPPORTED_SYM, MINIMUM_BITBLAS_VERSION)
+    BITBLAS_OPTIMIZE_FEATURES)
+from vllm.model_executor.layers.quantization.utils.bitblas_utils import (
+    BITBLAS_SUPPORTED_NUM_BITS)
+from vllm.model_executor.layers.quantization.utils.bitblas_utils import (
+    BITBLAS_SUPPORTED_SYM)
+from vllm.model_executor.layers.quantization.utils.bitblas_utils import (
+    MINIMUM_BITBLAS_VERSION)
 from vllm.model_executor.layers.vocab_parallel_embedding import ParallelLMHead
-from vllm.model_executor.parameter import (BasevLLMParameter,
-                                           ChannelQuantScaleParameter,
-                                           GroupQuantScaleParameter,
-                                           PackedvLLMParameter)
+from vllm.model_executor.parameter import BasevLLMParameter
+from vllm.model_executor.parameter import ChannelQuantScaleParameter
+from vllm.model_executor.parameter import GroupQuantScaleParameter
+from vllm.model_executor.parameter import PackedvLLMParameter
 from vllm.model_executor.utils import set_weight_attrs
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 
@@ -396,8 +403,10 @@ class BitBLASLinearMethod(LinearMethodBase):
             matmul_config, enable_tuning)
 
     def _get_or_create_bitblas_operator(self, config, enable_tuning):
-        from bitblas import Matmul, auto_detect_nvidia_target
-        from bitblas.cache import get_database_path, global_operator_cache
+        from bitblas import Matmul
+        from bitblas import auto_detect_nvidia_target
+        from bitblas.cache import get_database_path
+        from bitblas.cache import global_operator_cache
         BITBLAS_DATABASE_PATH = get_database_path()
         BITBLAS_TARGET = auto_detect_nvidia_target()
         if global_operator_cache.size() == 0:

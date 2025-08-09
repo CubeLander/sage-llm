@@ -23,52 +23,74 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Inference-only MiniCPM-V model compatible with HuggingFace weights."""
-import math
 from collections import defaultdict
-from collections.abc import Iterable, Mapping, Sequence
+from collections.abc import Iterable
+from collections.abc import Mapping
+from collections.abc import Sequence
 from functools import partial
-from typing import Any, Callable, Literal, Optional, TypedDict, Union
+import math
+from typing import Any
+from typing import Callable
+from typing import Literal
+from typing import Optional
+from typing import TypedDict
+from typing import Union
 
 import numpy as np
 import torch
-import torch.types
 from torch import nn
-from transformers import BatchFeature, PretrainedConfig
+import torch.types
+from transformers import BatchFeature
+from transformers import PretrainedConfig
 from typing_extensions import TypeVar
 
 from vllm.config import VllmConfig
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal import MultiModalKwargs
+from vllm.io.inputs.multimodal.inputs import MultiModalDataDict
+from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
+from vllm.io.inputs.multimodal.inputs import NestedTensors
+from vllm.io.inputs.multimodal.parse import DictEmbeddingItems
+from vllm.io.inputs.multimodal.parse import ImageItem
+from vllm.io.inputs.multimodal.parse import ImageProcessorItems
+from vllm.io.inputs.multimodal.parse import ImageSize
+from vllm.io.inputs.multimodal.parse import ModalityData
+from vllm.io.inputs.multimodal.parse import ModalityDataItems
+from vllm.io.inputs.multimodal.parse import MultiModalDataItems
+from vllm.io.inputs.multimodal.parse import MultiModalDataParser
+from vllm.io.inputs.multimodal.parse import VideoItem
+from vllm.io.inputs.multimodal.parse import VideoProcessorItems
+from vllm.io.inputs.multimodal.processing import BaseMultiModalProcessor
+from vllm.io.inputs.multimodal.processing import BaseProcessingInfo
+from vllm.io.inputs.multimodal.processing import PromptReplacement
+from vllm.io.inputs.multimodal.processing import PromptUpdate
+from vllm.io.inputs.multimodal.processing import PromptUpdateDetails
+from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
 from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.model_executor.layers.quantization.awq import AWQConfig
 from vllm.model_executor.layers.quantization.awq_marlin import AWQMarlinConfig
-from vllm.model_executor.layers.resampler import (BaseResampler, Resampler2,
-                                                  get_2d_sincos_pos_embed)
+from vllm.model_executor.layers.resampler import BaseResampler
+from vllm.model_executor.layers.resampler import Resampler2
+from vllm.model_executor.layers.resampler import get_2d_sincos_pos_embed
 from vllm.model_executor.model_loader.utils import set_default_torch_dtype
 from vllm.model_executor.models.llama import LlamaForCausalLM
 from vllm.model_executor.models.minicpm import MiniCPMForCausalLM
 from vllm.model_executor.models.module_mapping import MultiModelKeys
 from vllm.model_executor.models.qwen2 import Qwen2ForCausalLM
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY, MultiModalKwargs
-from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
-                                    NestedTensors)
-from vllm.io.inputs.multimodal.parse import (DictEmbeddingItems, ImageItem,
-                                   ImageProcessorItems, ImageSize,
-                                   ModalityData, ModalityDataItems,
-                                   MultiModalDataItems, MultiModalDataParser,
-                                   VideoItem, VideoProcessorItems)
-from vllm.io.inputs.multimodal.processing import (BaseMultiModalProcessor,
-                                        BaseProcessingInfo, PromptReplacement,
-                                        PromptUpdate, PromptUpdateDetails)
-from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
 from vllm.platforms import current_platform
-from vllm.sequence import IntermediateTensors
 from vllm.utils import flatten_2d_lists
 
 from .idefics2_vision_model import Idefics2VisionTransformer
-from .interfaces import (MultiModalEmbeddings, SupportsLoRA,
-                         SupportsMultiModal, SupportsPP)
-from .utils import (AutoWeightsLoader, flatten_bn, maybe_prefix,
-                    merge_multimodal_embeddings)
+from .interfaces import MultiModalEmbeddings
+from .interfaces import SupportsLoRA
+from .interfaces import SupportsMultiModal
+from .interfaces import SupportsPP
+from .utils import AutoWeightsLoader
+from .utils import flatten_bn
+from .utils import maybe_prefix
+from .utils import merge_multimodal_embeddings
 
 # For profile run
 _MAX_FRAMES_PER_VIDEO = 16

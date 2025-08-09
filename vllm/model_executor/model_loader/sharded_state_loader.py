@@ -2,21 +2,25 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 import collections
+from collections.abc import Generator
 import glob
 import os
-from collections.abc import Generator
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
 import torch
 from torch import nn
 
-from vllm.config import LoadConfig, ModelConfig
-from vllm.utils.logger import init_logger
+from vllm.config import LoadConfig
+from vllm.config import ModelConfig
 from vllm.model_executor.model_loader.base_loader import BaseModelLoader
 from vllm.model_executor.model_loader.weight_utils import (
-    download_weights_from_hf, runai_safetensors_weights_iterator)
+    download_weights_from_hf)
+from vllm.model_executor.model_loader.weight_utils import (
+    runai_safetensors_weights_iterator)
 from vllm.transformers_utils.s3_utils import glob as s3_glob
 from vllm.transformers_utils.utils import is_s3
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

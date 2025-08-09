@@ -1,13 +1,16 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from itertools import accumulate, product
-from typing import Callable, Optional
+from itertools import accumulate
+from itertools import product
+from typing import Callable
+from typing import Optional
 
 import pytest
 import torch
 
-from tests.kernels.allclose_default import get_default_atol, get_default_rtol
+from tests.kernels.allclose_default import get_default_atol
+from tests.kernels.allclose_default import get_default_rtol
 from vllm.model_executor.layers.rotary_embedding import get_rope
 from vllm.platforms import current_platform
 

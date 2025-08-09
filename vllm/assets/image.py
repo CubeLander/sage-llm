@@ -4,8 +4,8 @@
 from dataclasses import dataclass
 from typing import Literal
 
-import torch
 from PIL import Image
+import torch
 
 from .base import get_vllm_public_assets
 

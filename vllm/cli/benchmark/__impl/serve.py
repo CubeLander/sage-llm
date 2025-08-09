@@ -17,31 +17,37 @@ On the client side, run:
 """
 import argparse
 import asyncio
+from collections.abc import AsyncGenerator
+from collections.abc import Iterable
+from dataclasses import dataclass
+from datetime import datetime
 import gc
 import json
 import os
 import random
 import time
+from typing import Any
+from typing import Literal
+from typing import Optional
 import warnings
-from collections.abc import AsyncGenerator, Iterable
-from dataclasses import dataclass
-from datetime import datetime
-from typing import Any, Literal, Optional
 
 import aiohttp
 import numpy as np
 from tqdm.asyncio import tqdm
 from transformers import PreTrainedTokenizerBase
 
-from .datasets import (SampleRequest, add_dataset_parser,
-                                      get_samples)
-from .lib.endpoint_request_func import (
-    ASYNC_REQUEST_FUNCS, OPENAI_COMPATIBLE_BACKENDS, RequestFuncInput,
-    RequestFuncOutput)
-from .lib.ready_checker import wait_for_endpoint
-from .lib.utils import (convert_to_pytorch_benchmark_format,
-                                       write_to_json)
 from vllm.transformers_utils.tokenizer import get_tokenizer
+
+from .datasets import SampleRequest
+from .datasets import add_dataset_parser
+from .datasets import get_samples
+from .lib.endpoint_request_func import ASYNC_REQUEST_FUNCS
+from .lib.endpoint_request_func import OPENAI_COMPATIBLE_BACKENDS
+from .lib.endpoint_request_func import RequestFuncInput
+from .lib.endpoint_request_func import RequestFuncOutput
+from .lib.ready_checker import wait_for_endpoint
+from .lib.utils import convert_to_pytorch_benchmark_format
+from .lib.utils import write_to_json
 
 MILLISECONDS_TO_SECONDS_CONVERSION = 1000
 

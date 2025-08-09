@@ -8,7 +8,8 @@ import uuid
 
 import pytest
 
-from tests.mq_llm_engine.utils import RemoteMQLLMEngine, generate
+from tests.mq_llm_engine.utils import RemoteMQLLMEngine
+from tests.mq_llm_engine.utils import generate
 from vllm.engine.arg_utils import AsyncEngineArgs
 
 MODEL = "google/gemma-1.1-2b-it"

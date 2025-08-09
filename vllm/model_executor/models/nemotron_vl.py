@@ -11,33 +11,42 @@ from abc import ABC
 from collections.abc import Iterable
 from typing import Optional
 
+from PIL import Image
 import torch
 import torch.nn as nn
-from PIL import Image
-from transformers import AutoModel, PretrainedConfig
+from transformers import AutoModel
+from transformers import PretrainedConfig
 from transformers.image_processing_utils_fast import BaseImageProcessorFast
 
 from vllm.config import VllmConfig
-from vllm.model_executor.layers.quantization import QuantizationConfig
-from vllm.model_executor.layers.quantization.awq import AWQConfig
-from vllm.model_executor.models.internvl import (
-    BaseInternVLDummyInputsBuilder, BaseInternVLMultiModalProcessor,
-    BaseInternVLProcessingInfo, InternVLImageEmbeddingInputs,
-    InternVLImageInputs, InternVLImagePixelInputs, InternVLProcessor)
-from vllm.model_executor.models.module_mapping import MultiModelKeys
-from vllm.model_executor.sampling_metadata import SamplingMetadata
+from vllm.core.tensors.intermediate_tensors import IntermediateTensors
 from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
 from vllm.io.inputs.multimodal.inputs import NestedTensors
 from vllm.io.inputs.multimodal.processing import PromptUpdateDetails
-from vllm.sequence import IntermediateTensors
+from vllm.model_executor.layers.quantization import QuantizationConfig
+from vllm.model_executor.layers.quantization.awq import AWQConfig
+from vllm.model_executor.models.internvl import BaseInternVLDummyInputsBuilder
+from vllm.model_executor.models.internvl import BaseInternVLMultiModalProcessor
+from vllm.model_executor.models.internvl import BaseInternVLProcessingInfo
+from vllm.model_executor.models.internvl import InternVLImageEmbeddingInputs
+from vllm.model_executor.models.internvl import InternVLImageInputs
+from vllm.model_executor.models.internvl import InternVLImagePixelInputs
+from vllm.model_executor.models.internvl import InternVLProcessor
+from vllm.model_executor.models.module_mapping import MultiModelKeys
+from vllm.model_executor.sampling_metadata import SamplingMetadata
 from vllm.transformers_utils.processor import (
     cached_image_processor_from_config)
 from vllm.transformers_utils.tokenizer import AnyTokenizer
 
-from .interfaces import (MultiModalEmbeddings, SupportsLoRA,
-                         SupportsMultiModal, SupportsPP)
-from .utils import (AutoWeightsLoader, flatten_bn, init_vllm_registered_model,
-                    maybe_prefix, merge_multimodal_embeddings)
+from .interfaces import MultiModalEmbeddings
+from .interfaces import SupportsLoRA
+from .interfaces import SupportsMultiModal
+from .interfaces import SupportsPP
+from .utils import AutoWeightsLoader
+from .utils import flatten_bn
+from .utils import init_vllm_registered_model
+from .utils import maybe_prefix
+from .utils import merge_multimodal_embeddings
 
 IMG_START = '<img>'
 IMG_END = '</img>'

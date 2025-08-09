@@ -1,13 +1,16 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 """Test the functionality of the Transformers backend."""
-from typing import Any, Optional, Union
+from typing import Any
+from typing import Optional
+from typing import Union
 
 import pytest
 
 from vllm.platforms import current_platform
 
-from ..conftest import HfRunner, VllmRunner
+from ..conftest import HfRunner
+from ..conftest import VllmRunner
 from ..core.block.e2e.test_correctness_sliding_window import prep_prompts
 from ..utils import multi_gpu_test
 from .utils import check_logprobs_close

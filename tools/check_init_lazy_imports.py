@@ -8,9 +8,9 @@ i.e: appears only within the ``if typing.TYPE_CHECKING:`` guard,
 from __future__ import annotations
 
 import ast
+from collections.abc import Iterable
 import pathlib
 import sys
-from collections.abc import Iterable
 from typing import Final
 
 REPO_ROOT: Final = pathlib.Path(__file__).resolve().parent.parent

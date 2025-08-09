@@ -3,34 +3,42 @@
 
 from collections.abc import Mapping
 from copy import copy
-from typing import Any, Callable, Optional, Union
+from typing import Any
+from typing import Callable
+from typing import Optional
+from typing import Union
 
 from typing_extensions import TypeVar
 
-import vllm.envs as envs
-from vllm.config import ParallelConfig, VllmConfig
+from vllm.config import ParallelConfig
+from vllm.config import VllmConfig
 from vllm.distributed import stateless_destroy_torch_distributed_process_group
 from vllm.engine.arg_utils import EngineArgs
+import vllm.envs as envs
 from vllm.io.inputs import PromptType
-from vllm.utils.logger import init_logger
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal import MultiModalRegistry
 from vllm.lora.request import LoRARequest
-from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY, MultiModalRegistry
-from vllm.outputs import PoolingRequestOutput, RequestOutput
+from vllm.outputs import PoolingRequestOutput
+from vllm.outputs import RequestOutput
 from vllm.pooling_params import PoolingParams
 from vllm.sampling_params import SamplingParams
 from vllm.tasks import SupportedTask
-from vllm.transformers_utils.tokenizer_group import (
-    TokenizerGroup, init_tokenizer_from_configs)
+from vllm.transformers_utils.tokenizer_group import TokenizerGroup
+from vllm.transformers_utils.tokenizer_group import init_tokenizer_from_configs
 from vllm.usage.usage_lib import UsageContext
 from vllm.utils import Device
+from vllm.utils.logger import init_logger
 from vllm.v1.engine.core_client import EngineCoreClient
 from vllm.v1.engine.output_processor import OutputProcessor
 from vllm.v1.engine.parallel_sampling import ParentRequest
 from vllm.v1.engine.processor import Processor
 from vllm.v1.executor.abstract import Executor
-from vllm.v1.metrics.loggers import (PrometheusStatLogger, StatLoggerBase,
-                                     StatLoggerFactory)
-from vllm.v1.metrics.reader import Metric, get_metrics_snapshot
+from vllm.v1.metrics.loggers import PrometheusStatLogger
+from vllm.v1.metrics.loggers import StatLoggerBase
+from vllm.v1.metrics.loggers import StatLoggerFactory
+from vllm.v1.metrics.reader import Metric
+from vllm.v1.metrics.reader import get_metrics_snapshot
 from vllm.v1.metrics.stats import IterationStats
 
 logger = init_logger(__name__)

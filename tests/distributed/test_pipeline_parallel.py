@@ -7,19 +7,23 @@ WARNING: This test runs in both single-node (4 GPUs) and multi-node
  all workers in a node other than the head node, which can cause the test
  to fail.
 """
+from dataclasses import dataclass
 import json
 import os
-from dataclasses import dataclass
-from typing import Literal, NamedTuple, Optional
+from typing import Literal
+from typing import NamedTuple
+from typing import Optional
 
 import pytest
 
-from vllm.config import _FLOAT16_NOT_SUPPORTED_MODELS, RunnerOption
-from vllm.utils.logger import init_logger
+from vllm.config import RunnerOption
+from vllm.config import _FLOAT16_NOT_SUPPORTED_MODELS
 from vllm.transformers_utils.config import get_config
+from vllm.utils.logger import init_logger
 
 from ..models.registry import HF_EXAMPLE_MODELS
-from ..utils import compare_two_settings, create_new_process_for_each_test
+from ..utils import compare_two_settings
+from ..utils import create_new_process_for_each_test
 
 logger = init_logger("test_pipeline_parallel")
 

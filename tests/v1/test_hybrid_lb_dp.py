@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 import asyncio
+from contextlib import AsyncExitStack
 import os
 import threading
 import time
-from contextlib import AsyncExitStack
 
 import openai  # use the official client for correctness check
 import pytest

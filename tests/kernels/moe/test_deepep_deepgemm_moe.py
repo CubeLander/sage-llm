@@ -14,16 +14,19 @@ import torch.distributed
 from torch.distributed import ProcessGroup
 from typing_extensions import ParamSpec
 
-from vllm.config import VllmConfig, set_current_vllm_config
+from vllm.config import VllmConfig
+from vllm.config import set_current_vllm_config
 from vllm.model_executor.layers.fused_moe.fused_moe import fused_experts
 from vllm.model_executor.layers.fused_moe.modular_kernel import (
     FusedMoEModularKernel)
 from vllm.platforms import current_platform
-from vllm.utils import has_deep_ep, has_deep_gemm
-from vllm.utils.deep_gemm import (is_blackwell_deep_gemm_used,
-                                  is_deep_gemm_supported)
+from vllm.utils import has_deep_ep
+from vllm.utils import has_deep_gemm
+from vllm.utils.deep_gemm import is_blackwell_deep_gemm_used
+from vllm.utils.deep_gemm import is_deep_gemm_supported
 
-from .parallel_utils import ProcessGroupInfo, parallel_launch
+from .parallel_utils import ProcessGroupInfo
+from .parallel_utils import parallel_launch
 from .utils import make_test_weights
 
 if has_deep_ep():
@@ -32,7 +35,9 @@ if has_deep_ep():
     from vllm.model_executor.layers.fused_moe.deepep_ll_prepare_finalize import (  # noqa: E501
         DeepEPLLPrepareAndFinalize)
 
-    from .parallel_utils import DeepEPHTArgs, DeepEPLLArgs, make_deepep_a2a
+    from .parallel_utils import DeepEPHTArgs
+    from .parallel_utils import DeepEPLLArgs
+    from .parallel_utils import make_deepep_a2a
 
 if has_deep_gemm():
 
