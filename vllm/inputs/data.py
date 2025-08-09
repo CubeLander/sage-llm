@@ -7,7 +7,7 @@ import torch
 from typing_extensions import NotRequired, TypedDict, TypeIs, TypeVar
 
 if TYPE_CHECKING:
-    from vllm.multimodal.inputs import MultiModalDataDict, MultiModalInputs
+    from vllm.inputs.multimodal.inputs import MultiModalDataDict, MultiModalInputs
 
 
 class TextPrompt(TypedDict):

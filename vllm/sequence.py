@@ -17,7 +17,7 @@ import torch
 
 from vllm.inputs import SingletonInputs
 from vllm.lora.request import LoRARequest
-from vllm.multimodal import MultiModalKwargs, MultiModalPlaceholderDict
+from vllm.inputs.multimodal import MultiModalKwargs, MultiModalPlaceholderDict
 from vllm.pooling_params import PoolingParams
 from vllm.sampling_params import RequestOutputKind, SamplingParams
 

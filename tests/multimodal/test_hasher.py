@@ -7,7 +7,7 @@ import pytest
 import torch
 from PIL import Image, ImageDraw
 
-from vllm.multimodal.hasher import MultiModalHasher
+from vllm.inputs.multimodal.hasher import MultiModalHasher
 
 ASSETS_DIR = Path(__file__).parent / "assets"
 assert ASSETS_DIR.exists()

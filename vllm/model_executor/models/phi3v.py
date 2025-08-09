@@ -30,19 +30,19 @@ from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.model_executor.layers.vocab_parallel_embedding import (
     VocabParallelEmbedding)
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.multimodal import MULTIMODAL_REGISTRY
-from vllm.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
+from vllm.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
                                     MultiModalKwargs)
-from vllm.multimodal.parse import (ImageEmbeddingItems, ImageProcessorItems,
+from vllm.inputs.multimodal.parse import (ImageEmbeddingItems, ImageProcessorItems,
                                    ImageSize, MultiModalDataItems)
 # yapf conflicts with isort for this block
 # yapf: disable
-from vllm.multimodal.processing import (BaseMultiModalProcessor,
+from vllm.inputs.multimodal.processing import (BaseMultiModalProcessor,
                                         BaseProcessingInfo, BoundPromptUpdate,
                                         PlaceholderFeaturesInfo,
                                         PromptReplacement, PromptUpdate)
 # yapf: enable
-from vllm.multimodal.profiling import BaseDummyInputsBuilder
+from vllm.inputs.multimodal.profiling import BaseDummyInputsBuilder
 from vllm.sequence import IntermediateTensors
 from vllm.utils import is_list_of
 from vllm.utils.tensor_schema import TensorSchema, TensorShape

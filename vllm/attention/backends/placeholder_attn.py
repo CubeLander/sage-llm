@@ -12,7 +12,7 @@ from vllm.attention.backends.abstract import (AttentionBackend, AttentionImpl,
                                               AttentionMetadata,
                                               AttentionMetadataBuilder)
 from vllm.attention.backends.utils import CommonAttentionState
-from vllm.multimodal import MultiModalPlaceholderMap
+from vllm.inputs.multimodal import MultiModalPlaceholderMap
 
 if TYPE_CHECKING:
     from vllm.worker.model_runner import (ModelInputForGPUBuilder,

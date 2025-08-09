@@ -10,8 +10,8 @@ from typing_extensions import assert_never
 from vllm.config import ModelConfig
 from vllm.utils.logger import init_logger
 from vllm.lora.request import LoRARequest
-from vllm.multimodal import MULTIMODAL_REGISTRY, MultiModalRegistry
-from vllm.multimodal.inputs import (MultiModalDataDict, MultiModalEncDecInputs,
+from vllm.inputs.multimodal import MULTIMODAL_REGISTRY, MultiModalRegistry
+from vllm.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalEncDecInputs,
                                     MultiModalInputs)
 from vllm.transformers_utils.tokenizer import AnyTokenizer
 from vllm.transformers_utils.tokenizer_group import TokenizerGroup

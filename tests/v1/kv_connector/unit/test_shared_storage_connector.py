@@ -8,7 +8,7 @@ from PIL import Image
 from vllm import LLM, EngineArgs, SamplingParams
 from vllm.assets.image import ImageAsset
 from vllm.config import KVTransferConfig
-from vllm.multimodal.utils import encode_image_base64
+from vllm.inputs.multimodal.utils import encode_image_base64
 
 MODEL_NAME = "RedHatAI/Qwen2.5-VL-3B-Instruct-quantized.w8a8"
 

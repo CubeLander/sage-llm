@@ -28,16 +28,16 @@ from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.model_executor.model_loader.weight_utils import default_weight_loader
 from vllm.model_executor.models.module_mapping import MultiModelKeys
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.multimodal import MULTIMODAL_REGISTRY
-from vllm.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
+from vllm.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
                                     MultiModalKwargs, NestedTensors)
-from vllm.multimodal.parse import (AudioProcessorItems, ImageEmbeddingItems,
+from vllm.inputs.multimodal.parse import (AudioProcessorItems, ImageEmbeddingItems,
                                    ImageProcessorItems, ImageSize,
                                    MultiModalDataItems, MultiModalDataParser)
-from vllm.multimodal.processing import (BaseMultiModalProcessor,
+from vllm.inputs.multimodal.processing import (BaseMultiModalProcessor,
                                         BaseProcessingInfo, PromptReplacement,
                                         PromptUpdate)
-from vllm.multimodal.profiling import BaseDummyInputsBuilder
+from vllm.inputs.multimodal.profiling import BaseDummyInputsBuilder
 from vllm.sequence import IntermediateTensors
 from vllm.utils import is_list_of
 

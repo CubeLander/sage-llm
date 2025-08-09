@@ -7,7 +7,7 @@ import openai
 import pytest
 import pytest_asyncio
 
-from vllm.multimodal.utils import encode_video_base64, fetch_video
+from vllm.inputs.multimodal.utils import encode_video_base64, fetch_video
 
 from ...utils import RemoteOpenAIServer
 

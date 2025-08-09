@@ -41,13 +41,13 @@ from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.model_executor.layers.vocab_parallel_embedding import (
     ParallelLMHead, VocabParallelEmbedding)
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.multimodal import MULTIMODAL_REGISTRY, MultiModalKwargs
-from vllm.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
+from vllm.inputs.multimodal import MULTIMODAL_REGISTRY, MultiModalKwargs
+from vllm.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
                                     MultiModalInputs, PlaceholderRange)
-from vllm.multimodal.parse import ImageProcessorItems, MultiModalDataItems
-from vllm.multimodal.processing import (BaseMultiModalProcessor,
+from vllm.inputs.multimodal.parse import ImageProcessorItems, MultiModalDataItems
+from vllm.inputs.multimodal.processing import (BaseMultiModalProcessor,
                                         BaseProcessingInfo)
-from vllm.multimodal.profiling import BaseDummyInputsBuilder
+from vllm.inputs.multimodal.profiling import BaseDummyInputsBuilder
 from vllm.sequence import IntermediateTensors
 from vllm.utils import is_list_of
 

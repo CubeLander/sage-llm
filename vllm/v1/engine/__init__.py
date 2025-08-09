@@ -10,8 +10,8 @@ import msgspec
 import torch
 
 from vllm.lora.request import LoRARequest
-from vllm.multimodal import MultiModalKwargs
-from vllm.multimodal.inputs import PlaceholderRange
+from vllm.inputs.multimodal import MultiModalKwargs
+from vllm.inputs.multimodal.inputs import PlaceholderRange
 from vllm.pooling_params import PoolingParams
 from vllm.sampling_params import SamplingParams
 from vllm.v1.metrics.stats import SchedulerStats

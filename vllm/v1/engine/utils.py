@@ -18,7 +18,7 @@ import zmq
 from vllm.config import CacheConfig, ParallelConfig, VllmConfig
 from vllm.utils.logger import init_logger
 from vllm.platforms import current_platform
-from vllm.ray.ray_env import get_env_vars_to_copy
+from vllm.utils.ray.ray_env import get_env_vars_to_copy
 from vllm.utils import get_mp_context, get_open_zmq_ipc_path, zmq_socket_ctx
 from vllm.v1.engine.coordinator import DPCoordinator
 from vllm.v1.executor.abstract import Executor

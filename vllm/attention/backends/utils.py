@@ -16,7 +16,7 @@ from vllm.attention import (AttentionMetadata, AttentionMetadataBuilder,
 from vllm.attention.backends.abstract import AttentionType
 from vllm.config import ModelConfig
 from vllm.utils.logger import init_logger
-from vllm.multimodal import MultiModalPlaceholderMap
+from vllm.inputs.multimodal import MultiModalPlaceholderMap
 from vllm.utils import async_tensor_h2d, make_tensor_with_pad
 
 logger = init_logger(__name__)

@@ -29,7 +29,7 @@ from vllm.attention.backends.utils import (PAD_SLOT_ID, CommonAttentionState,
 from vllm.attention.utils.fa_utils import (flash_attn_supports_fp8,
                                            get_flash_attn_version)
 from vllm.utils.logger import init_logger
-from vllm.multimodal import MultiModalPlaceholderMap
+from vllm.inputs.multimodal import MultiModalPlaceholderMap
 from vllm.utils import async_tensor_h2d, make_tensor_with_pad
 from vllm.vllm_flash_attn import (flash_attn_varlen_func,
                                   flash_attn_with_kvcache)

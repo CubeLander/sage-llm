@@ -7,8 +7,8 @@ from typing import Callable
 import requests
 from PIL import Image
 
-from vllm.multimodal.image import rescale_image_size
-from vllm.multimodal.video import (rescale_video_size, resize_video,
+from vllm.inputs.multimodal.image import rescale_image_size
+from vllm.inputs.multimodal.video import (rescale_video_size, resize_video,
                                    sample_frames_from_video)
 
 from .....conftest import IMAGE_ASSETS, VIDEO_ASSETS

@@ -9,7 +9,7 @@ from PIL import Image
 from transformers import AutoProcessor
 
 from vllm.entrypoints.openai.protocol import EmbeddingResponse
-from vllm.multimodal.utils import encode_image_base64, fetch_image
+from vllm.inputs.multimodal.utils import encode_image_base64, fetch_image
 
 from ...utils import VLLM_PATH, RemoteOpenAIServer
 

@@ -8,9 +8,9 @@ import pytest
 from PIL import Image
 from pqdm.threads import pqdm
 
-from vllm.multimodal import MULTIMODAL_REGISTRY
-from vllm.multimodal.parse import ImageSize
-from vllm.multimodal.processing import BaseMultiModalProcessor
+from vllm.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.inputs.multimodal.parse import ImageSize
+from vllm.inputs.multimodal.processing import BaseMultiModalProcessor
 
 from ...utils import build_model_context
 

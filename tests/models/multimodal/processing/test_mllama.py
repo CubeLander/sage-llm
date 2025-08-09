@@ -4,8 +4,8 @@
 import pytest
 from transformers import MllamaConfig
 
-from vllm.multimodal import MULTIMODAL_REGISTRY
-from vllm.multimodal.profiling import MultiModalProfiler
+from vllm.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.inputs.multimodal.profiling import MultiModalProfiler
 
 from ...utils import build_model_context
 

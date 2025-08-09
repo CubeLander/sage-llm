@@ -6,7 +6,7 @@ import torch
 
 from vllm.config import VllmConfig
 from vllm.model_executor.layers.sampler import SamplerOutput
-from vllm.multimodal import MultiModalKwargs
+from vllm.inputs.multimodal import MultiModalKwargs
 from vllm.sequence import IntermediateTensors
 from vllm.worker.neuronx_distributed_model_runner import (
     NeuronxDistributedModelRunner)

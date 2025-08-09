@@ -15,7 +15,7 @@ from vllm.lora.request import LoRARequest
 from vllm.model_executor import SamplingMetadata
 from vllm.model_executor.layers.sampler import SamplerOutput
 from vllm.model_executor.model_loader.neuron import get_neuron_model
-from vllm.multimodal import BatchedTensorInputs, MultiModalKwargs
+from vllm.inputs.multimodal import BatchedTensorInputs, MultiModalKwargs
 from vllm.platforms import current_platform
 from vllm.sampling_params import SamplingParams
 from vllm.sequence import IntermediateTensors, SequenceGroupMetadata

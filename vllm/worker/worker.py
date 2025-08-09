@@ -11,7 +11,7 @@ import torch.distributed
 import vllm.envs as envs
 from vllm.attention.layer import Attention
 from vllm.config import VllmConfig, get_layers_from_vllm_config
-from vllm.device_allocator.cumem import CuMemAllocator
+from vllm.platforms.device_allocator.cumem import CuMemAllocator
 from vllm.distributed import (ensure_model_parallel_initialized,
                               init_distributed_environment,
                               set_custom_all_reduce)

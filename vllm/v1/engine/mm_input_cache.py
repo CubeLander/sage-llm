@@ -3,8 +3,8 @@
 from collections.abc import Sequence
 from typing import TYPE_CHECKING, Optional
 
-from vllm.multimodal import MultiModalKwargs
-from vllm.multimodal.cache import MultiModalCache, MultiModalCacheItemMetadata
+from vllm.inputs.multimodal import MultiModalKwargs
+from vllm.inputs.multimodal.cache import MultiModalCache, MultiModalCacheItemMetadata
 from vllm.utils import is_list_of
 
 if TYPE_CHECKING:

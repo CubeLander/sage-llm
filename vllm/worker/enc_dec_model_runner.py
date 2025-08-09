@@ -20,7 +20,7 @@ from vllm.utils.logger import init_logger
 from vllm.lora.request import LoRARequest
 from vllm.model_executor import SamplingMetadata
 from vllm.model_executor.layers.sampler import SamplerOutput
-from vllm.multimodal import (MULTIMODAL_REGISTRY, MultiModalKwargs,
+from vllm.inputs.multimodal import (MULTIMODAL_REGISTRY, MultiModalKwargs,
                              MultiModalRegistry)
 from vllm.platforms import _Backend
 from vllm.sampling_params import SamplingParams

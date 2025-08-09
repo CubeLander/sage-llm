@@ -6,7 +6,7 @@ from typing import Optional
 
 import msgspec
 
-from vllm.adapter_commons.request import AdapterRequest
+from .adapter.request import AdapterRequest
 
 
 class LoRARequest(

@@ -72,7 +72,7 @@ from typing_extensions import Never, ParamSpec, TypeIs, assert_never
 
 import vllm.envs as envs
 from vllm.utils.logger import enable_trace_function_call, init_logger
-from vllm.ray.lazy_utils import is_in_ray_actor
+from vllm.utils.ray.lazy_utils import is_in_ray_actor
 
 if TYPE_CHECKING:
     from argparse import Namespace

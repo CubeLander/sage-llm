@@ -7,7 +7,7 @@ import pytest
 from PIL import Image
 
 from vllm.inputs.data import ExplicitEncoderDecoderPrompt, TextPrompt
-from vllm.multimodal.image import rescale_image_size
+from vllm.inputs.multimodal.image import rescale_image_size
 from vllm.sequence import SampleLogprobs
 
 from ....conftest import IMAGE_ASSETS, HfRunner, ImageTestAssets, VllmRunner

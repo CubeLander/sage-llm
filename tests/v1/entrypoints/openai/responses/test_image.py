@@ -8,7 +8,7 @@ import pytest
 import pytest_asyncio
 
 from tests.utils import RemoteOpenAIServer
-from vllm.multimodal.utils import encode_image_base64, fetch_image
+from vllm.inputs.multimodal.utils import encode_image_base64, fetch_image
 
 # Use a small vision model for testing
 MODEL_NAME = "Qwen/Qwen2.5-VL-3B-Instruct"

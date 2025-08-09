@@ -31,7 +31,7 @@ _I_co = TypeVar("_I_co", bound=BaseProcessingInfo, covariant=True)
 class ProcessingInfoFactory(Protocol[_I_co]):
     """
     Constructs a
-    [`BaseMultiModalProcessor`][vllm.multimodal.processing.BaseMultiModalProcessor]
+    [`BaseMultiModalProcessor`][vllm.inputs.multimodal.processing.BaseMultiModalProcessor]
     instance from the context.
     """
 
@@ -45,7 +45,7 @@ class ProcessingInfoFactory(Protocol[_I_co]):
 class DummyInputsBuilderFactory(Protocol[_I]):
     """
     Constructs a
-    [`BaseDummyInputsBuilder`][vllm.multimodal.profiling.BaseDummyInputsBuilder]
+    [`BaseDummyInputsBuilder`][vllm.inputs.multimodal.profiling.BaseDummyInputsBuilder]
     instance from the context.
     """
 
@@ -56,7 +56,7 @@ class DummyInputsBuilderFactory(Protocol[_I]):
 class MultiModalProcessorFactory(Protocol[_I]):
     """
     Constructs a
-    [`BaseMultiModalProcessor`][vllm.multimodal.processing.BaseMultiModalProcessor]
+    [`BaseMultiModalProcessor`][vllm.inputs.multimodal.processing.BaseMultiModalProcessor]
     instance from the context.
     """
 

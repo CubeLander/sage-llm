@@ -13,9 +13,9 @@ from PIL import Image
 
 from vllm.config import ModelConfig
 from vllm.inputs import InputProcessingContext
-from vllm.multimodal import MULTIMODAL_REGISTRY, MultiModalDataDict
-from vllm.multimodal.inputs import MultiModalInputs
-from vllm.multimodal.processing import BaseMultiModalProcessor, ProcessingCache
+from vllm.inputs.multimodal import MULTIMODAL_REGISTRY, MultiModalDataDict
+from vllm.inputs.multimodal.inputs import MultiModalInputs
+from vllm.inputs.multimodal.processing import BaseMultiModalProcessor, ProcessingCache
 from vllm.transformers_utils.tokenizer import (AnyTokenizer, MistralTokenizer,
                                                cached_tokenizer_from_config,
                                                encode_tokens)

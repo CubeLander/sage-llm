@@ -4,7 +4,7 @@
 import openai
 import pytest
 
-from vllm.multimodal.utils import encode_image_base64, fetch_image
+from vllm.inputs.multimodal.utils import encode_image_base64, fetch_image
 from vllm.platforms import current_platform
 
 from ...entrypoints.openai.test_vision import TEST_IMAGE_URLS

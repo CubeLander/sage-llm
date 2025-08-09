@@ -17,7 +17,7 @@ from transformers import AutoProcessor, AutoTokenizer
 
 from vllm import LLM, EngineArgs, SamplingParams
 from vllm.lora.request import LoRARequest
-from vllm.multimodal.utils import fetch_image
+from vllm.inputs.multimodal.utils import fetch_image
 from vllm.utils import FlexibleArgumentParser
 
 QUESTION = "What is the content of each image?"

@@ -212,7 +212,7 @@ from vllm.attention.utils.fa_utils import get_flash_attn_version
 from vllm.model_executor.layers.linear import (ColumnParallelLinear,
                                                LinearBase,
                                                UnquantizedLinearMethod)
-from vllm.multimodal import MultiModalPlaceholderMap
+from vllm.inputs.multimodal import MultiModalPlaceholderMap
 from vllm.platforms import current_platform
 from vllm.triton_utils import HAS_TRITON
 from vllm.utils import async_tensor_h2d, cdiv, make_tensor_with_pad, round_down

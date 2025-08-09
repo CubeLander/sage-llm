@@ -19,7 +19,7 @@ from vllm.executor.ray_utils import (RayWorkerWrapper, initialize_ray_cluster,
 from vllm.utils.logger import init_logger
 from vllm.model_executor.layers.sampler import SamplerOutput
 from vllm.platforms import current_platform
-from vllm.ray.ray_env import get_env_vars_to_copy
+from vllm.utils.ray.ray_env import get_env_vars_to_copy
 from vllm.sequence import ExecuteModelRequest
 from vllm.utils import (_run_task_with_lock, get_distributed_init_method,
                         get_ip, get_open_port, make_async)

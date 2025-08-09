@@ -4,7 +4,7 @@
 from typing import TYPE_CHECKING
 
 from vllm.utils.logger import init_logger
-from vllm.multimodal import MultiModalRegistry
+from vllm.inputs.multimodal import MultiModalRegistry
 from vllm.v1.request import Request
 
 if TYPE_CHECKING:

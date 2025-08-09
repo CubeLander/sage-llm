@@ -13,7 +13,7 @@ from vllm.utils.logger import init_logger
 from vllm.model_executor.layers.linear import (ColumnParallelLinear,
                                                RowParallelLinear)
 from vllm.model_executor.layers.pooler import DispatchPooler, Pooler
-from vllm.multimodal import MULTIMODAL_REGISTRY
+from vllm.inputs.multimodal import MULTIMODAL_REGISTRY
 from vllm.sequence import IntermediateTensors
 
 from .interfaces import (SupportsCrossEncoding, SupportsMultiModal,

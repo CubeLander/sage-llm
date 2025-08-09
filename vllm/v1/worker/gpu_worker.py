@@ -94,7 +94,7 @@ class Worker(WorkerBase):
             self.profiler = None
 
     def sleep(self, level: int = 1) -> None:
-        from vllm.device_allocator.cumem import CuMemAllocator
+        from vllm.platforms.device_allocator.cumem import CuMemAllocator
 
         free_bytes_before_sleep = torch.cuda.mem_get_info()[0]
 
@@ -118,7 +118,7 @@ class Worker(WorkerBase):
             used_bytes / GiB_bytes)
 
     def wake_up(self, tags: Optional[list[str]] = None) -> None:
-        from vllm.device_allocator.cumem import CuMemAllocator
+        from vllm.platforms.device_allocator.cumem import CuMemAllocator
 
         allocator = CuMemAllocator.get_instance()
         allocator.wake_up(tags)
@@ -134,7 +134,7 @@ class Worker(WorkerBase):
     def _maybe_get_memory_pool_context(self,
                                        tag: str) -> AbstractContextManager:
         if self.vllm_config.model_config.enable_sleep_mode:
-            from vllm.device_allocator.cumem import CuMemAllocator
+            from vllm.platforms.device_allocator.cumem import CuMemAllocator
 
             allocator = CuMemAllocator.get_instance()
             if tag == "weights":
@@ -286,7 +286,7 @@ class Worker(WorkerBase):
         """Allocate GPU KV cache with the specified kv_cache_config."""
 
         if self.vllm_config.model_config.enable_sleep_mode:
-            from vllm.device_allocator.cumem import CuMemAllocator
+            from vllm.platforms.device_allocator.cumem import CuMemAllocator
 
             allocator = CuMemAllocator.get_instance()
             context = allocator.use_memory_pool(tag="kv_cache")

@@ -18,7 +18,7 @@ from msgspec import msgpack
 
 from vllm import envs
 from vllm.utils.logger import init_logger
-from vllm.multimodal.inputs import (BaseMultiModalField,
+from vllm.inputs.multimodal.inputs import (BaseMultiModalField,
                                     MultiModalBatchedField,
                                     MultiModalFieldConfig, MultiModalFieldElem,
                                     MultiModalFlatField, MultiModalKwargs,

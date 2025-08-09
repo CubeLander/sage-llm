@@ -37,7 +37,7 @@ from vllm.model_executor.model_loader.weight_utils import default_weight_loader
 from vllm.model_executor.models.llama4 import (Llama4DecoderLayer,
                                                Llama4ForCausalLM)
 from vllm.model_executor.models.utils import extract_layer_index
-from vllm.multimodal.inputs import NestedTensors
+from vllm.inputs.multimodal.inputs import NestedTensors
 
 from .utils import AutoWeightsLoader, maybe_prefix, merge_multimodal_embeddings
 

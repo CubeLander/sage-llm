@@ -11,9 +11,9 @@ import safetensors.torch
 import torch
 from torch import nn
 
-from vllm.adapter_commons.models import (AdapterLRUCache, AdapterModel,
+from .adapter.models import (AdapterLRUCache, AdapterModel,
                                          AdapterModelManager)
-from vllm.adapter_commons.utils import (add_adapter, deactivate_adapter,
+from .adapter.utils import (add_adapter, deactivate_adapter,
                                         get_adapter, list_adapters,
                                         remove_adapter, set_adapter_mapping)
 from vllm.config import LoRAConfig

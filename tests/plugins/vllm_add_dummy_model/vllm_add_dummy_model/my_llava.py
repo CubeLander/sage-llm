@@ -10,7 +10,7 @@ from vllm.model_executor.models.llava import (LlavaDummyInputsBuilder,
                                               LlavaMultiModalProcessor,
                                               LlavaProcessingInfo)
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.multimodal import MULTIMODAL_REGISTRY
+from vllm.inputs.multimodal import MULTIMODAL_REGISTRY
 
 
 @MULTIMODAL_REGISTRY.register_processor(LlavaMultiModalProcessor,

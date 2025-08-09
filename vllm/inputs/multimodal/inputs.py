@@ -112,7 +112,7 @@ MultiModalDataDict: TypeAlias = Mapping[str, ModalityData[Any]]
 A dictionary containing an entry for each modality type to input.
 
 The built-in modalities are defined by
-[`MultiModalDataBuiltins`][vllm.multimodal.inputs.MultiModalDataBuiltins].
+[`MultiModalDataBuiltins`][vllm.inputs.multimodal.inputs.MultiModalDataBuiltins].
 """
 
 
@@ -174,7 +174,7 @@ Uses a list instead of a tensor if the dimensions of each element do not match.
 
 def nested_tensors_equal(a: NestedTensors, b: NestedTensors) -> bool:
     """Equality check between
-    [`NestedTensors`][vllm.multimodal.inputs.NestedTensors] objects."""
+    [`NestedTensors`][vllm.inputs.multimodal.inputs.NestedTensors] objects."""
     if isinstance(a, torch.Tensor):
         return isinstance(b, torch.Tensor) and torch.equal(a, b)
     elif isinstance(b, torch.Tensor):
@@ -194,7 +194,7 @@ def nested_tensors_equal(a: NestedTensors, b: NestedTensors) -> bool:
 BatchedTensorInputs: TypeAlias = Mapping[str, NestedTensors]
 """
 A dictionary containing nested tensors which have been batched via
-[`MultiModalKwargs.batch`][vllm.multimodal.inputs.MultiModalKwargs.batch].
+[`MultiModalKwargs.batch`][vllm.inputs.multimodal.inputs.MultiModalKwargs.batch].
 """
 
 
@@ -202,7 +202,7 @@ A dictionary containing nested tensors which have been batched via
 class MultiModalFieldElem:
     """
     Represents a keyword argument corresponding to a multi-modal item
-    in [`MultiModalKwargs`][vllm.multimodal.inputs.MultiModalKwargs].
+    in [`MultiModalKwargs`][vllm.inputs.multimodal.inputs.MultiModalKwargs].
     """
 
     modality: str
@@ -214,14 +214,14 @@ class MultiModalFieldElem:
     key: str
     """
     The key of this field in
-    [`MultiModalKwargs`][vllm.multimodal.inputs.MultiModalKwargs],
+    [`MultiModalKwargs`][vllm.inputs.multimodal.inputs.MultiModalKwargs],
     i.e. the name of the keyword argument to be passed to the model.
     """
 
     data: NestedTensors
     """
     The tensor data of this field in
-    [`MultiModalKwargs`][vllm.multimodal.inputs.MultiModalKwargs],
+    [`MultiModalKwargs`][vllm.inputs.multimodal.inputs.MultiModalKwargs],
     i.e. the value of the keyword argument to be passed to the model.
     """
 
@@ -244,7 +244,7 @@ class MultiModalFieldElem:
 class BaseMultiModalField(ABC):
     """
     Defines how to interpret tensor data belonging to a keyword argument in
-    [`MultiModalKwargs`][vllm.multimodal.inputs.MultiModalKwargs] for multiple
+    [`MultiModalKwargs`][vllm.inputs.multimodal.inputs.MultiModalKwargs] for multiple
     multi-modal items, and vice versa.
     """
 
@@ -271,11 +271,11 @@ class BaseMultiModalField(ABC):
     ) -> Sequence[MultiModalFieldElem]:
         """
         Construct
-        [`MultiModalFieldElem`][vllm.multimodal.inputs.MultiModalFieldElem]
+        [`MultiModalFieldElem`][vllm.inputs.multimodal.inputs.MultiModalFieldElem]
         instances to represent the provided data.
 
         This is the inverse of
-        [`reduce_data`][vllm.multimodal.inputs.BaseMultiModalField.reduce_data].
+        [`reduce_data`][vllm.inputs.multimodal.inputs.BaseMultiModalField.reduce_data].
         """
         raise NotImplementedError
 
@@ -286,10 +286,10 @@ class BaseMultiModalField(ABC):
     def reduce_data(self, elems: list[MultiModalFieldElem]) -> NestedTensors:
         """
         Merge the data from multiple instances of
-        [`MultiModalFieldElem`][vllm.multimodal.inputs.MultiModalFieldElem].
+        [`MultiModalFieldElem`][vllm.inputs.multimodal.inputs.MultiModalFieldElem].
 
         This is the inverse of
-        [`build_elems`][vllm.multimodal.inputs.BaseMultiModalField.build_elems].
+        [`build_elems`][vllm.inputs.multimodal.inputs.BaseMultiModalField.build_elems].
         """
         field_types = [type(item.field) for item in elems]
         if len(set(field_types)) > 1:
@@ -302,7 +302,7 @@ class BaseMultiModalField(ABC):
 class MultiModalBatchedField(BaseMultiModalField):
     """
     Info:
-        [`MultiModalFieldConfig.batched`][vllm.multimodal.inputs.MultiModalFieldConfig.batched]
+        [`MultiModalFieldConfig.batched`][vllm.inputs.multimodal.inputs.MultiModalFieldConfig.batched]
     """
 
     def build_elems(
@@ -332,8 +332,8 @@ class MultiModalBatchedField(BaseMultiModalField):
 class MultiModalFlatField(BaseMultiModalField):
     """
     Info:
-        [`MultiModalFieldConfig.flat`][vllm.multimodal.inputs.MultiModalFieldConfig.flat]
-        [`MultiModalFieldConfig.flat_from_sizes`][vllm.multimodal.inputs.MultiModalFieldConfig.flat_from_sizes]
+        [`MultiModalFieldConfig.flat`][vllm.inputs.multimodal.inputs.MultiModalFieldConfig.flat]
+        [`MultiModalFieldConfig.flat_from_sizes`][vllm.inputs.multimodal.inputs.MultiModalFieldConfig.flat_from_sizes]
     """
     slices: Union[Sequence[slice], Sequence[Sequence[slice]]]
     dim: int = 0
@@ -374,7 +374,7 @@ class MultiModalFlatField(BaseMultiModalField):
 class MultiModalSharedField(BaseMultiModalField):
     """
     Info:
-        [`MultiModalFieldConfig.shared`][vllm.multimodal.inputs.MultiModalFieldConfig.shared]
+        [`MultiModalFieldConfig.shared`][vllm.inputs.multimodal.inputs.MultiModalFieldConfig.shared]
     """
     batch_size: int
 
@@ -520,7 +520,7 @@ class MultiModalFieldConfig:
         ```
 
         Info:
-            [`MultiModalFieldConfig.flat`][vllm.multimodal.inputs.MultiModalFieldConfig.flat]
+            [`MultiModalFieldConfig.flat`][vllm.inputs.multimodal.inputs.MultiModalFieldConfig.flat]
         """
 
         if size_per_item.ndim != 1:
@@ -585,9 +585,9 @@ class MultiModalFieldConfig:
 class MultiModalKwargsItem(UserDict[str, MultiModalFieldElem]):
     """
     A collection of
-    [`MultiModalFieldElem`][vllm.multimodal.inputs.MultiModalFieldElem]
+    [`MultiModalFieldElem`][vllm.inputs.multimodal.inputs.MultiModalFieldElem]
     corresponding to a data item in
-    [`MultiModalDataItems`][vllm.multimodal.parse.MultiModalDataItems].
+    [`MultiModalDataItems`][vllm.inputs.multimodal.parse.MultiModalDataItems].
     """
 
     @staticmethod
@@ -610,9 +610,9 @@ class MultiModalKwargs(UserDict[str, NestedTensors]):
 
     The metadata `items` enables us to obtain the keyword arguments
     corresponding to each data item in
-    [`MultiModalDataItems`][vllm.multimodal.parse.MultiModalDataItems], via
-    [`get_item`][vllm.multimodal.inputs.MultiModalKwargs.get_item] and
-    [`get_items`][vllm.multimodal.inputs.MultiModalKwargs.get_items].
+    [`MultiModalDataItems`][vllm.inputs.multimodal.parse.MultiModalDataItems], via
+    [`get_item`][vllm.inputs.multimodal.inputs.MultiModalKwargs.get_item] and
+    [`get_items`][vllm.inputs.multimodal.inputs.MultiModalKwargs.get_items].
     """
 
     @staticmethod
@@ -652,7 +652,7 @@ class MultiModalKwargs(UserDict[str, NestedTensors]):
     @staticmethod
     def from_items(items: Sequence[MultiModalKwargsItem]):
         """Construct a new
-        [`MultiModalKwargs`][vllm.multimodal.inputs.MultiModalKwargs]
+        [`MultiModalKwargs`][vllm.inputs.multimodal.inputs.MultiModalKwargs]
         from multiple items."""
         elems_by_key = defaultdict[str, list[MultiModalFieldElem]](list)
         for item in items:
@@ -827,7 +827,7 @@ A dictionary containing placeholder ranges for each modality.
 class MultiModalInputs(TypedDict):
     """
     Represents the outputs of
-    [`BaseMultiModalProcessor`][vllm.multimodal.processing.BaseMultiModalProcessor],
+    [`BaseMultiModalProcessor`][vllm.inputs.multimodal.processing.BaseMultiModalProcessor],
     ready to be passed to vLLM internals.
     """
 
@@ -864,7 +864,7 @@ class MultiModalInputs(TypedDict):
 class MultiModalEncDecInputs(MultiModalInputs):
     """
     Represents the outputs of
-    [`EncDecMultiModalProcessor`][vllm.multimodal.processing.EncDecMultiModalProcessor]
+    [`EncDecMultiModalProcessor`][vllm.inputs.multimodal.processing.EncDecMultiModalProcessor]
     ready to be passed to vLLM internals.
     """
 

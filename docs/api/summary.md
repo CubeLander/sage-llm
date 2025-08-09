@@ -57,46 +57,46 @@ Inference parameters for vLLM APIs.
 
 ## Multi-Modality
 
-vLLM provides experimental support for multi-modal models through the [vllm.multimodal][] package.
+vLLM provides experimental support for multi-modal models through the [vllm.inputs.multimodal][] package.
 
 Multi-modal inputs can be passed alongside text and token prompts to [supported models][supported-mm-models]
 via the `multi_modal_data` field in [vllm.inputs.PromptType][].
 
 Looking to add your own multi-modal model? Please follow the instructions listed [here](../contributing/model/multimodal.md).
 
-- [vllm.multimodal.MULTIMODAL_REGISTRY][]
+- [vllm.inputs.multimodal.MULTIMODAL_REGISTRY][]
 
 ### Inputs
 
 User-facing inputs.
 
-- [vllm.multimodal.inputs.MultiModalDataDict][]
+- [vllm.inputs.multimodal.inputs.MultiModalDataDict][]
 
 Internal data structures.
 
-- [vllm.multimodal.inputs.PlaceholderRange][]
-- [vllm.multimodal.inputs.NestedTensors][]
-- [vllm.multimodal.inputs.MultiModalFieldElem][]
-- [vllm.multimodal.inputs.MultiModalFieldConfig][]
-- [vllm.multimodal.inputs.MultiModalKwargsItem][]
-- [vllm.multimodal.inputs.MultiModalKwargs][]
-- [vllm.multimodal.inputs.MultiModalInputs][]
+- [vllm.inputs.multimodal.inputs.PlaceholderRange][]
+- [vllm.inputs.multimodal.inputs.NestedTensors][]
+- [vllm.inputs.multimodal.inputs.MultiModalFieldElem][]
+- [vllm.inputs.multimodal.inputs.MultiModalFieldConfig][]
+- [vllm.inputs.multimodal.inputs.MultiModalKwargsItem][]
+- [vllm.inputs.multimodal.inputs.MultiModalKwargs][]
+- [vllm.inputs.multimodal.inputs.MultiModalInputs][]
 
 ### Data Parsing
 
-- [vllm.multimodal.parse][]
+- [vllm.inputs.multimodal.parse][]
 
 ### Data Processing
 
-- [vllm.multimodal.processing][]
+- [vllm.inputs.multimodal.processing][]
 
 ### Memory Profiling
 
-- [vllm.multimodal.profiling][]
+- [vllm.inputs.multimodal.profiling][]
 
 ### Registry
 
-- [vllm.multimodal.registry][]
+- [vllm.inputs.multimodal.registry][]
 
 ## Model Development
 

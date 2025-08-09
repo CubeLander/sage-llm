@@ -3,8 +3,8 @@
 import pytest
 import torch
 
-from vllm.multimodal.cache import MultiModalCache, MultiModalCacheItemMetadata
-from vllm.multimodal.inputs import (MultiModalFieldElem, MultiModalKwargs,
+from vllm.inputs.multimodal.cache import MultiModalCache, MultiModalCacheItemMetadata
+from vllm.inputs.multimodal.inputs import (MultiModalFieldElem, MultiModalKwargs,
                                     MultiModalKwargsItem,
                                     MultiModalSharedField)
 
