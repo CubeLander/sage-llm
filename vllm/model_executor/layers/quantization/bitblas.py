@@ -5,7 +5,7 @@ from typing import Any, Optional
 import torch
 from packaging import version
 
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.model_executor.layers.linear import LinearBase, LinearMethodBase
 from vllm.model_executor.layers.quantization import QuantizationMethods
 from vllm.model_executor.layers.quantization.base_config import (

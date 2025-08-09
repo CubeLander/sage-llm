@@ -10,20 +10,20 @@ import importlib.metadata
 
 
 def main():
-    import vllm.entrypoints.cli.benchmark.main
-    import vllm.entrypoints.cli.collect_env
-    import vllm.entrypoints.cli.openai
-    import vllm.entrypoints.cli.run_batch
-    import vllm.entrypoints.cli.serve
+    import vllm.cli.benchmark.main
+    import vllm.cli.collect_env
+    import vllm.cli.openai
+    import vllm.cli.run_batch
+    import vllm.cli.serve
     from vllm.entrypoints.utils import VLLM_SUBCMD_PARSER_EPILOG, cli_env_setup
     from vllm.utils import FlexibleArgumentParser
 
     CMD_MODULES = [
-        vllm.entrypoints.cli.openai,
-        vllm.entrypoints.cli.serve,
-        vllm.entrypoints.cli.benchmark.main,
-        vllm.entrypoints.cli.collect_env,
-        vllm.entrypoints.cli.run_batch,
+        vllm.cli.openai,
+        vllm.cli.serve,
+        vllm.cli.benchmark.main,
+        vllm.cli.collect_env,
+        vllm.cli.run_batch,
     ]
 
     cli_env_setup()

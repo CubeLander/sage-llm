@@ -10,7 +10,7 @@ import huggingface_hub
 import regex as re
 from huggingface_hub import HfApi, hf_hub_download
 
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.transformers_utils.tokenizer_base import TokenizerBase
 from vllm.utils import is_list_of
 

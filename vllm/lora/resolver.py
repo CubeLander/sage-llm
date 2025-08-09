@@ -6,7 +6,7 @@ from collections.abc import Set
 from dataclasses import dataclass, field
 from typing import Optional
 
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.lora.request import LoRARequest
 
 logger = init_logger(__name__)

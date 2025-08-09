@@ -21,7 +21,7 @@ from vllm.entrypoints.openai.serving_engine import (EmbeddingServeContext,
                                                     OpenAIServing,
                                                     ServeContext)
 from vllm.entrypoints.openai.serving_models import OpenAIServingModels
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.outputs import (EmbeddingOutput, EmbeddingRequestOutput,
                           PoolingRequestOutput)
 from vllm.pooling_params import PoolingParams

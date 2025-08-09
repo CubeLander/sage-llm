@@ -15,7 +15,7 @@ from vllm.compilation.counter import compilation_counter
 from vllm.compilation.monitor import end_monitoring_torch_compile
 from vllm.config import VllmConfig
 from vllm.forward_context import get_forward_context
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.utils import weak_ref_tensors
 
 logger = init_logger(__name__)

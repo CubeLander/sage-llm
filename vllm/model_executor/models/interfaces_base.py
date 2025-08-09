@@ -7,7 +7,7 @@ import torch
 import torch.nn as nn
 from typing_extensions import TypeIs, TypeVar
 
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.utils import supports_kw
 
 if TYPE_CHECKING:

@@ -10,7 +10,7 @@ from typing import (TYPE_CHECKING, Any, Callable, Dict, List, Optional, Tuple,
 import torch
 
 from vllm.distributed import get_pp_group
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.model_executor.layers.sampler import (PromptLogprobs, SampleLogprobs,
                                                 SamplerOutput,
                                                 SamplingMetadata, get_logprobs,

@@ -10,7 +10,7 @@ from tokenizers.decoders import DecodeStream
 from transformers import PreTrainedTokenizerFast
 
 from vllm.engine.output_processor.stop_checker import StopChecker
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.transformers_utils.detokenizer_utils import (
     AnyTokenizer, convert_prompt_ids_to_tokens, detokenize_incrementally)
 from vllm.v1.engine import EngineCoreRequest

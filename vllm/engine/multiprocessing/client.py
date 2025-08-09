@@ -39,7 +39,7 @@ from vllm.engine.protocol import EngineClient
 from vllm.envs import VLLM_RPC_TIMEOUT
 from vllm.inputs import PromptType
 from vllm.inputs.preprocess import InputPreprocessor
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.lora.request import LoRARequest
 from vllm.model_executor.layers.sampler import SamplerOutput
 from vllm.outputs import PoolingRequestOutput, RequestOutput

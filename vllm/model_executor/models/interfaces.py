@@ -14,7 +14,7 @@ from typing_extensions import Self, TypeIs
 from vllm.config import ModelConfig, SpeechToTextConfig
 from vllm.inputs import TokensPrompt
 from vllm.inputs.data import PromptType
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.model_executor.layers.quantization.base_config import (
     QuantizationConfig)
 from vllm.utils import supports_kw

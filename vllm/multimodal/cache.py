@@ -8,7 +8,7 @@ from typing import TypeVar, Union
 import torch
 
 from vllm.jsontree import json_map_leaves, json_reduce_leaves
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.utils import GiB_bytes, LRUCache
 
 from .inputs import MultiModalKwargs, MultiModalKwargsItem, NestedTensors

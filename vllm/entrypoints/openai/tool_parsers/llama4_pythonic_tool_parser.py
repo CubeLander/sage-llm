@@ -16,7 +16,7 @@ from vllm.entrypoints.openai.protocol import (ChatCompletionRequest,
                                               FunctionCall, ToolCall)
 from vllm.entrypoints.openai.tool_parsers.abstract_tool_parser import (
     ToolParser, ToolParserManager)
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

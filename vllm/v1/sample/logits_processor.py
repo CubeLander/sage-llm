@@ -12,7 +12,7 @@ import torch
 from torch._prims_common import DeviceLikeType
 
 from vllm import PoolingParams, SamplingParams
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

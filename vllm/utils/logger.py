@@ -28,7 +28,7 @@ _DATE_FORMAT = "%m-%d %H:%M:%S"
 DEFAULT_LOGGING_CONFIG = {
     "formatters": {
         "vllm": {
-            "class": "vllm.logging_utils.NewLineFormatter",
+            "class": "vllm.utils.logging_utils.NewLineFormatter",
             "datefmt": _DATE_FORMAT,
             "format": _FORMAT,
         },
@@ -139,7 +139,7 @@ def _configure_vllm_root_logger() -> None:
     for formatter in logging_config.get("formatters", {}).values():
         # This provides backwards compatibility after #10134.
         if formatter.get("class") == "vllm.logging.NewLineFormatter":
-            formatter["class"] = "vllm.logging_utils.NewLineFormatter"
+            formatter["class"] = "vllm.utils.logging_utils.NewLineFormatter"
 
     if logging_config:
         dictConfig(logging_config)

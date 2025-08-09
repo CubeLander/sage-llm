@@ -3,7 +3,7 @@
 from pathlib import Path
 from typing import Callable, Optional, Union
 
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__file__)
 

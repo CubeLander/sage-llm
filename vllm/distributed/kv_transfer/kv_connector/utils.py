@@ -15,7 +15,7 @@ from vllm import _custom_ops as ops
 from vllm.config import VllmConfig, get_current_vllm_config
 from vllm.distributed.kv_transfer.kv_connector.v1.base import (
     KVConnectorBase_V1)
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.v1.outputs import KVConnectorOutput, ModelRunnerOutput
 
 logger = init_logger(__name__)

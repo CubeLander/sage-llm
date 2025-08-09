@@ -9,7 +9,7 @@ import torch
 from vllm import envs
 from vllm.config import VllmConfig
 from vllm.distributed.parallel_state import get_pp_group, get_tp_group
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.model_executor.utils import set_random_seed
 from vllm.platforms import CpuArchEnum, current_platform
 from vllm.platforms.cpu import CpuPlatform, LogicalCPUInfo

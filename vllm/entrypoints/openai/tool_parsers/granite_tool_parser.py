@@ -20,7 +20,7 @@ from vllm.entrypoints.openai.tool_parsers.utils import (consume_space,
                                                         find_common_prefix,
                                                         is_complete_json,
                                                         partial_json_loads)
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.transformers_utils.tokenizer import AnyTokenizer
 
 logger = init_logger(__name__)

@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Optional, Union
 
 from vllm.envs import VLLM_MODEL_REDIRECT_PATH
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

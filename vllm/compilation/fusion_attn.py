@@ -10,7 +10,7 @@ from torch._subclasses.fake_tensor import (FakeTensorMode,
 
 from vllm.attention import Attention
 from vllm.config import VllmConfig
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.platforms import current_platform
 
 from .fusion import QUANT_OPS, GroupShape, QuantKey, empty_bf16, empty_fp32

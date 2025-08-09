@@ -11,7 +11,7 @@ from typing import TYPE_CHECKING, Any, Optional, Union
 
 import torch
 
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.sampling_params import SamplingParams
 from vllm.utils import LazyLoader
 from vllm.v1.structured_output.backend_types import (StructuredOutputBackend,

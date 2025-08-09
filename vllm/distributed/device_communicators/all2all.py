@@ -6,7 +6,7 @@ import torch
 import torch.distributed as dist
 
 from vllm.forward_context import get_forward_context
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.utils import has_deep_ep, has_pplx
 
 from .base_device_communicator import All2AllManagerBase, Cache

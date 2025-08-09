@@ -33,7 +33,7 @@ from vllm.config import (BlockSize, CacheConfig, CacheDType, CompilationConfig,
                          SchedulerConfig, SchedulerPolicy, SpeculativeConfig,
                          TaskOption, TokenizerMode, VllmConfig, get_attr_docs,
                          get_field)
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.platforms import CpuArchEnum, current_platform
 from vllm.plugins import load_general_plugins
 from vllm.ray.lazy_utils import is_ray_initialized

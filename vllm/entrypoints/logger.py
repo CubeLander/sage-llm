@@ -6,7 +6,7 @@ from typing import Optional, Union
 
 import torch
 
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.lora.request import LoRARequest
 from vllm.pooling_params import PoolingParams
 from vllm.sampling_params import BeamSearchParams, SamplingParams

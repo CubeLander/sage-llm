@@ -8,7 +8,7 @@ import torch
 from transformers import PretrainedConfig
 
 from vllm.attention.selector import get_env_variable_attn_backend
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.platforms import _Backend, current_platform
 
 logger = init_logger(__name__)

@@ -63,7 +63,7 @@ from vllm.entrypoints.openai.tool_parsers import ToolParser
 from vllm.inputs.data import EmbedsPrompt as EngineEmbedsPrompt
 from vllm.inputs.data import TokensPrompt as EngineTokensPrompt
 from vllm.inputs.parse import parse_and_batch_prompt
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.lora.request import LoRARequest
 from vllm.multimodal import (  # noqa: F401 - Required to resolve Pydantic error in RequestProcessingMixin
     MultiModalDataDict)

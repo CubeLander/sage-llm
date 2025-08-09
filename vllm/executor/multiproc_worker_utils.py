@@ -14,7 +14,7 @@ from typing import Any, Callable, Dict, Generic, List, Optional, TypeVar, Union
 import torch
 
 from vllm.config import VllmConfig
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.utils import (_maybe_force_spawn, decorate_logs, get_mp_context,
                         run_method)
 

@@ -6,7 +6,7 @@ from typing import Any, Callable, Optional, TypeVar
 
 from torch import nn
 
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.utils import LRUCache
 
 logger = init_logger(__name__)

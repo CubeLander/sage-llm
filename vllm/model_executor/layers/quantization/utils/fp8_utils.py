@@ -12,7 +12,7 @@ import torch
 
 import vllm.envs as envs
 from vllm import _custom_ops as ops
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.model_executor.layers.quantization.utils.quant_utils import (
     group_broadcast)
 from vllm.model_executor.layers.quantization.utils.w8a8_utils import (

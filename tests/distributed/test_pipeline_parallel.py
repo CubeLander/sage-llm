@@ -15,7 +15,7 @@ from typing import Literal, NamedTuple, Optional
 import pytest
 
 from vllm.config import _FLOAT16_NOT_SUPPORTED_MODELS, RunnerOption
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.transformers_utils.config import get_config
 
 from ..models.registry import HF_EXAMPLE_MODELS

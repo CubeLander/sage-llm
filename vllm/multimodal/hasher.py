@@ -10,7 +10,7 @@ import torch
 from blake3 import blake3
 from PIL import Image
 
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.multimodal.image import convert_image_mode
 
 logger = init_logger(__name__)

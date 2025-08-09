@@ -4,7 +4,8 @@
 from transformers import AutoTokenizer
 
 from vllm import LLM, SamplingParams
-from vllm.benchmarks.datasets import add_dataset_parser, get_samples
+# from vllm.benchmarks.datasets import add_dataset_parser, get_samples
+# moved to cli.benchmark.__impl
 from vllm.v1.metrics.reader import Counter, Vector
 
 try:

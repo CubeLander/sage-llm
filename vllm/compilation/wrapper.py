@@ -12,7 +12,7 @@ import torch
 
 import vllm.envs as envs
 from vllm.config import CompilationLevel, get_current_vllm_config
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

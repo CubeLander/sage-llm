@@ -12,7 +12,7 @@ from torch import nn
 from transformers import PretrainedConfig
 
 from vllm.config import LoRAConfig
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.lora.fully_sharded_layers import (
     ColumnParallelLinearWithShardedLoRA,
     MergedColumnParallelLinearWithShardedLoRA,

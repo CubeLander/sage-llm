@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any, Optional, Union
 
 import torch
 
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.model_executor.layers.linear import (LinearBase,
                                                UnquantizedLinearMethod)
 from vllm.model_executor.layers.quantization import QuantizationMethods

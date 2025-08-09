@@ -12,7 +12,7 @@ from vllm.attention.ops.flashmla import (flash_mla_with_kvcache,
                                          get_mla_metadata,
                                          is_flashmla_supported)
 from vllm.config import VllmConfig
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.v1.attention.backends.mla.common import (MLACommonBackend,
                                                    MLACommonDecodeMetadata,
                                                    MLACommonImpl,

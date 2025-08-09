@@ -12,7 +12,7 @@ import torch.distributed as dist
 
 import vllm.envs as envs
 from vllm.config import ParallelConfig, VllmConfig
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 
 if TYPE_CHECKING:
     from vllm.attention.backends.abstract import AttentionMetadata

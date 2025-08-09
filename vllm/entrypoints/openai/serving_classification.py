@@ -20,7 +20,7 @@ from vllm.entrypoints.openai.serving_engine import (ClassificationServeContext,
                                                     OpenAIServing,
                                                     ServeContext)
 from vllm.entrypoints.openai.serving_models import OpenAIServingModels
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.outputs import ClassificationOutput, PoolingRequestOutput
 from vllm.pooling_params import PoolingParams
 

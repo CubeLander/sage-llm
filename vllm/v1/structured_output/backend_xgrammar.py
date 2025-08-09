@@ -10,7 +10,7 @@ from typing import TYPE_CHECKING, Any
 import torch
 
 import vllm.envs
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.sampling_params import SamplingParams
 from vllm.transformers_utils.tokenizers.mistral import MistralTokenizer
 from vllm.utils import LazyLoader

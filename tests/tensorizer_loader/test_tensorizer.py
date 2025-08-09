@@ -473,7 +473,7 @@ async def test_serialize_and_serve_entrypoints(tmp_path):
     }
 
     cmd = [
-        "-m", "vllm.entrypoints.cli.main", "serve", "--host", "localhost",
+        "-m", "vllm.cli.main", "serve", "--host", "localhost",
         "--load-format", "tensorizer", model_ref,
         "--model-loader-extra-config",
         json.dumps(model_loader_extra_config, indent=2)

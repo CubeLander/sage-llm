@@ -43,7 +43,7 @@ from vllm.attention.backends.utils import (PAD_SLOT_ID, compute_slot_mapping,
 from vllm.attention.layer import Attention
 from vllm.attention.ops.paged_attn import PagedAttention
 from vllm.config import VllmConfig, get_layers_from_vllm_config
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.utils import (async_tensor_h2d, get_kv_cache_torch_dtype,
                         make_tensor_with_pad)
 from vllm.utils.flashinfer import use_trtllm_attention

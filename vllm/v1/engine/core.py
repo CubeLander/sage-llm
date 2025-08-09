@@ -18,8 +18,8 @@ import zmq
 
 from vllm.config import ParallelConfig, VllmConfig
 from vllm.distributed import stateless_destroy_torch_distributed_process_group
-from vllm.logger import init_logger
-from vllm.logging_utils.dump_input import dump_engine_exception
+from vllm.utils.logger import init_logger
+from vllm.utils.logging_utils.dump_input import dump_engine_exception
 from vllm.lora.request import LoRARequest
 from vllm.tasks import POOLING_TASKS, SupportedTask
 from vllm.transformers_utils.config import (

@@ -2,15 +2,15 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 import argparse
 
-from vllm.benchmarks.serve import add_cli_args, main
-from vllm.entrypoints.cli.benchmark.base import BenchmarkSubcommandBase
+from .__impl.latency import add_cli_args, main
+from vllm.cli.benchmark.base import BenchmarkSubcommandBase
 
 
-class BenchmarkServingSubcommand(BenchmarkSubcommandBase):
-    """ The `serve` subcommand for vllm bench. """
+class BenchmarkLatencySubcommand(BenchmarkSubcommandBase):
+    """ The `latency` subcommand for vllm bench. """
 
-    name = "serve"
-    help = "Benchmark the online serving throughput."
+    name = "latency"
+    help = "Benchmark the latency of a single batch of requests."
 
     @classmethod
     def add_cli_args(cls, parser: argparse.ArgumentParser) -> None:

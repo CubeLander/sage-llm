@@ -8,7 +8,7 @@ import torch.nn as nn
 from packaging import version
 
 from vllm import envs
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.platforms import current_platform
 
 logger = init_logger(__name__)

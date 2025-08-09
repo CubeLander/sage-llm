@@ -4,7 +4,7 @@ import os
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Any
 
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 
 if TYPE_CHECKING:
     # Avoid circular import.

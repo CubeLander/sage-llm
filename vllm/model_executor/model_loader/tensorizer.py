@@ -24,7 +24,7 @@ from transformers import PretrainedConfig
 import vllm.envs as envs
 from vllm.config import (ModelConfig, ParallelConfig, VllmConfig,
                          set_current_vllm_config)
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.model_executor.layers.vocab_parallel_embedding import (
     VocabParallelEmbedding)
 from vllm.platforms import current_platform

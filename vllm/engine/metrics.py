@@ -11,7 +11,7 @@ import prometheus_client
 from vllm.config import SupportsMetricsInfo, VllmConfig
 from vllm.engine.metrics_types import StatLoggerBase, Stats
 from vllm.executor.ray_utils import ray
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 
 if ray is not None:
     from ray.util import metrics as ray_metrics

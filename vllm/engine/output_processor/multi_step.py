@@ -10,7 +10,7 @@ from vllm.engine.output_processor.interfaces import (
 from vllm.engine.output_processor.single_step import (
     single_step_process_prompt_logprob)
 from vllm.engine.output_processor.stop_checker import StopChecker
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.sampling_params import SamplingParams
 from vllm.sequence import (VLLM_INVALID_TOKEN_ID,
                            CompletionSequenceGroupOutput, Sequence,

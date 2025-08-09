@@ -8,7 +8,7 @@ from tqdm import tqdm
 
 import vllm.envs as env
 import vllm.model_executor.layers.fused_moe.modular_kernel as mk
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.model_executor.layers.fused_moe.config import FusedMoEQuantConfig
 from vllm.model_executor.layers.fused_moe.deep_gemm_utils import (
     compute_aligned_M, deepgemm_moe_permute, deepgemm_unpermute_and_reduce)

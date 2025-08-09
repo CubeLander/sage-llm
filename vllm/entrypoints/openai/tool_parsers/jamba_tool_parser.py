@@ -18,7 +18,7 @@ from vllm.entrypoints.openai.protocol import (ChatCompletionRequest,
 from vllm.entrypoints.openai.tool_parsers import ToolParser, ToolParserManager
 from vllm.entrypoints.openai.tool_parsers.utils import (
     extract_intermediate_diff)
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.transformers_utils.tokenizer import AnyTokenizer
 from vllm.transformers_utils.tokenizers import MistralTokenizer
 

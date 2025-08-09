@@ -20,7 +20,7 @@ import zmq
 import zmq.asyncio
 
 from vllm.config import VllmConfig
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.lora.request import LoRARequest
 from vllm.tasks import SupportedTask
 from vllm.utils import (cancel_task_threadsafe, get_open_port,

@@ -33,7 +33,7 @@ from vllm import version
 from vllm.config.compilation import (CompilationConfig, CompilationLevel,
                                      PassConfig)
 from vllm.config.utils import ConfigType, config
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.model_executor.layers.quantization import QuantizationMethods
 from vllm.platforms import current_platform
 from vllm.transformers_utils.config import (

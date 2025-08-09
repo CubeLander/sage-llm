@@ -16,7 +16,7 @@ from typing import Any, Callable, NoReturn, Optional
 import requests
 
 import vllm.envs as envs
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.platforms import current_platform
 
 logger = init_logger(__name__)

@@ -4,7 +4,7 @@ from typing import Annotated, Any, Union, get_args, get_origin, get_type_hints
 
 import torch
 
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)
 

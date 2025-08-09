@@ -24,7 +24,7 @@ from vllm.entrypoints.score_utils import (ScoreContentPartParam,
                                           get_score_prompt)
 from vllm.entrypoints.utils import _validate_truncation_size
 from vllm.inputs.data import TokensPrompt
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 from vllm.lora.request import LoRARequest
 from vllm.outputs import PoolingRequestOutput, ScoringRequestOutput
 from vllm.transformers_utils.tokenizer import AnyTokenizer, MistralTokenizer

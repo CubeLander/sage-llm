@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 import argparse
 
-from vllm.entrypoints.cli.types import CLISubcommand
+from vllm.cli.types import CLISubcommand
 
 
 class BenchmarkSubcommandBase(CLISubcommand):

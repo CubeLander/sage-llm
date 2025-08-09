@@ -7,7 +7,7 @@ from typing import Literal, NamedTuple, Optional
 import pytest
 
 from vllm.config import RunnerOption
-from vllm.logger import init_logger
+from vllm.utils.logger import init_logger
 
 from ..utils import compare_two_settings, create_new_process_for_each_test
 
