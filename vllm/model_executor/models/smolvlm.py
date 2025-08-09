@@ -6,7 +6,7 @@ from typing import Optional
 from transformers import SmolVLMProcessor
 
 from vllm.config import VllmConfig
-from vllm.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
 
 # yapf: disable
 from .idefics3 import Idefics3DummyInputsBuilder as SmolVLMDummyInputsBuilder

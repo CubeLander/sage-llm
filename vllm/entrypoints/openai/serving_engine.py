@@ -60,12 +60,12 @@ from vllm.entrypoints.openai.protocol import (ChatCompletionRequest,
 from vllm.entrypoints.openai.serving_models import OpenAIServingModels
 from vllm.entrypoints.openai.tool_parsers import ToolParser
 # yapf: enable
-from vllm.inputs.data import EmbedsPrompt as EngineEmbedsPrompt
-from vllm.inputs.data import TokensPrompt as EngineTokensPrompt
-from vllm.inputs.parse import parse_and_batch_prompt
+from vllm.io.inputs.data import EmbedsPrompt as EngineEmbedsPrompt
+from vllm.io.inputs.data import TokensPrompt as EngineTokensPrompt
+from vllm.io.inputs.parse import parse_and_batch_prompt
 from vllm.utils.logger import init_logger
 from vllm.lora.request import LoRARequest
-from vllm.inputs.multimodal import (  # noqa: F401 - Required to resolve Pydantic error in RequestProcessingMixin
+from vllm.io.inputs.multimodal import (  # noqa: F401 - Required to resolve Pydantic error in RequestProcessingMixin
     MultiModalDataDict)
 from vllm.outputs import PoolingRequestOutput, RequestOutput
 from vllm.pooling_params import PoolingParams

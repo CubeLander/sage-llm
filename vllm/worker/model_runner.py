@@ -30,7 +30,7 @@ from vllm.distributed.kv_transfer import get_kv_transfer_group
 from vllm.distributed.parallel_state import (get_tensor_model_parallel_rank,
                                              graph_capture)
 from vllm.forward_context import get_forward_context, set_forward_context
-from vllm.inputs import INPUT_REGISTRY, InputRegistry
+from vllm.io.inputs import INPUT_REGISTRY, InputRegistry
 from vllm.utils.logger import init_logger
 from vllm.lora.layers import LoRAMapping
 from vllm.lora.request import LoRARequest
@@ -43,7 +43,7 @@ from vllm.model_executor.model_loader import get_model
 from vllm.model_executor.model_loader.tensorizer import TensorizerConfig
 from vllm.model_executor.models import supports_lora, supports_multimodal
 from vllm.model_executor.models.utils import set_cpu_offload_max_bytes
-from vllm.inputs.multimodal import (MULTIMODAL_REGISTRY, BatchedTensorInputs,
+from vllm.io.inputs.multimodal import (MULTIMODAL_REGISTRY, BatchedTensorInputs,
                              MultiModalKwargs, MultiModalPlaceholderMap,
                              MultiModalRegistry)
 from vllm.sampling_params import SamplingParams

@@ -16,7 +16,7 @@ from vllm.model_executor.layers.fused_moe.utils import (
     normalize_scales_shape)
 from vllm.model_executor.layers.quantization.utils.quant_utils import (
     group_broadcast)
-from vllm.triton_utils import tl, triton
+from vllm.platforms.triton_tuils import tl, triton
 
 
 @triton.jit

@@ -12,7 +12,7 @@ from vllm.attention.backends.flash_attn import FlashAttentionMetadata
 from vllm.attention.selector import (_Backend, _cached_get_attn_backend,
                                      global_force_attn_backend_context_manager)
 from vllm.model_executor.models.mllama import MllamaForConditionalGeneration
-from vllm.inputs.multimodal.image import rescale_image_size
+from vllm.io.inputs.multimodal.image import rescale_image_size
 from vllm.sequence import SampleLogprobs
 
 from ....conftest import (IMAGE_ASSETS, HfRunner, ImageTestAssets,

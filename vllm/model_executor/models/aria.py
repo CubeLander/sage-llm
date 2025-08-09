@@ -20,14 +20,14 @@ from vllm.model_executor.layers.vocab_parallel_embedding import ParallelLMHead
 from vllm.model_executor.model_loader.weight_utils import (
     default_weight_loader, maybe_remap_kv_scale_name)
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
                                     MultiModalKwargs)
-from vllm.inputs.multimodal.parse import MultiModalDataItems
-from vllm.inputs.multimodal.processing import (BaseMultiModalProcessor,
+from vllm.io.inputs.multimodal.parse import MultiModalDataItems
+from vllm.io.inputs.multimodal.processing import (BaseMultiModalProcessor,
                                         BaseProcessingInfo, PromptReplacement,
                                         PromptUpdate)
-from vllm.inputs.multimodal.profiling import BaseDummyInputsBuilder
+from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
 from vllm.sequence import IntermediateTensors
 from vllm.utils.tensor_schema import TensorSchema, TensorShape
 

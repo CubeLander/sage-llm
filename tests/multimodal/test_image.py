@@ -6,7 +6,7 @@ import numpy as np
 import pytest
 from PIL import Image, ImageChops
 
-from vllm.inputs.multimodal.image import ImageMediaIO, convert_image_mode
+from vllm.io.inputs.multimodal.image import ImageMediaIO, convert_image_mode
 
 ASSETS_DIR = Path(__file__).parent / "assets"
 assert ASSETS_DIR.exists()

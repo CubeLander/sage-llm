@@ -30,7 +30,7 @@ else:
 class ModalityDataItems(ABC, Generic[_T, _I]):
     """
     Represents data items for a modality in
-    [`MultiModalDataItems`][vllm.inputs.multimodal.parse.MultiModalDataItems].
+    [`MultiModalDataItems`][vllm.io.inputs.multimodal.parse.MultiModalDataItems].
     """
 
     def __init__(self, data: _T, modality: str) -> None:
@@ -259,7 +259,7 @@ _D = TypeVar("_D", bound=ModalityDataItems[Any, Any])
 
 class MultiModalDataItems(UserDict[str, ModalityDataItems[Any, Any]]):
     """
-    As [`MultiModalDataDict`][vllm.inputs.multimodal.inputs.MultiModalDataDict], but
+    As [`MultiModalDataDict`][vllm.io.inputs.multimodal.inputs.MultiModalDataDict], but
     normalized such that each entry corresponds to a list.
     """
 
@@ -313,8 +313,8 @@ ModalityDataParser: TypeAlias = Callable[[ModalityData[Any]],
 
 class MultiModalDataParser:
     """
-    Parses [`MultiModalDataDict`][vllm.inputs.multimodal.inputs.MultiModalDataDict]
-    into [`MultiModalDataItems`][vllm.inputs.multimodal.parse.MultiModalDataItems].
+    Parses [`MultiModalDataDict`][vllm.io.inputs.multimodal.inputs.MultiModalDataDict]
+    into [`MultiModalDataItems`][vllm.io.inputs.multimodal.parse.MultiModalDataItems].
 
     Args:
         target_sr (float, optional): Enables automatic resampling of audio

@@ -6,7 +6,7 @@ encoder/decoder models, specifically BART
 """
 
 from vllm import LLM, SamplingParams
-from vllm.inputs import (
+from vllm.io.inputs import (
     ExplicitEncoderDecoderPrompt,
     TextPrompt,
     TokensPrompt,

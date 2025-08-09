@@ -5,7 +5,7 @@ import sys
 import types
 from unittest import mock
 
-from vllm.triton_utils.importing import (TritonLanguagePlaceholder,
+from vllm.platforms.triton_tuils.importing import (TritonLanguagePlaceholder,
                                          TritonPlaceholder)
 
 
@@ -81,12 +81,12 @@ def test_no_triton_fallback():
     # clear existing triton modules
     sys.modules.pop("triton", None)
     sys.modules.pop("triton.language", None)
-    sys.modules.pop("vllm.triton_utils", None)
-    sys.modules.pop("vllm.triton_utils.importing", None)
+    sys.modules.pop("vllm.platforms.triton_tuils", None)
+    sys.modules.pop("vllm.platforms.triton_tuils.importing", None)
 
     # mock triton not being installed
     with mock.patch.dict(sys.modules, {"triton": None}):
-        from vllm.triton_utils import HAS_TRITON, tl, triton
+        from vllm.platforms.triton_tuils import HAS_TRITON, tl, triton
         assert HAS_TRITON is False
         assert triton.__class__.__name__ == "TritonPlaceholder"
         assert triton.language.__class__.__name__ == "TritonLanguagePlaceholder"

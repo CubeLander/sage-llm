@@ -31,10 +31,10 @@ from vllm.model_executor.model_loader.tpu import TPUModelLoader
 from vllm.model_executor.models.interfaces import supports_transcription
 from vllm.model_executor.models.interfaces_base import (
     is_pooling_model, is_text_generation_model)
-from vllm.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.inputs.multimodal.inputs import (BatchedTensorInputs, MultiModalKwargs,
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import (BatchedTensorInputs, MultiModalKwargs,
                                     PlaceholderRange)
-from vllm.inputs.multimodal.utils import group_mm_inputs_by_modality
+from vllm.io.inputs.multimodal.utils import group_mm_inputs_by_modality
 from vllm.sequence import IntermediateTensors
 from vllm.tasks import GenerationTask, PoolingTask, SupportedTask
 from vllm.utils import (LayerBlockType, cdiv, is_pin_memory_available,

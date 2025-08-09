@@ -10,7 +10,7 @@ import torch.nn.functional as F
 from transformers import PretrainedConfig
 
 from vllm.config import ModelConfig, ModelDType, RunnerOption
-from vllm.inputs import InputContext
+from vllm.io.inputs import InputContext
 from vllm.sequence import Logprob, PromptLogprobs, SampleLogprobs
 
 from .registry import HF_EXAMPLE_MODELS

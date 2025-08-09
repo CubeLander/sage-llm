@@ -9,7 +9,7 @@
 import torch
 from packaging import version
 
-from vllm.triton_utils import tl, triton
+from vllm.platforms.triton_tuils import tl, triton
 
 TRITON_22 = version.parse(triton.__version__) >= version.parse('2.2.0')
 

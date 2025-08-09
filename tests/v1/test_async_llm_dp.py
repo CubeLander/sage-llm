@@ -12,7 +12,7 @@ import pytest
 from vllm import SamplingParams
 from vllm.config import VllmConfig
 from vllm.engine.arg_utils import AsyncEngineArgs
-from vllm.inputs import PromptType
+from vllm.io.inputs import PromptType
 from vllm.platforms import current_platform
 from vllm.sampling_params import RequestOutputKind
 from vllm.v1.engine.async_llm import AsyncLLM

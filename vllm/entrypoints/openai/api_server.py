@@ -99,7 +99,7 @@ from vllm.entrypoints.tool_server import (DemoToolServer, MCPToolServer,
 from vllm.entrypoints.utils import (cli_env_setup, load_aware_call,
                                     log_non_default_args, with_cancellation)
 from vllm.utils.logger import init_logger
-from vllm.reasoning import ReasoningParserManager
+from vllm.io.reasoning import ReasoningParserManager
 from vllm.transformers_utils.config import (
     maybe_register_config_serialize_by_value)
 from vllm.transformers_utils.tokenizer import MistralTokenizer

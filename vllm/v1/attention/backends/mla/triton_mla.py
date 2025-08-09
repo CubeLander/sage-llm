@@ -12,7 +12,7 @@ from vllm.attention.ops.triton_decode_attention import decode_attention_fwd
 from vllm.attention.ops.triton_flash_attention import triton_attention
 from vllm.utils.logger import init_logger
 from vllm.platforms import current_platform
-from vllm.triton_utils import HAS_TRITON
+from vllm.platforms.triton_tuils import HAS_TRITON
 from vllm.v1.attention.backends.mla.common import (MLACommonBackend,
                                                    MLACommonImpl,
                                                    MLACommonMetadata)

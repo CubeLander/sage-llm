@@ -20,7 +20,7 @@ _PARTITION_SIZE_ROCM = 256
 if current_platform.is_rocm():
     import aiter
 
-    from vllm.triton_utils import tl, triton
+    from vllm.platforms.triton_tuils import tl, triton
     from vllm.utils import direct_register_custom_op
 
     @triton.jit

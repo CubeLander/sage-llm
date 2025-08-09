@@ -10,7 +10,7 @@ from vllm.model_executor.layers.fused_moe.layer import (
 from vllm.model_executor.layers.fused_moe.modular_kernel import (
     FusedMoEActivationFormat, FusedMoEPermuteExpertsUnpermute,
     FusedMoEPrepareAndFinalize)
-from vllm.triton_utils import HAS_TRITON
+from vllm.platforms.triton_tuils import HAS_TRITON
 
 _config: Optional[dict[str, Any]] = None
 

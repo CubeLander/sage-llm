@@ -21,7 +21,7 @@ from vllm import LLM, EngineArgs, SamplingParams
 from vllm.assets.image import ImageAsset
 from vllm.assets.video import VideoAsset
 from vllm.lora.request import LoRARequest
-from vllm.inputs.multimodal.image import convert_image_mode
+from vllm.io.inputs.multimodal.image import convert_image_mode
 from vllm.utils import FlexibleArgumentParser
 
 

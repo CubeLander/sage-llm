@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from vllm.triton_utils.importing import (HAS_TRITON, TritonLanguagePlaceholder,
+from vllm.platforms.triton_tuils.importing import (HAS_TRITON, TritonLanguagePlaceholder,
                                          TritonPlaceholder)
 
 if HAS_TRITON:

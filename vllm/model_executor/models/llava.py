@@ -15,23 +15,23 @@ from transformers.models.llava import LlavaProcessor
 from transformers.models.pixtral import PixtralProcessor
 
 from vllm.config import VllmConfig
-from vllm.inputs import InputProcessingContext
+from vllm.io.inputs import InputProcessingContext
 from vllm.jsontree import json_map_leaves
 from vllm.model_executor.layers.activation import get_act_fn
 from vllm.model_executor.layers.linear import (ColumnParallelLinear,
                                                RowParallelLinear)
 from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
                                     MultiModalInputs, MultiModalKwargs)
-from vllm.inputs.multimodal.parse import (ImageEmbeddingItems, ImageProcessorItems,
+from vllm.io.inputs.multimodal.parse import (ImageEmbeddingItems, ImageProcessorItems,
                                    ImageSize, MultiModalDataItems)
-from vllm.inputs.multimodal.processing import (BaseMultiModalProcessor,
+from vllm.io.inputs.multimodal.processing import (BaseMultiModalProcessor,
                                         BaseProcessingInfo, ProcessingCache,
                                         PromptReplacement, PromptUpdate,
                                         PromptUpdateDetails)
-from vllm.inputs.multimodal.profiling import BaseDummyInputsBuilder
+from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
 from vllm.sequence import IntermediateTensors
 
 from .clip import CLIPVisionModel

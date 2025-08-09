@@ -12,7 +12,7 @@ from tqdm import tqdm
 
 from vllm import LLM, SamplingParams
 from vllm.engine.arg_utils import EngineArgs
-from vllm.inputs import PromptType
+from vllm.io.inputs import PromptType
 from vllm.utils import FlexibleArgumentParser
 
 DURATION_MS = int(os.getenv("VLLM_TPU_PROFILE_DURATION_MS", 3000))

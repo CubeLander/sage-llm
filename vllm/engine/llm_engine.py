@@ -29,15 +29,15 @@ from vllm.engine.output_processor.util import create_output_by_sequence_group
 from vllm.entrypoints.openai.logits_processors import (
     get_logits_processors as get_openai_logits_processors)
 from vllm.executor.executor_base import ExecutorBase
-from vllm.inputs import ProcessorInputs, PromptType, SingletonInputs
-from vllm.inputs.parse import split_enc_dec_inputs
-from vllm.inputs.preprocess import InputPreprocessor
+from vllm.io.inputs import ProcessorInputs, PromptType, SingletonInputs
+from vllm.io.inputs.parse import split_enc_dec_inputs
+from vllm.io.inputs.preprocess import InputPreprocessor
 from vllm.utils.logger import init_logger
 from vllm.logits_process import get_bad_words_logits_processors
 from vllm.lora.request import LoRARequest
 from vllm.model_executor.layers.sampler import SamplerOutput
-from vllm.inputs.multimodal import MULTIMODAL_REGISTRY, MultiModalRegistry
-from vllm.inputs.multimodal.processing import EncDecMultiModalProcessor
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY, MultiModalRegistry
+from vllm.io.inputs.multimodal.processing import EncDecMultiModalProcessor
 from vllm.outputs import (PoolingRequestOutput, RequestOutput,
                           RequestOutputFactory)
 from vllm.pooling_params import PoolingParams
@@ -633,7 +633,7 @@ class LLMEngine:
         Args:
             request_id: The unique ID of the request.
             prompt: The prompt to the LLM. See
-                [PromptType][vllm.inputs.PromptType]
+                [PromptType][vllm.io.inputs.PromptType]
                 for more details about the format of each input.
             params: Parameters for sampling or pooling.
                 [SamplingParams][vllm.SamplingParams] for text generation.

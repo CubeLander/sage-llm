@@ -202,7 +202,7 @@ You can add a new `ReasoningParser` similar to <gh-file:vllm/reasoning/deepseek_
     ```python
     # import the required packages
 
-    from vllm.reasoning import ReasoningParser, ReasoningParserManager
+    from vllm.io.reasoning import ReasoningParser, ReasoningParserManager
     from vllm.entrypoints.openai.protocol import (ChatCompletionRequest,
                                                 DeltaMessage)
 

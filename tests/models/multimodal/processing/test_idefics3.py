@@ -4,7 +4,7 @@
 import pytest
 from transformers import Idefics3Config
 
-from vllm.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
 
 from ....conftest import ImageTestAssets
 from ...utils import build_model_context

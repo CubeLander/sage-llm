@@ -12,7 +12,7 @@ from vllm import LLM, SamplingParams
 from vllm.assets.audio import AudioAsset
 from vllm.assets.image import ImageAsset
 from vllm.assets.video import VideoAsset
-from vllm.inputs.multimodal.image import convert_image_mode
+from vllm.io.inputs.multimodal.image import convert_image_mode
 from vllm.utils import FlexibleArgumentParser
 
 

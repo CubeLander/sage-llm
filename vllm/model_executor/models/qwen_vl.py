@@ -31,14 +31,14 @@ from vllm.model_executor.layers.linear import (ColumnParallelLinear,
 from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.model_executor.layers.resampler import Resampler2, get_abs_pos
 from vllm.model_executor.models.module_mapping import MultiModelKeys
-from vllm.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
                                     MultiModalKwargs)
-from vllm.inputs.multimodal.parse import MultiModalDataItems
-from vllm.inputs.multimodal.processing import (BaseMultiModalProcessor,
+from vllm.io.inputs.multimodal.parse import MultiModalDataItems
+from vllm.io.inputs.multimodal.processing import (BaseMultiModalProcessor,
                                         BaseProcessingInfo, PromptReplacement,
                                         PromptUpdate, PromptUpdateDetails)
-from vllm.inputs.multimodal.profiling import BaseDummyInputsBuilder
+from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
 from vllm.sequence import IntermediateTensors
 
 from .interfaces import (MultiModalEmbeddings, SupportsLoRA,

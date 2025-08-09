@@ -8,7 +8,7 @@ import torch
 
 from vllm.config import (CacheConfig, KVTransferConfig, ModelConfig,
                          SchedulerConfig, SpeculativeConfig, VllmConfig)
-from vllm.inputs.multimodal.inputs import MultiModalKwargs, PlaceholderRange
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs, PlaceholderRange
 from vllm.sampling_params import GuidedDecodingParams, SamplingParams
 from vllm.v1.core.sched.output import CachedRequestData, SchedulerOutput
 from vllm.v1.core.sched.scheduler import Scheduler

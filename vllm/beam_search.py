@@ -8,7 +8,7 @@ from vllm.lora.request import LoRARequest
 from vllm.sequence import Logprob
 
 if TYPE_CHECKING:
-    from vllm.inputs.multimodal import MultiModalDataDict
+    from vllm.io.inputs.multimodal import MultiModalDataDict
 
 
 @dataclass

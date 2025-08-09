@@ -13,7 +13,7 @@ from vllm.model_executor.layers.quantization.utils.int8_utils import (
 from vllm.model_executor.layers.quantization.utils.mxfp4_utils import (
     quant_dequant_mxfp4)
 from vllm.platforms import current_platform
-from vllm.triton_utils import tl, triton
+from vllm.platforms.triton_tuils import tl, triton
 from vllm.utils import cdiv
 from vllm.utils.flashinfer import fp4_quantize
 

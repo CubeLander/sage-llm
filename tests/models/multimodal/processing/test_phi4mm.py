@@ -3,7 +3,7 @@
 """Tests for phi4mm's multimodal preprocessing kwargs."""
 import pytest
 
-from vllm.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
 
 from ....conftest import ImageTestAssets
 from ...utils import build_model_context

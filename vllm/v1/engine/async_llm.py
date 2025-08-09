@@ -13,11 +13,11 @@ from vllm.config import ModelConfig, VllmConfig
 from vllm.engine.arg_utils import AsyncEngineArgs
 from vllm.engine.protocol import EngineClient
 from vllm.envs import VLLM_V1_OUTPUT_PROC_CHUNK_SIZE
-from vllm.inputs import PromptType
-from vllm.inputs.preprocess import InputPreprocessor
+from vllm.io.inputs import PromptType
+from vllm.io.inputs.preprocess import InputPreprocessor
 from vllm.utils.logger import init_logger
 from vllm.lora.request import LoRARequest
-from vllm.inputs.multimodal import MULTIMODAL_REGISTRY, MultiModalRegistry
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY, MultiModalRegistry
 from vllm.outputs import PoolingRequestOutput, RequestOutput
 from vllm.pooling_params import PoolingParams
 from vllm.sampling_params import SamplingParams

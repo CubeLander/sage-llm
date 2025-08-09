@@ -11,7 +11,7 @@ from .registry import (DummyData, InputContext, InputProcessingContext,
 
 INPUT_REGISTRY = InputRegistry()
 """
-The global [`InputRegistry`][vllm.inputs.registry.InputRegistry] which is used
+The global [`InputRegistry`][vllm.io.inputs.registry.InputRegistry] which is used
 by [`LLMEngine`][vllm.LLMEngine] to dispatch data processing according to the
 target model.
 """

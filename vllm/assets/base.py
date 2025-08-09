@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Optional
 
 import vllm.envs as envs
-from vllm.connections import global_http_connection
+from vllm.utils.network.httpconnection import global_http_connection
 
 VLLM_S3_BUCKET_URL = "https://vllm-public-assets.s3.us-west-2.amazonaws.com"
 

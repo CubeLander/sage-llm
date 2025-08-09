@@ -7,9 +7,9 @@ import pytest
 
 from vllm.config import ModelConfig
 from vllm.engine.llm_engine import LLMEngine as V0LLMEngine
-from vllm.inputs import InputProcessingContext
-from vllm.inputs.multimodal import MULTIMODAL_REGISTRY, MultiModalKwargs
-from vllm.inputs.multimodal.processing import BaseMultiModalProcessor
+from vllm.io.inputs import InputProcessingContext
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY, MultiModalKwargs
+from vllm.io.inputs.multimodal.processing import BaseMultiModalProcessor
 from vllm.transformers_utils.tokenizer import cached_tokenizer_from_config
 from vllm.utils import GiB_bytes, set_default_torch_num_threads
 from vllm.v1.core.kv_cache_utils import get_kv_cache_config

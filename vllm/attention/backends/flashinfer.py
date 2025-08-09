@@ -7,7 +7,7 @@ from contextlib import contextmanager
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Set, Tuple, Type
 
-from vllm.inputs.multimodal import MultiModalPlaceholderMap
+from vllm.io.inputs.multimodal import MultiModalPlaceholderMap
 
 try:
     from flashinfer import BatchDecodeWithPagedKVCacheWrapper

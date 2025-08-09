@@ -11,7 +11,7 @@ from huggingface_hub import snapshot_download
 
 from vllm.assets.image import ImageAsset
 from vllm.lora.request import LoRARequest
-from vllm.inputs.multimodal.image import rescale_image_size
+from vllm.io.inputs.multimodal.image import rescale_image_size
 from vllm.platforms import current_platform
 
 from ....conftest import (IMAGE_ASSETS, HfRunner, PromptAudioInput,

@@ -7,7 +7,7 @@ from enum import Enum
 from typing import List, Mapping, Optional, Union
 
 from vllm import PoolingParams
-from vllm.inputs import PromptType
+from vllm.io.inputs import PromptType
 from vllm.lora.request import LoRARequest
 from vllm.outputs import RequestOutput
 from vllm.sampling_params import SamplingParams

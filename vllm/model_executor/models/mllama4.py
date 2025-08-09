@@ -32,7 +32,7 @@ from transformers.models.llama4.image_processing_llama4_fast import (
 from vllm.attention.layer import MultiHeadAttention
 from vllm.config import VllmConfig
 from vllm.distributed import get_tensor_model_parallel_world_size
-from vllm.inputs import InputProcessingContext
+from vllm.io.inputs import InputProcessingContext
 from vllm.model_executor.layers.linear import (ColumnParallelLinear,
                                                QKVParallelLinear,
                                                ReplicatedLinear,
@@ -42,16 +42,16 @@ from vllm.model_executor.layers.rotary_embedding import get_rope
 from vllm.model_executor.model_loader.utils import initialize_model
 from vllm.model_executor.model_loader.weight_utils import default_weight_loader
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
                                     MultiModalKwargs, NestedTensors)
-from vllm.inputs.multimodal.parse import (ImageProcessorItems, ImageSize,
+from vllm.io.inputs.multimodal.parse import (ImageProcessorItems, ImageSize,
                                    MultiModalDataItems)
-from vllm.inputs.multimodal.processing import (BaseMultiModalProcessor,
+from vllm.io.inputs.multimodal.processing import (BaseMultiModalProcessor,
                                         BaseProcessingInfo, PromptReplacement,
                                         PromptUpdate, PromptUpdateDetails)
-from vllm.inputs.multimodal.profiling import BaseDummyInputsBuilder
-from vllm.inputs.multimodal.utils import run_dp_sharded_vision_model
+from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
+from vllm.io.inputs.multimodal.utils import run_dp_sharded_vision_model
 from vllm.sequence import IntermediateTensors
 
 from .interfaces import MultiModalEmbeddings, SupportsMultiModal, SupportsPP

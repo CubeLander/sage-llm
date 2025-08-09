@@ -10,7 +10,7 @@ from vllm.model_executor.layers.fused_moe.config import FusedMoEQuantConfig
 from vllm.model_executor.layers.fused_moe.topk_weight_and_reduce import (
     TopKWeightAndReduceDelegate)
 from vllm.model_executor.layers.fused_moe.utils import _resize_cache
-from vllm.triton_utils import tl, triton
+from vllm.platforms.triton_tuils import tl, triton
 from vllm.utils.deep_gemm import (fp8_m_grouped_gemm_nt_masked,
                                   is_blackwell_deep_gemm_used)
 

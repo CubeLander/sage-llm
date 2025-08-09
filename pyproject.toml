@@ -123,7 +123,6 @@ files = [
     "vllm/multimodal",
     "vllm/platforms",
     "vllm/transformers_utils",
-    "vllm/triton_utils",
     "vllm/usage",
 ]
 # TODO(woosuk): Include the code from Megatron and HuggingFace.

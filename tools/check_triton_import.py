@@ -9,12 +9,12 @@ FORBIDDEN_IMPORT_RE = re.compile(r"^(from|import)\s+triton(\s|\.|$)")
 
 # the way allowed to import triton
 ALLOWED_LINES = {
-    "from vllm.triton_utils import triton",
-    "from vllm.triton_utils import tl",
-    "from vllm.triton_utils import tl, triton",
+    "from vllm.platforms.triton_tuils import triton",
+    "from vllm.platforms.triton_tuils import tl",
+    "from vllm.platforms.triton_tuils import tl, triton",
 }
 
-ALLOWED_FILES = {"vllm/triton_utils/importing.py"}
+ALLOWED_FILES = {"vllm/platforms/triton_utils/importing.py"}
 
 
 def is_allowed_file(current_file: str) -> bool:
@@ -76,7 +76,7 @@ def main():
 
     if all_violations:
         print("❌ Forbidden direct `import triton` detected."
-              " ➤ Use `from vllm.triton_utils import triton` instead.\n")
+              " ➤ Use `from vllm.platforms.triton_tuils import triton` instead.\n")
         for v in all_violations:
             print(f"❌ {v}")
         return 1

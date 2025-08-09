@@ -41,8 +41,8 @@ from typing_extensions import Required, TypeAlias, TypedDict
 from vllm.config import ModelConfig
 from vllm.utils.logger import init_logger
 from vllm.model_executor.models import SupportsMultiModal
-from vllm.inputs.multimodal import MULTIMODAL_REGISTRY, MultiModalDataDict
-from vllm.inputs.multimodal.utils import MediaConnector
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY, MultiModalDataDict
+from vllm.io.inputs.multimodal.utils import MediaConnector
 # yapf: disable
 from vllm.transformers_utils.chat_templates import (
     get_chat_template_fallback_path)

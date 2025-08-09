@@ -11,10 +11,10 @@ import vllm.envs as envs
 from vllm.config import ParallelConfig, VllmConfig
 from vllm.distributed import stateless_destroy_torch_distributed_process_group
 from vllm.engine.arg_utils import EngineArgs
-from vllm.inputs import PromptType
+from vllm.io.inputs import PromptType
 from vllm.utils.logger import init_logger
 from vllm.lora.request import LoRARequest
-from vllm.inputs.multimodal import MULTIMODAL_REGISTRY, MultiModalRegistry
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY, MultiModalRegistry
 from vllm.outputs import PoolingRequestOutput, RequestOutput
 from vllm.pooling_params import PoolingParams
 from vllm.sampling_params import SamplingParams

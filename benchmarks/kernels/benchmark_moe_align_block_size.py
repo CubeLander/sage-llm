@@ -8,7 +8,7 @@ import torch
 from vllm.model_executor.layers.fused_moe.moe_align_block_size import (
     moe_align_block_size,
 )
-from vllm.triton_utils import triton
+from vllm.platforms.triton_tuils import triton
 
 
 def get_topk_ids(num_tokens: int, num_experts: int, topk: int) -> torch.Tensor:

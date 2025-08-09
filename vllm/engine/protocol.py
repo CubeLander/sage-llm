@@ -8,9 +8,9 @@ from typing import AsyncGenerator, Mapping, Optional
 from vllm.beam_search import BeamSearchSequence, create_sort_beams_key_function
 from vllm.config import DecodingConfig, ModelConfig, VllmConfig
 from vllm.core.scheduler import SchedulerOutputs
-from vllm.inputs.data import PromptType, TokensPrompt
-from vllm.inputs.parse import is_explicit_encoder_decoder_prompt
-from vllm.inputs.preprocess import InputPreprocessor
+from vllm.io.inputs.data import PromptType, TokensPrompt
+from vllm.io.inputs.parse import is_explicit_encoder_decoder_prompt
+from vllm.io.inputs.preprocess import InputPreprocessor
 from vllm.utils.logger import init_logger
 from vllm.lora.request import LoRARequest
 from vllm.model_executor.layers.sampler import SamplerOutput

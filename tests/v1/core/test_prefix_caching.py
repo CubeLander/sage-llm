@@ -9,7 +9,7 @@ import pytest
 import torch
 
 from vllm.distributed.kv_events import AllBlocksCleared, BlockRemoved
-from vllm.inputs.multimodal.inputs import MultiModalKwargs, PlaceholderRange
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs, PlaceholderRange
 from vllm.sampling_params import SamplingParams
 from vllm.utils import sha256, sha256_cbor_64bit
 from vllm.v1.core.block_pool import BlockPool

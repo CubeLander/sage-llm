@@ -32,8 +32,8 @@ from transformers import PreTrainedTokenizerBase
 
 from vllm.lora.request import LoRARequest
 from vllm.lora.utils import get_adapter_absolute_path
-from vllm.inputs.multimodal import MultiModalDataDict
-from vllm.inputs.multimodal.image import convert_image_mode
+from vllm.io.inputs.multimodal import MultiModalDataDict
+from vllm.io.inputs.multimodal.image import convert_image_mode
 from vllm.transformers_utils.tokenizer import AnyTokenizer, get_lora_tokenizer
 
 logger = logging.getLogger(__name__)

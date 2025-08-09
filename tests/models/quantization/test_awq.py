@@ -6,7 +6,7 @@ from typing import Optional
 import pytest
 import torch
 
-from vllm.inputs.multimodal.image import rescale_image_size
+from vllm.io.inputs.multimodal.image import rescale_image_size
 
 from ...conftest import IMAGE_ASSETS, ImageTestAssets, VllmRunner
 from ..utils import check_logprobs_close

@@ -17,7 +17,7 @@ import vllm.envs as envs
 from benchmark_utils import convert_to_pytorch_benchmark_format, write_to_json
 from vllm import LLM, SamplingParams
 from vllm.engine.arg_utils import EngineArgs
-from vllm.inputs import PromptType
+from vllm.io.inputs import PromptType
 from vllm.sampling_params import BeamSearchParams
 from vllm.utils import FlexibleArgumentParser
 

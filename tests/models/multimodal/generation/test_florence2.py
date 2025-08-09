@@ -6,8 +6,8 @@ from typing import Optional
 import pytest
 from PIL import Image
 
-from vllm.inputs.data import ExplicitEncoderDecoderPrompt, TextPrompt
-from vllm.inputs.multimodal.image import rescale_image_size
+from vllm.io.inputs.data import ExplicitEncoderDecoderPrompt, TextPrompt
+from vllm.io.inputs.multimodal.image import rescale_image_size
 from vllm.sequence import SampleLogprobs
 
 from ....conftest import IMAGE_ASSETS, HfRunner, ImageTestAssets, VllmRunner

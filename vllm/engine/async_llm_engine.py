@@ -19,8 +19,8 @@ from vllm.engine.llm_engine import LLMEngine, SchedulerOutputState
 from vllm.engine.metrics_types import StatLoggerBase
 from vllm.engine.protocol import EngineClient
 from vllm.executor.executor_base import ExecutorBase
-from vllm.inputs import PromptType
-from vllm.inputs.preprocess import InputPreprocessor
+from vllm.io.inputs import PromptType
+from vllm.io.inputs.preprocess import InputPreprocessor
 from vllm.utils.logger import init_logger
 from vllm.lora.request import LoRARequest
 from vllm.model_executor.layers.sampler import SamplerOutput
@@ -857,7 +857,7 @@ class AsyncLLMEngine(EngineClient):
 
         Args:
             prompt: The prompt to the LLM. See
-                [`PromptType`][vllm.inputs.PromptType] for more details about
+                [`PromptType`][vllm.io.inputs.PromptType] for more details about
                 the format of each input.
             sampling_params: The sampling parameters of the request.
             request_id: The unique id of the request.
@@ -948,7 +948,7 @@ class AsyncLLMEngine(EngineClient):
 
         Args:
             prompt: The prompt to the LLM. See
-                [`PromptType`][vllm.inputs.PromptType] for more details about
+                [`PromptType`][vllm.io.inputs.PromptType] for more details about
                 the format of each input.
             pooling_params: The pooling parameters of the request.
             request_id: The unique id of the request.

@@ -6,7 +6,7 @@ import pytest
 import torch
 
 from vllm.config import ModelConfig, SchedulerConfig, VllmConfig
-from vllm.inputs.multimodal.inputs import MultiModalKwargs, PlaceholderRange
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs, PlaceholderRange
 from vllm.sampling_params import SamplingParams
 from vllm.utils import GiB_bytes, sha256, sha256_cbor_64bit
 from vllm.v1.core.kv_cache_manager import KVCacheManager

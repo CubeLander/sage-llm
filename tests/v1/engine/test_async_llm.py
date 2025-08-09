@@ -12,7 +12,7 @@ from vllm import SamplingParams
 from vllm.assets.image import ImageAsset
 from vllm.config import VllmConfig
 from vllm.engine.arg_utils import AsyncEngineArgs
-from vllm.inputs import PromptType
+from vllm.io.inputs import PromptType
 from vllm.platforms import current_platform
 from vllm.sampling_params import RequestOutputKind
 from vllm.utils import set_default_torch_num_threads

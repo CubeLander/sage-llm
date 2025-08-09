@@ -2,8 +2,8 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from vllm.utils.logger import init_logger
-from vllm.reasoning import ReasoningParser, ReasoningParserManager
-from vllm.reasoning.deepseek_r1_reasoning_parser import (
+from vllm.io.reasoning import ReasoningParser, ReasoningParserManager
+from vllm.io.reasoning.deepseek_r1_reasoning_parser import (
     DeepSeekR1ReasoningParser)
 from vllm.transformers_utils.tokenizers.mistral import MistralTokenizer
 

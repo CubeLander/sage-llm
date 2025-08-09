@@ -8,12 +8,12 @@ import torch.nn as nn
 from transformers import BatchFeature, PretrainedConfig
 
 from vllm.config import VllmConfig
-from vllm.inputs import TokensPrompt
+from vllm.io.inputs import TokensPrompt
 from vllm.utils.logger import init_logger
 from vllm.model_executor.layers.linear import (ColumnParallelLinear,
                                                RowParallelLinear)
 from vllm.model_executor.layers.pooler import DispatchPooler, Pooler
-from vllm.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
 from vllm.sequence import IntermediateTensors
 
 from .interfaces import (SupportsCrossEncoding, SupportsMultiModal,

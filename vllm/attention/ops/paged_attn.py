@@ -7,7 +7,7 @@ from typing import List, Optional, Tuple
 import torch
 
 from vllm import _custom_ops as ops
-from vllm.triton_utils import HAS_TRITON
+from vllm.platforms.triton_tuils import HAS_TRITON
 
 if HAS_TRITON:
     from vllm.attention.ops.prefix_prefill import context_attention_fwd

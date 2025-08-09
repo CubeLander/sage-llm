@@ -17,17 +17,17 @@ from tests.utils import multi_gpu_test
 from vllm.distributed import get_tensor_model_parallel_world_size
 from vllm.distributed.parallel_state import (init_distributed_environment,
                                              initialize_model_parallel)
-from vllm.inputs.multimodal.image import convert_image_mode
-from vllm.inputs.multimodal.inputs import PlaceholderRange
-from vllm.inputs.multimodal.utils import (MediaConnector,
+from vllm.io.inputs.multimodal.image import convert_image_mode
+from vllm.io.inputs.multimodal.inputs import PlaceholderRange
+from vllm.io.inputs.multimodal.utils import (MediaConnector,
                                    merge_and_sort_multimodal_metadata,
                                    run_dp_sharded_vision_model)
 from vllm.platforms import current_platform
 from vllm.utils import get_open_port, update_environment_variables
 
 if TYPE_CHECKING:
-    from vllm.inputs.multimodal.hasher import MultiModalHashDict
-    from vllm.inputs.multimodal.inputs import MultiModalPlaceholderDict
+    from vllm.io.inputs.multimodal.hasher import MultiModalHashDict
+    from vllm.io.inputs.multimodal.inputs import MultiModalPlaceholderDict
 
 # Test different image extensions (JPG/PNG) and formats (gray/RGB/RGBA)
 TEST_IMAGE_URLS = [

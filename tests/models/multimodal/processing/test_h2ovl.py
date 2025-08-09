@@ -8,9 +8,9 @@ import pytest
 from PIL import Image
 from transformers import PretrainedConfig
 
-from vllm.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.inputs.multimodal.image import rescale_image_size
-from vllm.inputs.multimodal.processing import BaseMultiModalProcessor
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.image import rescale_image_size
+from vllm.io.inputs.multimodal.processing import BaseMultiModalProcessor
 
 from ....conftest import ImageTestAssets
 from ...utils import build_model_context

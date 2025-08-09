@@ -30,15 +30,15 @@ from vllm.config import VllmConfig
 from vllm.model_executor.layers.linear import ColumnParallelLinear
 from vllm.model_executor.models.persimmon import PersimmonForCausalLM
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
                                     MultiModalKwargs)
-from vllm.inputs.multimodal.parse import (ImageProcessorItems, ImageSize,
+from vllm.io.inputs.multimodal.parse import (ImageProcessorItems, ImageSize,
                                    MultiModalDataItems)
-from vllm.inputs.multimodal.processing import (BaseMultiModalProcessor,
+from vllm.io.inputs.multimodal.processing import (BaseMultiModalProcessor,
                                         BaseProcessingInfo, PromptReplacement,
                                         PromptUpdate, PromptUpdateDetails)
-from vllm.inputs.multimodal.profiling import BaseDummyInputsBuilder
+from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
 from vllm.sequence import IntermediateTensors
 from vllm.utils.tensor_schema import TensorSchema, TensorShape
 

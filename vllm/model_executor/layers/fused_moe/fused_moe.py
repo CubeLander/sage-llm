@@ -38,7 +38,7 @@ from vllm.model_executor.layers.quantization.utils.flashinfer_utils import (
 from vllm.model_executor.layers.quantization.utils.mxfp4_utils import (
     dequant_mxfp4)
 from vllm.platforms import current_platform
-from vllm.triton_utils import tl, triton
+from vllm.platforms.triton_tuils import tl, triton
 from vllm.utils import direct_register_custom_op, is_torch_equal_or_newer
 from vllm.utils.deep_gemm import is_blackwell_deep_gemm_used
 

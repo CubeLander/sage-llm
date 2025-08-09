@@ -18,7 +18,7 @@ from vllm.attention.layer import MultiHeadAttention
 from vllm.config import (CacheConfig, ModelConfig, SpeechToTextConfig,
                          VllmConfig)
 from vllm.distributed import get_tensor_model_parallel_world_size
-from vllm.inputs.data import PromptType
+from vllm.io.inputs.data import PromptType
 from vllm.utils.logger import init_logger
 from vllm.model_executor.layers.activation import get_act_fn
 from vllm.model_executor.layers.linear import (ColumnParallelLinear,
@@ -31,14 +31,14 @@ from vllm.model_executor.layers.vocab_parallel_embedding import ParallelLMHead
 from vllm.model_executor.model_loader.utils import set_default_torch_dtype
 from vllm.model_executor.model_loader.weight_utils import default_weight_loader
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.inputs.multimodal import MULTIMODAL_REGISTRY, NestedTensors
-from vllm.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY, NestedTensors
+from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
                                     MultiModalKwargs)
-from vllm.inputs.multimodal.parse import MultiModalDataItems, MultiModalDataParser
-from vllm.inputs.multimodal.processing import (BaseProcessingInfo,
+from vllm.io.inputs.multimodal.parse import MultiModalDataItems, MultiModalDataParser
+from vllm.io.inputs.multimodal.processing import (BaseProcessingInfo,
                                         EncDecMultiModalProcessor,
                                         PromptReplacement, PromptUpdate)
-from vllm.inputs.multimodal.profiling import BaseDummyInputsBuilder
+from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
 from vllm.transformers_utils.processor import cached_get_processor
 
 from .interfaces import (MultiModalEmbeddings, SupportsMultiModal,

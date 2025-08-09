@@ -5,7 +5,7 @@ import pytest
 from transformers import AutoTokenizer
 
 from tests.reasoning.utils import run_reasoning_extraction
-from vllm.reasoning import ReasoningParser, ReasoningParserManager
+from vllm.io.reasoning import ReasoningParser, ReasoningParserManager
 
 parser_name = "hunyuan_a13b"
 START_REASONING = "<think>\n"

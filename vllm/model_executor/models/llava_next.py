@@ -15,9 +15,9 @@ from typing_extensions import NotRequired
 
 from vllm.config import VllmConfig
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.inputs.multimodal.inputs import MultiModalFieldConfig
-from vllm.inputs.multimodal.parse import ImageSize
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
+from vllm.io.inputs.multimodal.parse import ImageSize
 from vllm.sequence import IntermediateTensors
 
 from .clip import CLIPVisionModel

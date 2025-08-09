@@ -11,7 +11,7 @@ The traditional flow of text data for a Large Language Model goes from text to t
 
 ## Offline Inference
 
-To input multi-modal data, follow this schema in [vllm.inputs.EmbedsPrompt][]:
+To input multi-modal data, follow this schema in [vllm.io.inputs.EmbedsPrompt][]:
 
 - `prompt_embeds`: A torch tensor representing a sequence of prompt/token embeddings. This has the shape (sequence_length, hidden_size), where sequence length is the number of tokens embeddings and hidden_size is the hidden size (embedding size) of the model.
 

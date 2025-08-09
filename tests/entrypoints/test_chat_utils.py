@@ -21,8 +21,8 @@ from vllm.entrypoints.chat_utils import (_try_extract_ast, load_chat_template,
                                          resolve_chat_template_content_format,
                                          resolve_hf_chat_template)
 from vllm.entrypoints.llm import apply_hf_chat_template
-from vllm.inputs.multimodal import MultiModalDataDict
-from vllm.inputs.multimodal.utils import (encode_audio_base64, encode_image_base64,
+from vllm.io.inputs.multimodal import MultiModalDataDict
+from vllm.io.inputs.multimodal.utils import (encode_audio_base64, encode_image_base64,
                                    encode_video_base64)
 from vllm.transformers_utils.tokenizer_group import TokenizerGroup
 from vllm.transformers_utils.tokenizers.mistral import MistralTokenizer

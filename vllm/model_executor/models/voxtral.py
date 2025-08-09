@@ -21,7 +21,7 @@ from transformers import TensorType, WhisperConfig
 from transformers.tokenization_utils_base import TextInput
 
 from vllm.config import ModelConfig, SpeechToTextConfig, VllmConfig
-from vllm.inputs.data import PromptType
+from vllm.io.inputs.data import PromptType
 from vllm.utils.logger import init_logger
 from vllm.model_executor.model_loader.weight_utils import default_weight_loader
 from vllm.model_executor.models import SupportsPP
@@ -29,15 +29,15 @@ from vllm.model_executor.models import SupportsPP
 from vllm.model_executor.models.whisper import WhisperEncoder
 # yapf: enable
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
                                     MultiModalKwargs, NestedTensors)
-from vllm.inputs.multimodal.parse import (AudioProcessorItems, MultiModalDataItems,
+from vllm.io.inputs.multimodal.parse import (AudioProcessorItems, MultiModalDataItems,
                                    MultiModalDataParser)
-from vllm.inputs.multimodal.processing import (BaseMultiModalProcessor,
+from vllm.io.inputs.multimodal.processing import (BaseMultiModalProcessor,
                                         BaseProcessingInfo, MultiModalHashes,
                                         PromptReplacement, PromptUpdate)
-from vllm.inputs.multimodal.profiling import BaseDummyInputsBuilder, ProcessorInputs
+from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder, ProcessorInputs
 from vllm.sequence import IntermediateTensors
 from vllm.transformers_utils.tokenizer import (MistralTokenizer,
                                                cached_tokenizer_from_config)

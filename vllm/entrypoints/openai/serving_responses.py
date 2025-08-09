@@ -42,10 +42,10 @@ from vllm.entrypoints.openai.protocol import (ErrorResponse,
 from vllm.entrypoints.openai.serving_engine import OpenAIServing
 from vllm.entrypoints.openai.serving_models import OpenAIServingModels
 from vllm.entrypoints.tool_server import ToolServer
-from vllm.inputs.data import TokensPrompt as EngineTokensPrompt
+from vllm.io.inputs.data import TokensPrompt as EngineTokensPrompt
 from vllm.utils.logger import init_logger
 from vllm.outputs import CompletionOutput
-from vllm.reasoning import ReasoningParser, ReasoningParserManager
+from vllm.io.reasoning import ReasoningParser, ReasoningParserManager
 from vllm.sampling_params import SamplingParams
 from vllm.transformers_utils.tokenizer import AnyTokenizer
 from vllm.utils import random_uuid

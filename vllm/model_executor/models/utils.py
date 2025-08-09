@@ -15,7 +15,7 @@ import vllm.envs as envs
 from vllm.config import VllmConfig
 from vllm.utils.logger import init_logger
 from vllm.model_executor.model_loader.weight_utils import default_weight_loader
-from vllm.inputs.multimodal import MultiModalPlaceholderMap, NestedTensors
+from vllm.io.inputs.multimodal import MultiModalPlaceholderMap, NestedTensors
 from vllm.sequence import IntermediateTensors
 from vllm.utils import (get_cuda_view_from_cpu_tensor, is_pin_memory_available,
                         is_uva_available)

@@ -32,9 +32,9 @@ LLM Class.
 
 LLM Inputs.
 
-- [vllm.inputs.PromptType][]
-- [vllm.inputs.TextPrompt][]
-- [vllm.inputs.TokensPrompt][]
+- [vllm.io.inputs.PromptType][]
+- [vllm.io.inputs.TextPrompt][]
+- [vllm.io.inputs.TokensPrompt][]
 
 ## vLLM Engines
 
@@ -57,46 +57,46 @@ Inference parameters for vLLM APIs.
 
 ## Multi-Modality
 
-vLLM provides experimental support for multi-modal models through the [vllm.inputs.multimodal][] package.
+vLLM provides experimental support for multi-modal models through the [vllm.io.inputs.multimodal][] package.
 
 Multi-modal inputs can be passed alongside text and token prompts to [supported models][supported-mm-models]
-via the `multi_modal_data` field in [vllm.inputs.PromptType][].
+via the `multi_modal_data` field in [vllm.io.inputs.PromptType][].
 
 Looking to add your own multi-modal model? Please follow the instructions listed [here](../contributing/model/multimodal.md).
 
-- [vllm.inputs.multimodal.MULTIMODAL_REGISTRY][]
+- [vllm.io.inputs.multimodal.MULTIMODAL_REGISTRY][]
 
 ### Inputs
 
 User-facing inputs.
 
-- [vllm.inputs.multimodal.inputs.MultiModalDataDict][]
+- [vllm.io.inputs.multimodal.inputs.MultiModalDataDict][]
 
 Internal data structures.
 
-- [vllm.inputs.multimodal.inputs.PlaceholderRange][]
-- [vllm.inputs.multimodal.inputs.NestedTensors][]
-- [vllm.inputs.multimodal.inputs.MultiModalFieldElem][]
-- [vllm.inputs.multimodal.inputs.MultiModalFieldConfig][]
-- [vllm.inputs.multimodal.inputs.MultiModalKwargsItem][]
-- [vllm.inputs.multimodal.inputs.MultiModalKwargs][]
-- [vllm.inputs.multimodal.inputs.MultiModalInputs][]
+- [vllm.io.inputs.multimodal.inputs.PlaceholderRange][]
+- [vllm.io.inputs.multimodal.inputs.NestedTensors][]
+- [vllm.io.inputs.multimodal.inputs.MultiModalFieldElem][]
+- [vllm.io.inputs.multimodal.inputs.MultiModalFieldConfig][]
+- [vllm.io.inputs.multimodal.inputs.MultiModalKwargsItem][]
+- [vllm.io.inputs.multimodal.inputs.MultiModalKwargs][]
+- [vllm.io.inputs.multimodal.inputs.MultiModalInputs][]
 
 ### Data Parsing
 
-- [vllm.inputs.multimodal.parse][]
+- [vllm.io.inputs.multimodal.parse][]
 
 ### Data Processing
 
-- [vllm.inputs.multimodal.processing][]
+- [vllm.io.inputs.multimodal.processing][]
 
 ### Memory Profiling
 
-- [vllm.inputs.multimodal.profiling][]
+- [vllm.io.inputs.multimodal.profiling][]
 
 ### Registry
 
-- [vllm.inputs.multimodal.registry][]
+- [vllm.io.inputs.multimodal.registry][]
 
 ## Model Development
 

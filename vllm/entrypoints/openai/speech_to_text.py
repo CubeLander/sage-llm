@@ -23,7 +23,7 @@ from vllm.entrypoints.openai.protocol import (
 from vllm.entrypoints.openai.serving_engine import (OpenAIServing,
                                                     SpeechToTextRequest)
 from vllm.entrypoints.openai.serving_models import OpenAIServingModels
-from vllm.inputs.data import PromptType
+from vllm.io.inputs.data import PromptType
 from vllm.utils.logger import init_logger
 from vllm.model_executor.models import SupportsTranscription
 from vllm.outputs import RequestOutput

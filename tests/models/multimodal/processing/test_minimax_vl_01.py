@@ -4,9 +4,9 @@
 import pytest
 from PIL import Image
 
-from vllm.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.inputs.multimodal.parse import ImageSize
-from vllm.inputs.multimodal.processing import BaseMultiModalProcessor
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.parse import ImageSize
+from vllm.io.inputs.multimodal.processing import BaseMultiModalProcessor
 
 from ....conftest import ImageTestAssets
 from ...utils import build_model_context

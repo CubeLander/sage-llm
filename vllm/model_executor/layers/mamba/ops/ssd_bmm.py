@@ -10,7 +10,7 @@ import math
 
 import torch
 
-from vllm.triton_utils import tl, triton
+from vllm.platforms.triton_tuils import tl, triton
 
 
 @triton.autotune(

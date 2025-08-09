@@ -18,7 +18,7 @@ from vllm.model_executor.layers.quantization.utils.quant_utils import (
 from vllm.model_executor.layers.quantization.utils.w8a8_utils import (
     CUTLASS_BLOCK_FP8_SUPPORTED)
 from vllm.platforms import current_platform
-from vllm.triton_utils import tl, triton
+from vllm.platforms.triton_tuils import tl, triton
 from vllm.utils import cdiv, direct_register_custom_op, has_deep_gemm
 from vllm.utils.deep_gemm import is_blackwell_deep_gemm_used
 

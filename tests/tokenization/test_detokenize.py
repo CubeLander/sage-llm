@@ -8,7 +8,7 @@ import pytest
 from transformers import (AutoTokenizer, PreTrainedTokenizer,
                           PreTrainedTokenizerFast)
 
-from vllm.inputs import token_inputs
+from vllm.io.inputs import token_inputs
 from vllm.sequence import Logprob, SamplingParams, Sequence, SequenceGroup
 from vllm.transformers_utils.detokenizer import Detokenizer
 from vllm.transformers_utils.tokenizer_group import TokenizerGroup

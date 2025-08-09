@@ -13,7 +13,7 @@ from transformers import AutoTokenizer
 
 from vllm.assets.image import ImageAsset
 from vllm.lora.request import LoRARequest
-from vllm.inputs.multimodal.image import convert_image_mode, rescale_image_size
+from vllm.io.inputs.multimodal.image import convert_image_mode, rescale_image_size
 from vllm.platforms import current_platform
 from vllm.sequence import SampleLogprobs
 

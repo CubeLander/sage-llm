@@ -6,15 +6,15 @@ from collections.abc import Mapping, Sequence
 from typing import Any, Literal, Optional, Union
 
 from vllm.config import VllmConfig
-from vllm.inputs import ProcessorInputs, PromptType, SingletonInputs
-from vllm.inputs.parse import split_enc_dec_inputs
-from vllm.inputs.preprocess import InputPreprocessor
+from vllm.io.inputs import ProcessorInputs, PromptType, SingletonInputs
+from vllm.io.inputs.parse import split_enc_dec_inputs
+from vllm.io.inputs.preprocess import InputPreprocessor
 from vllm.lora.request import LoRARequest
-from vllm.inputs.multimodal import (MULTIMODAL_REGISTRY, MultiModalKwargs,
+from vllm.io.inputs.multimodal import (MULTIMODAL_REGISTRY, MultiModalKwargs,
                              MultiModalRegistry)
-from vllm.inputs.multimodal.inputs import PlaceholderRange
-from vllm.inputs.multimodal.processing import EncDecMultiModalProcessor
-from vllm.inputs.multimodal.utils import merge_and_sort_multimodal_metadata
+from vllm.io.inputs.multimodal.inputs import PlaceholderRange
+from vllm.io.inputs.multimodal.processing import EncDecMultiModalProcessor
+from vllm.io.inputs.multimodal.utils import merge_and_sort_multimodal_metadata
 from vllm.pooling_params import PoolingParams
 from vllm.sampling_params import SamplingParams
 from vllm.transformers_utils.tokenizer_group import TokenizerGroup

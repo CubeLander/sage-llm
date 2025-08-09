@@ -10,7 +10,7 @@ from typing import Any, Optional, Union
 import torch
 
 from vllm.core.scheduler import Scheduler, SchedulerOutputs
-from vllm.inputs import EncoderDecoderInputs, embeds_inputs, token_inputs
+from vllm.io.inputs import EncoderDecoderInputs, embeds_inputs, token_inputs
 from vllm.lora.request import LoRARequest
 from vllm.sampling_params import SamplingParams
 from vllm.sequence import (Logprob, Sequence, SequenceData, SequenceGroup,

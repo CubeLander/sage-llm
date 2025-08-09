@@ -13,7 +13,7 @@ import numpy as np
 import torch
 from torch.distributed import PrefixStore, ProcessGroup
 
-from vllm.inputs import ProcessorInputs, PromptType
+from vllm.io.inputs import ProcessorInputs, PromptType
 from vllm.utils.logger import init_logger
 
 if TYPE_CHECKING:

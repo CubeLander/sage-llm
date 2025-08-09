@@ -13,8 +13,8 @@ from mistral_common.tokens.tokenizers.multimodal import image_from_chunk
 from transformers import AutoProcessor
 
 from vllm import RequestOutput, SamplingParams, TextPrompt, TokensPrompt
-from vllm.inputs.multimodal import MultiModalDataBuiltins
-from vllm.inputs.multimodal.inputs import PlaceholderRange
+from vllm.io.inputs.multimodal import MultiModalDataBuiltins
+from vllm.io.inputs.multimodal.inputs import PlaceholderRange
 from vllm.sequence import Logprob, SampleLogprobs
 
 from ....utils import VLLM_PATH, large_gpu_test

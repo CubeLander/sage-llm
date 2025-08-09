@@ -7,7 +7,7 @@ import pytest
 from transformers import PreTrainedTokenizer
 
 from vllm.engine.output_processor.stop_checker import StopChecker
-from vllm.inputs import token_inputs
+from vllm.io.inputs import token_inputs
 from vllm.sampling_params import SamplingParams
 from vllm.sequence import Logprob, Sequence, SequenceStatus
 

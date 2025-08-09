@@ -10,9 +10,9 @@ from vllm.entrypoints.chat_utils import (
     BaseMultiModalItemTracker, ChatCompletionContentPartImageEmbedsParam,
     ChatCompletionContentPartImageParam, ChatCompletionContentPartTextParam,
     MultiModalItemTracker, _ContentPart, _parse_chat_message_content_part)
-from vllm.inputs import TokensPrompt
+from vllm.io.inputs import TokensPrompt
 from vllm.model_executor.models.interfaces import supports_score_template
-from vllm.inputs.multimodal.inputs import MultiModalDataDict
+from vllm.io.inputs.multimodal.inputs import MultiModalDataDict
 from vllm.outputs import PoolingRequestOutput
 from vllm.transformers_utils.tokenizer import (AnyTokenizer,
                                                PreTrainedTokenizer,

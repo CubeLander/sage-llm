@@ -16,7 +16,7 @@ from ray.experimental.tqdm_ray import tqdm
 from vllm.model_executor.layers.fused_moe.fused_moe import *
 from vllm.platforms import current_platform
 from vllm.transformers_utils.config import get_config
-from vllm.triton_utils import triton
+from vllm.platforms.triton_tuils import triton
 from vllm.utils import FlexibleArgumentParser
 
 FP8_DTYPE = current_platform.fp8_dtype()

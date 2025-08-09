@@ -3,7 +3,7 @@
 
 import torch
 
-from vllm.triton_utils import tl, triton
+from vllm.platforms.triton_tuils import tl, triton
 
 AWQ_TRITON_SUPPORTED_GROUP_SIZES = [-1, 32, 64, 128]
 

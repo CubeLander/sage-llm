@@ -18,16 +18,16 @@ from transformers.models.got_ocr2.image_processing_got_ocr2 import (
 from vllm.config import VllmConfig
 from vllm.jsontree import json_map_leaves
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.inputs.multimodal.inputs import MultiModalDataDict, MultiModalKwargs
-from vllm.inputs.multimodal.parse import (ImageProcessorItems, ImageSize,
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import MultiModalDataDict, MultiModalKwargs
+from vllm.io.inputs.multimodal.parse import (ImageProcessorItems, ImageSize,
                                    MultiModalDataItems)
-from vllm.inputs.multimodal.processing import (BaseMultiModalProcessor,
+from vllm.io.inputs.multimodal.processing import (BaseMultiModalProcessor,
                                         BaseProcessingInfo,
                                         MultiModalFieldConfig,
                                         PromptReplacement, PromptUpdate,
                                         PromptUpdateDetails)
-from vllm.inputs.multimodal.profiling import BaseDummyInputsBuilder
+from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
 from vllm.sequence import IntermediateTensors
 from vllm.utils.tensor_schema import TensorSchema, TensorShape
 

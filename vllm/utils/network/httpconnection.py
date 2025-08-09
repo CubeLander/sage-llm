@@ -169,6 +169,6 @@ class HTTPConnection:
 
 global_http_connection = HTTPConnection()
 """
-The global [`HTTPConnection`][vllm.connections.HTTPConnection] instance used
+The global [`HTTPConnection`][vllm.utils.network.httpconnection.HTTPConnection] instance used
 by vLLM.
 """

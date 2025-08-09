@@ -4,7 +4,7 @@
 import pytest
 
 from vllm.assets.video import VideoAsset
-from vllm.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
 
 from ...utils import build_model_context
 

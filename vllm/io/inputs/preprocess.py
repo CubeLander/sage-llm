@@ -10,8 +10,8 @@ from typing_extensions import assert_never
 from vllm.config import ModelConfig
 from vllm.utils.logger import init_logger
 from vllm.lora.request import LoRARequest
-from vllm.inputs.multimodal import MULTIMODAL_REGISTRY, MultiModalRegistry
-from vllm.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalEncDecInputs,
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY, MultiModalRegistry
+from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalEncDecInputs,
                                     MultiModalInputs)
 from vllm.transformers_utils.tokenizer import AnyTokenizer
 from vllm.transformers_utils.tokenizer_group import TokenizerGroup
@@ -214,7 +214,7 @@ class InputPreprocessor:
     ) -> list[int]:
         """
         Async version of
-        [`_tokenize_prompt`][vllm.inputs.preprocess.InputPreprocessor._tokenize_prompt].
+        [`_tokenize_prompt`][vllm.io.inputs.preprocess.InputPreprocessor._tokenize_prompt].
         """
         tokenizer = self.get_tokenizer_group()
         tokenization_kwargs = self._get_tokenization_kw(tokenization_kwargs)
@@ -285,7 +285,7 @@ class InputPreprocessor:
     ) -> MultiModalInputs:
         """
         Async version of
-        [`_process_multimodal`][vllm.inputs.preprocess.InputPreprocessor._process_multimodal].
+        [`_process_multimodal`][vllm.io.inputs.preprocess.InputPreprocessor._process_multimodal].
         """
         tokenizer = await self._get_mm_tokenizer_async(lora_request)
 
@@ -480,7 +480,7 @@ class InputPreprocessor:
 
         Returns:
 
-        * [`SingletonInputs`][vllm.inputs.data.SingletonInputs] instance
+        * [`SingletonInputs`][vllm.io.inputs.data.SingletonInputs] instance
         """
         parsed = parse_singleton_prompt(prompt)
 
@@ -518,7 +518,7 @@ class InputPreprocessor:
     ) -> SingletonInputs:
         """
         Async version of
-        [`_prompt_to_llm_inputs`][vllm.inputs.preprocess.InputPreprocessor._prompt_to_llm_inputs].
+        [`_prompt_to_llm_inputs`][vllm.io.inputs.preprocess.InputPreprocessor._prompt_to_llm_inputs].
         """
         parsed = parse_singleton_prompt(prompt)
 
@@ -656,7 +656,7 @@ class InputPreprocessor:
         """
         For encoder/decoder models only:
         Process an input prompt into an
-        [`EncoderDecoderInputs`][vllm.inputs.data.EncoderDecoderInputs]
+        [`EncoderDecoderInputs`][vllm.io.inputs.data.EncoderDecoderInputs]
         instance.
 
         There are two types of input prompts:
@@ -683,7 +683,7 @@ class InputPreprocessor:
 
         Returns:
 
-        * [`EncoderDecoderInputs`][vllm.inputs.data.EncoderDecoderInputs]
+        * [`EncoderDecoderInputs`][vllm.io.inputs.data.EncoderDecoderInputs]
           instance
         """
         encoder_inputs: SingletonInputs
@@ -726,7 +726,7 @@ class InputPreprocessor:
     ) -> EncoderDecoderInputs:
         """
         Async version of
-        [`_process_encoder_decoder_prompt`][vllm.inputs.preprocess.InputPreprocessor._process_encoder_decoder_prompt].
+        [`_process_encoder_decoder_prompt`][vllm.io.inputs.preprocess.InputPreprocessor._process_encoder_decoder_prompt].
         """
         encoder_inputs: SingletonInputs
         decoder_inputs: Optional[SingletonInputs]
@@ -790,7 +790,7 @@ class InputPreprocessor:
         """
         For decoder-only models:
         Process an input prompt into a
-        [`DecoderOnlyInputs`][vllm.inputs.data.DecoderOnlyInputs] instance.
+        [`DecoderOnlyInputs`][vllm.io.inputs.data.DecoderOnlyInputs] instance.
 
         Arguments:
 
@@ -800,7 +800,7 @@ class InputPreprocessor:
 
         Returns:
 
-        * [`DecoderOnlyInputs`][vllm.inputs.data.DecoderOnlyInputs] instance
+        * [`DecoderOnlyInputs`][vllm.io.inputs.data.DecoderOnlyInputs] instance
         """
 
         prompt_comps = self._prompt_to_llm_inputs(
@@ -821,7 +821,7 @@ class InputPreprocessor:
     ) -> DecoderOnlyInputs:
         """
         Async version of
-        [`_process_decoder_only_prompt`][vllm.inputs.preprocess.InputPreprocessor._process_decoder_only_prompt].
+        [`_process_decoder_only_prompt`][vllm.io.inputs.preprocess.InputPreprocessor._process_decoder_only_prompt].
         """
         prompt_comps = await self._prompt_to_llm_inputs_async(
             prompt,
@@ -870,7 +870,7 @@ class InputPreprocessor:
     ) -> ProcessorInputs:
         """
         Async version of
-        [`preprocess`][vllm.inputs.preprocess.InputPreprocessor.preprocess].
+        [`preprocess`][vllm.io.inputs.preprocess.InputPreprocessor.preprocess].
         """
         if self.model_config.is_encoder_decoder:
             assert not return_mm_hashes, (

@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Generic, Optional, Protocol, TypeVar
 
 import torch.nn as nn
 
-from vllm.inputs import InputProcessingContext
+from vllm.io.inputs import InputProcessingContext
 from vllm.utils.logger import init_logger
 from vllm.transformers_utils.tokenizer import (AnyTokenizer,
                                                cached_tokenizer_from_config)
@@ -31,7 +31,7 @@ _I_co = TypeVar("_I_co", bound=BaseProcessingInfo, covariant=True)
 class ProcessingInfoFactory(Protocol[_I_co]):
     """
     Constructs a
-    [`BaseMultiModalProcessor`][vllm.inputs.multimodal.processing.BaseMultiModalProcessor]
+    [`BaseMultiModalProcessor`][vllm.io.inputs.multimodal.processing.BaseMultiModalProcessor]
     instance from the context.
     """
 
@@ -45,7 +45,7 @@ class ProcessingInfoFactory(Protocol[_I_co]):
 class DummyInputsBuilderFactory(Protocol[_I]):
     """
     Constructs a
-    [`BaseDummyInputsBuilder`][vllm.inputs.multimodal.profiling.BaseDummyInputsBuilder]
+    [`BaseDummyInputsBuilder`][vllm.io.inputs.multimodal.profiling.BaseDummyInputsBuilder]
     instance from the context.
     """
 
@@ -56,7 +56,7 @@ class DummyInputsBuilderFactory(Protocol[_I]):
 class MultiModalProcessorFactory(Protocol[_I]):
     """
     Constructs a
-    [`BaseMultiModalProcessor`][vllm.inputs.multimodal.processing.BaseMultiModalProcessor]
+    [`BaseMultiModalProcessor`][vllm.io.inputs.multimodal.processing.BaseMultiModalProcessor]
     instance from the context.
     """
 

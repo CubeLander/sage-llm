@@ -15,9 +15,9 @@ from typing import TYPE_CHECKING, Any, Callable, Optional, Union
 import msgspec
 import torch
 
-from vllm.inputs import SingletonInputs
+from vllm.io.inputs import SingletonInputs
 from vllm.lora.request import LoRARequest
-from vllm.inputs.multimodal import MultiModalKwargs, MultiModalPlaceholderDict
+from vllm.io.inputs.multimodal import MultiModalKwargs, MultiModalPlaceholderDict
 from vllm.pooling_params import PoolingParams
 from vllm.sampling_params import RequestOutputKind, SamplingParams
 
@@ -449,8 +449,8 @@ class Sequence:
     """Stores the data, status, and block information of a sequence.
 
     The sequence is constructed from the
-    [`DecoderOnlyInputs`][vllm.inputs.data.DecoderOnlyInputs] (for decoder-only)
-    or [`EncoderDecoderInputs`][vllm.inputs.data.EncoderDecoderInputs]
+    [`DecoderOnlyInputs`][vllm.io.inputs.data.DecoderOnlyInputs] (for decoder-only)
+    or [`EncoderDecoderInputs`][vllm.io.inputs.data.EncoderDecoderInputs]
     (for encoder-decoder) instance passed in through the `inputs`
     constructor argument.
 

@@ -5,7 +5,7 @@
 
 import torch
 
-from vllm.triton_utils import tl, triton
+from vllm.platforms.triton_tuils import tl, triton
 
 
 @triton.heuristics({"HAS_BIAS": lambda args: args["B"] is not None})

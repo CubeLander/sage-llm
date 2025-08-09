@@ -24,11 +24,11 @@ from vllm.assets.audio import AudioAsset
 from vllm.assets.image import ImageAsset
 from vllm.assets.video import VideoAsset
 from vllm.config import ConvertOption, RunnerOption, _get_and_verify_dtype
-from vllm.connections import global_http_connection
+from vllm.utils.network.httpconnection import global_http_connection
 from vllm.distributed import (cleanup_dist_env_and_memory,
                               init_distributed_environment,
                               initialize_model_parallel)
-from vllm.inputs import (ExplicitEncoderDecoderPrompt, TextPrompt,
+from vllm.io.inputs import (ExplicitEncoderDecoderPrompt, TextPrompt,
                          to_enc_dec_tuple_list, zip_enc_dec_prompts)
 from vllm.utils.logger import init_logger
 from vllm.outputs import RequestOutput

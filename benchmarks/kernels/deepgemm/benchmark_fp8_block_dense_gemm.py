@@ -12,7 +12,7 @@ from vllm.model_executor.layers.quantization.utils.fp8_utils import (
     per_token_group_quant_fp8,
     w8a8_block_fp8_matmul,
 )
-from vllm.triton_utils import triton
+from vllm.platforms.triton_tuils import triton
 from vllm.utils.deep_gemm import calc_diff, fp8_gemm_nt, per_block_cast_to_fp8
 
 

@@ -15,11 +15,11 @@ import torch.nn as nn
 from transformers import PretrainedConfig
 
 from vllm.model_executor.layers.quantization import QuantizationConfig
-from vllm.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.inputs.multimodal.inputs import MultiModalDataDict, MultiModalKwargs
-from vllm.inputs.multimodal.parse import (ImageEmbeddingItems, ImageProcessorItems,
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import MultiModalDataDict, MultiModalKwargs
+from vllm.io.inputs.multimodal.parse import (ImageEmbeddingItems, ImageProcessorItems,
                                    MultiModalDataItems)
-from vllm.inputs.multimodal.processing import (PromptReplacement, PromptUpdate,
+from vllm.io.inputs.multimodal.processing import (PromptReplacement, PromptUpdate,
                                         PromptUpdateDetails)
 
 from .intern_vit import InternVisionModel

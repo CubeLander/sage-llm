@@ -13,7 +13,7 @@ import torch
 
 import vllm.envs as envs
 from vllm.lora.layers import LoRAMapping
-from vllm.triton_utils import HAS_TRITON
+from vllm.platforms.triton_tuils import HAS_TRITON
 
 if HAS_TRITON:
     from vllm.lora.ops.triton_ops import (LoRAKernelMeta, lora_expand,

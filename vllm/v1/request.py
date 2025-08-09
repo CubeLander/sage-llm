@@ -5,7 +5,7 @@ import enum
 import time
 from typing import TYPE_CHECKING, Any, Optional, Union
 
-from vllm.inputs.multimodal.inputs import MultiModalKwargs, PlaceholderRange
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs, PlaceholderRange
 from vllm.pooling_params import PoolingParams
 from vllm.sampling_params import SamplingParams
 from vllm.utils import is_list_of

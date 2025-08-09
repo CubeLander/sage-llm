@@ -12,10 +12,10 @@ from mistral_common.protocol.instruct.request import ChatCompletionRequest
 from PIL import Image
 
 from vllm.config import ModelConfig
-from vllm.inputs import InputProcessingContext
-from vllm.inputs.multimodal import MULTIMODAL_REGISTRY, MultiModalDataDict
-from vllm.inputs.multimodal.inputs import MultiModalInputs
-from vllm.inputs.multimodal.processing import BaseMultiModalProcessor, ProcessingCache
+from vllm.io.inputs import InputProcessingContext
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY, MultiModalDataDict
+from vllm.io.inputs.multimodal.inputs import MultiModalInputs
+from vllm.io.inputs.multimodal.processing import BaseMultiModalProcessor, ProcessingCache
 from vllm.transformers_utils.tokenizer import (AnyTokenizer, MistralTokenizer,
                                                cached_tokenizer_from_config,
                                                encode_tokens)

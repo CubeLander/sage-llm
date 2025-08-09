@@ -40,14 +40,14 @@ from vllm.model_executor.layers.quantization import QuantizationConfig
 from vllm.model_executor.layers.quantization.gptq import GPTQConfig
 from vllm.model_executor.layers.quantization.gptq_marlin import (
     GPTQMarlinConfig)
-from vllm.inputs.multimodal import MULTIMODAL_REGISTRY, MultiModalKwargs
-from vllm.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY, MultiModalKwargs
+from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
                                     NestedTensors)
-from vllm.inputs.multimodal.parse import (AudioItem, AudioProcessorItems,
+from vllm.io.inputs.multimodal.parse import (AudioItem, AudioProcessorItems,
                                    DictEmbeddingItems, ModalityData,
                                    ModalityDataItems, MultiModalDataItems,
                                    MultiModalDataParser)
-from vllm.inputs.multimodal.processing import (PromptReplacement, PromptUpdate,
+from vllm.io.inputs.multimodal.processing import (PromptReplacement, PromptUpdate,
                                         PromptUpdateDetails)
 
 from .minicpmv import (_MAX_FRAMES_PER_VIDEO, MiniCPMV2_6,

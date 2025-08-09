@@ -44,7 +44,7 @@ if typing.TYPE_CHECKING:
     from vllm.engine.llm_engine import LLMEngine
     from vllm.entrypoints.llm import LLM
     from vllm.executor.ray_utils import initialize_ray_cluster
-    from vllm.inputs import PromptType, TextPrompt, TokensPrompt
+    from vllm.io.inputs import PromptType, TextPrompt, TokensPrompt
     from vllm.model_executor.models import ModelRegistry
     from vllm.outputs import (ClassificationOutput,
                               ClassificationRequestOutput, CompletionOutput,

@@ -31,15 +31,15 @@ from vllm.model_executor.model_loader.weight_utils import default_weight_loader
 from vllm.model_executor.models.interfaces import (
     IsAttentionFree, MultiModalEmbeddings, SupportsMultiModalWithRawInput)
 from vllm.model_executor.models.utils import AutoWeightsLoader
-from vllm.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
                                     MultiModalFieldElem, MultiModalInputs,
                                     MultiModalKwargs, MultiModalKwargsItem,
                                     MultiModalSharedField, PlaceholderRange)
-from vllm.inputs.multimodal.parse import MultiModalDataItems
-from vllm.inputs.multimodal.processing import (BaseMultiModalProcessor,
+from vllm.io.inputs.multimodal.parse import MultiModalDataItems
+from vllm.io.inputs.multimodal.processing import (BaseMultiModalProcessor,
                                         BaseProcessingInfo, PromptUpdate)
-from vllm.inputs.multimodal.profiling import BaseDummyInputsBuilder
+from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
 from vllm.sequence import IntermediateTensors
 
 

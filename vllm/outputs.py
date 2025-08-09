@@ -12,7 +12,7 @@ from typing_extensions import TypeVar
 
 from vllm.utils.logger import init_logger
 from vllm.lora.request import LoRARequest
-from vllm.inputs.multimodal.inputs import MultiModalPlaceholderDict
+from vllm.io.inputs.multimodal.inputs import MultiModalPlaceholderDict
 from vllm.sampling_params import RequestOutputKind
 from vllm.sequence import (PromptLogprobs, RequestMetrics, SampleLogprobs,
                            SequenceGroup, SequenceGroupBase, SequenceStatus)

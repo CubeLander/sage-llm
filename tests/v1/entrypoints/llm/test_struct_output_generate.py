@@ -17,7 +17,7 @@ from tests.reasoning.utils import run_reasoning_extraction
 from vllm.entrypoints.llm import LLM
 from vllm.outputs import RequestOutput
 from vllm.platforms import current_platform
-from vllm.reasoning.abs_reasoning_parsers import ReasoningParserManager
+from vllm.io.reasoning.abs_reasoning_parsers import ReasoningParserManager
 from vllm.sampling_params import GuidedDecodingParams, SamplingParams
 
 if TYPE_CHECKING:

@@ -3,7 +3,7 @@
 
 import torch
 
-from vllm.inputs.multimodal.inputs import MultiModalKwargs, NestedTensors
+from vllm.io.inputs.multimodal.inputs import MultiModalKwargs, NestedTensors
 
 
 def assert_nested_tensors_equal(expected: NestedTensors,

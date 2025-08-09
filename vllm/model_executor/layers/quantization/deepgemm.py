@@ -5,7 +5,7 @@ import logging
 import torch
 
 from vllm.platforms import current_platform
-from vllm.triton_utils import triton
+from vllm.platforms.triton_tuils import triton
 from vllm.utils import direct_register_custom_op
 from vllm.utils.deep_gemm import fp8_gemm_nt
 

@@ -15,7 +15,7 @@ from vllm.utils import get_allowed_kwarg_only_overrides
 
 if TYPE_CHECKING:
     from vllm.config import ModelConfig
-    from vllm.inputs.multimodal import (MultiModalDataDict, MultiModalPlaceholderDict,
+    from vllm.io.inputs.multimodal import (MultiModalDataDict, MultiModalPlaceholderDict,
                                  MultiModalRegistry)
     from vllm.sequence import SequenceData
     from vllm.transformers_utils.tokenizer import AnyTokenizer

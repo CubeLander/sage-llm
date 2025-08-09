@@ -12,7 +12,7 @@ import torch
 from vllm.lora.ops.triton_ops.kernel_utils import do_shrink_kernel
 from vllm.lora.ops.triton_ops.utils import _get_lora_a_ptr
 from vllm.platforms import current_platform
-from vllm.triton_utils import tl, triton
+from vllm.platforms.triton_tuils import tl, triton
 from vllm.utils import direct_register_custom_op
 
 

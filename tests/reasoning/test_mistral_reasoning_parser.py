@@ -7,7 +7,7 @@ from mistral_common.tokens.tokenizers.tekken import (SpecialTokenInfo,
                                                      Tekkenizer)
 
 from tests.reasoning.utils import run_reasoning_extraction_mistral
-from vllm.reasoning import ReasoningParser, ReasoningParserManager
+from vllm.io.reasoning import ReasoningParser, ReasoningParserManager
 from vllm.transformers_utils.tokenizers.mistral import MistralTokenizer
 
 parser_name = "mistral"

@@ -9,7 +9,7 @@ from packaging import version
 
 from vllm import _custom_ops as ops
 from vllm.attention.backends.utils import PAD_SLOT_ID
-from vllm.triton_utils import HAS_TRITON, tl, triton
+from vllm.platforms.triton_tuils import HAS_TRITON, tl, triton
 
 TRITON3 = HAS_TRITON and (version.parse(triton.__version__)
                           >= version.parse("3.0.0"))

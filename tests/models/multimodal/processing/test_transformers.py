@@ -4,7 +4,7 @@ import pytest
 
 from vllm.assets.image import ImageAsset
 from vllm.config import ModelConfig
-from vllm.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
 
 
 # yapf: disable

@@ -16,7 +16,7 @@ from PIL.Image import Image
 
 from vllm import LLM, EngineArgs
 from vllm.entrypoints.score_utils import ScoreMultiModalParam
-from vllm.inputs.multimodal.utils import fetch_image
+from vllm.io.inputs.multimodal.utils import fetch_image
 from vllm.utils import FlexibleArgumentParser
 
 

@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Optional, Union, cast
 import torch
 from tpu_info import device
 
-from vllm.inputs import ProcessorInputs, PromptType
+from vllm.io.inputs import ProcessorInputs, PromptType
 from vllm.utils.logger import init_logger
 from vllm.sampling_params import SamplingParams, SamplingType
 from vllm.utils import DEFAULT_MAX_NUM_BATCHED_TOKENS

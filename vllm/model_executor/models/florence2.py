@@ -19,15 +19,15 @@ from vllm.model_executor.models.bart import (BartDecoder, BartEncoder,
                                              BartParallelLMHead,
                                              BartScaledWordEmbedding)
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import (MultiModalDataDict, MultiModalFieldConfig,
                                     MultiModalKwargs)
-from vllm.inputs.multimodal.parse import MultiModalDataItems
-from vllm.inputs.multimodal.processing import (BaseProcessingInfo,
+from vllm.io.inputs.multimodal.parse import MultiModalDataItems
+from vllm.io.inputs.multimodal.processing import (BaseProcessingInfo,
                                         EncDecMultiModalProcessor,
                                         PromptIndexTargets, PromptInsertion,
                                         PromptUpdate)
-from vllm.inputs.multimodal.profiling import BaseDummyInputsBuilder
+from vllm.io.inputs.multimodal.profiling import BaseDummyInputsBuilder
 from vllm.sequence import IntermediateTensors
 from vllm.utils.tensor_schema import TensorSchema, TensorShape
 

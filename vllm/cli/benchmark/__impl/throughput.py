@@ -26,7 +26,7 @@ from .lib.utils import (convert_to_pytorch_benchmark_format,
 from vllm.engine.arg_utils import AsyncEngineArgs, EngineArgs
 from vllm.entrypoints.openai.api_server import (
     build_async_engine_client_from_engine_args)
-from vllm.inputs import TextPrompt, TokensPrompt
+from vllm.io.inputs import TextPrompt, TokensPrompt
 from vllm.lora.request import LoRARequest
 from vllm.outputs import RequestOutput
 from vllm.sampling_params import BeamSearchParams

@@ -11,7 +11,7 @@ import torch
 
 from vllm.model_executor.layers.quantization.utils.quant_utils import (
     GroupShape)
-from vllm.inputs.multimodal import MultiModalPlaceholderMap
+from vllm.io.inputs.multimodal import MultiModalPlaceholderMap
 
 if TYPE_CHECKING:
     from vllm.worker.model_runner_base import (ModelRunnerBase,

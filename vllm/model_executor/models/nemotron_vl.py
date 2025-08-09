@@ -26,9 +26,9 @@ from vllm.model_executor.models.internvl import (
     InternVLImageInputs, InternVLImagePixelInputs, InternVLProcessor)
 from vllm.model_executor.models.module_mapping import MultiModelKeys
 from vllm.model_executor.sampling_metadata import SamplingMetadata
-from vllm.inputs.multimodal import MULTIMODAL_REGISTRY
-from vllm.inputs.multimodal.inputs import NestedTensors
-from vllm.inputs.multimodal.processing import PromptUpdateDetails
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal.inputs import NestedTensors
+from vllm.io.inputs.multimodal.processing import PromptUpdateDetails
 from vllm.sequence import IntermediateTensors
 from vllm.transformers_utils.processor import (
     cached_image_processor_from_config)

@@ -25,7 +25,7 @@ Not currently supported:
 import torch
 
 from vllm.platforms import current_platform
-from vllm.triton_utils import tl, triton
+from vllm.platforms.triton_tuils import tl, triton
 
 # Avoid misleading ROCm warning.
 if current_platform.is_rocm():

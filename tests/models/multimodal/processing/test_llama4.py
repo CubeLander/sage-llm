@@ -4,7 +4,7 @@
 
 import pytest
 
-from vllm.inputs.multimodal import MULTIMODAL_REGISTRY
+from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
 from vllm.transformers_utils.tokenizer import encode_tokens
 
 from ....conftest import ImageTestAssets

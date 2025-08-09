@@ -3,8 +3,8 @@
 
 import pytest
 
-from vllm.inputs import zip_enc_dec_prompts
-from vllm.inputs.parse import parse_and_batch_prompt
+from vllm.io.inputs import zip_enc_dec_prompts
+from vllm.io.inputs.parse import parse_and_batch_prompt
 
 STRING_INPUTS = [
     '',

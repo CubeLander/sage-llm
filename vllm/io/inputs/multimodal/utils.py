@@ -12,7 +12,7 @@ import torch
 from PIL import Image, UnidentifiedImageError
 
 import vllm.envs as envs
-from vllm.connections import HTTPConnection, global_http_connection
+from vllm.utils.network.httpconnection import HTTPConnection, global_http_connection
 from vllm.distributed import (get_tensor_model_parallel_rank,
                               get_tensor_model_parallel_world_size,
                               tensor_model_parallel_all_gather)
@@ -386,7 +386,7 @@ def group_mm_inputs_by_modality(
         mm_inputs: List of MultiModalKwargs.
 
     Returns:
-        list[list[vllm.inputs.multimodal.MultiModalKwargs]]: List of list of
+        list[list[vllm.io.inputs.multimodal.MultiModalKwargs]]: List of list of
         `MultiModalKwargs`, each inner list contains consecutive
         `MultiModalKwargs` with same modality.
     """

@@ -35,8 +35,8 @@ from vllm.entrypoints.score_utils import (ScoreContentPartParam,
                                           get_score_prompt)
 from vllm.entrypoints.utils import (_validate_truncation_size,
                                     log_non_default_args)
-from vllm.inputs import PromptType, SingletonPrompt, TextPrompt, TokensPrompt
-from vllm.inputs.parse import parse_and_batch_prompt
+from vllm.io.inputs import PromptType, SingletonPrompt, TextPrompt, TokensPrompt
+from vllm.io.inputs.parse import parse_and_batch_prompt
 from vllm.utils.logger import init_logger
 from vllm.lora.request import LoRARequest
 from vllm.model_executor.layers.quantization import QuantizationMethods
@@ -420,7 +420,7 @@ class LLM:
 
         Args:
             prompts: The prompts to the LLM. You may pass a sequence of prompts
-                for batch inference. See [PromptType][vllm.inputs.PromptType]
+                for batch inference. See [PromptType][vllm.io.inputs.PromptType]
                 for more details about the format of each prompts.
             sampling_params: The sampling parameters for text generation. If
                 None, we use the default sampling parameters.
@@ -1049,7 +1049,7 @@ class LLM:
 
         Args:
             prompts: The prompts to the LLM. You may pass a sequence of prompts
-                for batch inference. See [PromptType][vllm.inputs.PromptType]
+                for batch inference. See [PromptType][vllm.io.inputs.PromptType]
                 for more details about the format of each prompts.
             pooling_params: The pooling parameters for pooling. If None, we
                 use the default pooling parameters.
@@ -1153,7 +1153,7 @@ class LLM:
 
         Args:
             prompts: The prompts to the LLM. You may pass a sequence of prompts
-                for batch inference. See [PromptType][vllm.inputs.PromptType]
+                for batch inference. See [PromptType][vllm.io.inputs.PromptType]
                 for more details about the format of each prompts.
             pooling_params: The pooling parameters for pooling. If None, we
                 use the default pooling parameters.
@@ -1202,7 +1202,7 @@ class LLM:
 
         Args:
             prompts: The prompts to the LLM. You may pass a sequence of prompts
-                for batch inference. See [PromptType][vllm.inputs.PromptType]
+                for batch inference. See [PromptType][vllm.io.inputs.PromptType]
                 for more details about the format of each prompts.
             use_tqdm: If `True`, shows a tqdm progress bar.
                 If a callable (e.g., `functools.partial(tqdm, leave=False)`),
@@ -1246,7 +1246,7 @@ class LLM:
 
         Args:
             prompts: The prompts to the LLM. You may pass a sequence of prompts
-                for batch inference. See [PromptType][vllm.inputs.PromptType]
+                for batch inference. See [PromptType][vllm.io.inputs.PromptType]
                 for more details about the format of each prompts.
             use_tqdm: If `True`, shows a tqdm progress bar.
                 If a callable (e.g., `functools.partial(tqdm, leave=False)`),
@@ -1416,7 +1416,7 @@ class LLM:
                 the `data_2` list.
             data_2: The data to pair with the query to form the input to
                 the LLM. Can be text or multi-modal data. See [PromptType]
-                [vllm.inputs.PromptType] for more details about the format of
+                [vllm.io.inputs.PromptType] for more details about the format of
                 each prompt.
             use_tqdm: If `True`, shows a tqdm progress bar.
                 If a callable (e.g., `functools.partial(tqdm, leave=False)`),

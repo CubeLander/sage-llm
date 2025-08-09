@@ -8,7 +8,7 @@ from typing import Optional
 
 import pytest
 
-from vllm.inputs import token_inputs
+from vllm.io.inputs import token_inputs
 from vllm.lora.request import LoRARequest
 from vllm.sequence import Sequence
 from vllm.transformers_utils.tokenizer_group import TokenizerGroup

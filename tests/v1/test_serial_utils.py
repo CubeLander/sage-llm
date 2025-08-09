@@ -9,7 +9,7 @@ import numpy as np
 import pytest
 import torch
 
-from vllm.inputs.multimodal.inputs import (MultiModalBatchedField,
+from vllm.io.inputs.multimodal.inputs import (MultiModalBatchedField,
                                     MultiModalFieldElem, MultiModalFlatField,
                                     MultiModalKwargs, MultiModalKwargsItem,
                                     MultiModalSharedField, NestedTensors)

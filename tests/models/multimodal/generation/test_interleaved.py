@@ -5,7 +5,7 @@ import pytest
 
 from vllm.assets.image import ImageAsset
 from vllm.assets.video import VideoAsset
-from vllm.inputs.multimodal.image import convert_image_mode
+from vllm.io.inputs.multimodal.image import convert_image_mode
 
 models = ["llava-hf/llava-onevision-qwen2-0.5b-ov-hf"]
 
