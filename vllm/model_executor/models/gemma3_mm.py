@@ -17,7 +17,7 @@ from transformers import Gemma3Processor
 from transformers.models.gemma3.processing_gemma3 import Gemma3ProcessorKwargs
 
 from vllm.config import VllmConfig
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 import vllm.envs as envs
 from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
 from vllm.io.inputs.multimodal.inputs import MultiModalDataDict

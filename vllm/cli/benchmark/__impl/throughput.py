@@ -30,17 +30,17 @@ from vllm.outputs import RequestOutput
 from vllm.sampling_params import BeamSearchParams
 from vllm.utils import merge_async_iterators
 
-from .datasets import AIMODataset
-from .datasets import BurstGPTDataset
-from .datasets import ConversationDataset
-from .datasets import InstructCoderDataset
-from .datasets import RandomDataset
-from .datasets import SampleRequest
-from .datasets import ShareGPTDataset
-from .datasets import SonnetDataset
-from .datasets import VisionArenaDataset
-from .lib.utils import convert_to_pytorch_benchmark_format
-from .lib.utils import write_to_json
+from vllm.cli.benchmark.__impl.datasets import AIMODataset
+from vllm.cli.benchmark.__impl.datasets import BurstGPTDataset
+from vllm.cli.benchmark.__impl.datasets import ConversationDataset
+from vllm.cli.benchmark.__impl.datasets import InstructCoderDataset
+from vllm.cli.benchmark.__impl.datasets import RandomDataset
+from vllm.cli.benchmark.__impl.datasets import SampleRequest
+from vllm.cli.benchmark.__impl.datasets import ShareGPTDataset
+from vllm.cli.benchmark.__impl.datasets import SonnetDataset
+from vllm.cli.benchmark.__impl.datasets import VisionArenaDataset
+from vllm.cli.benchmark.__impl.lib.utils import convert_to_pytorch_benchmark_format
+from vllm.cli.benchmark.__impl.lib.utils import write_to_json
 
 
 def run_vllm(

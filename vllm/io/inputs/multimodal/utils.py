@@ -25,7 +25,7 @@ from vllm.utils.network.httpconnection import HTTPConnection
 from vllm.utils.network.httpconnection import global_http_connection
 
 from .audio import AudioMediaIO
-from .base import MediaIO
+from vllm.io.inputs.multimodal.base import MediaIO
 from .image import ImageEmbeddingMediaIO
 from .image import ImageMediaIO
 from .inputs import PlaceholderRange

@@ -17,7 +17,7 @@ from torch import nn
 
 from vllm.config import DeviceConfig
 from vllm.config import VllmConfig
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 from vllm.sequence import SequenceGroupMetadata
 from vllm.io.inputs.multimodal import BatchedTensorInputs
 from vllm.io.inputs.multimodal import MultiModalKwargs

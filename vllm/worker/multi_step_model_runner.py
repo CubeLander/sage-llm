@@ -16,7 +16,7 @@ from typing import Union
 
 import torch
 
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 from vllm.distributed import get_pp_group
 from vllm.model_executor.layers.sampler import PromptLogprobs
 from vllm.model_executor.layers.sampler import SampleLogprobs

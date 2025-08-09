@@ -6,7 +6,7 @@ from typing import Optional
 import torch
 
 from vllm.config import VllmConfig
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 from vllm.io.inputs.multimodal import MultiModalKwargs
 from vllm.model_executor.layers.sampler import SamplerOutput
 from vllm.worker.neuronx_distributed_model_runner import (

@@ -15,7 +15,7 @@ import torch.distributed
 import torch.nn as nn
 
 from vllm.config import VllmConfig
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 from vllm.distributed import ensure_model_parallel_initialized
 from vllm.distributed import init_distributed_environment
 from vllm.distributed import set_custom_all_reduce

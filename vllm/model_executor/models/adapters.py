@@ -159,7 +159,7 @@ def as_seq_cls_model(cls: _T) -> _T:
         return cls
 
     # Lazy import
-    from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+    from vllm.core.types import IntermediateTensors
     from vllm.model_executor.layers.linear import RowParallelLinear
     from vllm.model_executor.layers.pooler import ClassifierPooler
     from vllm.model_executor.layers.pooler import DispatchPooler

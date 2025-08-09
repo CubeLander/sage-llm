@@ -4,8 +4,8 @@ import argparse
 
 from vllm.cli.benchmark.base import BenchmarkSubcommandBase
 
-from .__impl.latency import add_cli_args
-from .__impl.latency import main
+from vllm.cli.benchmark.__impl.latency import add_cli_args
+from vllm.cli.benchmark.__impl.latency import main
 
 
 class BenchmarkLatencySubcommand(BenchmarkSubcommandBase):

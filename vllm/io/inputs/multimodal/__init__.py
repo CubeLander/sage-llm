@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
-from .base import MultiModalPlaceholderMap
+from vllm.io.inputs.multimodal.base import MultiModalPlaceholderMap
 from .hasher import MultiModalHashDict
 from .hasher import MultiModalHasher
 from .inputs import BatchedTensorInputs

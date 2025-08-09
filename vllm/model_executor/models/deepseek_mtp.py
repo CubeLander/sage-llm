@@ -10,7 +10,7 @@ from transformers import PretrainedConfig
 from vllm.config import CacheConfig
 from vllm.config import ModelConfig
 from vllm.config import VllmConfig
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 from vllm.model_executor.layers.fused_moe import FusedMoE
 from vllm.model_executor.layers.layernorm import RMSNorm
 from vllm.model_executor.layers.logits_processor import LogitsProcessor

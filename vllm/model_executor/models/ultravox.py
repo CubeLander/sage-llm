@@ -22,7 +22,7 @@ from transformers.models.whisper.modeling_whisper import WhisperEncoder
 
 from vllm import envs
 from vllm.config import VllmConfig
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 from vllm.forward_context import get_forward_context
 from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
 from vllm.io.inputs.multimodal.inputs import MultiModalDataDict

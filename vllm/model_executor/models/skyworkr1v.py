@@ -24,7 +24,7 @@ from transformers import PretrainedConfig
 from transformers import TensorType
 
 from vllm.config import VllmConfig
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
 from vllm.io.inputs.multimodal.image import convert_image_mode
 from vllm.io.inputs.multimodal.inputs import MultiModalDataDict

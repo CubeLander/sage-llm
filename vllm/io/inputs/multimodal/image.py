@@ -9,7 +9,7 @@ from PIL import Image
 import pybase64
 import torch
 
-from .base import MediaIO
+from vllm.io.inputs.multimodal.base import MediaIO
 
 
 def rescale_image_size(image: Image.Image,

@@ -8,20 +8,20 @@ from vllm.platforms import current_platform
 from vllm.utils.logger import init_logger
 
 if current_platform.is_cuda_alike():
-    from .fusion import FusionPass
-    from .fusion_attn import AttnFusionPass
+    from vllm.compilation.fusion import FusionPass
+    from vllm.compilation.fusion_attn import AttnFusionPass
 
 if current_platform.is_cuda():
-    from .collective_fusion import AllReduceFusionPass, AsyncTPPass
+    from vllm.compilation.collective_fusion import AllReduceFusionPass, AsyncTPPass
 
-from .activation_quant_fusion import ActivationQuantFusionPass
-from .fix_functionalization import FixFunctionalizationPass
-from .inductor_pass import CustomGraphPass
-from .inductor_pass import InductorPass
-from .inductor_pass import get_pass_context
-from .noop_elimination import NoOpEliminationPass
-from .sequence_parallelism import SequenceParallelismPass
-from .vllm_inductor_pass import VllmInductorPass
+from vllm.compilation.activation_quant_fusion import ActivationQuantFusionPass
+from vllm.compilation.fix_functionalization import FixFunctionalizationPass
+from vllm.compilation.inductor_pass import CustomGraphPass
+from vllm.compilation.inductor_pass import InductorPass
+from vllm.compilation.inductor_pass import get_pass_context
+from vllm.compilation.noop_elimination import NoOpEliminationPass
+from vllm.compilation.sequence_parallelism import SequenceParallelismPass
+from vllm.compilation.vllm_inductor_pass import VllmInductorPass
 
 logger = init_logger(__name__)
 

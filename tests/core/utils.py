@@ -20,7 +20,7 @@ from vllm.lora.request import LoRARequest
 from vllm.sampling_params import SamplingParams
 from vllm.sequence import Logprob
 from vllm.sequence import Sequence
-from vllm.sequence import SequenceData
+from vllm.core.types import SequenceData
 from vllm.sequence import SequenceGroup
 from vllm.sequence import SequenceGroupMetadata
 

@@ -34,7 +34,7 @@ from transformers.models.pixtral.modeling_pixtral import apply_rotary_pos_emb
 from transformers.tokenization_utils_base import TextInput
 
 from vllm.config import VllmConfig
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 from vllm.distributed import divide
 from vllm.distributed import get_tensor_model_parallel_world_size
 from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY

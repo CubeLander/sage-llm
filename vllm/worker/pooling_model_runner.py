@@ -14,7 +14,7 @@ from typing import cast
 import torch
 
 from vllm.config import VllmConfig
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 from vllm.distributed import get_pp_group
 from vllm.forward_context import set_forward_context
 from vllm.io.inputs.multimodal import MultiModalKwargs
@@ -22,7 +22,7 @@ from vllm.model_executor.models.interfaces_base import VllmModelForPooling
 from vllm.model_executor.pooling_metadata import PoolingMetadata
 from vllm.pooling_params import PoolingParams
 from vllm.sequence import PoolerOutput
-from vllm.sequence import SequenceData
+from vllm.core.types import SequenceData
 from vllm.sequence import SequenceGroupMetadata
 from vllm.utils.logger import init_logger
 from vllm.worker.model_runner import GPUModelRunnerBase

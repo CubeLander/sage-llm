@@ -10,7 +10,7 @@ from torch import nn
 from transformers import RobertaConfig
 
 from vllm.config import VllmConfig
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 from vllm.forward_context import get_forward_context
 from vllm.model_executor.layers.pooler import CLSPool
 from vllm.model_executor.layers.pooler import ClassifierPooler

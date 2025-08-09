@@ -7,7 +7,7 @@ from typing import Literal
 from PIL import Image
 import torch
 
-from .base import get_vllm_public_assets
+from vllm.assets.base import get_vllm_public_assets
 
 VLM_IMAGES_DIR = "vision_model_images"
 

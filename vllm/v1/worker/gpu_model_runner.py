@@ -29,8 +29,8 @@ from vllm.config import CompilationLevel
 from vllm.config import VllmConfig
 from vllm.config import get_layers_from_vllm_config
 from vllm.config import update_config
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
-from vllm.core.tensors.intermediate_tensors import PoolerOutput
+from vllm.core.types import IntermediateTensors
+from vllm.core.types.intermediate_tensors import PoolerOutput
 from vllm.distributed.eplb.eplb_state import EplbState
 from vllm.distributed.kv_transfer import get_kv_transfer_group
 from vllm.distributed.kv_transfer import has_kv_transfer_group

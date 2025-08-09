@@ -16,7 +16,7 @@ import numpy.typing as npt
 
 from vllm.utils import PlaceholderModule
 
-from .base import get_cache_dir
+from vllm.assets.base import get_cache_dir
 
 try:
     import librosa

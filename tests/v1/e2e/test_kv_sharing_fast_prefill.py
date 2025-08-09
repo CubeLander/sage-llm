@@ -12,7 +12,7 @@ from vllm import LLM
 from vllm import SamplingParams
 from vllm.config import CompilationConfig
 from vllm.config import CompilationLevel
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 from vllm.distributed import cleanup_dist_env_and_memory
 from vllm.forward_context import get_forward_context
 from vllm.model_executor.models.gemma3n import Gemma3nForConditionalGeneration

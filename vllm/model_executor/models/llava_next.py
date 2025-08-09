@@ -23,7 +23,7 @@ from transformers.models.llava_next.modeling_llava_next import unpad_image
 from typing_extensions import NotRequired
 
 from vllm.config import VllmConfig
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
 from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
 from vllm.io.inputs.multimodal.parse import ImageSize

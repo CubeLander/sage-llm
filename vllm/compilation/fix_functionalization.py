@@ -11,8 +11,8 @@ from torch._higher_order_ops.auto_functionalize import auto_functionalized
 
 from vllm.utils.logger import init_logger
 
-from .fx_utils import is_func
-from .vllm_inductor_pass import VllmInductorPass
+from vllm.compilation.fx_utils import is_func
+from vllm.compilation.vllm_inductor_pass import VllmInductorPass
 
 logger = init_logger(__name__)
 

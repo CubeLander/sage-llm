@@ -19,7 +19,7 @@ from vllm.config import VllmConfig
 import vllm.envs as envs
 from vllm.utils import is_torch_equal_or_newer
 
-from .inductor_pass import pass_context
+from vllm.compilation.inductor_pass import pass_context
 
 
 class CompilerInterface:

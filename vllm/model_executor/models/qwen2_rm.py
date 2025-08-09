@@ -14,7 +14,7 @@ import torch
 from torch import nn
 
 from vllm.config import VllmConfig
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 from vllm.model_executor.layers.linear import ColumnParallelLinear
 from vllm.model_executor.layers.linear import RowParallelLinear
 from vllm.model_executor.layers.pooler import DispatchPooler

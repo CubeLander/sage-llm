@@ -39,7 +39,7 @@ from vllm.config import DeviceConfig
 from vllm.config import ModelConfig
 from vllm.config import ParallelConfig
 from vllm.config import VllmConfig
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 from vllm.distributed import get_pp_group
 from vllm.distributed import get_tensor_model_parallel_world_size
 from vllm.distributed.utils import get_pp_indices

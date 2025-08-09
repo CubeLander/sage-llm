@@ -13,12 +13,12 @@ from vllm.config import VllmConfig
 from vllm.platforms import current_platform
 from vllm.utils.logger import init_logger
 
-from .fusion import GroupShape
-from .fusion import QUANT_OPS
-from .fusion import QuantKey
-from .fusion import empty_bf16
-from .fusion import empty_fp32
-from .vllm_inductor_pass import VllmInductorPass
+from vllm.compilation.fusion import GroupShape
+from vllm.compilation.fusion import QUANT_OPS
+from vllm.compilation.fusion import QuantKey
+from vllm.compilation.fusion import empty_bf16
+from vllm.compilation.fusion import empty_fp32
+from vllm.compilation.vllm_inductor_pass import VllmInductorPass
 
 logger = init_logger(__name__)
 

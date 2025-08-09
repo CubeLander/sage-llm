@@ -22,7 +22,7 @@ from transformers import ChameleonVQVAEConfig
 from vllm.attention import Attention
 from vllm.config import CacheConfig
 from vllm.config import VllmConfig
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 from vllm.distributed import get_pp_group
 from vllm.distributed import get_tensor_model_parallel_world_size
 from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY

@@ -18,8 +18,8 @@ import vllm.envs as envs
 from vllm.io.inputs import PromptType
 from vllm.sampling_params import BeamSearchParams
 
-from .lib.utils import convert_to_pytorch_benchmark_format
-from .lib.utils import write_to_json
+from vllm.cli.benchmark.__impl.lib.utils import convert_to_pytorch_benchmark_format
+from vllm.cli.benchmark.__impl.lib.utils import write_to_json
 
 
 def save_to_pytorch_benchmark_format(args: argparse.Namespace,

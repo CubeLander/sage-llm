@@ -11,7 +11,7 @@ import numpy.typing as npt
 
 from vllm.utils import PlaceholderModule
 
-from .base import MediaIO
+from vllm.io.inputs.multimodal.base import MediaIO
 
 try:
     import librosa

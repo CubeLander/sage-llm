@@ -16,7 +16,7 @@ from vllm.compilation.decorators import support_torch_compile
 from vllm.config import CacheConfig
 from vllm.config import PoolerConfig
 from vllm.config import VllmConfig
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 from vllm.distributed import get_tensor_model_parallel_world_size
 from vllm.model_executor.layers.activation import get_act_fn
 from vllm.model_executor.layers.linear import ColumnParallelLinear

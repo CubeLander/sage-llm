@@ -53,7 +53,7 @@ from transformers.models.glm4v.video_processing_glm4v import (
 from transformers.video_utils import VideoMetadata
 
 from vllm.config import VllmConfig
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 from vllm.distributed import parallel_state
 from vllm.distributed import utils as dist_utils
 from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY

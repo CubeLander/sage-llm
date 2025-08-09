@@ -17,9 +17,9 @@ from vllm.model_executor.layers.quantization.utils.quant_utils import (
 from vllm.platforms import current_platform
 from vllm.utils.logger import init_logger
 
-from .fx_utils import find_getitem_maybe
-from .multi_output_match import MultiOutputMatch
-from .vllm_inductor_pass import VllmInductorPass
+from vllm.compilation.fx_utils import find_getitem_maybe
+from vllm.compilation.multi_output_match import MultiOutputMatch
+from vllm.compilation.vllm_inductor_pass import VllmInductorPass
 
 logger = init_logger(__name__)
 FP8_DTYPE = current_platform.fp8_dtype()

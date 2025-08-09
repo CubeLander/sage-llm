@@ -9,7 +9,7 @@ import torch
 import torch.nn as nn
 
 from vllm.config import VllmConfig
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 from vllm.model_executor.layers.pooler import DispatchPooler
 from vllm.model_executor.layers.pooler import Pooler
 from vllm.model_executor.models.gemma2 import Gemma2Model

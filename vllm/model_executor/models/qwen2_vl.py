@@ -52,7 +52,7 @@ from transformers.models.qwen2_vl.video_processing_qwen2_vl import (
     Qwen2VLVideoProcessor)
 
 from vllm.config import VllmConfig
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 from vllm.distributed import parallel_state
 from vllm.distributed import tensor_model_parallel_all_gather
 from vllm.distributed import utils as dist_utils

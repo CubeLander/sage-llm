@@ -9,7 +9,7 @@ import torch
 from vllm.engine.arg_utils import EngineArgs
 from vllm.platforms import current_platform
 from vllm.sequence import SamplingParams
-from vllm.sequence import SequenceData
+from vllm.core.types import SequenceData
 from vllm.sequence import SequenceGroupMetadata
 from vllm.utils import make_tensor_with_pad
 from vllm.worker.enc_dec_model_runner import EncoderDecoderModelRunner

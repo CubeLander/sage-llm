@@ -9,7 +9,7 @@ from vllm.distributed.parallel_state import init_distributed_environment
 from vllm.engine.arg_utils import EngineArgs
 from vllm.model_executor.sampling_metadata import SamplingMetadata
 from vllm.sequence import SamplingParams
-from vllm.sequence import SequenceData
+from vllm.core.types import SequenceData
 from vllm.sequence import SequenceGroupMetadata
 from vllm.utils import get_open_port
 from vllm.worker.model_runner import ModelRunner

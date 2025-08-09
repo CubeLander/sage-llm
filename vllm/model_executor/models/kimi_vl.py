@@ -60,7 +60,7 @@ from transformers import BatchFeature
 from transformers.activations import GELUActivation
 
 from vllm.config import VllmConfig
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 from vllm.distributed import get_tensor_model_parallel_rank
 from vllm.distributed import get_tensor_model_parallel_world_size
 from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY

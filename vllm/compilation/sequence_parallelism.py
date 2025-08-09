@@ -15,7 +15,7 @@ from vllm.distributed.parallel_state import (
 from vllm.platforms import current_platform
 from vllm.utils.logger import init_logger
 
-from .vllm_inductor_pass import VllmInductorPass
+from vllm.compilation.vllm_inductor_pass import VllmInductorPass
 
 logger = init_logger(__name__)
 

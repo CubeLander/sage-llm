@@ -24,7 +24,7 @@ from transformers.models.llava_onevision.modeling_llava_onevision import (
 from typing_extensions import NotRequired
 
 from vllm.config import VllmConfig
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
 from vllm.io.inputs.multimodal.inputs import MultiModalDataDict
 from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig

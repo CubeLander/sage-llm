@@ -25,7 +25,7 @@ if TYPE_CHECKING:
     from vllm.io.inputs.multimodal import MultiModalDataDict
     from vllm.io.inputs.multimodal import MultiModalPlaceholderDict
     from vllm.io.inputs.multimodal import MultiModalRegistry
-    from vllm.sequence import SequenceData
+    from vllm.core.types import SequenceData
     from vllm.transformers_utils.tokenizer import AnyTokenizer
 else:
     ModelConfig = Any
@@ -231,7 +231,7 @@ class InputRegistry:
         The model is identified by ``model_config``.
         """
         # Avoid circular import
-        from vllm.sequence import SequenceData
+        from vllm.core.types import SequenceData
 
         if not model_config.is_multimodal_model:
             seq_data = SequenceData.from_prompt_token_counts((0, seq_len))

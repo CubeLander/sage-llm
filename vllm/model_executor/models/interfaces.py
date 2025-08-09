@@ -34,7 +34,7 @@ from .interfaces_base import is_pooling_model
 if TYPE_CHECKING:
     from vllm.attention import AttentionMetadata
     from vllm.config import VllmConfig
-    from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+    from vllm.core.types import IntermediateTensors
     from vllm.model_executor.models.utils import WeightsMapper
 
 logger = init_logger(__name__)

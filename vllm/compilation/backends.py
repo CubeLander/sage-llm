@@ -24,13 +24,13 @@ from vllm.utils import is_torch_equal_or_newer
 from vllm.utils import resolve_obj_by_qualname
 from vllm.utils.logger import init_logger
 
-from .compiler_interface import CompilerInterface
-from .compiler_interface import EagerAdaptor
-from .compiler_interface import InductorAdaptor
-from .compiler_interface import InductorStandaloneAdaptor
-from .counter import compilation_counter
-from .inductor_pass import InductorPass
-from .pass_manager import PostGradPassManager
+from vllm.compilation.compiler_interface import CompilerInterface
+from vllm.compilation.compiler_interface import EagerAdaptor
+from vllm.compilation.compiler_interface import InductorAdaptor
+from vllm.compilation.compiler_interface import InductorStandaloneAdaptor
+from vllm.compilation.counter import compilation_counter
+from vllm.compilation.inductor_pass import InductorPass
+from vllm.compilation.pass_manager import PostGradPassManager
 
 logger = init_logger(__name__)
 
@@ -542,7 +542,7 @@ class VllmBackend:
         # when dynamo calls the backend, it means the bytecode
         # transform and analysis are done
         compilation_counter.num_graphs_seen += 1
-        from .monitor import torch_compile_start_time
+        from vllm.compilation.monitor import torch_compile_start_time
         dynamo_time = time.time() - torch_compile_start_time
         logger.info("Dynamo bytecode transform time: %.2f s", dynamo_time)
         self.compilation_config.compilation_time += dynamo_time

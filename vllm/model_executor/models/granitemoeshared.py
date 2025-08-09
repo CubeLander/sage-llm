@@ -15,7 +15,7 @@ from transformers.models.granitemoeshared import GraniteMoeSharedConfig
 from vllm.compilation.decorators import support_torch_compile
 from vllm.config import CacheConfig
 from vllm.config import VllmConfig
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 from vllm.distributed import get_pp_group
 from vllm.model_executor.layers.activation import SiluAndMul
 from vllm.model_executor.layers.layernorm import RMSNorm

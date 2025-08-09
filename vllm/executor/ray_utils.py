@@ -14,7 +14,7 @@ from typing import Union
 import msgspec
 
 from vllm.config import ParallelConfig
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 from vllm.executor.msgspec_utils import decode_hook
 from vllm.executor.msgspec_utils import encode_hook
 import vllm.platforms

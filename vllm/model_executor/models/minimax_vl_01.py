@@ -14,7 +14,7 @@ from transformers import BatchFeature
 from transformers import PretrainedConfig
 
 from vllm.config import VllmConfig
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
 from vllm.io.inputs.multimodal.inputs import MultiModalFieldConfig
 from vllm.jsontree import json_map_leaves

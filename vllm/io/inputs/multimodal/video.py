@@ -14,7 +14,7 @@ import numpy.typing as npt
 
 from vllm import envs
 
-from .base import MediaIO
+from vllm.io.inputs.multimodal.base import MediaIO
 from .image import ImageMediaIO
 
 

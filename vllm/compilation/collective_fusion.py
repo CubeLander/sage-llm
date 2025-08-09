@@ -20,7 +20,7 @@ from vllm.platforms import current_platform
 from vllm.utils import direct_register_custom_op
 from vllm.utils.logger import init_logger
 
-from .vllm_inductor_pass import VllmInductorPass
+from vllm.compilation.vllm_inductor_pass import VllmInductorPass
 
 FP8_DTYPE = current_platform.fp8_dtype()
 

@@ -9,7 +9,7 @@ from torch._dynamo.utils import lazy_format_graph_code
 from vllm.config import VllmConfig
 from vllm.utils.logger import init_logger
 
-from .inductor_pass import InductorPass
+from vllm.compilation.inductor_pass import InductorPass
 
 logger = init_logger(__name__)
 

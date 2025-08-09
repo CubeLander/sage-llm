@@ -18,7 +18,7 @@ from transformers.models.aria.processing_aria import AriaProcessor
 from vllm.config import CacheConfig
 from vllm.config import QuantizationConfig
 from vllm.config import VllmConfig
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 from vllm.distributed import get_tensor_model_parallel_rank
 from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY
 from vllm.io.inputs.multimodal.inputs import MultiModalDataDict

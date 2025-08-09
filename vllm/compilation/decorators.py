@@ -17,11 +17,11 @@ from vllm.compilation.counter import compilation_counter
 from vllm.compilation.wrapper import TorchCompileWrapperWithCustomDispatcher
 from vllm.config import CompilationLevel
 from vllm.config import VllmConfig
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 from vllm.utils import supports_dynamo
 from vllm.utils.logger import init_logger
 
-from .monitor import start_monitoring_torch_compile
+from vllm.compilation.monitor import start_monitoring_torch_compile
 
 logger = init_logger(__name__)
 

@@ -47,7 +47,7 @@ from transformers.models.qwen2_5_vl.configuration_qwen2_5_vl import (
     Qwen2_5_VLVisionConfig)
 
 from vllm.config import VllmConfig
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 from vllm.distributed import parallel_state
 from vllm.distributed import utils as dist_utils
 from vllm.io.inputs.multimodal import MULTIMODAL_REGISTRY

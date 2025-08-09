@@ -17,7 +17,7 @@ import torch
 import torch.nn as nn
 
 from vllm.config import VllmConfig
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 from vllm.sequence import SequenceGroupMetadata
 from vllm.model_executor.layers.sampler import SamplerOutput
 from vllm.model_executor.models.interfaces import supports_transcription

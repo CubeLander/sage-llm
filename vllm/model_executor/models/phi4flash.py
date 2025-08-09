@@ -15,7 +15,7 @@ from vllm.attention import AttentionType
 from vllm.attention.selector import _Backend
 from vllm.config import CacheConfig
 from vllm.config import VllmConfig
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 from vllm.distributed import get_pp_group
 from vllm.distributed import get_tensor_model_parallel_world_size
 import vllm.envs as envs

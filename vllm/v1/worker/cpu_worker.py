@@ -9,7 +9,7 @@ import torch
 
 from vllm import envs
 from vllm.config import VllmConfig
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 from vllm.distributed.parallel_state import get_pp_group
 from vllm.distributed.parallel_state import get_tp_group
 from vllm.model_executor.utils import set_random_seed

@@ -38,16 +38,16 @@ from transformers import PreTrainedTokenizerBase
 
 from vllm.transformers_utils.tokenizer import get_tokenizer
 
-from .datasets import SampleRequest
-from .datasets import add_dataset_parser
-from .datasets import get_samples
-from .lib.endpoint_request_func import ASYNC_REQUEST_FUNCS
-from .lib.endpoint_request_func import OPENAI_COMPATIBLE_BACKENDS
-from .lib.endpoint_request_func import RequestFuncInput
-from .lib.endpoint_request_func import RequestFuncOutput
-from .lib.ready_checker import wait_for_endpoint
-from .lib.utils import convert_to_pytorch_benchmark_format
-from .lib.utils import write_to_json
+from vllm.cli.benchmark.__impl.datasets import SampleRequest
+from vllm.cli.benchmark.__impl.datasets import add_dataset_parser
+from vllm.cli.benchmark.__impl.datasets import get_samples
+from vllm.cli.benchmark.__impl.lib.endpoint_request_func import ASYNC_REQUEST_FUNCS
+from vllm.cli.benchmark.__impl.lib.endpoint_request_func import OPENAI_COMPATIBLE_BACKENDS
+from vllm.cli.benchmark.__impl.lib.endpoint_request_func import RequestFuncInput
+from vllm.cli.benchmark.__impl.lib.endpoint_request_func import RequestFuncOutput
+from vllm.cli.benchmark.__impl.lib.ready_checker import wait_for_endpoint
+from vllm.cli.benchmark.__impl.lib.utils import convert_to_pytorch_benchmark_format
+from vllm.cli.benchmark.__impl.lib.utils import write_to_json
 
 MILLISECONDS_TO_SECONDS_CONVERSION = 1000
 

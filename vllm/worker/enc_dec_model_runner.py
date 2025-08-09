@@ -20,7 +20,7 @@ from vllm.attention.backends.utils import PAD_SLOT_ID
 from vllm.attention.selector import get_env_variable_attn_backend
 from vllm.attention.selector import get_global_forced_attn_backend
 from vllm.config import VllmConfig
-from vllm.core.tensors.intermediate_tensors import IntermediateTensors
+from vllm.core.types import IntermediateTensors
 from vllm.forward_context import set_forward_context
 from vllm.io.inputs import INPUT_REGISTRY
 from vllm.io.inputs import InputRegistry

@@ -26,7 +26,7 @@ from vllm.core.interfaces import AllocStatus
 from vllm.core.interfaces import BlockSpaceManager
 from vllm.lora.request import LoRARequest
 from vllm.sequence import Sequence
-from vllm.sequence import SequenceData
+from vllm.core.types import SequenceData
 from vllm.sequence import SequenceGroup
 from vllm.sequence import SequenceGroupBase
 from vllm.sequence import SequenceGroupMetadata

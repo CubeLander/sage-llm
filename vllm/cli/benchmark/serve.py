@@ -4,8 +4,8 @@ import argparse
 
 from vllm.cli.benchmark.base import BenchmarkSubcommandBase
 
-from .__impl.serve import add_cli_args
-from .__impl.serve import main
+from vllm.cli.benchmark.__impl.serve import add_cli_args
+from vllm.cli.benchmark.__impl.serve import main
 
 
 class BenchmarkServingSubcommand(BenchmarkSubcommandBase):
