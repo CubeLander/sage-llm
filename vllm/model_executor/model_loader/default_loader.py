@@ -252,7 +252,8 @@ class DefaultModelLoader(BaseModelLoader):
                               model_config.revision,
                               fall_back_to_pt=True,
                               allow_patterns_overrides=None)
-
+        
+    # 这里的model不是nn.Module!而是vllm自己实现的
     def load_weights(self, model: nn.Module,
                      model_config: ModelConfig) -> None:
         weights_to_load = {name for name, _ in model.named_parameters()}

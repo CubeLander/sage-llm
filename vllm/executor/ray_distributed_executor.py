@@ -443,7 +443,7 @@ class RayDistributedExecutor(DistributedExecutorBase):
             output = self.output_decoder.decode(outputs[0])
         return output
 
-    def _run_workers(
+    def _run_workers( # 在这里编排workers干什么
         self,
         method: Union[str, Callable],
         *args,
@@ -589,7 +589,7 @@ class RayDistributedExecutor(DistributedExecutorBase):
                     ]
                 else:
                     outputs = [
-                        worker.execute_model_spmd.
+                        worker.execute_model_spmd. # 核心任务注入逻辑
                         bind(  # type: ignore[attr-defined]
                             outputs[i]) for i, worker in enumerate(tp_group)
                     ]

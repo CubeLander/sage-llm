@@ -48,4 +48,4 @@ class BaseModelLoader(ABC):
             # Quantization does not happen in `load_weights` but after it
             self.load_weights(model, model_config)
             process_weights_after_loading(model, model_config, target_device)
-        return model.eval()
+        return model.eval() # model:torch.nn.module
