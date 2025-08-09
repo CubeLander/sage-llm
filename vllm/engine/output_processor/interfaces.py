@@ -9,7 +9,7 @@ from typing import List
 from vllm.config import SchedulerConfig
 from vllm.core.scheduler import Scheduler
 from vllm.engine.output_processor.stop_checker import StopChecker
-from vllm.sequence import Sequence
+from vllm.core.types.sequence import VllmSequence
 from vllm.sequence import SequenceGroup
 from vllm.sequence import SequenceGroupOutput
 from vllm.transformers_utils.detokenizer import Detokenizer
@@ -35,7 +35,7 @@ class SequenceGroupOutputProcessor(ABC):
         detokenizer: Detokenizer,
         scheduler: List[Scheduler],
         seq_counter: Counter,
-        get_tokenizer_for_seq: Callable[[Sequence], AnyTokenizer],
+        get_tokenizer_for_seq: Callable[[VllmSequence], AnyTokenizer],
         stop_checker: "StopChecker",
     ):
         """Create an output processor.

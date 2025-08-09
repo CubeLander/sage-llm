@@ -15,9 +15,9 @@ from vllm.core.block.prefix_caching_block import LastAccessBlocksTracker
 from vllm.core.block.utils import check_no_caching_or_swa_for_blockmgr_encdec
 from vllm.core.interfaces import AllocStatus
 from vllm.core.interfaces import BlockSpaceManager
-from vllm.sequence import Sequence
+from vllm.core.types.sequence import VllmSequence
 from vllm.sequence import SequenceGroup
-from vllm.sequence import SequenceStatus
+from vllm.core.types import SequenceStatus
 from vllm.utils import Device
 
 SeqId = int
@@ -151,7 +151,7 @@ class SelfAttnBlockSpaceManager(BlockSpaceManager):
         else:
             return AllocStatus.LATER
 
-    def _allocate_sequence(self, seq: Sequence) -> BlockTable:
+    def _allocate_sequence(self, seq: VllmSequence) -> BlockTable:
         block_table = BlockTable(
             block_size=self.block_size,
             block_allocator=self.block_allocator,
@@ -240,7 +240,7 @@ class SelfAttnBlockSpaceManager(BlockSpaceManager):
 
     def append_slots(
         self,
-        seq: Sequence,
+        seq: VllmSequence,
         num_lookahead_slots: int,
     ) -> List[Tuple[int, int]]:
 
@@ -256,7 +256,7 @@ class SelfAttnBlockSpaceManager(BlockSpaceManager):
         new_cows = self.block_allocator.clear_copy_on_writes()
         return new_cows
 
-    def free(self, seq: Sequence) -> None:
+    def free(self, seq: VllmSequence) -> None:
         seq_id = seq.seq_id
 
         if seq_id not in self.block_tables:
@@ -275,7 +275,7 @@ class SelfAttnBlockSpaceManager(BlockSpaceManager):
         self.block_tables[seq_id].free()
         del self.block_tables[seq_id]
 
-    def remove_seq_from_computed_blocks_tracker(self, seq: Sequence) -> None:
+    def remove_seq_from_computed_blocks_tracker(self, seq: VllmSequence) -> None:
         seq_id = seq.seq_id
         self._computed_blocks_tracker.remove_seq(seq_id)
 
@@ -287,7 +287,7 @@ class SelfAttnBlockSpaceManager(BlockSpaceManager):
         self.cross_block_tables[request_id].free()
         del self.cross_block_tables[request_id]
 
-    def get_block_table(self, seq: Sequence) -> List[int]:
+    def get_block_table(self, seq: VllmSequence) -> List[int]:
         block_ids = self.block_tables[seq.seq_id].physical_block_ids
         return block_ids  # type: ignore
 
@@ -298,7 +298,7 @@ class SelfAttnBlockSpaceManager(BlockSpaceManager):
         assert all(b is not None for b in block_ids)
         return block_ids  # type: ignore
 
-    def access_all_blocks_in_seq(self, seq: Sequence, now: float):
+    def access_all_blocks_in_seq(self, seq: VllmSequence, now: float):
         if self.enable_caching:
             # Record the latest access time for the sequence. The actual update
             # of the block ids is deferred to the sequence free(..) call, since
@@ -317,7 +317,7 @@ class SelfAttnBlockSpaceManager(BlockSpaceManager):
         self.block_allocator.mark_blocks_as_computed([])
 
     def get_common_computed_block_ids(
-            self, seqs: List[Sequence]) -> GenericSequence[int]:
+            self, seqs: List[VllmSequence]) -> GenericSequence[int]:
         """Determine which blocks for which we skip prefill.
 
         With prefix caching we can skip prefill for previously-generated blocks.
@@ -341,7 +341,7 @@ class SelfAttnBlockSpaceManager(BlockSpaceManager):
         return self.block_allocator.get_common_computed_block_ids(
             computed_seq_block_ids)  # type: ignore
 
-    def fork(self, parent_seq: Sequence, child_seq: Sequence) -> None:
+    def fork(self, parent_seq: VllmSequence, child_seq: VllmSequence) -> None:
         if parent_seq.seq_id not in self.block_tables:
             # Parent sequence has either been freed or never existed.
             return
@@ -523,7 +523,7 @@ class SelfAttnBlockSpaceManager(BlockSpaceManager):
         else:
             return AllocStatus.LATER
 
-    def get_num_cached_tokens(self, seq: Sequence) -> int:
+    def get_num_cached_tokens(self, seq: VllmSequence) -> int:
         """Get the number of tokens in blocks that are already computed and
         cached in the block manager for the sequence.
         """

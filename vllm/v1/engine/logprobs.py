@@ -6,7 +6,7 @@ from dataclasses import dataclass
 import itertools
 from typing import Optional
 
-from vllm.sequence import Logprob
+from vllm.core.types.logprob import Logprob
 from vllm.sequence import PromptLogprobs
 from vllm.sequence import SampleLogprobs
 from vllm.transformers_utils.detokenizer_utils import (

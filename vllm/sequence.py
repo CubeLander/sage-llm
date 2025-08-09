@@ -21,6 +21,10 @@ from typing import Union
 import msgspec
 import torch
 
+from vllm.core.types.logprob import Logprob
+from vllm.core.types.sequence import VllmSequence
+from vllm.core.types.sequence_data import SequenceData
+from vllm.core.types.sequence_status import SequenceStatus
 from vllm.io.inputs import SingletonInputs
 from vllm.io.inputs.multimodal import MultiModalKwargs
 from vllm.io.inputs.multimodal import MultiModalPlaceholderDict
@@ -46,18 +50,6 @@ def array_full(token_id: int, count: int):
 # We use dataclass for now because it is used for
 # openai server output, and msgspec is not serializable.
 # TODO(sang): Fix it.
-@dataclass
-class Logprob:
-    """Infos for supporting OpenAI compatible logprobs and token ranks.
-
-    Attributes:
-        logprob: The logprob of chosen token
-        rank: The vocab rank of chosen token (>=1)
-        decoded_token: The decoded chosen token index
-    """
-    logprob: float
-    rank: Optional[int] = None
-    decoded_token: Optional[str] = None
 
 
 # {token_id -> logprob} per each sequence group. None if the corresponding
@@ -67,38 +59,7 @@ PromptLogprobs = list[Optional[dict[int, Logprob]]]
 SampleLogprobs = list[dict[int, Logprob]]
 
 
-class SequenceStatus(enum.IntEnum):
-    """Status of a sequence."""
-    WAITING = 0
-    RUNNING = 1
-    SWAPPED = 2
-    # Note: anything after SWAPPED (2) will be considered
-    # as a finished status.
-    FINISHED_STOPPED = 3
-    FINISHED_LENGTH_CAPPED = 4
-    FINISHED_ABORTED = 5
-    FINISHED_IGNORED = 6
 
-    @staticmethod
-    def is_finished(status: "SequenceStatus") -> bool:
-        return status > SequenceStatus.SWAPPED
-
-    @staticmethod
-    def get_finished_reason(status: "SequenceStatus") -> Union[str, None]:
-        if status == SequenceStatus.FINISHED_STOPPED:
-            finish_reason = "stop"
-        elif status == SequenceStatus.FINISHED_LENGTH_CAPPED:
-            finish_reason = "length"
-        elif status == SequenceStatus.FINISHED_ABORTED:
-            finish_reason = "abort"
-        elif status == SequenceStatus.FINISHED_IGNORED:
-            # The ignored sequences are the sequences whose prompt lengths
-            # are longer than the model's length cap. Therefore, the stop
-            # reason should also be "length" as in OpenAI API.
-            finish_reason = "length"
-        else:
-            finish_reason = None
-        return finish_reason
 
 
 class SequenceStage(enum.Enum):
@@ -150,235 +111,6 @@ class SequenceDataDelta(
     new_stage: SequenceStage
 
 
-class Sequence:
-    """Stores the data, status, and block information of a sequence.
-
-    The sequence is constructed from the
-    [`DecoderOnlyInputs`][vllm.io.inputs.data.DecoderOnlyInputs] (for decoder-only)
-    or [`EncoderDecoderInputs`][vllm.io.inputs.data.EncoderDecoderInputs]
-    (for encoder-decoder) instance passed in through the `inputs`
-    constructor argument.
-
-    Args:
-        seq_id: The ID of the sequence.
-        inputs: The inputs of the sequence.
-        block_size: The block size of the sequence. Should be the same as the
-            block size used by the block manager and cache engine.
-        eos_token_id: The end-of-sequence (EOS) token id recognized by this LLM.
-        lora_request: LoRA request.
-    """
-
-    def __init__(
-        self,
-        seq_id: int,
-        inputs: SingletonInputs,
-        block_size: int,
-        eos_token_id: Optional[int] = None,
-        lora_request: Optional[LoRARequest] = None,
-    ) -> None:
-        self.seq_id = seq_id
-        self.inputs = inputs
-        self.block_size = block_size
-        self.eos_token_id = eos_token_id
-        self.lora_request = lora_request
-
-        self.data = SequenceData.from_seqs(
-            self.prompt_token_ids,
-            prompt_embeds=self.inputs["prompt_embeds"]
-            if self.inputs["type"] == "embeds" else None)
-        self.output_logprobs: SampleLogprobs = []
-        self.output_text = ""
-
-        self.status = SequenceStatus.WAITING
-        self.stop_reason: Union[int, str, None] = None
-
-        # These are used to keep track of delta outputs
-        self._last_output_token_ids_offset: int = 0
-        self._last_output_text_offset: int = 0
-
-        # Used for incremental detokenization
-        self.prefix_offset = 0
-        self.read_offset = 0
-        # Input + output tokens
-        self.tokens: Optional[list[str]] = None
-
-    @property
-    def n_blocks(self) -> int:
-        return (self.get_len() + self.block_size - 1) // self.block_size
-
-    @property
-    def prompt(self) -> Optional[str]:
-        if self.inputs["type"] == "embeds":
-            return None
-        return self.inputs.get("prompt")
-
-    @property
-    def prompt_token_ids(self) -> list[int]:
-        if self.inputs["type"] == "embeds":
-            return [0] * len(self.inputs["prompt_embeds"])
-        return self.inputs["prompt_token_ids"]
-
-    @property
-    def token_type_ids(self) -> list[int]:
-        if self.inputs["type"] == "embeds":
-            return []
-        return self.inputs.get("token_type_ids", [])
-
-    @property
-    def multi_modal_data(self) -> MultiModalKwargs:
-        if self.inputs["type"] == "multimodal":
-            return self.inputs["mm_kwargs"]
-
-        return MultiModalKwargs({})
-
-    @property
-    def multi_modal_placeholders(self) -> MultiModalPlaceholderDict:
-        if self.inputs["type"] == "multimodal":
-            return self.inputs["mm_placeholders"]
-
-        return {}
-
-    @property
-    def lora_int_id(self) -> int:
-        return self.lora_request.lora_int_id if self.lora_request else 0
-
-    def get_output_text_to_return(self, buffer_length: int,
-                                  delta: bool) -> str:
-        """If delta is True, only new text since the last call to
-        this method is returned"""
-
-        # We return the full output text if the sequence is finished.
-        truncate = buffer_length and not self.is_finished()
-        if not delta:
-            return self.output_text[:-buffer_length] if truncate else (
-                self.output_text)
-        length = len(self.output_text)
-        if truncate:
-            length -= buffer_length
-        last_offset = self._last_output_text_offset
-        if last_offset < length:
-            self._last_output_text_offset = length
-            return self.output_text[last_offset:length]
-        return ""
-
-    def get_output_token_ids_to_return(
-            self, delta: bool) -> Union[GenericSequence[int], int]:
-        """If delta is True, only new tokens since the last call to
-        this method are returned"""
-        if not delta:
-            return self.get_output_token_ids()
-
-        output_len = self.get_output_len()
-
-        # Get the number of new tokens
-        num_new_tokens = output_len - self._last_output_token_ids_offset
-        self._last_output_token_ids_offset = output_len
-
-        # Return new tokens
-        if num_new_tokens == 1:
-            # Optimization for single decode token case
-            # (which is what we have most of the time)
-            return self.data._cached_all_token_ids[-1]
-
-        if num_new_tokens == 0:
-            return []
-
-        return self.data._cached_all_token_ids[-num_new_tokens:]
-
-    def hash_of_block(self, logical_idx: int) -> int:
-        # TODO This can produce incorrect hash when block size > prompt size
-
-        # Compute the number of tokens in the sequence
-        # TODO: The current hashing function is O(L^2). We should optimize
-        # this in the future.
-        num_tokens = self.num_hashed_tokens_of_block(logical_idx)
-        hashed_tokens = self.data.get_prefix_token_ids(num_tokens)
-        return hash((hashed_tokens, self.lora_int_id))
-
-    def extra_hash(self) -> Optional[int]:
-        """
-        This function computes an extra hash for a sequence, specifically
-        designed for prefix caching mode. The final sequence hash is determined
-        by applying token_ids from the sequence's blocks.
-        """
-        if self.lora_int_id == 0:
-            return None
-
-        # NOTE: If there are additional factors influencing the block aside from
-        # token_ids, include them as input parameters to the hash.
-        return hash(self.lora_int_id)
-
-    def num_hashed_tokens_of_block(self, logical_idx: int):
-        return logical_idx * self.block_size + self.block_size
-
-    def reset_state_for_recompute(self):
-        """Reset the sequence states for recomputation."""
-        self.data.reset_state_for_recompute()
-
-    def append_token_id(self,
-                        token_id: int,
-                        logprobs: dict[int, Logprob],
-                        token_embed: Optional[torch.Tensor] = None) -> None:
-        assert token_id in logprobs
-        self.output_logprobs.append(logprobs)
-        self.data.append_token_id(token_id, logprobs[token_id].logprob,
-                                  token_embed)
-
-    def get_len(self) -> int:
-        return self.data.get_len()
-
-    def get_prompt_len(self) -> int:
-        return self.data.get_prompt_len()
-
-    def get_output_len(self) -> int:
-        return self.data.get_output_len()
-
-    def get_token_ids(self) -> list[int]:
-        return self.data.get_token_ids()
-
-    def get_prompt_token_ids(self) -> tuple[int, ...]:
-        return self.data.get_prompt_token_ids()
-
-    def get_last_token_id(self) -> int:
-        return self.data.get_last_token_id()
-
-    def get_output_token_ids(self) -> tuple[int, ...]:
-        return self.data.get_output_token_ids()
-
-    def get_cumulative_logprob(self) -> float:
-        return self.data.cumulative_logprob
-
-    def is_finished(self) -> bool:
-        return SequenceStatus.is_finished(self.status)
-
-    def fork(self, new_seq_id: int) -> "Sequence":
-        new_seq = copy.deepcopy(self)
-        new_seq.seq_id = new_seq_id
-        return new_seq
-
-    def get_num_new_tokens(self) -> int:
-        """Get the number of new tokens to be computed.
-
-        Returns:
-            The new number of tokens to be computed. I.e., 1 for decode, or
-            the remaining prompt size for prefill.
-        """
-        if self.data.stage == SequenceStage.DECODE:
-            return 1
-        return self.data.get_num_uncomputed_tokens()
-
-    def get_num_computed_tokens(self) -> int:
-        return self.data.get_num_computed_tokens()
-
-    def is_prefill(self) -> bool:
-        return self.data.stage == SequenceStage.PREFILL
-
-    def __repr__(self) -> str:
-        return (f"Sequence(seq_id={self.seq_id}, "
-                f"status={self.status.name}, "
-                f"num_blocks={self.n_blocks})")
-
-
 class SequenceGroupState(msgspec.Struct,
                          omit_defaults=True):  # type: ignore[call-arg]
     """Mutable state tied to a specific sequence group"""
@@ -416,13 +148,13 @@ class SequenceGroup:
 
     def __init__(self,
                  request_id: str,
-                 seqs: list[Sequence],
+                 seqs: list[VllmSequence],
                  arrival_time: float,
                  sampling_params: Optional[SamplingParams] = None,
                  lora_request: Optional[LoRARequest] = None,
                  pooling_params: Optional[PoolingParams] = None,
                  pooled_data: Optional[torch.Tensor] = None,
-                 encoder_seq: Optional[Sequence] = None,
+                 encoder_seq: Optional[VllmSequence] = None,
                  trace_headers: Optional[Mapping[str, str]] = None,
                  priority: int = 0,
                  draft_size: int = 1) -> None:
@@ -575,7 +307,7 @@ class SequenceGroup:
     def get_seqs(
         self,
         status: Optional[SequenceStatus] = None,
-    ) -> list[Sequence]:
+    ) -> list[VllmSequence]:
         if status is None:
             return self.seqs
 
@@ -587,10 +319,10 @@ class SequenceGroup:
     def is_encoder_decoder(self) -> bool:
         return self.encoder_seq is not None
 
-    def get_encoder_seq(self) -> Optional[Sequence]:
+    def get_encoder_seq(self) -> Optional[VllmSequence]:
         return self.encoder_seq
 
-    def get_finished_seqs(self) -> list[Sequence]:
+    def get_finished_seqs(self) -> list[VllmSequence]:
         if self.is_single_seq:
             return self.seqs if self.first_seq.is_finished() else []
 
@@ -1116,83 +848,3 @@ class SequenceGroupBase:
         output, or adding request in the engine again.
         """
         raise NotImplementedError
-
-
-class ParallelSampleSequenceGroup(SequenceGroupBase):
-
-    @staticmethod
-    def add_request(request_id: str, engine, params, **kwargs):
-        original_params = params
-        group = ParallelSampleSequenceGroup(request_id)
-        seqs = []
-        for i in range(original_params.n):
-            request_id_i = f"{request_id}_parallel_sample_{i}"
-            group.seq_id_to_index[request_id_i] = i
-            params = original_params.clone()
-            params.n = 1
-            if params.seed is not None:
-                params.seed += i
-            seq_group = engine._add_processed_request(
-                request_id_i,
-                params=params,
-                **kwargs,
-            )  # type: ignore
-            assert seq_group is not None
-            engine.seq_id_to_seq_group[request_id_i] = group
-            group.to_be_finished[request_id_i] = seq_group
-            seqs.append(seq_group.seqs[0])
-
-        # for parallel sampling, the `assembled_seq_group` is always
-        # available, since we have all the sequences ready, and they
-        # will not change.
-        group.assembled_seq_group = SequenceGroup(
-            request_id=request_id,
-            seqs=seqs,
-            arrival_time=seq_group.arrival_time,
-            sampling_params=original_params,
-            lora_request=seq_group.lora_request,
-            pooling_params=seq_group.pooling_params,
-            pooled_data=seq_group.pooled_data,
-            encoder_seq=seq_group.encoder_seq,
-            trace_headers=seq_group.trace_headers,
-            priority=seq_group.priority,
-        )
-
-        group.streaming = params.output_kind == RequestOutputKind.DELTA
-        group.output_produced = False
-
-    def maybe_assemble_group(
-            self, seq_group: SequenceGroup) -> Optional[SequenceGroup]:
-
-        # in the streaming mode, we will return the assembled sequence
-        # for the first remaining sequence, and then return None for the
-        # rest of sequences
-        if self.streaming:
-            first_remaining_id = next(iter(self.to_be_finished))
-            if seq_group.request_id == first_remaining_id:
-                return self.assembled_seq_group
-            return None
-
-        # in the non-streaming mode, we will return the assembled sequence
-        # when the last sequences finishes, and then return None for the
-        # rest of the time
-        if (len(self.to_be_finished) == 1
-                and seq_group.request_id in self.to_be_finished
-                and seq_group.is_finished()):
-            assert self.assembled_seq_group is not None
-            params = self.assembled_seq_group.sampling_params
-            assert isinstance(params, SamplingParams)
-            if not self.output_produced:
-                self.output_produced = True
-                if params._real_n is not None:
-                    # Get the top-n sequences.
-                    n = params._real_n or params.n
-                    seqs = self.assembled_seq_group.seqs
-                    sorting_key = lambda seq: seq.get_cumulative_logprob()
-                    sorted_seqs = sorted(seqs, key=sorting_key, reverse=True)
-                    top_n_seqs = sorted_seqs[:n]
-                    self.assembled_seq_group.seqs = top_n_seqs
-                return self.assembled_seq_group
-            if self.output_produced:
-                return None
-        return None

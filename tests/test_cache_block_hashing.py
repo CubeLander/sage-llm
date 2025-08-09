@@ -10,7 +10,7 @@ import pytest
 
 from vllm.io.inputs import token_inputs
 from vllm.lora.request import LoRARequest
-from vllm.sequence import Sequence
+from vllm.core.types.sequence import VllmSequence
 from vllm.transformers_utils.tokenizer_group import TokenizerGroup
 
 # Make two prefixes with different first blocks.
@@ -72,7 +72,7 @@ def test_auto_prefix_caching(model: str, block_size: int, max_num_seqs: int,
             for seq_id, prompt in enumerate(prompts):
                 hashes[-1].append([])
                 prompt_token_ids = tokenizer.encode(prompt)
-                seq = Sequence(seq_id,
+                seq = VllmSequence(seq_id,
                                inputs=token_inputs(prompt_token_ids,
                                                    prompt=prompt),
                                block_size=block_size,

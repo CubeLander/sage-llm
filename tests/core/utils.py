@@ -18,8 +18,8 @@ from vllm.io.inputs import embeds_inputs
 from vllm.io.inputs import token_inputs
 from vllm.lora.request import LoRARequest
 from vllm.sampling_params import SamplingParams
-from vllm.sequence import Logprob
-from vllm.sequence import Sequence
+from vllm.core.types.logprob import Logprob
+from vllm.core.types.sequence import VllmSequence
 from vllm.core.types import SequenceData
 from vllm.sequence import SequenceGroup
 from vllm.sequence import SequenceGroupMetadata
@@ -34,7 +34,7 @@ def create_dummy_prompt(
     prompt_embeds: Optional[torch.Tensor] = None,
     min_tokens: int = 0,
     max_tokens: int = 16,
-) -> tuple[Sequence, SequenceGroup]:
+) -> tuple[VllmSequence, SequenceGroup]:
     if not block_size:
         block_size = prompt_length
 
@@ -48,7 +48,7 @@ def create_dummy_prompt(
         prompt_token_ids=prompt_tokens,
         prompt=prompt_str) if prompt_embeds is None else embeds_inputs(
             prompt_embeds=prompt_embeds)
-    prompt = Sequence(
+    prompt = VllmSequence(
         int(request_id),
         inputs=inputs,
         block_size=block_size,
@@ -66,8 +66,8 @@ def create_dummy_prompt(
 
 
 def create_dummy_lora_sequence(request_id: int, token_ids: list[int],
-                               block_size: int, lora_int_id: int) -> Sequence:
-    return Sequence(seq_id=request_id,
+                               block_size: int, lora_int_id: int) -> VllmSequence:
+    return VllmSequence(seq_id=request_id,
                     inputs=token_inputs(token_ids),
                     block_size=block_size,
                     lora_request=LoRARequest(lora_name="dummy",
@@ -76,8 +76,8 @@ def create_dummy_lora_sequence(request_id: int, token_ids: list[int],
 
 
 def create_dummy_sequence(request_id: int, token_ids: list[int],
-                          block_size: int) -> Sequence:
-    return Sequence(
+                          block_size: int) -> VllmSequence:
+    return VllmSequence(
         seq_id=request_id,
         inputs=token_inputs(token_ids),
         block_size=block_size,
@@ -90,7 +90,7 @@ def create_dummy_prompt_encoder_decoder(
     encoder_prompt_length: int,
     block_size: Optional[int] = None,
     lora_request: Optional[LoRARequest] = None,
-) -> tuple[Sequence, Sequence, SequenceGroup]:
+) -> tuple[VllmSequence, VllmSequence, SequenceGroup]:
     if not block_size:
         block_size = decoder_prompt_length
 
@@ -109,11 +109,11 @@ def create_dummy_prompt_encoder_decoder(
                                 prompt=encoder_prompt_str),
     }
 
-    decoder_prompt = Sequence(int(request_id),
+    decoder_prompt = VllmSequence(int(request_id),
                               inputs=inputs["decoder"],
                               block_size=block_size)
 
-    encoder_prompt = Sequence(int(request_id),
+    encoder_prompt = VllmSequence(int(request_id),
                               inputs=inputs["encoder"],
                               block_size=block_size)
 
@@ -140,9 +140,9 @@ def create_seq_group(
 
     prompt_token_ids = [0] * seq_prompt_len
 
-    seqs: list[Sequence] = []
+    seqs: list[VllmSequence] = []
     for seq_id_offset, output_len in enumerate(seq_output_lens):
-        seq = Sequence(
+        seq = VllmSequence(
             seq_id=seq_id_start + seq_id_offset,
             inputs=token_inputs(prompt_token_ids),
             block_size=16,
@@ -187,7 +187,7 @@ def create_seq_group_encoder_decoder(
     seqs = []
     for seq_id_offset, output_len in enumerate(seq_output_lens):
         # Construct decoder input sequences
-        seq = Sequence(
+        seq = VllmSequence(
             seq_id=seq_id_start + seq_id_offset,
             inputs=inputs["decoder"],
             block_size=16,
@@ -201,7 +201,7 @@ def create_seq_group_encoder_decoder(
         seqs.append(seq)
 
     # Encoder input sequence
-    encoder_seq = Sequence(
+    encoder_seq = VllmSequence(
         seq_id=seq_id_start + len(seq_output_lens),
         inputs=inputs["encoder"],
         block_size=16,
@@ -239,7 +239,7 @@ def schedule_and_update_computed_tokens(scheduler):
     return metas, out
 
 
-def append_new_token_seq(seq: Sequence, token_id: int):
+def append_new_token_seq(seq: VllmSequence, token_id: int):
     seq.append_token_id(token_id, {token_id: Logprob(token_id)})
 
 

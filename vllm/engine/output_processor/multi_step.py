@@ -14,11 +14,11 @@ from vllm.engine.output_processor.single_step import (
 from vllm.engine.output_processor.stop_checker import StopChecker
 from vllm.sampling_params import SamplingParams
 from vllm.sequence import CompletionSequenceGroupOutput
-from vllm.sequence import Sequence
+from vllm.core.types.sequence import VllmSequence
 from vllm.sequence import SequenceGroup
 from vllm.sequence import SequenceGroupOutput
 from vllm.sequence import SequenceOutput
-from vllm.sequence import SequenceStatus
+from vllm.core.types import SequenceStatus
 from vllm.sequence import VLLM_INVALID_TOKEN_ID
 from vllm.transformers_utils.detokenizer import Detokenizer
 from vllm.transformers_utils.tokenizer import AnyTokenizer
@@ -47,7 +47,7 @@ class MultiStepOutputProcessor(SequenceGroupOutputProcessor):
         detokenizer: Detokenizer,
         scheduler: List[Scheduler],
         seq_counter: Counter,
-        get_tokenizer_for_seq: Callable[[Sequence], AnyTokenizer],
+        get_tokenizer_for_seq: Callable[[VllmSequence], AnyTokenizer],
         stop_checker: StopChecker,
     ):
         self.detokenizer = detokenizer
@@ -152,7 +152,7 @@ class MultiStepOutputProcessor(SequenceGroupOutputProcessor):
                 self._process_seq_outputs(seq, valid_samples,
                                           sequence_group.sampling_params)
 
-    def _process_decode_and_stop(self, seq: Sequence,
+    def _process_decode_and_stop(self, seq: VllmSequence,
                                  sampling_params: SamplingParams) -> None:
         new_char_count = 0
         if sampling_params.detokenize and self.detokenizer:
@@ -166,7 +166,7 @@ class MultiStepOutputProcessor(SequenceGroupOutputProcessor):
             sampling_params=sampling_params,
         )
 
-    def _process_seq_outputs(self, seq: Sequence,
+    def _process_seq_outputs(self, seq: VllmSequence,
                              valid_samples: List[SequenceOutput],
                              sampling_params: SamplingParams) -> None:
         output_token_ids = [sample.output_token for sample in valid_samples]

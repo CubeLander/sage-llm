@@ -16,7 +16,7 @@ from vllm.core.block.interfaces import BlockAllocator
 from vllm.core.block.prefix_caching_block import ComputedBlocksTracker
 from vllm.core.block.prefix_caching_block import PrefixCachingBlock
 from vllm.core.block.prefix_caching_block import PrefixCachingBlockAllocator
-from vllm.sequence import Logprob
+from vllm.core.types.logprob import Logprob
 from vllm.utils import Device
 
 

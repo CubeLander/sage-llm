@@ -7,8 +7,8 @@ from vllm.core.block.utils import STR_NOT_IMPL_ENC_DEC_PREFIX_CACHE
 from vllm.core.block.utils import STR_NOT_IMPL_ENC_DEC_SWA
 from vllm.core.block_manager import SelfAttnBlockSpaceManager
 from vllm.core.interfaces import AllocStatus
-from vllm.sequence import Logprob
-from vllm.sequence import SequenceStatus
+from vllm.core.types.logprob import Logprob
+from vllm.core.types import SequenceStatus
 from vllm.utils import chunk_list
 
 from ..utils import create_dummy_prompt

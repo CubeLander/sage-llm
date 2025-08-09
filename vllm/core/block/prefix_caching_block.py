@@ -27,7 +27,7 @@ from vllm.core.block.naive_block import NaiveBlockAllocator
 from vllm.core.evictor import EvictionPolicy
 from vllm.core.evictor import Evictor
 from vllm.core.evictor import make_evictor
-from vllm.sequence import Sequence
+from vllm.core.types.sequence import VllmSequence
 from vllm.utils.logger import init_logger
 
 PrefixHash = int
@@ -1013,7 +1013,7 @@ class ComputedBlocksTracker:
         # `get_num_cached_tokens` for more details.
         self._seq_id_to_num_tokens_computed: Dict[int, int] = {}
 
-    def _update_seq_hashes(self, seq: Sequence) -> None:
+    def _update_seq_hashes(self, seq: VllmSequence) -> None:
         """Incrementally update the sequence's block hashes and record them."""
         assert self._enable_caching
 
@@ -1059,7 +1059,7 @@ class ComputedBlocksTracker:
 
         self._seq_id_to_blocks_hashes[seq.seq_id] = block_hashes_recorded
 
-    def get_num_cached_tokens(self, seq: Sequence) -> int:
+    def get_num_cached_tokens(self, seq: VllmSequence) -> int:
         if not self._enable_caching:
             return 0
 

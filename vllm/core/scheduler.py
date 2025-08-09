@@ -25,14 +25,14 @@ from vllm.config import SchedulerConfig
 from vllm.core.interfaces import AllocStatus
 from vllm.core.interfaces import BlockSpaceManager
 from vllm.lora.request import LoRARequest
-from vllm.sequence import Sequence
+from vllm.core.types.sequence import VllmSequence
 from vllm.core.types import SequenceData
 from vllm.sequence import SequenceGroup
 from vllm.sequence import SequenceGroupBase
 from vllm.sequence import SequenceGroupMetadata
 from vllm.sequence import SequenceGroupMetadataDelta
 from vllm.sequence import SequenceStage
-from vllm.sequence import SequenceStatus
+from vllm.core.types import SequenceStatus
 from vllm.utils import Device
 from vllm.utils import PyObjectCache
 from vllm.utils.logger import init_logger
@@ -1704,10 +1704,10 @@ class Scheduler:
         return (seq_group_metadata_list, scheduler_outputs,
                 allow_async_output_proc)
 
-    def fork_seq(self, parent_seq: Sequence, child_seq: Sequence) -> None:
+    def fork_seq(self, parent_seq: VllmSequence, child_seq: VllmSequence) -> None:
         self.block_manager.fork(parent_seq, child_seq)
 
-    def free_seq(self, seq: Sequence) -> None:
+    def free_seq(self, seq: VllmSequence) -> None:
         """Free a sequence from a block table."""
         self.block_manager.free(seq)
 
@@ -1718,7 +1718,7 @@ class Scheduler:
         for seq in seqs:
             self._remove_seq_from_computed_blocks_tracker(seq)
 
-    def _remove_seq_from_computed_blocks_tracker(self, seq: Sequence) -> None:
+    def _remove_seq_from_computed_blocks_tracker(self, seq: VllmSequence) -> None:
         """
         Free a sequence computed blocks tracker _seq_id_to_blocks_hashes
         and _seq_id_to_num_tokens_computed.

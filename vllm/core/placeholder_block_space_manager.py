@@ -7,7 +7,7 @@ from typing import Tuple
 
 from vllm.core.interfaces import AllocStatus
 from vllm.core.interfaces import BlockSpaceManager
-from vllm.sequence import Sequence
+from vllm.core.types.sequence import VllmSequence
 from vllm.sequence import SequenceGroup
 from vllm.utils import Device
 
@@ -45,12 +45,12 @@ class PlaceholderBlockSpaceManager(BlockSpaceManager):
 
     def append_slots(
         self,
-        seq: Sequence,
+        seq: VllmSequence,
         num_lookahead_slots: int,
     ) -> List[Tuple[int, int]]:
         return []
 
-    def fork(self, parent_seq: Sequence, child_seq: Sequence) -> None:
+    def fork(self, parent_seq: VllmSequence, child_seq: VllmSequence) -> None:
         pass
 
     def can_swap_in(self, seq_group: SequenceGroup,
@@ -66,11 +66,11 @@ class PlaceholderBlockSpaceManager(BlockSpaceManager):
     def swap_out(self, seq_group: SequenceGroup) -> List[Tuple[int, int]]:
         return None  # type: ignore
 
-    def free(self, seq: Sequence) -> None:
+    def free(self, seq: VllmSequence) -> None:
         # No operation on free
         return
 
-    def get_block_table(self, seq: Sequence) -> List[int]:
+    def get_block_table(self, seq: VllmSequence) -> List[int]:
         return None  # type: ignore
 
     def get_num_free_gpu_blocks(self) -> int:
@@ -81,13 +81,13 @@ class PlaceholderBlockSpaceManager(BlockSpaceManager):
 
     def access_all_blocks_in_seq(
         self,
-        seq: Sequence,
+        seq: VllmSequence,
         access_time: float,
     ) -> None:
         pass
 
     def get_common_computed_block_ids(self,
-                                      seq_group: List[Sequence]) -> List[int]:
+                                      seq_group: List[VllmSequence]) -> List[int]:
         return []
 
     def mark_blocks_as_computed(self, seq_group: SequenceGroup,
@@ -100,8 +100,8 @@ class PlaceholderBlockSpaceManager(BlockSpaceManager):
     def reset_prefix_cache(self, device: Optional[Device] = None) -> bool:
         return True
 
-    def get_num_cached_tokens(self, seq: Sequence) -> int:
+    def get_num_cached_tokens(self, seq: VllmSequence) -> int:
         return 0
 
-    def remove_seq_from_computed_blocks_tracker(self, seq: Sequence) -> None:
+    def remove_seq_from_computed_blocks_tracker(self, seq: VllmSequence) -> None:
         return

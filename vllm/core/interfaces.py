@@ -9,7 +9,7 @@ from typing import Optional
 from typing import Sequence as GenericSequence
 from typing import Tuple
 
-from vllm.sequence import Sequence
+from vllm.core.types.sequence import VllmSequence
 from vllm.sequence import SequenceGroup
 from vllm.utils import Device
 
@@ -63,13 +63,13 @@ class BlockSpaceManager(ABC):
     @abstractmethod
     def append_slots(
         self,
-        seq: Sequence,
+        seq: VllmSequence,
         num_lookahead_slots: int,
     ) -> List[Tuple[int, int]]:
         pass
 
     @abstractmethod
-    def fork(self, parent_seq: Sequence, child_seq: Sequence) -> None:
+    def fork(self, parent_seq: VllmSequence, child_seq: VllmSequence) -> None:
         pass
 
     @abstractmethod
@@ -90,11 +90,11 @@ class BlockSpaceManager(ABC):
         pass
 
     @abstractmethod
-    def free(self, seq: Sequence) -> None:
+    def free(self, seq: VllmSequence) -> None:
         pass
 
     @abstractmethod
-    def get_block_table(self, seq: Sequence) -> List[int]:
+    def get_block_table(self, seq: VllmSequence) -> List[int]:
         pass
 
     @abstractmethod
@@ -108,14 +108,14 @@ class BlockSpaceManager(ABC):
     @abstractmethod
     def access_all_blocks_in_seq(
         self,
-        seq: Sequence,
+        seq: VllmSequence,
         access_time: float,
     ) -> None:
         pass
 
     @abstractmethod
     def get_common_computed_block_ids(
-            self, seqs: List[Sequence]) -> GenericSequence[int]:
+            self, seqs: List[VllmSequence]) -> GenericSequence[int]:
         pass
 
     @abstractmethod
@@ -134,9 +134,9 @@ class BlockSpaceManager(ABC):
         pass
 
     @abstractmethod
-    def get_num_cached_tokens(self, seq: Sequence) -> int:
+    def get_num_cached_tokens(self, seq: VllmSequence) -> int:
         pass
 
     @abstractmethod
-    def remove_seq_from_computed_blocks_tracker(self, seq: Sequence) -> None:
+    def remove_seq_from_computed_blocks_tracker(self, seq: VllmSequence) -> None:
         pass

@@ -26,7 +26,7 @@ from vllm.model_executor.layers.sampler import get_logprobs
 from vllm.model_executor.layers.sampler import get_pythonized_sample_results
 from vllm.platforms import current_platform
 from vllm.sequence import CompletionSequenceGroupOutput
-from vllm.sequence import Logprob
+from ..core.types.logprob import Logprob
 from vllm.sequence import SequenceGroupMetadata
 from vllm.sequence import SequenceOutput
 from vllm.utils import PyObjectCache

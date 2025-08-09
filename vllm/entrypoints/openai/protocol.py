@@ -52,7 +52,7 @@ from vllm.sampling_params import BeamSearchParams
 from vllm.sampling_params import GuidedDecodingParams
 from vllm.sampling_params import RequestOutputKind
 from vllm.sampling_params import SamplingParams
-from vllm.sequence import Logprob
+from vllm.core.types.logprob import Logprob
 from vllm.utils import random_uuid
 from vllm.utils import resolve_obj_by_qualname
 from vllm.utils.logger import init_logger

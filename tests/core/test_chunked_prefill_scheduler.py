@@ -11,7 +11,7 @@ from vllm.core.scheduler import Scheduler
 from vllm.engine.arg_utils import EngineArgs
 from vllm.engine.llm_engine import LLMEngine
 from vllm.sampling_params import SamplingParams
-from vllm.sequence import Logprob
+from vllm.core.types.logprob import Logprob
 from vllm.sequence import SequenceGroup
 
 from .utils import create_dummy_prompt

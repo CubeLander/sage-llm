@@ -12,9 +12,9 @@ from vllm.engine.output_processor.multi_step import MultiStepOutputProcessor
 from vllm.engine.output_processor.stop_checker import StopChecker
 from vllm.sampling_params import SamplingParams
 from vllm.sequence import CompletionSequenceGroupOutput
-from vllm.sequence import Logprob
+from vllm.core.types.logprob import Logprob
 from vllm.sequence import SequenceOutput
-from vllm.sequence import SequenceStatus
+from vllm.core.types import SequenceStatus
 from vllm.transformers_utils.detokenizer import Detokenizer
 from vllm.utils import Counter
 

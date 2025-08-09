@@ -21,7 +21,7 @@ from vllm.sequence import RequestMetrics
 from vllm.sequence import SampleLogprobs
 from vllm.sequence import SequenceGroup
 from vllm.sequence import SequenceGroupBase
-from vllm.sequence import SequenceStatus
+from vllm.core.types import SequenceStatus
 from vllm.utils.logger import init_logger
 
 logger = init_logger(__name__)

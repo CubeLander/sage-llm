@@ -20,7 +20,7 @@ from vllm import TextPrompt
 from vllm import TokensPrompt
 from vllm.io.inputs.multimodal import MultiModalDataBuiltins
 from vllm.io.inputs.multimodal.inputs import PlaceholderRange
-from vllm.sequence import Logprob
+from vllm.core.types.logprob import Logprob
 from vllm.sequence import SampleLogprobs
 
 from ....utils import VLLM_PATH

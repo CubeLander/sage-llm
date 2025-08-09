@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING
 from typing import Union
 
 from vllm.lora.request import LoRARequest
-from vllm.sequence import Logprob
+from vllm.core.types.logprob import Logprob
 
 if TYPE_CHECKING:
     from vllm.io.inputs.multimodal import MultiModalDataDict

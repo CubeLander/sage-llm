@@ -18,7 +18,7 @@ from vllm.core.scheduler import Scheduler
 from vllm.core.scheduler import SchedulingBudget
 from vllm.lora.request import LoRARequest
 from vllm.sequence import SequenceGroup
-from vllm.sequence import SequenceStatus
+from vllm.core.types import SequenceStatus
 
 from .utils import append_new_token
 from .utils import append_new_token_seq

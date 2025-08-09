@@ -8,8 +8,8 @@ from typing import Tuple
 
 from vllm.lora.request import LoRARequest
 from vllm.sampling_params import SamplingParams
-from vllm.sequence import Sequence
-from vllm.sequence import SequenceStatus
+from vllm.core.types.sequence import VllmSequence
+from vllm.core.types import SequenceStatus
 from vllm.transformers_utils.tokenizer import AnyTokenizer
 
 
@@ -21,7 +21,7 @@ class StopChecker:
     """
 
     def __init__(self, max_model_len: int,
-                 get_tokenizer_for_seq: Callable[[Sequence], AnyTokenizer]):
+                 get_tokenizer_for_seq: Callable[[VllmSequence], AnyTokenizer]):
         # Do not use it directly, but use `self._get_max_model_len`.
         self._max_model_len = max_model_len
         self.get_tokenizer_for_seq = get_tokenizer_for_seq
@@ -34,7 +34,7 @@ class StopChecker:
 
     def maybe_stop_sequence(
         self,
-        seq: Sequence,
+        seq: VllmSequence,
         new_char_count: int,
         sampling_params: SamplingParams,
         lora_req: Optional[LoRARequest] = None,

@@ -22,7 +22,7 @@ from vllm.model_executor.layers.sampler import Sampler
 from vllm.model_executor.layers.sampler import SamplerOutput
 from vllm.model_executor.sampling_metadata import SamplingMetadata
 from vllm.sequence import CompletionSequenceGroupOutput
-from vllm.sequence import Logprob
+from vllm.core.types.logprob import Logprob
 from vllm.sequence import SequenceOutput
 
 TORCH_DTYPE_TO_NEURON_AMP = {

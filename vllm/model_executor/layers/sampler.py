@@ -20,7 +20,7 @@ from vllm.model_executor.sampling_metadata import SamplingTensors
 from vllm.model_executor.sampling_metadata import SequenceGroupToSample
 from vllm.sampling_params import SamplingType
 from vllm.sequence import CompletionSequenceGroupOutput
-from vllm.sequence import Logprob
+from vllm.core.types.logprob import Logprob
 from vllm.sequence import PromptLogprobs
 from vllm.sequence import SampleLogprobs
 from vllm.sequence import SequenceOutput

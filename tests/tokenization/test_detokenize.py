@@ -11,9 +11,9 @@ from transformers import PreTrainedTokenizer
 from transformers import PreTrainedTokenizerFast
 
 from vllm.io.inputs import token_inputs
-from vllm.sequence import Logprob
+from vllm.core.types.logprob import Logprob
 from vllm.sequence import SamplingParams
-from vllm.sequence import Sequence
+from vllm.core.types.sequence import VllmSequence
 from vllm.sequence import SequenceGroup
 from vllm.transformers_utils.detokenizer import Detokenizer
 from vllm.transformers_utils.tokenizer_group import TokenizerGroup
@@ -249,7 +249,7 @@ def create_complete_sequence_token_ids(complete_sequence: str,
 
 def create_sequence(prompt_token_ids=None):
     prompt_token_ids = prompt_token_ids or []
-    return Sequence(
+    return VllmSequence(
         seq_id=0,
         inputs=token_inputs(prompt_token_ids),
         block_size=16,

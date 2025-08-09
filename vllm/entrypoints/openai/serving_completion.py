@@ -45,7 +45,7 @@ from vllm.io.inputs.data import is_tokens_prompt
 from vllm.outputs import RequestOutput
 from vllm.sampling_params import BeamSearchParams
 from vllm.sampling_params import SamplingParams
-from vllm.sequence import Logprob
+from vllm.core.types.logprob import Logprob
 from vllm.transformers_utils.tokenizer import AnyTokenizer
 from vllm.utils import merge_async_iterators
 from vllm.utils.logger import init_logger

@@ -66,14 +66,14 @@ from vllm.pooling_params import PoolingParams
 from vllm.sampling_params import RequestOutputKind
 from vllm.sampling_params import SamplingParams
 from vllm.sequence import ExecuteModelRequest
-from vllm.sequence import ParallelSampleSequenceGroup
+from vllm.core.types import ParallelSampleSequenceGroup
 from vllm.sequence import PoolingSequenceGroupOutput
-from vllm.sequence import Sequence
+from vllm.core.types.sequence import VllmSequence
 from vllm.sequence import SequenceGroup
 from vllm.sequence import SequenceGroupBase
 from vllm.sequence import SequenceGroupMetadata
 from vllm.sequence import SequenceGroupOutput
-from vllm.sequence import SequenceStatus
+from vllm.core.types import SequenceStatus
 from vllm.tracing import SpanAttributes
 from vllm.tracing import SpanKind
 from vllm.tracing import extract_trace_context
@@ -279,7 +279,7 @@ class LLMEngine:
 
         # Ensure that the function doesn't contain a reference to self,
         # to avoid engine GC issues
-        def get_tokenizer_for_seq(sequence: Sequence) -> AnyTokenizer:
+        def get_tokenizer_for_seq(sequence: VllmSequence) -> AnyTokenizer:
             assert tokenizer_group, ("tokenizer_group cannot be None, "
                                      "make sure skip_tokenizer_init is False")
             return tokenizer_group.get_lora_tokenizer(sequence.lora_request)
@@ -605,10 +605,10 @@ class LLMEngine:
 
         encoder_inputs, decoder_inputs = split_enc_dec_inputs(processed_inputs)
 
-        seq = Sequence(seq_id, decoder_inputs, block_size, eos_token_id,
+        seq = VllmSequence(seq_id, decoder_inputs, block_size, eos_token_id,
                        lora_request)
 
-        encoder_seq = (None if encoder_inputs is None else Sequence(
+        encoder_seq = (None if encoder_inputs is None else VllmSequence(
             seq_id, encoder_inputs, block_size, eos_token_id, lora_request))
 
         # Create a SequenceGroup based on SamplingParams or PoolingParams
@@ -751,12 +751,12 @@ class LLMEngine:
     def _create_sequence_group_with_sampling(
         self,
         request_id: str,
-        seq: Sequence,
+        seq: VllmSequence,
         sampling_params: SamplingParams,
         arrival_time: float,
         lora_request: Optional[LoRARequest],
         trace_headers: Optional[Mapping[str, str]] = None,
-        encoder_seq: Optional[Sequence] = None,
+        encoder_seq: Optional[VllmSequence] = None,
         priority: int = 0,
     ) -> SequenceGroup:
         """Creates a SequenceGroup with SamplingParams."""
@@ -798,11 +798,11 @@ class LLMEngine:
     def _create_sequence_group_with_pooling(
         self,
         request_id: str,
-        seq: Sequence,
+        seq: VllmSequence,
         pooling_params: PoolingParams,
         arrival_time: float,
         lora_request: Optional[LoRARequest],
-        encoder_seq: Optional[Sequence] = None,
+        encoder_seq: Optional[VllmSequence] = None,
         priority: int = 0,
     ) -> SequenceGroup:
         """Creates a SequenceGroup with PoolingParams."""

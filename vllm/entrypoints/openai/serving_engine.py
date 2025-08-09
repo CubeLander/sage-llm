@@ -88,7 +88,7 @@ from vllm.outputs import RequestOutput
 from vllm.pooling_params import PoolingParams
 from vllm.sampling_params import BeamSearchParams
 from vllm.sampling_params import SamplingParams
-from vllm.sequence import Logprob
+from vllm.core.types.logprob import Logprob
 from vllm.sequence import PromptLogprobs
 from vllm.tracing import contains_trace_headers
 from vllm.tracing import extract_trace_headers

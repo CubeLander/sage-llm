@@ -16,7 +16,7 @@ from vllm.config import ModelConfig
 from vllm.config import ModelDType
 from vllm.config import RunnerOption
 from vllm.io.inputs import InputContext
-from vllm.sequence import Logprob
+from vllm.core.types.logprob import Logprob
 from vllm.sequence import PromptLogprobs
 from vllm.sequence import SampleLogprobs
 

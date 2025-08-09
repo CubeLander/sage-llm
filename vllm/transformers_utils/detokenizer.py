@@ -3,9 +3,9 @@
 
 from typing import Optional
 
-from vllm.sequence import Logprob
+from ..core.types.logprob import Logprob
 from vllm.sequence import SamplingParams
-from vllm.sequence import Sequence
+from ..core.types.sequence import VllmSequence
 from vllm.sequence import SequenceGroup
 from vllm.sequence import VLLM_INVALID_TOKEN_ID
 
@@ -21,7 +21,7 @@ class Detokenizer:
     def __init__(self, tokenizer_group: TokenizerGroup):
         self.tokenizer_group = tokenizer_group
 
-    def get_tokenizer_for_seq(self, sequence: Sequence) -> AnyTokenizer:
+    def get_tokenizer_for_seq(self, sequence: VllmSequence) -> AnyTokenizer:
         """Returns the HF tokenizer to use for a given sequence."""
         return self.tokenizer_group.get_lora_tokenizer(sequence.lora_request)
 
@@ -100,7 +100,7 @@ class Detokenizer:
             else:
                 prev_tokens.extend(next_iter_tokens)
 
-    def decode_sequence_inplace(self, seq: Sequence,
+    def decode_sequence_inplace(self, seq: VllmSequence,
                                 prms: SamplingParams) -> int:
         """Decodes the new token for a sequence. In-place operation.
 

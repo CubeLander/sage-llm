@@ -9,17 +9,17 @@ from transformers import PreTrainedTokenizer
 from vllm.engine.output_processor.stop_checker import StopChecker
 from vllm.io.inputs import token_inputs
 from vllm.sampling_params import SamplingParams
-from vllm.sequence import Logprob
-from vllm.sequence import Sequence
-from vllm.sequence import SequenceStatus
+from vllm.core.types.logprob import Logprob
+from vllm.core.types.sequence import VllmSequence
+from vllm.core.types import SequenceStatus
 
 
 def sequence_with_eos(text: str, eos_token: str,
-                      eos_token_id: int) -> Sequence:
+                      eos_token_id: int) -> VllmSequence:
     """
     Create a Sequence that ends with an EOS token.
     """
-    seq = Sequence(
+    seq = VllmSequence(
         seq_id=0,
         inputs=token_inputs([]),
         block_size=16,
