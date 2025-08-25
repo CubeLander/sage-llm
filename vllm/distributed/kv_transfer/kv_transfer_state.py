@@ -54,13 +54,15 @@ def ensure_kv_transfer_initialized(vllm_config: "VllmConfig") -> None:
 
     global _KV_CONNECTOR_AGENT
 
-    if vllm_config.kv_transfer_config is None:
+    # HOTLLM_OPTIMIZATION: This entire function can return early if kv_transfer_config is None
+    if vllm_config.kv_transfer_config is None:  # HOTLLM_OPTIMIZATION: Always True if kv_transfer_config removed
         return
 
+    # HOTLLM_OPTIMIZATION: This entire block will never execute if kv_transfer_config is None
     if (vllm_config.kv_transfer_config.is_kv_transfer_instance
             and _KV_CONNECTOR_AGENT is None):
         if envs.VLLM_USE_V1:
-            _KV_CONNECTOR_AGENT = KVConnectorFactory.create_connector(
+            _KV_CONNECTOR_AGENT = KVConnectorFactory.create_connector(  # HOTLLM_OPTIMIZATION: Never executed
                 config=vllm_config, role=KVConnectorRole.WORKER)
         else:
-            raise ValueError("V0 is no longer supported")
+            raise ValueError("V0 is no longer supported")  # HOTLLM_OPTIMIZATION: Never executed

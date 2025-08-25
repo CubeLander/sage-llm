@@ -49,6 +49,7 @@ class RayDistributedExecutor(RayDistributedExecutorV0, Executor):
         super()._init_executor()
 
         # KV connector setup
+        # HOTLLM_OPTIMIZATION: This connector check can be simplified to self.has_connector = False
         self.has_connector = self.vllm_config.kv_transfer_config is not None
         self.kv_output_aggregator = KVOutputAggregator(
             self.parallel_config.world_size)

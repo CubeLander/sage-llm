@@ -965,13 +965,14 @@ class DPEngineCoreProc(EngineCoreProc):
         assert dp_size > 1
         assert 0 <= local_dp_rank <= dp_rank < dp_size
 
-        if vllm_config.kv_transfer_config is not None:
+        # HOTLLM_OPTIMIZATION: This entire kv_transfer_config modification block can be removed
+        if vllm_config.kv_transfer_config is not None:  # HOTLLM_OPTIMIZATION: Always False if kv_transfer_config removed
             # modify the engine_id and append the local_dp_rank to it to ensure
             # that the kv_transfer_config is unique for each DP rank.
-            vllm_config.kv_transfer_config.engine_id = (
+            vllm_config.kv_transfer_config.engine_id = (  # HOTLLM_OPTIMIZATION: Never executed
                 f"{vllm_config.kv_transfer_config.engine_id}_dp{local_dp_rank}"
             )
-            logger.debug("Setting kv_transfer_config.engine_id to %s",
+            logger.debug("Setting kv_transfer_config.engine_id to %s",  # HOTLLM_OPTIMIZATION: Never executed
                          vllm_config.kv_transfer_config.engine_id)
 
         self.dp_rank = dp_rank

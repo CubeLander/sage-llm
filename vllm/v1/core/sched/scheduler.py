@@ -78,12 +78,13 @@ class Scheduler(SchedulerInterface):
         # Create KVConnector for the Scheduler. Note that each Worker
         # will have a corresponding KVConnector with Role=WORKER.
         # KV Connector pushes/pull of remote KVs for P/D and offloading.
+        # HOTLLM_OPTIMIZATION: This entire connector creation block can be removed
         self.connector = None
-        if self.vllm_config.kv_transfer_config is not None:
+        if self.vllm_config.kv_transfer_config is not None:  # HOTLLM_OPTIMIZATION: Always False if kv_transfer_config removed
             assert len(self.kv_cache_config.kv_cache_groups) == 1, (
                 "Multiple KV cache groups are not currently supported "
                 "with KV connectors")
-            self.connector = KVConnectorFactory.create_connector(
+            self.connector = KVConnectorFactory.create_connector(  # HOTLLM_OPTIMIZATION: Never executed
                 config=self.vllm_config, role=KVConnectorRole.SCHEDULER)
 
         self.kv_event_publisher = EventPublisherFactory.create(

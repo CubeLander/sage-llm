@@ -232,9 +232,6 @@ class LLM:
                 # to provide better context to the user.
                 raise ValueError(
                     f"Invalid 'kv_transfer_config' provided: {e}") from e
-        # HOTLLM_OPTIMIZATION: This entire kv_transfer_config conversion block can be removed
-        # if disaggregated prefilling feature is not needed. This is used for experimental 
-        # disaggregated prefilling where prefill and decode run on separate vLLM instances.
 
         if hf_overrides is None:
             hf_overrides = {}

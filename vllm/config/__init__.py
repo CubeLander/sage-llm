@@ -3132,12 +3132,13 @@ class ObservabilityConfig:
             list[DetailedTraceModules],
             self.collect_detailed_traces[0].split(","))
 
-
+# HOTLLM_OPTIMIZATION: These KV role type definitions can be removed if disaggregated prefilling not needed
 KVProducer = Literal["kv_producer", "kv_both"]
 KVConsumer = Literal["kv_consumer", "kv_both"]
 KVRole = Literal[KVProducer, KVConsumer]
 
 
+# HOTLLM_OPTIMIZATION: This entire KVTransferConfig class can be removed if disaggregated prefilling not needed
 @config
 @dataclass
 class KVTransferConfig:
@@ -3184,7 +3185,7 @@ class KVTransferConfig:
     """The Python module path to dynamically load the KV connector from.
     Only supported in V1."""
 
-    def compute_hash(self) -> str:
+    def compute_hash(self) -> str:  # HOTLLM_OPTIMIZATION: This method can be removed
         """
         WARNING: Whenever a new field is added to this config,
         ensure that it is included in the factors list if
@@ -3211,26 +3212,26 @@ class KVTransferConfig:
             raise ValueError(f"Unsupported kv_role: {self.kv_role}. "
                              f"Supported roles are {get_args(KVRole)}")
 
-        if self.kv_connector is not None and self.kv_role is None:
+        if self.kv_connector is not None and self.kv_role is None:  # HOTLLM_OPTIMIZATION: This validation can be removed
             raise ValueError("Please specify kv_disagg_role when kv_connector "
                              f"is set, supported roles are {get_args(KVRole)}")
 
     @property
-    def is_kv_transfer_instance(self) -> bool:
+    def is_kv_transfer_instance(self) -> bool:  # HOTLLM_OPTIMIZATION: This property can be removed
         return self.kv_connector is not None and \
             self.kv_role in get_args(KVRole)
 
     @property
-    def is_kv_producer(self) -> bool:
+    def is_kv_producer(self) -> bool:  # HOTLLM_OPTIMIZATION: This property can be removed
         return self.kv_connector is not None and \
             self.kv_role in get_args(KVProducer)
 
     @property
-    def is_kv_consumer(self) -> bool:
+    def is_kv_consumer(self) -> bool:  # HOTLLM_OPTIMIZATION: This property can be removed
         return self.kv_connector is not None and \
             self.kv_role in get_args(KVConsumer)
 
-    def get_from_extra_config(self, key, default) -> Any:
+    def get_from_extra_config(self, key, default) -> Any:  # HOTLLM_OPTIMIZATION: This method can be removed
         return self.kv_connector_extra_config.get(key, default)
 
 
@@ -3323,7 +3324,7 @@ class VllmConfig:
     You can specify the full compilation config like so:
     `{"level": 3, "cudagraph_capture_sizes": [1, 2, 4, 8]}`
     """
-    kv_transfer_config: Optional[KVTransferConfig] = None
+    kv_transfer_config: Optional[KVTransferConfig] = None  # HOTLLM_OPTIMIZATION: Can be removed
     """The configurations for distributed KV cache transfer."""
     kv_events_config: Optional[KVEventsConfig] = None
     """The configurations for event publishing."""
@@ -3407,10 +3408,10 @@ class VllmConfig:
             vllm_factors.append(self.compilation_config.compute_hash())
         else:
             vllm_factors.append("None")
-        if self.kv_transfer_config:
+        if self.kv_transfer_config:  # HOTLLM_OPTIMIZATION: This hash computation can be removed
             vllm_factors.append(self.kv_transfer_config.compute_hash())
         else:
-            vllm_factors.append("None")
+            vllm_factors.append("None")  # HOTLLM_OPTIMIZATION: Could always append "None" if kv_transfer_config removed
         if self.additional_config:
             if isinstance(additional_config := self.additional_config, dict):
                 additional_config_hash = hashlib.md5(
@@ -3658,7 +3659,7 @@ class VllmConfig:
             if not (current_platform.is_cuda() or current_platform.is_rocm()):
                 # Hybrid KV cache manager is not supported on non-GPU platforms.
                 self.scheduler_config.disable_hybrid_kv_cache_manager = True
-            if self.kv_transfer_config is not None:
+            if self.kv_transfer_config is not None:  # HOTLLM_OPTIMIZATION: This check can be removed if kv_transfer_config is None
                 # Hybrid KV cache manager is not compatible with KV transfer.
                 self.scheduler_config.disable_hybrid_kv_cache_manager = True
             if self.kv_events_config is not None:

@@ -322,7 +322,6 @@ class TPUWorker:
             parallel_config.tensor_parallel_size,
             parallel_config.pipeline_parallel_size)
 
-        ensure_kv_transfer_initialized(vllm_config)
 
 
 try:

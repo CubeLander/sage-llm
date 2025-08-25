@@ -123,6 +123,7 @@ class MultiprocExecutor(Executor):
                 max_workers=1, thread_name_prefix="mp_exec_io")
 
         self.output_rank = self._get_output_rank()
+        # HOTLLM_OPTIMIZATION: This connector check can be simplified to self.has_connector = False
         self.has_connector = self.vllm_config.kv_transfer_config is not None
         self.kv_output_aggregator = KVOutputAggregator(
             self.parallel_config.world_size)
