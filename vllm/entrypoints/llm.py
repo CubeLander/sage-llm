@@ -173,33 +173,33 @@ class LLM:
         self,
         model: str,
         *,
-        runner: RunnerOption = "auto",
-        convert: ConvertOption = "auto",
-        tokenizer: Optional[str] = None,
-        tokenizer_mode: TokenizerMode = "auto",
-        skip_tokenizer_init: bool = False,
-        trust_remote_code: bool = False,
-        allowed_local_media_path: str = "",
-        tensor_parallel_size: int = 1,
-        dtype: ModelDType = "auto",
-        quantization: Optional[QuantizationMethods] = None,
-        revision: Optional[str] = None,
-        tokenizer_revision: Optional[str] = None,
-        seed: Optional[int] = None,
-        gpu_memory_utilization: float = 0.9,
-        swap_space: float = 4,
-        cpu_offload_gb: float = 0,
-        enforce_eager: bool = False,
-        max_seq_len_to_capture: int = 8192,
-        disable_custom_all_reduce: bool = False,
-        disable_async_output_proc: bool = False,
-        hf_token: Optional[Union[bool, str]] = None,
-        hf_overrides: Optional[HfOverrides] = None,
-        mm_processor_kwargs: Optional[dict[str, Any]] = None,
-        override_pooler_config: Optional[PoolerConfig] = None,
-        compilation_config: Optional[Union[int, dict[str, Any],
+        runner: RunnerOption = "auto", # vllm/config/__init__.py
+        convert: ConvertOption = "auto", # vllm/config/__init__.py
+        tokenizer: Optional[str] = None, # 如果谁想用tokenizer，谁就自己写一个registry，我们不需要这个接口
+        tokenizer_mode: TokenizerMode = "auto", # 同上
+        skip_tokenizer_init: bool = False, # 同上
+        trust_remote_code: bool = False,    # 这个字段应该写成per-model config
+        allowed_local_media_path: str = "", # per-model config
+        tensor_parallel_size: int = 1, # 这个很重要
+        dtype: ModelDType = "auto", # 参数的精度，per-model config，表示计算时的浮点精度
+        quantization: Optional[QuantizationMethods] = None, # 权重的精度，per-model config，表示权重加载后的精度
+        revision: Optional[str] = None, # per-model config
+        tokenizer_revision: Optional[str] = None, # per-model config
+        seed: Optional[int] = None, # 采样阶段的随机数，影响sampling， per-model config
+        gpu_memory_utilization: float = 0.9, # GPU显存比例
+        swap_space: float = 4, # kvcache能够swap到内存里的大小， engine config
+        cpu_offload_gb: float = 0, # 允许CPU加载的权重大小， engine config
+        enforce_eager: bool = False, # 强制pytorch在eager mode工作
+        max_seq_len_to_capture: int = 8192, # per-model config，这个是第一个dummy sequence profile的时候用的。
+        disable_custom_all_reduce: bool = False, # vllm有一个自己优化过的all_reduce，这个参数是开关
+        disable_async_output_proc: bool = False, # vllm会有一个线程异步处理生成输出，这个也是开关，这俩都可以去掉，让开发者自己在里边改
+        hf_token: Optional[Union[bool, str]] = None, # 私有hugging face访问令牌，应该让用户填到.bashrc环境变量里去。
+        hf_overrides: Optional[HfOverrides] = None, # 覆盖hugging face上的config参数
+        mm_processor_kwargs: Optional[dict[str, Any]] = None, # 多模态模型（e.g., image + text）在构建 MMProcessor（如 CLIPProcessor）时传的额外 kwargs
+        override_pooler_config: Optional[PoolerConfig] = None, # 表示模型“输出格式”的策略设定
+        compilation_config: Optional[Union[int, dict[str, Any], # 这个归runtime优化策略管
                                            CompilationConfig]] = None,
-        logits_processors: Optional[list[Union[str,
+        logits_processors: Optional[list[Union[str, # sampling后处理策略
                                                type[LogitsProcessor]]]] = None,
         **kwargs,
     ) -> None:
