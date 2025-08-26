@@ -343,3 +343,25 @@ extend-ignore-re = []
 windo = "windo"
 
 [tool.typos.type.vimscript.extend-words]
+
+[tool.black]
+line-length = 120
+target-version = ['py39', 'py310', 'py311', 'py312']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+# 保持函数签名更紧凑，减少不必要的换行
+skip-string-normalization = false

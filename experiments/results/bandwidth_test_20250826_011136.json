@@ -1,0 +1,179 @@
+{
+  "timestamp": "2025-08-26T01:11:28.587277",
+  "gpu_count": 2,
+  "gpu_names": [
+    "NVIDIA A100 80GB PCIe",
+    "NVIDIA A100 80GB PCIe"
+  ],
+  "cuda_version": "12.6",
+  "pytorch_version": "2.7.1+cu126",
+  "topology": {
+    "gpu_count": 2,
+    "gpu_names": [
+      "NVIDIA A100 80GB PCIe",
+      "NVIDIA A100 80GB PCIe"
+    ],
+    "p2p_access_matrix": [
+      [
+        true,
+        true
+      ],
+      [
+        true,
+        true
+      ]
+    ],
+    "nvlink_info": "Not available through PyTorch directly"
+  },
+  "single_gpu_memory": {
+    "10MB": {
+      "size_mb": 10,
+      "memory_copy_time_ms": 0.08786174585111439,
+      "memory_bandwidth_gbps": 111.14763205989877
+    },
+    "100MB": {
+      "size_mb": 100,
+      "memory_copy_time_ms": 0.14878459624014795,
+      "memory_bandwidth_gbps": 656.3599489988635
+    },
+    "500MB": {
+      "size_mb": 500,
+      "memory_copy_time_ms": 0.6366055458784103,
+      "memory_bandwidth_gbps": 767.0075341964742
+    },
+    "1000MB": {
+      "size_mb": 1000,
+      "memory_copy_time_ms": 1.2473852664697915,
+      "memory_bandwidth_gbps": 782.8876340376831
+    },
+    "2000MB": {
+      "size_mb": 2000,
+      "memory_copy_time_ms": 9.43638781318441,
+      "memory_bandwidth_gbps": 206.9780342506819
+    }
+  },
+  "p2p_bandwidth": {
+    "1MB": {
+      "size_mb": 1,
+      "gpu0_to_gpu1_time_ms": 0.07706867181695998,
+      "gpu1_to_gpu0_time_ms": 0.1081589434761554,
+      "gpu0_to_gpu1_bandwidth_gbps": 12.671329049491867,
+      "gpu1_to_gpu0_bandwidth_gbps": 9.028957464024154,
+      "bidirectional_avg_bandwidth_gbps": 10.85014325675801
+    },
+    "5MB": {
+      "size_mb": 5,
+      "gpu0_to_gpu1_time_ms": 0.31362336594611406,
+      "gpu1_to_gpu0_time_ms": 0.3162763954605907,
+      "gpu0_to_gpu1_bandwidth_gbps": 15.569032891633947,
+      "gpu1_to_gpu0_bandwidth_gbps": 15.4384347680743,
+      "bidirectional_avg_bandwidth_gbps": 15.503733829854124
+    },
+    "10MB": {
+      "size_mb": 10,
+      "gpu0_to_gpu1_time_ms": 0.5935446824878454,
+      "gpu1_to_gpu0_time_ms": 0.5981747410260141,
+      "gpu0_to_gpu1_bandwidth_gbps": 16.45305785415739,
+      "gpu1_to_gpu0_bandwidth_gbps": 16.325706069182385,
+      "bidirectional_avg_bandwidth_gbps": 16.389381961669887
+    },
+    "20MB": {
+      "size_mb": 20,
+      "gpu0_to_gpu1_time_ms": 1.1665760539472103,
+      "gpu1_to_gpu0_time_ms": 1.170984999043867,
+      "gpu0_to_gpu1_bandwidth_gbps": 16.74237177586008,
+      "gpu1_to_gpu0_bandwidth_gbps": 16.67933407853018,
+      "bidirectional_avg_bandwidth_gbps": 16.710852927195127
+    },
+    "50MB": {
+      "size_mb": 50,
+      "gpu0_to_gpu1_time_ms": 2.8685411729384214,
+      "gpu1_to_gpu0_time_ms": 2.968725940445438,
+      "gpu0_to_gpu1_bandwidth_gbps": 17.021936258276668,
+      "gpu1_to_gpu0_bandwidth_gbps": 16.447501716063982,
+      "bidirectional_avg_bandwidth_gbps": 16.734718987170325
+    },
+    "100MB": {
+      "size_mb": 100,
+      "gpu0_to_gpu1_time_ms": 5.756654753349721,
+      "gpu1_to_gpu0_time_ms": 5.776142759714276,
+      "gpu0_to_gpu1_bandwidth_gbps": 16.96406232164177,
+      "gpu1_to_gpu0_bandwidth_gbps": 16.906827629175616,
+      "bidirectional_avg_bandwidth_gbps": 16.935444975408693
+    },
+    "200MB": {
+      "size_mb": 200,
+      "gpu0_to_gpu1_time_ms": 11.487446643877774,
+      "gpu1_to_gpu0_time_ms": 11.456877359887585,
+      "gpu0_to_gpu1_bandwidth_gbps": 17.002255249132464,
+      "gpu1_to_gpu0_bandwidth_gbps": 17.04762073161586,
+      "bidirectional_avg_bandwidth_gbps": 17.024937990374163
+    },
+    "500MB": {
+      "size_mb": 500,
+      "gpu0_to_gpu1_time_ms": 28.707355761434883,
+      "gpu1_to_gpu0_time_ms": 28.7090782658197,
+      "gpu0_to_gpu1_bandwidth_gbps": 17.008924613528883,
+      "gpu1_to_gpu0_bandwidth_gbps": 17.007904101934727,
+      "bidirectional_avg_bandwidth_gbps": 17.008414357731805
+    },
+    "1000MB": {
+      "size_mb": 1000,
+      "gpu0_to_gpu1_time_ms": 57.37870570155792,
+      "gpu1_to_gpu0_time_ms": 57.25434795022011,
+      "gpu0_to_gpu1_bandwidth_gbps": 17.019597916330916,
+      "gpu1_to_gpu0_bandwidth_gbps": 17.056564871703262,
+      "bidirectional_avg_bandwidth_gbps": 17.03808139401709
+    }
+  },
+  "all_reduce_bandwidth": {
+    "1MB": {
+      "size_mb": 1,
+      "all_reduce_time_ms": 1.6742541920393705,
+      "effective_bandwidth_gbps": 1.1665641987259672
+    },
+    "10MB": {
+      "size_mb": 10,
+      "all_reduce_time_ms": 1.1938714073039591,
+      "effective_bandwidth_gbps": 16.359592733782048
+    },
+    "50MB": {
+      "size_mb": 50,
+      "all_reduce_time_ms": 5.81880429526791,
+      "effective_bandwidth_gbps": 16.782872398615996
+    },
+    "100MB": {
+      "size_mb": 100,
+      "all_reduce_time_ms": 11.690953106153756,
+      "effective_bandwidth_gbps": 16.706294022956396
+    },
+    "500MB": {
+      "size_mb": 500,
+      "all_reduce_time_ms": 58.24404578888789,
+      "effective_bandwidth_gbps": 16.7667353250092
+    },
+    "1000MB": {
+      "size_mb": 1000,
+      "all_reduce_time_ms": 116.35664640925825,
+      "effective_bandwidth_gbps": 16.7856762829888
+    }
+  },
+  "analysis": {
+    "p2p_analysis": {
+      "peak_bandwidth_gbps": 17.03808139401709,
+      "avg_bandwidth_gbps": 16.021745520019913,
+      "bandwidth_range": {
+        "min": 10.85014325675801,
+        "max": 17.03808139401709
+      }
+    },
+    "memory_analysis": {
+      "peak_memory_bandwidth_gbps": 782.8876340376831,
+      "avg_memory_bandwidth_gbps": 504.8761567087204
+    },
+    "efficiency_analysis": {
+      "p2p_vs_memory_ratio": 0.021763124940605446,
+      "theoretical_nvlink_utilization": 0.05679360464672364
+    }
+  }
+}
