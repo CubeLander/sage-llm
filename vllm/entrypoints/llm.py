@@ -36,7 +36,6 @@ from vllm.engine.arg_utils import (
     PoolerConfig,
     RunnerOption,
 )
-from vllm.engine.llm_engine import LLMEngine
 from vllm.entrypoints.chat_utils import (
     ChatCompletionMessageParam,
     ChatTemplateContentFormatOption,
@@ -442,38 +441,6 @@ class LLM:
             modality_lora_id,
             modality_lora_path,
         )
-
-    def collective_rpc(
-        self,
-        method: Union[str, Callable[..., _R]],
-        timeout: Optional[float] = None,
-        args: tuple = (),
-        kwargs: Optional[dict[str, Any]] = None,
-    ) -> list[_R]:
-        """
-        Execute an RPC call on all workers.
-
-        Args:
-            method: Name of the worker method to execute, or a callable that
-                is serialized and sent to all workers to execute.
-
-                If the method is a callable, it should accept an additional
-                `self` argument, in addition to the arguments passed in `args`
-                and `kwargs`. The `self` argument will be the worker object.
-            timeout: Maximum time in seconds to wait for execution. Raises a
-                [`TimeoutError`][] on timeout. `None` means wait indefinitely.
-            args: Positional arguments to pass to the worker method.
-            kwargs: Keyword arguments to pass to the worker method.
-
-        Returns:
-            A list containing the results from each worker.
-
-        Note:
-            It is recommended to use this API to only pass control messages,
-            and set up data-plane communication to pass data.
-        """
-
-        return self.llm_engine.collective_rpc(method, timeout, args, kwargs)
 
 
     def _get_beam_search_lora_requests(

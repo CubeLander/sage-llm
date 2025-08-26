@@ -35,7 +35,6 @@ from vllm.config import (BlockSize, CacheConfig, CacheDType, CompilationConfig,
                          VllmConfig, get_attr_docs, get_field)
 from vllm.logger import init_logger
 from vllm.platforms import CpuArchEnum, current_platform
-from vllm.plugins import load_general_plugins
 from vllm.ray.lazy_utils import is_ray_initialized
 from vllm.reasoning import ReasoningParserManager
 from vllm.test_utils import MODEL_WEIGHTS_S3_BUCKET, MODELS_ON_S3
@@ -453,9 +452,6 @@ class EngineArgs:
         if isinstance(self.compilation_config, dict):
             self.compilation_config = CompilationConfig(
                 **self.compilation_config)
-        # Setup plugins
-        from vllm.plugins import load_general_plugins
-        load_general_plugins()
 
     @staticmethod
     def add_cli_args(parser: FlexibleArgumentParser) -> FlexibleArgumentParser:
@@ -1740,7 +1736,6 @@ class AsyncEngineArgs(EngineArgs):
         # Initialize plugin to update the parser, for example, The plugin may
         # adding a new kind of quantization method to --quantization argument or
         # a new device to --device argument.
-        load_general_plugins()
         if not async_args_only:
             parser = EngineArgs.add_cli_args(parser)
         parser.add_argument('--enable-log-requests',

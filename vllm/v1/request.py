@@ -10,8 +10,7 @@ from vllm.multimodal.inputs import MultiModalKwargsItem, PlaceholderRange
 from vllm.pooling_params import PoolingParams
 from vllm.sampling_params import SamplingParams
 from vllm.utils import is_list_of
-from vllm.v1.engine import (EngineCoreEvent, EngineCoreEventType,
-                            EngineCoreRequest, FinishReason)
+from vllm.v1.engine import EngineCoreEvent, EngineCoreEventType, EngineCoreRequest, FinishReason
 from vllm.v1.structured_output.request import StructuredOutputRequest
 from vllm.v1.utils import ConstantList
 
@@ -38,8 +37,6 @@ class Request:
         structured_output_request: Optional["StructuredOutputRequest"] = None,
         cache_salt: Optional[str] = None,
         priority: int = 0,
-        block_hasher: Optional[Callable[["Request"],
-                                        list["BlockHash"]]] = None,
     ) -> None:
         self.request_id = request_id
         self.client_index = client_index
@@ -50,8 +47,7 @@ class Request:
         self.eos_token_id = eos_token_id
         self.lora_request = lora_request
         self.structured_output_request = structured_output_request
-        self.arrival_time = arrival_time if arrival_time is not None else \
-            time.time()
+        self.arrival_time = arrival_time if arrival_time is not None else time.time()
 
         self.status = RequestStatus.WAITING
         self.use_structured_output = False
@@ -73,11 +69,9 @@ class Request:
                 self.use_structured_output = True
 
             if sampling_params.extra_args is not None:
-                self.kv_transfer_params = \
-                    sampling_params.extra_args.get("kv_transfer_params")
+                self.kv_transfer_params = sampling_params.extra_args.get("kv_transfer_params")
         else:
-            raise ValueError(
-                "sampling_params and pooling_params can't both be unset")
+            raise ValueError("sampling_params and pooling_params can't both be unset")
 
         self.prompt_token_ids = prompt_token_ids
         self.num_prompt_tokens = len(self.prompt_token_ids)
@@ -114,22 +108,15 @@ class Request:
         # indicates that the output is corrupted
         self.num_nans_in_logits = 0
 
-        self.block_hashes: list[BlockHash] = []
-        self.get_hash_new_full_blocks: Optional[Callable[
-            [], list[BlockHash]]] = None
-        if block_hasher is not None:
-            self.get_hash_new_full_blocks = partial(block_hasher, self)
-            self.block_hashes = self.get_hash_new_full_blocks()
+        self.get_hash_new_full_blocks: Optional[Callable[[], list[BlockHash]]] = None
 
     @classmethod
-    def from_engine_core_request(
-        cls, request: EngineCoreRequest,
-        block_hasher: Optional[Callable[["Request"], list["BlockHash"]]]
-    ) -> "Request":
+    def from_engine_core_request(cls, request: EngineCoreRequest) -> "Request":
         if request.mm_kwargs is not None:
             mm_kwargs_lst = list(request.mm_kwargs)
-            assert is_list_of(mm_kwargs_lst, MultiModalKwargsItem), (
-                "mm_kwargs was not updated in EngineCore.add_request")
+            assert is_list_of(
+                mm_kwargs_lst, MultiModalKwargsItem
+            ), "mm_kwargs was not updated in EngineCore.add_request"
         else:
             mm_kwargs_lst = None
 
@@ -145,12 +132,11 @@ class Request:
             eos_token_id=request.eos_token_id,
             arrival_time=request.arrival_time,
             lora_request=request.lora_request,
-            structured_output_request=StructuredOutputRequest(
-                sampling_params=request.sampling_params) \
-                    if request.sampling_params else None,
+            structured_output_request=(
+                StructuredOutputRequest(sampling_params=request.sampling_params) if request.sampling_params else None
+            ),
             cache_salt=request.cache_salt,
             priority=request.priority,
-            block_hasher=block_hasher,
         )
 
     def append_output_token_ids(
@@ -163,9 +149,6 @@ class Request:
         else:
             self._output_token_ids.extend(token_ids)
             self._all_token_ids.extend(token_ids)
-
-        if self.get_hash_new_full_blocks is not None:
-            self.block_hashes.extend(self.get_hash_new_full_blocks())
 
     @property
     def is_output_corrupted(self) -> bool:
@@ -210,6 +193,7 @@ class Request:
 
 class RequestStatus(enum.IntEnum):
     """Status of a request."""
+
     WAITING = enum.auto()
     WAITING_FOR_FSM = enum.auto()
     WAITING_FOR_REMOTE_KVS = enum.auto()
@@ -230,8 +214,7 @@ class RequestStatus(enum.IntEnum):
         return status > RequestStatus.PREEMPTED
 
     @staticmethod
-    def get_finished_reason(
-            status: "RequestStatus") -> Union[FinishReason, None]:
+    def get_finished_reason(status: "RequestStatus") -> Union[FinishReason, None]:
         return _FINISHED_REASON_MAP.get(status)
 
 

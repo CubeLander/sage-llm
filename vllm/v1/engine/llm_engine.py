@@ -7,11 +7,9 @@ from typing import Any, Callable, Optional, Union
 
 from typing_extensions import TypeVar
 
-from vllm.v1.executor.multiproc_executor import MultiprocExecutor
-import vllm.envs as envs
-from vllm.config import ParallelConfig, VllmConfig
+from vllm.v1.engine.core import EngineCore
+from vllm.config import  VllmConfig
 from vllm.distributed import stateless_destroy_torch_distributed_process_group
-from vllm.engine.arg_utils import EngineArgs
 from vllm.inputs import PromptType
 from vllm.logger import init_logger
 from vllm.lora.request import LoRARequest
@@ -21,13 +19,10 @@ from vllm.pooling_params import PoolingParams
 from vllm.sampling_params import SamplingParams
 from vllm.tasks import SupportedTask
 from vllm.transformers_utils.tokenizer_group import TokenizerGroup, init_tokenizer_from_configs
-from vllm.usage.usage_lib import UsageContext
 from vllm.utils import Device
-from vllm.v1.engine.core_client import EngineCoreClient
 from vllm.v1.engine.output_processor import OutputProcessor
 from vllm.v1.engine.parallel_sampling import ParentRequest
 from vllm.v1.engine.processor import Processor
-from vllm.v1.executor.abstract import Executor
 from vllm.v1.metrics.loggers import PrometheusStatLogger, StatLoggerBase, StatLoggerFactory
 from vllm.v1.metrics.reader import Metric, get_metrics_snapshot
 from vllm.v1.metrics.stats import IterationStats
@@ -74,12 +69,8 @@ class LLMEngine:
         # OutputProcessor (convert EngineCoreOutputs --> RequestOutput).
         self.output_processor = OutputProcessor(self.tokenizer, log_stats=self.log_stats)
 
-        # EngineCore (gets EngineCoreRequests and gives EngineCoreOutputs)
-        self.engine_core = EngineCoreClient.make_client(
-            multiprocess_mode=True,
-            asyncio_mode=False,
+        self.engine_core = EngineCore(
             vllm_config=vllm_config,
-            executor_class=MultiprocExecutor,
             log_stats=self.log_stats,
         )
 
@@ -220,15 +211,6 @@ class LLMEngine:
     def pin_lora(self, lora_id: int) -> bool:
         """Prevent an adapter from being evicted."""
         return self.engine_core.pin_lora(lora_id)
-
-    def collective_rpc(
-        self,
-        method: Union[str, Callable[..., _R]],
-        timeout: Optional[float] = None,
-        args: tuple = (),
-        kwargs: Optional[dict[str, Any]] = None,
-    ) -> list[_R]:
-        return self.engine_core.collective_rpc(method, timeout, args, kwargs)
 
     def __del__(self):
         if dp_group := getattr(self, "dp_group", None):

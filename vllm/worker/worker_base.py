@@ -549,9 +549,6 @@ class WorkerWrapperBase:
             "vllm_config is required to initialize the worker")
         enable_trace_function_call_for_thread(self.vllm_config)
 
-        from vllm.plugins import load_general_plugins
-        load_general_plugins()
-
         if isinstance(self.vllm_config.parallel_config.worker_cls, str):
             worker_class = resolve_obj_by_qualname(
                 self.vllm_config.parallel_config.worker_cls)
