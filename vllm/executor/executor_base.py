@@ -125,17 +125,6 @@ class ExecutorBase(ABC):
         self.collective_rpc("initialize_cache",
                             args=(num_gpu_blocks, num_cpu_blocks))
 
-    def apply_model(self, func: Callable[[nn.Module], _R]) -> list[_R]:
-        """
-        Run a function directly on the model inside each worker,
-        returning the result for each of them.
-        """
-
-        def rpc_func(worker: WorkerBase) -> _R:
-            return func(worker.get_model())
-
-        return self.collective_rpc(rpc_func)
-
     @cached_property  # Avoid unnecessary RPC calls
     def supported_tasks(self) -> tuple[SupportedTask, ...]:
         output = self.collective_rpc("get_supported_tasks")
