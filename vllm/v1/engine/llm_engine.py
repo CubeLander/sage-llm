@@ -7,6 +7,7 @@ from typing import Any, Callable, Optional, Union
 
 from typing_extensions import TypeVar
 
+from vllm.v1.executor.multiproc_executor import MultiprocExecutor
 import vllm.envs as envs
 from vllm.config import ParallelConfig, VllmConfig
 from vllm.distributed import stateless_destroy_torch_distributed_process_group
@@ -19,8 +20,7 @@ from vllm.outputs import PoolingRequestOutput, RequestOutput
 from vllm.pooling_params import PoolingParams
 from vllm.sampling_params import SamplingParams
 from vllm.tasks import SupportedTask
-from vllm.transformers_utils.tokenizer_group import (
-    TokenizerGroup, init_tokenizer_from_configs)
+from vllm.transformers_utils.tokenizer_group import TokenizerGroup, init_tokenizer_from_configs
 from vllm.usage.usage_lib import UsageContext
 from vllm.utils import Device
 from vllm.v1.engine.core_client import EngineCoreClient
@@ -28,8 +28,7 @@ from vllm.v1.engine.output_processor import OutputProcessor
 from vllm.v1.engine.parallel_sampling import ParentRequest
 from vllm.v1.engine.processor import Processor
 from vllm.v1.executor.abstract import Executor
-from vllm.v1.metrics.loggers import (PrometheusStatLogger, StatLoggerBase,
-                                     StatLoggerFactory)
+from vllm.v1.metrics.loggers import PrometheusStatLogger, StatLoggerBase, StatLoggerFactory
 from vllm.v1.metrics.reader import Metric, get_metrics_snapshot
 from vllm.v1.metrics.stats import IterationStats
 
@@ -39,30 +38,13 @@ _R = TypeVar("_R", default=Any)
 
 
 class LLMEngine:
-    """Legacy LLMEngine for backwards compatibility."""
 
     def __init__(
         self,
         vllm_config: VllmConfig,
-        executor_class: type[Executor],
         log_stats: bool,
-        usage_context: UsageContext = UsageContext.ENGINE_CONTEXT,
-        stat_loggers: Optional[list[StatLoggerFactory]] = None,
         mm_registry: MultiModalRegistry = MULTIMODAL_REGISTRY,
-        use_cached_outputs: bool = False,
-        multiprocess_mode: bool = False,
     ) -> None:
-        if not envs.VLLM_USE_V1:
-            raise ValueError(
-                "Using V1 LLMEngine, but envs.VLLM_USE_V1=False. "
-                "This should not happen. As a workaround, try using "
-                "LLMEngine.from_vllm_config(...) or explicitly set "
-                "VLLM_USE_V1=0 or 1 and report this issue on Github.")
-
-        if stat_loggers is not None:
-            raise NotImplementedError(
-                "Passing StatLoggers to LLMEngine in V1 is not yet supported. "
-                "Set VLLM_USE_V1=0 and file and issue on Github.")
 
         self.vllm_config = vllm_config
         self.model_config = vllm_config.model_config
@@ -76,10 +58,7 @@ class LLMEngine:
         # important: init dp group before init the engine_core
         # In the decoupled engine case this is handled in EngineCoreProc.
         parallel_config = vllm_config.parallel_config
-        if not multiprocess_mode and parallel_config.data_parallel_size > 1:
-            self.dp_group = parallel_config.stateless_init_dp_group()
-        else:
-            self.dp_group = None
+        self.dp_group = None
         self.should_execute_dummy_batch = False
 
         if self.model_config.skip_tokenizer_init:
@@ -89,47 +68,26 @@ class LLMEngine:
             self.tokenizer = init_tokenizer_from_configs(
                 model_config=vllm_config.model_config,
                 scheduler_config=vllm_config.scheduler_config,
-                lora_config=vllm_config.lora_config)
+                lora_config=vllm_config.lora_config,
+            )
 
         # Processor (convert Inputs --> EngineCoreRequests)
-        self.processor = Processor(vllm_config=vllm_config,
-                                   tokenizer=self.tokenizer,
-                                   mm_registry=mm_registry)
+        self.processor = Processor(vllm_config=vllm_config, tokenizer=self.tokenizer, mm_registry=mm_registry)
 
         # OutputProcessor (convert EngineCoreOutputs --> RequestOutput).
-        self.output_processor = OutputProcessor(self.tokenizer,
-                                                log_stats=self.log_stats)
+        self.output_processor = OutputProcessor(self.tokenizer, log_stats=self.log_stats)
 
         # EngineCore (gets EngineCoreRequests and gives EngineCoreOutputs)
         self.engine_core = EngineCoreClient.make_client(
-            multiprocess_mode=multiprocess_mode,
+            multiprocess_mode=True,
             asyncio_mode=False,
             vllm_config=vllm_config,
-            executor_class=executor_class,
+            executor_class=MultiprocExecutor,
             log_stats=self.log_stats,
         )
 
-        if not multiprocess_mode:
-            # for v0 compatibility
-            self.model_executor = self.engine_core.engine_core.model_executor  # type: ignore
-
         # Don't keep the dummy data in memory
         self.reset_mm_cache()
-
-    @classmethod
-    def from_vllm_config(
-        cls,
-        vllm_config: VllmConfig,
-        usage_context: UsageContext = UsageContext.ENGINE_CONTEXT,
-        stat_loggers: Optional[list[StatLoggerFactory]] = None,
-        disable_log_stats: bool = False,
-    ) -> "LLMEngine":
-        return cls(vllm_config=vllm_config,
-                   executor_class=Executor.get_class(vllm_config),
-                   log_stats=(not disable_log_stats),
-                   usage_context=usage_context,
-                   stat_loggers=stat_loggers,
-                   multiprocess_mode=envs.VLLM_ENABLE_V1_MULTIPROCESSING)
 
     @classmethod
     def from_engine_args(
@@ -150,12 +108,14 @@ class LLMEngine:
             enable_multiprocessing = True
 
         # Create the LLMEngine.
-        return cls(vllm_config=vllm_config,
-                   executor_class=executor_class,
-                   log_stats=not engine_args.disable_log_stats,
-                   usage_context=usage_context,
-                   stat_loggers=stat_loggers,
-                   multiprocess_mode=enable_multiprocessing)
+        return cls(
+            vllm_config=vllm_config,
+            executor_class=executor_class,
+            log_stats=not engine_args.disable_log_stats,
+            usage_context=usage_context,
+            stat_loggers=stat_loggers,
+            multiprocess_mode=True,
+        )
 
     def get_num_unfinished_requests(self) -> int:
         return self.output_processor.get_num_unfinished_requests()
@@ -167,8 +127,7 @@ class LLMEngine:
         return self.has_unfinished_requests_dp(has_unfinished)
 
     def has_unfinished_requests_dp(self, has_unfinished: bool) -> bool:
-        aggregated_has_unfinished = ParallelConfig.has_unfinished_dp(
-            self.dp_group, has_unfinished)
+        aggregated_has_unfinished = ParallelConfig.has_unfinished_dp(self.dp_group, has_unfinished)
         if not has_unfinished and aggregated_has_unfinished:
             self.should_execute_dummy_batch = True
         return aggregated_has_unfinished
@@ -195,13 +154,12 @@ class LLMEngine:
     ) -> None:
         # Validate the request_id type.
         if not isinstance(request_id, str):
-            raise TypeError(
-                f"request_id must be a string, got {type(request_id)}")
+            raise TypeError(f"request_id must be a string, got {type(request_id)}")
 
         # Process raw inputs into the request.
         prompt_str, request = self.processor.process_inputs(
-            request_id, prompt, params, arrival_time, lora_request,
-            tokenization_kwargs, trace_headers, priority)
+            request_id, prompt, params, arrival_time, lora_request, tokenization_kwargs, trace_headers, priority
+        )
 
         n = params.n if isinstance(params, SamplingParams) else 1
 
@@ -221,8 +179,7 @@ class LLMEngine:
             child_request.sampling_params = params
 
             # Make a new RequestState and queue.
-            self.output_processor.add_request(child_request, prompt_str,
-                                              parent_req, idx)
+            self.output_processor.add_request(child_request, prompt_str, parent_req, idx)
             # Add the request to EngineCore.
             self.engine_core.add_request(child_request)
 
@@ -239,9 +196,8 @@ class LLMEngine:
         # 2) Process EngineCoreOutputs.
         iteration_stats = IterationStats() if self.log_stats else None
         processed_outputs = self.output_processor.process_outputs(
-            outputs.outputs,
-            engine_core_timestamp=outputs.timestamp,
-            iteration_stats=iteration_stats)
+            outputs.outputs, engine_core_timestamp=outputs.timestamp, iteration_stats=iteration_stats
+        )
 
         # 3) Abort any reqs that finished due to stop strings.
         self.engine_core.abort_requests(processed_outputs.reqs_to_abort)
@@ -249,8 +205,7 @@ class LLMEngine:
         # 4) Record stats
         if self.stat_logger is not None:
             assert outputs.scheduler_stats is not None
-            self.stat_logger.record(scheduler_stats=outputs.scheduler_stats,
-                                    iteration_stats=iteration_stats)
+            self.stat_logger.record(scheduler_stats=outputs.scheduler_stats, iteration_stats=iteration_stats)
 
         return processed_outputs.request_outputs
 
@@ -289,8 +244,7 @@ class LLMEngine:
 
     def get_tokenizer_group(self) -> TokenizerGroup:
         if self.tokenizer is None:
-            raise ValueError("Unable to get tokenizer because "
-                             "skip_tokenizer_init is True")
+            raise ValueError("Unable to get tokenizer because " "skip_tokenizer_init is True")
 
         return self.tokenizer
 
@@ -310,11 +264,13 @@ class LLMEngine:
         """Prevent an adapter from being evicted."""
         return self.engine_core.pin_lora(lora_id)
 
-    def collective_rpc(self,
-                       method: Union[str, Callable[..., _R]],
-                       timeout: Optional[float] = None,
-                       args: tuple = (),
-                       kwargs: Optional[dict[str, Any]] = None) -> list[_R]:
+    def collective_rpc(
+        self,
+        method: Union[str, Callable[..., _R]],
+        timeout: Optional[float] = None,
+        args: tuple = (),
+        kwargs: Optional[dict[str, Any]] = None,
+    ) -> list[_R]:
         return self.engine_core.collective_rpc(method, timeout, args, kwargs)
 
     def __del__(self):
