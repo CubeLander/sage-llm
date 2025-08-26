@@ -270,7 +270,6 @@ class EngineArgs:
     tokenizer: Optional[str] = ModelConfig.tokenizer
     hf_config_path: Optional[str] = ModelConfig.hf_config_path
     runner: RunnerOption = ModelConfig.runner
-    convert: ConvertOption = ModelConfig.convert
     task: Optional[TaskOption] = ModelConfig.task
     skip_tokenizer_init: bool = ModelConfig.skip_tokenizer_init
     enable_prompt_embeds: bool = ModelConfig.enable_prompt_embeds
@@ -905,7 +904,6 @@ class EngineArgs:
             model=self.model,
             hf_config_path=self.hf_config_path,
             runner=self.runner,
-            convert=self.convert,
             task=self.task,
             tokenizer=self.tokenizer,
             tokenizer_mode=self.tokenizer_mode,

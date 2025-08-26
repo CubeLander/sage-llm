@@ -197,8 +197,7 @@ class LLM:
         self,
         model: str,
         *,
-        runner: RunnerOption = "auto",  # vllm/config/__init__.py
-        convert: ConvertOption = "auto",  # vllm/config/__init__.py
+        convert: ConvertOption = "auto",  # vllm/config/__init__.py 
         tokenizer: Optional[str] = None,  # 如果谁想用tokenizer，谁就自己写一个registry，我们不需要这个接口
         tokenizer_mode: TokenizerMode = "auto",  # 同上， 属于per-model config
         skip_tokenizer_init: bool = False,  # 同上, 属于per-model config
@@ -245,7 +244,7 @@ class LLM:
 
         engine_args = EngineArgs(
             model=model,
-            runner=runner,
+            runner="auto",
             convert=convert,
             tokenizer=tokenizer,
             tokenizer_mode=tokenizer_mode,
@@ -279,8 +278,6 @@ class LLM:
         # Create the V1 Engine
         vllm_config = engine_args.create_engine_config(UsageContext.LLM_CLASS)
         self.llm_engine = V1LLMEngine.from_vllm_config(vllm_config)
-
-        self.engine_class = type(self.llm_engine)
 
         self.request_counter = Counter()
         self.default_sampling_params: Union[dict[str, Any], None] = None
@@ -388,7 +385,7 @@ class LLM:
         )
 
         outputs = self._run_engine(use_tqdm=use_tqdm)
-        return self.engine_class.validate_outputs(outputs, RequestOutput)
+        return outputs
 
     def _get_modality_specific_lora_reqs(
         self,
@@ -976,7 +973,7 @@ class LLM:
         )
 
         outputs = self._run_engine(use_tqdm=use_tqdm)
-        return self.engine_class.validate_outputs(outputs, PoolingRequestOutput)
+        return outputs
 
     def embed(
         self,
@@ -1140,8 +1137,7 @@ class LLM:
 
         scores = _cosine_similarity(tokenizer=tokenizer, embed_1=encoded_output_1, embed_2=encoded_output_2)
 
-        items = self.engine_class.validate_outputs(scores, PoolingRequestOutput)
-        return [ScoringRequestOutput.from_base(item) for item in items]
+        return [ScoringRequestOutput.from_base(item) for item in scores]
 
     def _cross_encoding_score(
         self,
@@ -1205,9 +1201,7 @@ class LLM:
         )
 
         outputs = self._run_engine(use_tqdm=use_tqdm)
-        items = self.engine_class.validate_outputs(outputs, PoolingRequestOutput)
-
-        return [ScoringRequestOutput.from_base(item) for item in items]
+        return [ScoringRequestOutput.from_base(item) for item in outputs]
 
     def score(
         self,
