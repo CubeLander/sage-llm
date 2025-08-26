@@ -645,48 +645,6 @@ def serialize_vllm_model(
     return model
 
 
-def tensorize_vllm_model(engine_args: "EngineArgs",
-                         tensorizer_config: TensorizerConfig,
-                         generate_keyfile: bool = True):
-    """Utility to load a model and then serialize it with Tensorizer
-
-       Intended to be used separately from running a vLLM server since it
-       creates its own Engine instance.
-    """
-    engine_config = engine_args.create_engine_config()
-    tensorizer_config.verify_with_model_config(engine_config.model_config)
-    tensorizer_config.verify_with_parallel_config(
-        engine_config.parallel_config)
-
-    # generate the encryption key before creating the engine to support sharding
-    if generate_keyfile and (keyfile :=
-                             tensorizer_config.encryption_keyfile) is not None:
-        encryption_params = EncryptionParams.random()
-        with open_stream(
-                keyfile,
-                mode="wb+",
-                s3_access_key_id=tensorizer_config.s3_access_key_id,
-                s3_secret_access_key=tensorizer_config.s3_secret_access_key,
-                s3_endpoint=tensorizer_config.s3_endpoint,
-        ) as stream:
-            stream.write(encryption_params.key)
-
-    from vllm import LLMEngine
-    from vllm.v1.engine.llm_engine import LLMEngine as V1LLMEngine
-
-    if not envs.VLLM_USE_V1:
-        engine = LLMEngine.from_engine_args(engine_args)
-        engine.model_executor.collective_rpc(
-            "save_tensorized_model",
-            kwargs={"tensorizer_config": tensorizer_config.to_serializable()},
-        )
-    else:
-        engine = V1LLMEngine.from_vllm_config(engine_config)
-        engine.collective_rpc(
-            "save_tensorized_model",
-            kwargs={"tensorizer_config": tensorizer_config.to_serializable()},
-        )
-
 
 def tensorize_lora_adapter(lora_path: str,
                            tensorizer_config: TensorizerConfig):

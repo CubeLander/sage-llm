@@ -57,9 +57,6 @@ class LLMEngine:
 
         # important: init dp group before init the engine_core
         # In the decoupled engine case this is handled in EngineCoreProc.
-        parallel_config = vllm_config.parallel_config
-        self.dp_group = None
-        self.should_execute_dummy_batch = False
 
         if self.model_config.skip_tokenizer_init:
             self.tokenizer = None
@@ -88,49 +85,14 @@ class LLMEngine:
 
         # Don't keep the dummy data in memory
         self.reset_mm_cache()
-
-    @classmethod
-    def from_engine_args(
-        cls,
-        engine_args: EngineArgs,
-        usage_context: UsageContext = UsageContext.ENGINE_CONTEXT,
-        stat_loggers: Optional[list[StatLoggerFactory]] = None,
-        enable_multiprocessing: bool = False,
-    ) -> "LLMEngine":
-        """Creates an LLM engine from the engine arguments."""
-
-        # Create the engine configs.
-        vllm_config = engine_args.create_engine_config(usage_context)
-        executor_class = Executor.get_class(vllm_config)
-
-        if envs.VLLM_ENABLE_V1_MULTIPROCESSING:
-            logger.debug("Enabling multiprocessing for LLMEngine.")
-            enable_multiprocessing = True
-
-        # Create the LLMEngine.
-        return cls(
-            vllm_config=vllm_config,
-            executor_class=executor_class,
-            log_stats=not engine_args.disable_log_stats,
-            usage_context=usage_context,
-            stat_loggers=stat_loggers,
-            multiprocess_mode=True,
-        )
+        self.engine_core.execute_dummy_batch()
 
     def get_num_unfinished_requests(self) -> int:
         return self.output_processor.get_num_unfinished_requests()
 
     def has_unfinished_requests(self) -> bool:
         has_unfinished = self.output_processor.has_unfinished_requests()
-        if self.dp_group is None:
-            return has_unfinished or self.engine_core.dp_engines_running()
-        return self.has_unfinished_requests_dp(has_unfinished)
-
-    def has_unfinished_requests_dp(self, has_unfinished: bool) -> bool:
-        aggregated_has_unfinished = ParallelConfig.has_unfinished_dp(self.dp_group, has_unfinished)
-        if not has_unfinished and aggregated_has_unfinished:
-            self.should_execute_dummy_batch = True
-        return aggregated_has_unfinished
+        return has_unfinished or self.engine_core.dp_engines_running()
 
     def get_supported_tasks(self) -> tuple[SupportedTask, ...]:
         return self.engine_core.get_supported_tasks()
@@ -184,11 +146,6 @@ class LLMEngine:
             self.engine_core.add_request(child_request)
 
     def step(self) -> Union[list[RequestOutput], list[PoolingRequestOutput]]:
-
-        if self.should_execute_dummy_batch:
-            self.should_execute_dummy_batch = False
-            self.engine_core.execute_dummy_batch()
-            return []
 
         # 1) Get EngineCoreOutput from the EngineCore.
         outputs = self.engine_core.get_output()

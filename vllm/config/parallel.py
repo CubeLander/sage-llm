@@ -197,19 +197,6 @@ class ParallelConfig:
         assert last_exc is not None
         raise last_exc
 
-    @staticmethod
-    def has_unfinished_dp(dp_group: ProcessGroup,
-                          has_unfinished: bool) -> bool:
-        tensor = torch.tensor([has_unfinished],
-                              dtype=torch.int32,
-                              device="cpu")
-        # dp rank 0: has_unfinished_seqs=True
-        # dp rank 1: has_unfinished_seqs=False
-        # aggregated: has_unfinished_seqs=True
-        # so this is an OR operation, i.e. MAX in integers
-        torch.distributed.all_reduce(tensor, op=ReduceOp.MAX, group=dp_group)
-        aggregated_has_unfinished = bool(tensor.item())
-        return aggregated_has_unfinished
 
     @staticmethod
     def sync_kv_cache_memory_size(dp_group: ProcessGroup,

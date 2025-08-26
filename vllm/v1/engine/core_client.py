@@ -132,9 +132,6 @@ class EngineCoreClient(ABC):
     def is_sleeping(self) -> bool:
         raise NotImplementedError
 
-    def execute_dummy_batch(self) -> None:
-        raise NotImplementedError
-
     async def execute_dummy_batch_async(self) -> None:
         raise NotImplementedError
 
@@ -229,87 +226,6 @@ class EngineCoreClient(ABC):
             args: tuple = (),
             kwargs: Optional[dict[str, Any]] = None) -> list[_R]:
         raise NotImplementedError
-
-
-class InprocClient(EngineCoreClient):
-    """
-    InprocClient: client for in-process EngineCore. Intended 
-    for use in LLMEngine for V0-style add_request() and step()
-        EngineCore setup in this process (no busy loop).
-
-        * pushes EngineCoreRequest directly into the EngineCore
-        * pulls EngineCoreOutputs by stepping the EngineCore
-    """
-
-    def __init__(self, *args, **kwargs):
-        self.engine_core = EngineCore(*args, **kwargs)
-
-    def get_output(self) -> EngineCoreOutputs:
-        outputs, _ = self.engine_core.step()
-        return outputs.get(0) or EngineCoreOutputs()
-
-    def get_supported_tasks(self) -> tuple[SupportedTask, ...]:
-        return self.engine_core.get_supported_tasks()
-
-    def add_request(self, request: EngineCoreRequest) -> None:
-        req, request_wave = self.engine_core.preprocess_add_request(request)
-        self.engine_core.add_request(req, request_wave)
-
-    def abort_requests(self, request_ids: list[str]) -> None:
-        if len(request_ids) > 0:
-            self.engine_core.abort_requests(request_ids)
-
-    def shutdown(self) -> None:
-        self.engine_core.shutdown()
-
-    def profile(self, is_start: bool = True) -> None:
-        self.engine_core.profile(is_start)
-
-    def reset_mm_cache(self) -> None:
-        self.engine_core.reset_mm_cache()
-
-    def reset_prefix_cache(self) -> None:
-        self.engine_core.reset_prefix_cache()
-
-    def sleep(self, level: int = 1) -> None:
-        self.engine_core.sleep(level)
-
-    def wake_up(self, tags: Optional[list[str]] = None) -> None:
-        self.engine_core.wake_up(tags)
-
-    def is_sleeping(self) -> bool:
-        return self.engine_core.is_sleeping()
-
-    def execute_dummy_batch(self) -> None:
-        self.engine_core.execute_dummy_batch()
-
-    def add_lora(self, lora_request: LoRARequest) -> bool:
-        return self.engine_core.add_lora(lora_request)
-
-    def remove_lora(self, lora_id: int) -> bool:
-        return self.engine_core.remove_lora(lora_id)
-
-    def list_loras(self) -> set[int]:
-        return self.engine_core.list_loras()
-
-    def pin_lora(self, lora_id: int) -> bool:
-        return self.engine_core.pin_lora(lora_id)
-
-    def save_sharded_state(self,
-                           path: str,
-                           pattern: Optional[str] = None,
-                           max_size: Optional[int] = None) -> None:
-        self.engine_core.save_sharded_state(path, pattern, max_size)
-
-    def collective_rpc(self,
-                       method: Union[str, Callable[..., _R]],
-                       timeout: Optional[float] = None,
-                       args: tuple = (),
-                       kwargs: Optional[dict[str, Any]] = None) -> list[_R]:
-        return self.engine_core.collective_rpc(method, timeout, args, kwargs)
-
-    def dp_engines_running(self) -> bool:
-        return False
 
 
 @dataclass
@@ -736,8 +652,6 @@ class SyncMPClient(MPClient):
     def is_sleeping(self) -> bool:
         return self.call_utility("is_sleeping")
 
-    def execute_dummy_batch(self) -> None:
-        self.call_utility("execute_dummy_batch")
 
     def collective_rpc(self,
                        method: Union[str, Callable[..., _R]],
@@ -924,8 +838,6 @@ class AsyncMPClient(MPClient):
     async def is_sleeping_async(self) -> bool:
         return await self.call_utility_async("is_sleeping")
 
-    async def execute_dummy_batch_async(self) -> None:
-        await self.call_utility_async("execute_dummy_batch")
 
     async def add_lora_async(self, lora_request: LoRARequest) -> bool:
         return await self.call_utility_async("add_lora", lora_request)
