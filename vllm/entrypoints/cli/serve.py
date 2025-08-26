@@ -7,6 +7,7 @@ from typing import Optional
 
 import uvloop
 
+from vllm.v1.executor.multiproc_executor import MultiprocExecutor
 import vllm
 import vllm.envs as envs
 from vllm.entrypoints.cli.types import CLISubcommand
@@ -121,7 +122,7 @@ def run_headless(args: argparse.Namespace):
         vllm_config=vllm_config,
         local_client=False,
         handshake_address=handshake_address,
-        executor_class=Executor.get_class(vllm_config),
+        executor_class=MultiprocExecutor,
         log_stats=not engine_args.disable_log_stats,
     )
 
@@ -165,7 +166,7 @@ def run_multi_api_server(args: argparse.Namespace):
             logger.warning("Multi-modal processor cache is disabled because "
                            "it is not compatible with `api_server_count > 1`.")
 
-    executor_class = Executor.get_class(vllm_config)
+    executor_class = MultiprocExecutor(vllm_config)
     log_stats = not engine_args.disable_log_stats
 
     parallel_config = vllm_config.parallel_config

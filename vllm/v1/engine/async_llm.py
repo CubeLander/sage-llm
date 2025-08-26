@@ -8,6 +8,7 @@ from typing import Any, Optional, Union
 
 import numpy as np
 
+from vllm.v1.executor.multiproc_executor import MultiprocExecutor
 import vllm.envs as envs
 from vllm.config import ModelConfig, VllmConfig
 from vllm.engine.arg_utils import AsyncEngineArgs
@@ -173,7 +174,7 @@ class AsyncLLM(EngineClient):
         # Create the LLMEngine.
         return cls(
             vllm_config=vllm_config,
-            executor_class=Executor.get_class(vllm_config),
+            executor_class=MultiprocExecutor(vllm_config),
             start_engine_loop=start_engine_loop,
             stat_loggers=stat_loggers,
             log_requests=enable_log_requests,
@@ -196,7 +197,7 @@ class AsyncLLM(EngineClient):
 
         # Create the engine configs.
         vllm_config = engine_args.create_engine_config(usage_context)
-        executor_class = Executor.get_class(vllm_config)
+        executor_class = MultiprocExecutor(vllm_config)
 
         # Create the AsyncLLM.
         return cls(
