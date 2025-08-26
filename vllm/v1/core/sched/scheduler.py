@@ -335,20 +335,6 @@ class Scheduler(SchedulerInterface):
                     break
 
                 request = self.waiting.peek_request()
-
-                # KVTransfer: skip request if still waiting for remote kvs.
-                if request.status == RequestStatus.WAITING_FOR_REMOTE_KVS:
-                    is_ready = self._update_waiting_for_remote_kv(request)
-                    if is_ready:
-                        request.status = RequestStatus.WAITING
-                    else:
-                        logger.debug(
-                            "%s is still in WAITING_FOR_REMOTE_KVS state.",
-                            request.request_id)
-                        self.waiting.pop_request()
-                        skipped_waiting_requests.prepend_request(request)
-                        continue
-
                 # Skip request if the structured output request is still waiting
                 # for FSM compilation.
                 if request.status == RequestStatus.WAITING_FOR_FSM:
@@ -1021,7 +1007,6 @@ class Scheduler(SchedulerInterface):
     def _free_request(self, request: Request) -> Optional[dict[str, Any]]:
         assert request.is_finished()
 
-        delay_free_blocks, kv_xfer_params = self._connector_finished(request)
         self.encoder_cache_manager.free(request)
         request_id = request.request_id
         self.finished_req_ids.add(request_id)
@@ -1083,27 +1068,6 @@ class Scheduler(SchedulerInterface):
     def shutdown(self) -> None:
         if self.kv_event_publisher:
             self.kv_event_publisher.shutdown()
-
-    ########################################################################
-    # KV Connector Related Methods
-    ########################################################################
-
-    def get_kv_connector(self) -> Optional[KVConnectorBase_V1]:
-        return self.connector
-
-    def _connector_finished(
-            self, request: Request) -> tuple[bool, Optional[dict[str, Any]]]:
-        """
-        Invoke the KV connector request_finished() method if applicable.
-
-        Returns optional kv transfer parameters to be included with the
-        request outputs.
-        """
-        if self.connector is None:
-            return False, None
-
-        (block_ids, ) = self.kv_cache_manager.get_block_ids(request.request_id)
-        return self.connector.request_finished(request, block_ids)
 
     def _update_waiting_for_remote_kv(self, request: Request) -> bool:
         """

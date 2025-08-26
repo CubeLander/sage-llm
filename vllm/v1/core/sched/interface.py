@@ -145,6 +145,3 @@ class SchedulerInterface(ABC):
     def shutdown(self) -> None:
         """Shutdown the scheduler."""
         raise NotImplementedError
-
-    def get_kv_connector(self) -> Optional["KVConnectorBase_V1"]:
-        return None

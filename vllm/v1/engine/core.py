@@ -162,11 +162,6 @@ class EngineCore:
                     f"Unsupported task: {pooling_params.task!r} " f"Supported tasks: {supported_pooling_tasks}"
                 )
 
-        if request.kv_transfer_params is not None and (not self.scheduler.get_kv_connector()):
-            logger.warning(
-                "Got kv_transfer_params, but no KVConnector found. " "Disabling KVTransfer for this request."
-            )
-
         self.scheduler.add_request(request)
 
     def abort_requests(self, request_ids: list[str]):
