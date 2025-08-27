@@ -17,7 +17,7 @@ from vllm.entrypoints.openai.tool_parsers.abstract_tool_parser import (
     ToolParser, ToolParserManager)
 from vllm.entrypoints.openai.tool_parsers.utils import (
     extract_intermediate_diff)
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.transformers_utils.tokenizer import AnyTokenizer
 
 logger = init_logger(__name__)

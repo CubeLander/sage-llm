@@ -8,7 +8,7 @@ from vllm.core.scheduler import Scheduler
 from vllm.engine.output_processor.interfaces import (
     SequenceGroupOutputProcessor)
 from vllm.engine.output_processor.stop_checker import StopChecker
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.sequence import (CompletionSequenceGroupOutput, SequenceGroup,
                            SequenceGroupOutput)
 from vllm.transformers_utils.detokenizer import Detokenizer

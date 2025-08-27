@@ -3,7 +3,7 @@
 
 from typing import TYPE_CHECKING
 
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.multimodal import MultiModalRegistry
 from vllm.v1.request import Request
 

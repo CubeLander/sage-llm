@@ -24,7 +24,7 @@ from vllm.attention.backends.abstract import AttentionBackend
 from vllm.attention.layer import Attention
 from vllm.distributed.kv_transfer.kv_connector.utils import (
     get_kv_connector_cache_layout)
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.v1.kv_cache_interface import AttentionSpec
 
 logger = init_logger(__name__)

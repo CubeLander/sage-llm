@@ -11,7 +11,7 @@ from transformers.models.gemma3.processing_gemma3 import Gemma3ProcessorKwargs
 
 import vllm.envs as envs
 from vllm.config import VllmConfig
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.model_executor.layers.layernorm import GemmaRMSNorm
 from vllm.model_executor.models.module_mapping import MultiModelKeys
 from vllm.model_executor.sampling_metadata import SamplingMetadata

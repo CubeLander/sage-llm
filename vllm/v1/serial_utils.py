@@ -17,7 +17,7 @@ import zmq
 from msgspec import msgpack
 
 from vllm import envs
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.multimodal.inputs import (BaseMultiModalField,
                                     MultiModalBatchedField,
                                     MultiModalFieldConfig, MultiModalFieldElem,

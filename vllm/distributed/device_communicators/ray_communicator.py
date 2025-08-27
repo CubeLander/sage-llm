@@ -13,7 +13,7 @@ from torch.distributed import ReduceOp
 from vllm.distributed.device_communicators.base_device_communicator import (
     DeviceCommunicatorBase)
 from vllm.distributed.parallel_state import get_pp_group
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.utils import current_stream
 
 logger = init_logger(__name__)

@@ -4,7 +4,7 @@ import os
 
 import torch
 
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 
 logger = init_logger(__name__)
 

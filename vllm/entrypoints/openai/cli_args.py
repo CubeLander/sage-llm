@@ -22,7 +22,7 @@ from vllm.entrypoints.chat_utils import (ChatTemplateContentFormatOption,
                                          validate_chat_template)
 from vllm.entrypoints.openai.serving_models import LoRAModulePath
 from vllm.entrypoints.openai.tool_parsers import ToolParserManager
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.utils import FlexibleArgumentParser
 
 logger = init_logger(__name__)

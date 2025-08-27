@@ -14,7 +14,7 @@ from compressed_tensors.quantization import (QuantizationArgs,
 from pydantic import BaseModel
 
 import vllm.envs as envs
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.model_executor.layers.fused_moe import FusedMoE
 from vllm.model_executor.layers.linear import (LinearBase, LinearMethodBase,
                                                UnquantizedLinearMethod)

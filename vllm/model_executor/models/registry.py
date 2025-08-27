@@ -21,7 +21,7 @@ import transformers
 
 from vllm.config import (ModelConfig, ModelImpl, iter_architecture_defaults,
                          try_match_architecture_defaults)
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.transformers_utils.dynamic_module import (
     try_get_class_from_dynamic_module)
 

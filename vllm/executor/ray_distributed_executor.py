@@ -16,7 +16,7 @@ from vllm.executor.executor_base import (
 from vllm.executor.msgspec_utils import encode_hook
 from vllm.executor.ray_utils import (RayWorkerWrapper, initialize_ray_cluster,
                                      ray)
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.model_executor.layers.sampler import SamplerOutput
 from vllm.platforms import current_platform
 from vllm.ray.ray_env import get_env_vars_to_copy

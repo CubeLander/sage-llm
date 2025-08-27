@@ -26,7 +26,7 @@ from vllm.attention import Attention
 from vllm.compilation.decorators import support_torch_compile
 from vllm.config import CacheConfig, VllmConfig
 from vllm.distributed import get_tensor_model_parallel_world_size
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.model_executor.layers.activation import (_ACTIVATION_REGISTRY,
                                                    GeluAndMul,
                                                    GeluAndMulSparse)

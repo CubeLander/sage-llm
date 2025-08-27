@@ -9,7 +9,7 @@ import torch
 from tabulate import tabulate
 
 from vllm import _custom_ops as ops
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.platforms import current_platform
 from vllm.utils import (
     STR_DTYPE_TO_TORCH_DTYPE,

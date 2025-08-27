@@ -7,7 +7,7 @@ from torch._inductor.pattern_matcher import (PatternMatcherPass, fwd_only,
                                              register_replacement)
 
 from vllm.config import VllmConfig
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.platforms import current_platform
 
 from .vllm_inductor_pass import VllmInductorPass

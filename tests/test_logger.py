@@ -16,7 +16,7 @@ from uuid import uuid4
 import pytest
 
 from vllm.entrypoints.logger import RequestLogger
-from hotLLM.vllm.logger import (_DATE_FORMAT, _FORMAT, _configure_vllm_root_logger,
+from vllm.logger import (_DATE_FORMAT, _FORMAT, _configure_vllm_root_logger,
                          enable_trace_function_call, init_logger)
 from vllm.utils.logging_utils import NewLineFormatter
 from vllm.utils.logging_utils.dump_input import prepare_object_to_dump

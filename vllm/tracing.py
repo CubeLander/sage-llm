@@ -5,7 +5,7 @@ import os
 from collections.abc import Mapping
 from typing import Optional
 
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.utils import run_once
 
 TRACE_HEADERS = ["traceparent", "tracestate"]

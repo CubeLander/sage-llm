@@ -12,7 +12,7 @@ from vllm.adapter_commons.utils import (add_adapter_worker,
                                         set_active_adapters_worker)
 from vllm.adapter_commons.worker_manager import AbstractWorkerManager
 from vllm.config import LoRAConfig
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.lora.models import (LoRAModel, LoRAModelManager,
                               LRUCacheLoRAModelManager, create_lora_manager)
 from vllm.lora.peft_helper import PEFTHelper

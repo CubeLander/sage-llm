@@ -20,7 +20,7 @@ import torch
 
 import vllm.envs as envs
 from vllm.connections import global_http_connection
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.utils import cuda_device_count_stateless, cuda_get_device_properties
 from vllm.version import __version__ as VLLM_VERSION
 

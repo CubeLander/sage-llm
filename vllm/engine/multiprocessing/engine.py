@@ -29,7 +29,7 @@ from vllm.engine.multiprocessing import (ENGINE_DEAD_ERROR, IPC_DATA_EXT,
                                          RPCStartupResponse,
                                          RPCUProfileRequest, RPCWakeUpRequest)
 # yapf: enable
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.outputs import RequestOutput
 from vllm.transformers_utils.config import (
     maybe_register_config_serialize_by_value)

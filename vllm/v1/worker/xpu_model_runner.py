@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 import torch
 
 from vllm.config import VllmConfig
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.v1.worker.gpu_model_runner import GPUModelRunner
 
 if TYPE_CHECKING:

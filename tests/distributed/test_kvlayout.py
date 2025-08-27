@@ -5,7 +5,7 @@ from vllm.config import (DeviceConfig, KVTransferConfig, ModelConfig,
                          VllmConfig, set_current_vllm_config)
 from vllm.distributed.kv_transfer.kv_connector.utils import (
     get_kv_connector_cache_layout)
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 
 logger = init_logger("test_expert_parallel")
 

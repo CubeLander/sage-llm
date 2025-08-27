@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
 from vllm.cli.main import main as vllm_main
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 
 logger = init_logger(__name__)
 

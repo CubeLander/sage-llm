@@ -20,7 +20,7 @@ from vllm.attention.backends.utils import (
     is_all_cross_attn_metadata_set, is_all_encoder_attn_metadata_set)
 from vllm.attention.ops.paged_attn import (PagedAttention,
                                            PagedAttentionMetadata)
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 
 logger = init_logger(__name__)
 

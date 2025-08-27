@@ -10,7 +10,7 @@ import msgspec.msgpack
 import zmq
 
 from vllm.config import ParallelConfig
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.utils import get_mp_context, make_zmq_socket, set_process_title
 from vllm.v1.engine import EngineCoreOutputs, EngineCoreRequestType
 from vllm.v1.serial_utils import MsgpackDecoder

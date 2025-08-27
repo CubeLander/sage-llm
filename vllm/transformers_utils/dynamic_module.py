@@ -6,7 +6,7 @@ from typing import Optional, Union
 from transformers.dynamic_module_utils import get_class_from_dynamic_module
 
 import vllm.envs as envs
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 
 logger = init_logger(__name__)
 

@@ -25,7 +25,7 @@ from torch.distributed.distributed_c10d import (Backend, PrefixStore,
 from torch.distributed.rendezvous import rendezvous
 
 import vllm.envs as envs
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.utils import get_tcp_uri, is_torch_equal_or_newer
 
 logger = init_logger(__name__)

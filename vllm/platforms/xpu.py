@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Optional
 import torch
 
 import vllm.envs as envs
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.utils import DEFAULT_MAX_NUM_BATCHED_TOKENS
 
 from .interface import DeviceCapability, Platform, PlatformEnum, _Backend

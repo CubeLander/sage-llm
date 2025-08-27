@@ -6,7 +6,7 @@ import torch.nn as nn
 
 from vllm.config import VllmConfig
 from vllm.forward_context import set_forward_context
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.model_executor.model_loader import get_model
 from vllm.v1.sample.metadata import SamplingMetadata
 

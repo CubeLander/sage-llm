@@ -8,7 +8,7 @@ from transformers import PreTrainedTokenizerBase
 
 from vllm.entrypoints.openai.protocol import (ChatCompletionRequest,
                                               DeltaMessage)
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.reasoning import ReasoningParser, ReasoningParserManager
 
 logger = init_logger(__name__)

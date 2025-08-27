@@ -6,7 +6,7 @@ from typing import Callable, Optional
 import torch
 from compressed_tensors.quantization import ActivationOrdering
 
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.model_executor.layers.quantization.compressed_tensors.schemes import (
     CompressedTensorsScheme)
 from vllm.model_executor.layers.quantization.kernels.mixed_precision import (

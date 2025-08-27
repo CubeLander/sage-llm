@@ -10,7 +10,7 @@ import torch
 from typing_extensions import Self
 
 from vllm.config import VllmConfig
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.utils import cdiv, get_dtype_size
 
 logger = init_logger(__name__)

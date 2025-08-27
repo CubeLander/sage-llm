@@ -13,7 +13,7 @@ from typing import Any, Optional
 import torch  # noqa
 
 import vllm.envs as envs
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 
 logger = init_logger(__name__)
 

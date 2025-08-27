@@ -14,7 +14,7 @@ from vllm.core.block.interfaces import (Block, BlockAllocator, BlockId, Device,
 from vllm.core.block.naive_block import (BlockPool, NaiveBlock,
                                          NaiveBlockAllocator)
 from vllm.core.evictor import EvictionPolicy, Evictor, make_evictor
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.sequence import Sequence
 
 PrefixHash = int

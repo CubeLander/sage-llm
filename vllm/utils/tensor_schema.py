@@ -5,7 +5,7 @@ from typing import (Annotated, Any, Optional, Union, get_args, get_origin,
 
 import torch
 
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 
 logger = init_logger(__name__)
 

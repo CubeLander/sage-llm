@@ -7,7 +7,7 @@ from typing import Callable, Optional
 
 from watchfiles import Change, awatch
 
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 
 logger = init_logger(__name__)
 

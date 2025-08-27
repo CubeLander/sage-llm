@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.platforms import current_platform
 from vllm.utils import resolve_obj_by_qualname
 

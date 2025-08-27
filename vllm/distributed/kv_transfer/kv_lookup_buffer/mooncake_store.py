@@ -18,7 +18,7 @@ from safetensors.torch import save as safetensors_save
 from vllm.config import VllmConfig
 from vllm.distributed.kv_transfer.kv_lookup_buffer.base import (
     KVStoreBufferBase)
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 
 DEFAULT_GLOBAL_SEGMENT_SIZE = 3355443200  # 3.125 GiB
 DEFAULT_LOCAL_BUFFER_SIZE = 1073741824  # 1.0 GiB

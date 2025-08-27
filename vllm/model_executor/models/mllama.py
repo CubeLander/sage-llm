@@ -40,7 +40,7 @@ from vllm.attention.selector import _Backend
 from vllm.config import VllmConfig
 from vllm.distributed import get_pp_group, get_tp_group
 from vllm.forward_context import get_forward_context
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.model_executor.layers.layernorm import RMSNorm
 from vllm.model_executor.layers.linear import (ColumnParallelLinear,
                                                QKVCrossParallelLinear,

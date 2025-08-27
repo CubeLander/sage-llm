@@ -7,7 +7,7 @@ import torch
 from torch._dynamo.utils import lazy_format_graph_code
 
 from vllm.config import VllmConfig
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 
 from .inductor_pass import InductorPass
 

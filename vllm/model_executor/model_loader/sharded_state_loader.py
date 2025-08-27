@@ -11,7 +11,7 @@ import torch
 from torch import nn
 
 from vllm.config import LoadConfig, ModelConfig
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.model_executor.model_loader.base_loader import BaseModelLoader
 from vllm.model_executor.model_loader.weight_utils import (
     download_weights_from_hf, runai_safetensors_weights_iterator)

@@ -9,7 +9,7 @@ import torch
 from torch import nn
 
 from vllm.config import LoadConfig, ModelConfig, ParallelConfig, VllmConfig
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.model_executor.model_loader.base_loader import BaseModelLoader
 from vllm.model_executor.model_loader.tensorizer import (
     TensorizerConfig, deserialize_tensorizer_model, init_tensorizer_model,

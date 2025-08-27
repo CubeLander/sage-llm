@@ -15,7 +15,7 @@ import msgspec
 import zmq
 
 from vllm.config import KVEventsConfig
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 
 logger = init_logger(__name__)
 

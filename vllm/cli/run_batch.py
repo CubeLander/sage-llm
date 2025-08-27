@@ -11,7 +11,7 @@ import typing
 from vllm.cli.types import CLISubcommand
 from vllm.entrypoints.utils import (VLLM_SUBCMD_PARSER_EPILOG,
                                     show_filtered_argument_or_group_from_help)
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 
 if typing.TYPE_CHECKING:
     from vllm.utils import FlexibleArgumentParser

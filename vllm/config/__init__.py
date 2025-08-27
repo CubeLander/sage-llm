@@ -36,7 +36,7 @@ from vllm.config.compilation import (CompilationConfig, CompilationLevel,
 from vllm.config.parallel import DistributedExecutorBackend, ParallelConfig
 from vllm.config.scheduler import SchedulerConfig, SchedulerPolicy
 from vllm.config.utils import ConfigType, config
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.model_executor.layers.quantization import QuantizationMethods
 from vllm.platforms import current_platform
 from vllm.transformers_utils.config import (

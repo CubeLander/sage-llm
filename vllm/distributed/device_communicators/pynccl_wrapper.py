@@ -30,7 +30,7 @@ from typing import Any, Optional
 import torch
 from torch.distributed import ReduceOp
 
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.utils import find_nccl_library
 
 logger = init_logger(__name__)

@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, Generic, Optional, Protocol, TypeVar
 import torch.nn as nn
 
 from vllm.inputs import InputProcessingContext
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.transformers_utils.tokenizer import (AnyTokenizer,
                                                cached_tokenizer_from_config)
 from vllm.utils import ClassRegistry

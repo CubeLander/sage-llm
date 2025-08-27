@@ -4,7 +4,7 @@ from typing import Callable, Optional
 
 import torch
 
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.platforms import current_platform
 from vllm.utils import direct_register_custom_op, is_torch_equal_or_newer
 

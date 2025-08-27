@@ -6,7 +6,7 @@ from typing import Literal, Optional
 from torch import nn
 
 from vllm.config import LoadConfig, ModelConfig, VllmConfig
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.model_executor.model_loader.base_loader import BaseModelLoader
 from vllm.model_executor.model_loader.bitsandbytes_loader import (
     BitsAndBytesModelLoader)

@@ -13,7 +13,7 @@ from pydantic.dataclasses import dataclass
 import vllm.envs as envs
 from vllm.compilation.inductor_pass import CallableInductorPass, InductorPass
 from vllm.config.utils import config
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.utils import is_torch_equal_or_newer, resolve_obj_by_qualname
 
 if TYPE_CHECKING:

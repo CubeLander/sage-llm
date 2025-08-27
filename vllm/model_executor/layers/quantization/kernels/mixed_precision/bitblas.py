@@ -6,7 +6,7 @@ from typing import Optional
 import torch
 from packaging import version
 
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.model_executor.layers.quantization.base_config import (
     QuantizationConfig)
 from vllm.model_executor.layers.quantization.utils import replace_parameter

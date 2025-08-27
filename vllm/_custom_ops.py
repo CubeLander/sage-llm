@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Optional, Union
 import torch
 
 import vllm.envs as envs
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.platforms import current_platform
 from vllm.scalar_type import ScalarType
 

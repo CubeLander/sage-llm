@@ -9,7 +9,7 @@ import torch
 import vllm._custom_ops as ops
 from vllm.attention.backends.abstract import (AttentionType,
                                               is_quantized_kv_cache)
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.v1.attention.backends.mla.common import (MLACommonBackend,
                                                    MLACommonImpl,
                                                    MLACommonMetadata,

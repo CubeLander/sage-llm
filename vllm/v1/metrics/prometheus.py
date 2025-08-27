@@ -7,7 +7,7 @@ from typing import Optional
 
 from prometheus_client import REGISTRY, CollectorRegistry, multiprocess
 
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 
 logger = init_logger(__name__)
 

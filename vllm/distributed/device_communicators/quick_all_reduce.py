@@ -12,7 +12,7 @@ import vllm.envs as envs
 from vllm import _custom_ops as ops
 from vllm.config import get_current_vllm_config
 from vllm.distributed.parallel_state import in_the_same_node_as
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.platforms import current_platform
 from vllm.utils import cuda_device_count_stateless
 

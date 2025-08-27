@@ -11,7 +11,7 @@ import torch
 
 import vllm.envs as envs
 from vllm.attention.backends.abstract import AttentionBackend
-from hotLLM.vllm.logger import init_logger
+from vllm.logger import init_logger
 from vllm.platforms import _Backend, current_platform
 from vllm.utils import STR_BACKEND_ENV_VAR, resolve_obj_by_qualname
 
