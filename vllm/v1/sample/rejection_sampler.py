@@ -5,7 +5,7 @@ from typing import Optional
 import torch
 import torch.nn as nn
 
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.triton_utils import tl, triton
 from vllm.v1.sample.metadata import SamplingMetadata
 from vllm.v1.sample.ops.topk_topp_sampler import apply_top_k_top_p

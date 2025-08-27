@@ -10,7 +10,7 @@ import numpy.typing as npt
 from PIL import Image
 
 import vllm.envs as envs
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 
 from .inputs import (MultiModalDataDict, MultiModalEncDecInputs,
                      MultiModalInputs, MultiModalKwargs,

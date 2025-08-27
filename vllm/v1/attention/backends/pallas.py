@@ -16,7 +16,7 @@ from vllm.attention.backends.abstract import (AttentionBackend, AttentionImpl,
                                               AttentionLayer, AttentionType)
 from vllm.attention.backends.utils import CommonAttentionState
 from vllm.config import VllmConfig
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.utils import cdiv, next_power_of_2
 
 logger = init_logger(__name__)

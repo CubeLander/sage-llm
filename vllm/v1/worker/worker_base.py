@@ -7,7 +7,7 @@ import torch
 import torch.nn as nn
 
 from vllm.config import VllmConfig
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.v1.kv_cache_interface import KVCacheSpec
 from vllm.worker.worker_base import WorkerBase as WorkerBaseV0
 

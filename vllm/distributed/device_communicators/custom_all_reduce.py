@@ -13,7 +13,7 @@ from vllm import _custom_ops as ops
 from vllm.distributed.device_communicators.custom_all_reduce_utils import (
     gpu_p2p_access_check)
 from vllm.distributed.parallel_state import in_the_same_node_as
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.platforms import current_platform
 from vllm.utils import cuda_device_count_stateless
 

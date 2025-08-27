@@ -5,7 +5,7 @@ import os
 import time
 
 from vllm.config import CompilationConfig, CompilationLevel, VllmConfig
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 
 logger = init_logger(__name__)
 

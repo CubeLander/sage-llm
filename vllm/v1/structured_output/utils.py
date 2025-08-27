@@ -13,7 +13,7 @@ from cachetools import LRUCache
 from diskcache import Cache
 
 import vllm.envs as envs
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.utils import LazyLoader
 
 if TYPE_CHECKING:

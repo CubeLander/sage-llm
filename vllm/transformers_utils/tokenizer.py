@@ -15,7 +15,7 @@ from transformers import (AutoTokenizer, PreTrainedTokenizer,
                           PreTrainedTokenizerFast)
 
 from vllm import envs
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.transformers_utils.config import (
     get_sentence_transformer_tokenizer_config)
 from vllm.transformers_utils.tokenizers import MistralTokenizer

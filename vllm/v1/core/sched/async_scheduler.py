@@ -3,7 +3,7 @@
 
 from __future__ import annotations
 
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.v1.core.sched.output import SchedulerOutput
 from vllm.v1.core.sched.scheduler import Scheduler
 from vllm.v1.request import Request, RequestStatus

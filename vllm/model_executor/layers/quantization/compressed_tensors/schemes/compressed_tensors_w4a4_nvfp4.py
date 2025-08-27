@@ -7,7 +7,7 @@ from torch.nn.parameter import Parameter
 
 import vllm.envs as envs
 from vllm._custom_ops import cutlass_scaled_fp4_mm, scaled_fp4_quant
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.model_executor.layers.quantization.compressed_tensors.schemes import (
     CompressedTensorsScheme)
 from vllm.model_executor.layers.quantization.utils.nvfp4_emulation_utils import (  # noqa: E501

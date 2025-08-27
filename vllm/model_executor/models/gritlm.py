@@ -8,7 +8,7 @@ import torch
 import torch.nn as nn
 
 from vllm.config import ModelConfig, VllmConfig
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.model_executor.layers.pooler import (DispatchPooler, Pooler,
                                                PoolerHead, PoolerNormalize,
                                                PoolingParamsUpdate,

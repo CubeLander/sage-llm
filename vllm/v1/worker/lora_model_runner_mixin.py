@@ -11,7 +11,7 @@ import numpy as np
 import torch.nn as nn
 
 from vllm.config import LoRAConfig, ModelConfig, SchedulerConfig
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.lora.layers import LoRAMapping
 from vllm.lora.request import LoRARequest
 from vllm.lora.worker_manager import LRUCacheWorkerLoRAManager

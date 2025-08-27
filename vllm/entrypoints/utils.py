@@ -18,7 +18,7 @@ from vllm.engine.arg_utils import EngineArgs
 from vllm.entrypoints.openai.cli_args import make_arg_parser
 from vllm.entrypoints.openai.protocol import (ChatCompletionRequest,
                                               CompletionRequest)
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.platforms import current_platform
 from vllm.utils import FlexibleArgumentParser
 

@@ -9,7 +9,7 @@ from dataclasses import astuple, dataclass
 from typing import Any, Callable, NamedTuple, Optional
 
 from vllm.config import VllmConfig
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.utils import GiB_bytes, cdiv, sha256_cbor_64bit
 from vllm.v1.kv_cache_interface import (ChunkedLocalAttentionSpec,
                                         FullAttentionSpec, KVCacheConfig,

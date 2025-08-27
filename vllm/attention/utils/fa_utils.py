@@ -3,7 +3,7 @@
 from typing import Optional
 
 from vllm import envs
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.platforms import current_platform
 
 logger = init_logger(__name__)

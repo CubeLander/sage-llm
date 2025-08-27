@@ -6,7 +6,7 @@ from functools import lru_cache
 from typing import TYPE_CHECKING, Optional
 
 from vllm import envs
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.utils import DEFAULT_MAX_NUM_BATCHED_TOKENS
 
 from .interface import Platform, PlatformEnum

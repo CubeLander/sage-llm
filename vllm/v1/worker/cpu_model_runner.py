@@ -7,7 +7,7 @@ import torch
 import torch.nn as nn
 
 from vllm.config import VllmConfig
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.model_executor.model_loader import get_model
 from vllm.v1.attention.backends.cpu_attn import TorchSDPAMetadataBuilderV1
 from vllm.v1.worker.gpu_model_runner import GPUModelRunner

@@ -9,7 +9,7 @@ import vllm.envs as envs
 from vllm.distributed.kv_transfer.kv_connector.base import (
     KVConnectorBase, KVConnectorBaseType)
 from vllm.distributed.kv_transfer.kv_connector.v1 import KVConnectorRole
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 
 # yapf: enable
 

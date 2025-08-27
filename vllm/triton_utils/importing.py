@@ -5,7 +5,7 @@ import os
 import types
 from importlib.util import find_spec
 
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 
 logger = init_logger(__name__)
 

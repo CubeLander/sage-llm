@@ -13,7 +13,7 @@ from neuronx_distributed_inference.modules.lora_serving import (
 
 from vllm.config import VllmConfig
 from vllm.entrypoints.openai.serving_models import LoRAModulePath
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.lora.layers import LoRAMapping
 from vllm.lora.request import LoRARequest
 from vllm.model_executor import SamplingMetadata

@@ -15,7 +15,7 @@ import torch
 from typing_extensions import assert_never
 
 from vllm.inputs import InputProcessingContext
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.transformers_utils.tokenizer import (AnyTokenizer, decode_tokens,
                                                encode_tokens)
 from vllm.utils import flatten_2d_lists, full_groupby

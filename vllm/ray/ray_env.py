@@ -5,7 +5,7 @@ import os
 from typing import Optional
 
 import vllm.envs as envs
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 
 logger = init_logger(__name__)
 

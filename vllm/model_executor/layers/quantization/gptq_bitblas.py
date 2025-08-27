@@ -6,7 +6,7 @@ import torch
 from packaging import version
 from torch.nn.parameter import Parameter
 
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.model_executor.layers.linear import (LinearBase, LinearMethodBase,
                                                set_weight_attrs)
 from vllm.model_executor.layers.quantization import QuantizationMethods

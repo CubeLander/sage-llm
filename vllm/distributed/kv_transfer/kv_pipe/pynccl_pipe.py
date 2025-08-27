@@ -24,7 +24,7 @@ from vllm.config import KVTransferConfig
 from vllm.distributed.device_communicators.pynccl import PyNcclCommunicator
 from vllm.distributed.kv_transfer.kv_pipe.base import KVPipeBase
 from vllm.distributed.utils import StatelessProcessGroup
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 
 logger = init_logger(__name__)
 

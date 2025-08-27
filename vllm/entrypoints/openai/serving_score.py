@@ -29,7 +29,7 @@ from vllm.entrypoints.score_utils import (ScoreContentPartParam,
 # yapf: enable
 from vllm.entrypoints.utils import _validate_truncation_size
 from vllm.inputs.data import TokensPrompt
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.lora.request import LoRARequest
 from vllm.outputs import PoolingRequestOutput, ScoringRequestOutput
 from vllm.transformers_utils.tokenizer import AnyTokenizer, MistralTokenizer

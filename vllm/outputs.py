@@ -10,7 +10,7 @@ from typing import Any, Generic, Optional, Union
 import torch
 from typing_extensions import TypeVar
 
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.lora.request import LoRARequest
 from vllm.multimodal.inputs import MultiModalPlaceholderDict
 from vllm.sampling_params import RequestOutputKind

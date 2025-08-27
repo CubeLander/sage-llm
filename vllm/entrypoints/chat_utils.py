@@ -39,7 +39,7 @@ from transformers import (PreTrainedTokenizer, PreTrainedTokenizerFast,
 from typing_extensions import Required, TypeAlias, TypedDict
 
 from vllm.config import ModelConfig
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.model_executor.models import SupportsMultiModal
 from vllm.multimodal import MULTIMODAL_REGISTRY, MultiModalDataDict
 from vllm.multimodal.utils import MediaConnector

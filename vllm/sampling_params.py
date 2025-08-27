@@ -10,7 +10,7 @@ from typing import Annotated, Any, Optional, Union
 import msgspec
 from pydantic import BaseModel
 
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.logits_process import LogitsProcessor
 from vllm.transformers_utils.tokenizer import AnyTokenizer
 

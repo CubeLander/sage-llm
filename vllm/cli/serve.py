@@ -16,7 +16,7 @@ from vllm.entrypoints.openai.cli_args import (make_arg_parser,
                                               validate_parsed_serve_args)
 from vllm.entrypoints.utils import (VLLM_SUBCMD_PARSER_EPILOG,
                                     show_filtered_argument_or_group_from_help)
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.usage.usage_lib import UsageContext
 from vllm.utils import (FlexibleArgumentParser, decorate_logs, get_tcp_uri,
                         set_process_title)

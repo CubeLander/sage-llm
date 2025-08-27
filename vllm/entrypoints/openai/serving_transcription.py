@@ -15,7 +15,7 @@ from vllm.entrypoints.openai.protocol import (
     TranslationResponseStreamChoice, TranslationStreamResponse)
 from vllm.entrypoints.openai.serving_models import OpenAIServingModels
 from vllm.entrypoints.openai.speech_to_text import OpenAISpeechToText
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.outputs import RequestOutput
 
 logger = init_logger(__name__)

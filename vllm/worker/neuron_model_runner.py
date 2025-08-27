@@ -9,7 +9,7 @@ import torch
 from torch import nn
 
 from vllm.config import DeviceConfig, VllmConfig
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.lora.layers import LoRAMapping
 from vllm.lora.request import LoRARequest
 from vllm.model_executor import SamplingMetadata

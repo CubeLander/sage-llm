@@ -4,7 +4,7 @@ from typing import Any
 
 from transformers import PretrainedConfig, WhisperConfig
 
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 
 logger = init_logger(__name__)
 

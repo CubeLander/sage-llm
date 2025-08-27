@@ -21,7 +21,7 @@ from vllm.entrypoints.openai.tool_parsers.abstract_tool_parser import (
 from vllm.entrypoints.openai.tool_parsers.utils import (find_common_prefix,
                                                         is_complete_json,
                                                         partial_json_loads)
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 
 logger = init_logger(__name__)
 

@@ -26,7 +26,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, PretrainedConfig
 
 from vllm.config import (ModelConfig, ParallelConfig, SchedulerConfig,
                          SpeculativeConfig)
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.model_executor.layers.logits_processor import LogitsProcessor
 from vllm.model_executor.layers.sampler import Sampler, SamplerOutput
 from vllm.model_executor.sampling_metadata import SamplingMetadata

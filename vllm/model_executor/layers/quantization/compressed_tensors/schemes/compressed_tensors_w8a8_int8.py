@@ -6,7 +6,7 @@ from typing import Callable, Optional
 import torch
 from compressed_tensors.quantization import QuantizationStrategy
 
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.model_executor.layers.quantization.compressed_tensors.schemes import (
     CompressedTensorsScheme)
 from vllm.model_executor.layers.quantization.kernels.scaled_mm import (

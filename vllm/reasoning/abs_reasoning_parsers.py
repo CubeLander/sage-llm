@@ -9,7 +9,7 @@ from collections.abc import Sequence
 from functools import cached_property
 from typing import TYPE_CHECKING, Any, Callable, Optional, Union
 
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.utils import import_from_path, is_list_of
 
 if TYPE_CHECKING:

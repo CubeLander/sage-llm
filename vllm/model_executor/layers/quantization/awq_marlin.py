@@ -8,7 +8,7 @@ from torch.nn import Parameter
 
 import vllm.model_executor.layers.fused_moe  # noqa
 from vllm import _custom_ops as ops
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.model_executor.layers.fused_moe.layer import (
     FusedMoE, FusedMoEConfig, FusedMoEMethodBase, FusedMoeWeightScaleSupported,
     UnquantizedFusedMoEMethod)

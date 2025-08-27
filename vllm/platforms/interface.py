@@ -14,7 +14,7 @@ import torch
 from torch.distributed import PrefixStore, ProcessGroup
 
 from vllm.inputs import ProcessorInputs, PromptType
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 
 if TYPE_CHECKING:
     from vllm.config import ModelConfig, VllmConfig

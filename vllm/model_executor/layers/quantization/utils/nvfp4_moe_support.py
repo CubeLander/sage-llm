@@ -3,7 +3,7 @@
 from dataclasses import dataclass
 
 import vllm.envs as envs
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.model_executor.layers.quantization.utils.flashinfer_fp4_moe import (
     is_flashinfer_fp4_cutlass_moe_available)
 from vllm.model_executor.layers.quantization.utils.marlin_utils_fp4 import (

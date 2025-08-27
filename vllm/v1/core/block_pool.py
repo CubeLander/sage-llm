@@ -6,7 +6,7 @@ from typing import Optional
 
 from vllm.distributed.kv_events import (AllBlocksCleared, BlockRemoved,
                                         BlockStored, KVCacheEvent)
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.v1.core.kv_cache_utils import (BlockHash, BlockHashWithGroupId,
                                          FreeKVCacheBlockQueue, KVCacheBlock)
 from vllm.v1.request import Request

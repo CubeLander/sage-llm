@@ -8,7 +8,7 @@ from typing import Any, Optional, Union, cast
 from typing_extensions import assert_never
 
 from vllm.config import ModelConfig
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.lora.request import LoRARequest
 from vllm.multimodal import MULTIMODAL_REGISTRY, MultiModalRegistry
 from vllm.multimodal.inputs import (MultiModalDataDict, MultiModalEncDecInputs,

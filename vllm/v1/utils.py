@@ -12,7 +12,7 @@ from typing import (TYPE_CHECKING, Any, Callable, Generic, Optional, TypeVar,
 
 import torch
 
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.usage.usage_lib import (UsageContext, is_usage_stats_enabled,
                                   usage_message)
 from vllm.utils import (get_open_port, get_open_zmq_ipc_path, get_tcp_uri,

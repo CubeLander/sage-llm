@@ -7,7 +7,7 @@ import torch
 from torch.distributed import ProcessGroup
 
 import vllm.envs as envs
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.platforms import current_platform
 
 from .base_device_communicator import DeviceCommunicatorBase

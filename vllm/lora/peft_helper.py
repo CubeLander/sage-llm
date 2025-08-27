@@ -10,7 +10,7 @@ from dataclasses import MISSING, dataclass, field, fields
 from typing import Literal, Optional, Union
 
 from vllm.config import LoRAConfig
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.model_executor.model_loader.tensorizer import TensorizerConfig
 
 logger = init_logger(__name__)

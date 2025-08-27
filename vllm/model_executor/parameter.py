@@ -8,7 +8,7 @@ import torch
 from torch.nn import Parameter
 
 from vllm.distributed import get_tensor_model_parallel_rank
-from vllm.utils.logger import init_logger
+from hotLLM.vllm.logger import init_logger
 from vllm.model_executor.utils import _make_synced_weight_loader
 
 __all__ = [
