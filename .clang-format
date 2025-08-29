@@ -1,7 +1,7 @@
 BasedOnStyle: Google
 UseTab: Never
-IndentWidth: 2
-ColumnLimit: 80
+IndentWidth: 4
+ColumnLimit: 300
 
 # Force pointers to the type for C++.
 DerivePointerAlignment: false
@@ -14,6 +14,28 @@ SortIncludes: false
 AlignConsecutiveAssignments: false
 AlignConsecutiveDeclarations: false
 IndentPPDirectives: BeforeHash
+
+# 括号风格 - 左括号换行
+# BreakBeforeBraces: Allman
+BreakBeforeBraces: Attach
+# 模板参数格式化
+AlwaysBreakTemplateDeclarations: Yes
+
+# 函数参数格式化 - 每个参数都换行
+BinPackParameters: false
+BinPackArguments: false
+AllowAllParametersOfDeclarationOnNextLine: false
+AllowAllArgumentsOnNextLine: false
+AllowShortFunctionsOnASingleLine: None
+
+# 对齐和缩进
+AlignAfterOpenBracket: BlockIndent
+IndentWrappedFunctionNames: true
+ContinuationIndentWidth: 4
+
+# 换行惩罚设置 - 鼓励换行
+PenaltyBreakBeforeFirstCallParameter: 1
+PenaltyBreakTemplateDeclaration: 1
 
 IncludeCategories:
   - Regex:           '^<'
